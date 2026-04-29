@@ -1,0 +1,222 @@
+{
+  "$schema": "../airgap.schema.json",
+  "specVersion": "1.0.0",
+  "brand": {
+    "name": "SkyPeak Airlines",
+    "botName": "SkyBot",
+    "tagline": "Your in-flight and ground support assistant",
+    "hotline": "1-888-SKYPEAK",
+    "hotlineLabel": "available 24/7",
+    "website": "skypeakair.com"
+  },
+  "theme": {
+    "primary": "#1565C0",
+    "primaryLight": "#42A5F5",
+    "primaryDark": "#0D47A1",
+    "secondary": "#FF6F00",
+    "background": "#E3F2FD"
+  },
+  "model": {
+    "provider": "llama.cpp",
+    "url": "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q3_K_S.gguf",
+    "filename": "gemma-4-e2b-it-q3ks.gguf",
+    "sha256": "2d010e251ba1fc44b746eb4059825a1954df5f90a1b7a360cf18232a520709aa",
+    "sizeBytes": 2445645184,
+    "sizeMB": 2445
+  },
+  "knowledge": {
+    "directory": "knowledge"
+  },
+  "prompts": {
+    "system": "You are {{botName}}, customer support for {{brandName}}. Answer ONLY using the CONTEXT provided. Be concise. Use {{currency}} for prices. Never confirm or modify flight bookings — direct to {{hotline}}. If unsure, say: \"Please contact us at {{hotline}}.\"",
+    "welcome": "Welcome aboard! I'm {{botName}}.\n\nI can help with:\n\n{{featureList}}\n\nWhat do you need help with?",
+    "fallback": "I don't have that information. Please contact {{brandName}} at {{hotline}} ({{hotlineLabel}}) or visit {{website}}."
+  },
+  "onboarding": {
+    "features": [
+      "Baggage allowance and policies",
+      "Check-in procedures and timing",
+      "Flight status and schedule info",
+      "SkyPeak Rewards loyalty program",
+      "Airport lounge access",
+      "Travel document requirements"
+    ]
+  },
+  "quickReplies": [
+    {
+      "title": "Baggage rules",
+      "value": "What is the baggage allowance?"
+    },
+    {
+      "title": "Check-in help",
+      "value": "How do I check in online?"
+    },
+    {
+      "title": "Flight status",
+      "value": "Check my flight status"
+    },
+    {
+      "title": "Frequent flyer",
+      "value": "How does the loyalty program work?"
+    }
+  ],
+  "actions": [
+    {
+      "id": "flight_status",
+      "label": "Check flight status",
+      "keywords": [
+        "my flight",
+        "flight status",
+        "is my flight on time",
+        "flight delayed"
+      ],
+      "requiresOnline": true,
+      "category": "flights",
+      "mockResponse": "Flight SP-512 Manila to Singapore: On time. Departure 14:30, Gate B12. Boarding begins at 13:50."
+    },
+    {
+      "id": "booking_change",
+      "label": "Modify booking",
+      "keywords": [
+        "change my flight",
+        "reschedule",
+        "cancel my booking",
+        "change seat",
+        "upgrade seat"
+      ],
+      "requiresOnline": true,
+      "category": "bookings",
+      "mockResponse": "Flight modifications require verification. Please call 1-888-SKYPEAK or visit skypeakair.com/manage to modify your booking."
+    },
+    {
+      "id": "lost_baggage",
+      "label": "Report lost baggage",
+      "keywords": [
+        "lost luggage",
+        "missing baggage",
+        "bag not arrived",
+        "luggage claim"
+      ],
+      "requiresOnline": true,
+      "category": "support",
+      "mockResponse": "Please report lost baggage at the SkyPeak service desk in the arrivals hall, or call 1-888-SKYPEAK with your baggage tag number."
+    },
+    {
+      "id": "upgrade_request",
+      "label": "Request cabin upgrade",
+      "keywords": [
+        "upgrade",
+        "upgrade seat",
+        "business class upgrade",
+        "premium economy upgrade",
+        "cabin upgrade"
+      ],
+      "requiresOnline": true,
+      "category": "bookings",
+      "mockResponse": "Upgrade availability depends on your route and fare class. Please visit skypeakair.com/manage or call 1-888-SKYPEAK to check upgrade options for your booking."
+    },
+    {
+      "id": "refund_request",
+      "label": "Request refund",
+      "keywords": [
+        "refund",
+        "get money back",
+        "cancel and refund",
+        "refund status",
+        "refund policy"
+      ],
+      "requiresOnline": true,
+      "category": "bookings",
+      "mockResponse": "Refund eligibility depends on your fare type. Flexible fares receive a full refund; Standard fares may incur a cancellation fee. Please call 1-888-SKYPEAK or visit skypeakair.com/refunds to submit your request."
+    },
+    {
+      "id": "complaint",
+      "label": "File a complaint",
+      "keywords": [
+        "complaint",
+        "file complaint",
+        "bad experience",
+        "report issue",
+        "poor service",
+        "feedback"
+      ],
+      "requiresOnline": true,
+      "category": "support",
+      "mockResponse": "We're sorry about your experience. Please submit your complaint at skypeakair.com/feedback or call 1-888-SKYPEAK. Include your booking reference and flight details for faster resolution."
+    }
+  ],
+  "backend": {
+    "type": "mock"
+  },
+  "support": [
+    {
+      "type": "phone",
+      "value": "1-888-SKYPEAK",
+      "label": "24/7 support"
+    },
+    {
+      "type": "website",
+      "value": "skypeakair.com/help",
+      "label": "Online help"
+    }
+  ],
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "safety": {
+    "enabled": true,
+    "confidenceThreshold": 0,
+    "topicBlocklist": [
+      "not_legal_advice:visa requirements",
+      "not_legal_advice:immigration advice",
+      "not_medical_advice:diagnose",
+      "not_medical_advice:prescribe",
+      "not_financial_advice:should I invest",
+      "not_financial_advice:investment advice",
+      "not_legal_advice:sue",
+      "not_legal_advice:legal advice"
+    ],
+    "groundingRules": {
+      "requireCitations": false,
+      "forbidUnsourcedAmounts": true,
+      "forbidUnsourcedDates": true
+    },
+    "refusalTemplates": {
+      "not_legal_advice": "I can't give visa or immigration advice. Please contact the embassy of your destination country or a licensed immigration advisor."
+    }
+  },
+  "tools": [
+    {
+      "name": "lookupFlightStatus",
+      "description": "Look up flight status by flight number",
+      "keywords": [
+        "flight status",
+        "is my flight",
+        "flight delayed",
+        "flight number"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "airline",
+      "backendMethod": "lookupFlightStatus"
+    },
+    {
+      "name": "requestCallback",
+      "description": "Request a callback from a booking agent",
+      "keywords": [
+        "call me back",
+        "callback",
+        "speak to an agent"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "airline",
+      "backendMethod": "requestCallback"
+    }
+  ],
+  "llm": {
+    "mode": "demo"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "name": "create-airgap-bot",
+  "version": "0.1.0",
+  "description": "Scaffold a config-driven, on-device customer support bot from one of the Airgap industry templates.",
+  "author": "Xavier Puspus (https://github.com/xmpuspus)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xmpuspus/airgap.git",
+    "directory": "packages/create-airgap-bot"
+  },
+  "homepage": "https://github.com/xmpuspus/airgap/tree/main/packages/create-airgap-bot#readme",
+  "bugs": {
+    "url": "https://github.com/xmpuspus/airgap/issues"
+  },
+  "keywords": [
+    "airgap",
+    "scaffold",
+    "cli",
+    "react-native",
+    "on-device",
+    "offline-first",
+    "customer-support",
+    "llm",
+    "rag",
+    "template"
+  ],
+  "bin": {
+    "create-airgap-bot": "dist/cli.js"
+  },
+  "main": "dist/cli.js",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "conflict-check": "node dist/conflict-check.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "picocolors": "1.1.1",
+    "prompts": "2.4.2",
+    "tar": "7.4.3"
+  },
+  "devDependencies": {
+    "@types/jest": "29.5.14",
+    "@types/node": "22.10.2",
+    "@types/prompts": "2.4.9",
+    "@types/tar": "6.1.13",
+    "jest": "29.7.0",
+    "ts-jest": "29.2.5",
+    "typescript": "5.9.3"
+  }
+}

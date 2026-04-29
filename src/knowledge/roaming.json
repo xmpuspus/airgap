@@ -1,0 +1,152 @@
+[
+  {
+    "id": "roaming-zone-a-asean",
+    "category": "roaming",
+    "title": "Roaming Zone A - ASEAN Countries",
+    "content": "Zone A covers all ASEAN member countries and offers the most affordable roaming rates. Countries included: Indonesia, Malaysia, Singapore, Thailand, Vietnam, Myanmar, Cambodia, Laos, and Brunei. Without a roaming package, pay-per-use rates are: Data: PHP 15/MB. Calls (outgoing): PHP 20/minute. Calls (incoming): PHP 10/minute. Texts (outgoing): PHP 8/text. Texts (incoming): Free.\n\nRecommended roaming packages (subscribe before departure):\n\n- ASEAN Roam Daily (PHP 299/day): 1GB data, 30 minutes outgoing calls, unlimited incoming calls, 50 outgoing texts. Auto-renews daily. Text ROAM299 to 2123.\n\n- ASEAN Roam Weekly (PHP 999/7 days): 5GB data, 120 minutes outgoing calls, unlimited incoming calls, 200 outgoing texts. Text ROAM999 to 2123.\n\n- ASEAN Roam Monthly (PHP 2,499/30 days): 15GB data, unlimited outgoing calls to ASEAN and PH, unlimited incoming calls, unlimited texts. Best for extended stays. Text ROAM2499 to 2123.\n\nTo activate roaming before travel, dial *888*77# or text ROAMING ON to 2123. Prepaid users need a minimum PHP 500 balance. Your phone will automatically connect to a partner network upon arrival. Preferred networks: Telkomsel (Indonesia), Maxis (Malaysia), AIS (Thailand), Viettel (Vietnam), Singtel (Singapore).",
+    "keywords": [
+      "ASEAN roaming",
+      "Zone A",
+      "Southeast Asia roaming",
+      "Indonesia roaming",
+      "Thailand roaming",
+      "Singapore roaming",
+      "Malaysia roaming",
+      "Vietnam roaming",
+      "Singapore",
+      "Malaysia",
+      "Thailand",
+      "Indonesia",
+      "Vietnam"
+    ],
+    "tags": [
+      "roaming",
+      "international",
+      "asean"
+    ],
+    "metadata": {
+      "zone": "Zone A - ASEAN",
+      "countries": "Indonesia, Malaysia, Singapore, Thailand, Vietnam, Myanmar, Cambodia, Laos, Brunei",
+      "dailyRate": "PHP 299/day (with package) or PHP 15/MB, PHP 20/min (pay-per-use)",
+      "packages": [
+        {
+          "name": "ASEAN Roam Daily",
+          "price": 299,
+          "includes": "1GB data, 30 min calls, 50 texts, unlimited incoming"
+        },
+        {
+          "name": "ASEAN Roam Weekly",
+          "price": 999,
+          "includes": "5GB data, 120 min calls, 200 texts, unlimited incoming"
+        },
+        {
+          "name": "ASEAN Roam Monthly",
+          "price": 2499,
+          "includes": "15GB data, unlimited calls to ASEAN/PH, unlimited texts"
+        }
+      ]
+    }
+  },
+  {
+    "id": "roaming-zone-b-apac",
+    "category": "roaming",
+    "title": "Roaming Zone B - Asia-Pacific Countries",
+    "content": "Zone B covers Asia-Pacific countries outside ASEAN. Countries included: Japan, South Korea, China, Hong Kong, Taiwan, India, Australia, New Zealand, Bangladesh, Sri Lanka, Nepal, and Pakistan. Without a roaming package, pay-per-use rates are: Data: PHP 25/MB. Calls (outgoing): PHP 35/minute. Calls (incoming): PHP 15/minute. Texts (outgoing): PHP 12/text. Texts (incoming): Free.\n\nRecommended roaming packages (subscribe before departure):\n\n- APAC Roam Daily (PHP 499/day): 800MB data, 20 minutes outgoing calls, unlimited incoming calls, 30 outgoing texts. Auto-renews daily. Text ROAMAPAC499 to 2123.\n\n- APAC Roam Weekly (PHP 1,799/7 days): 4GB data, 90 minutes outgoing calls, unlimited incoming calls, 150 outgoing texts. Text ROAMAPAC1799 to 2123.\n\n- APAC Roam Monthly (PHP 3,999/30 days): 12GB data, 300 minutes outgoing calls to APAC and PH, unlimited incoming calls, unlimited texts. Ideal for business travelers. Text ROAMAPAC3999 to 2123.\n\nPopular destinations: Japan (partner: NTT Docomo), South Korea (partner: SK Telecom), Australia (partner: Telstra), Hong Kong (partner: CSL), China (partner: China Mobile). Data speeds may vary by country. 4G LTE is available in most Zone B countries.",
+    "keywords": [
+      "Asia Pacific roaming",
+      "Zone B",
+      "Japan roaming",
+      "Korea roaming",
+      "Australia roaming",
+      "China roaming",
+      "Hong Kong roaming",
+      "APAC",
+      "Japan",
+      "Korea",
+      "Australia",
+      "China",
+      "Hong Kong",
+      "Taiwan"
+    ],
+    "tags": [
+      "roaming",
+      "international",
+      "asia-pacific"
+    ],
+    "metadata": {
+      "zone": "Zone B - Asia-Pacific",
+      "countries": "Japan, South Korea, China, Hong Kong, Taiwan, India, Australia, New Zealand, Bangladesh, Sri Lanka, Nepal, Pakistan",
+      "dailyRate": "PHP 499/day (with package) or PHP 25/MB, PHP 35/min (pay-per-use)",
+      "packages": [
+        {
+          "name": "APAC Roam Daily",
+          "price": 499,
+          "includes": "800MB data, 20 min calls, 30 texts, unlimited incoming"
+        },
+        {
+          "name": "APAC Roam Weekly",
+          "price": 1799,
+          "includes": "4GB data, 90 min calls, 150 texts, unlimited incoming"
+        },
+        {
+          "name": "APAC Roam Monthly",
+          "price": 3999,
+          "includes": "12GB data, 300 min calls to APAC/PH, unlimited texts"
+        }
+      ]
+    }
+  },
+  {
+    "id": "roaming-zone-c-row",
+    "category": "roaming",
+    "title": "Roaming Zone C - Europe, USA, Middle East, Africa & Rest of World",
+    "content": "If you are going to Europe, USA, UK, Canada, Middle East, or Africa, you are in ACME Roaming Zone C (Rest of World). Zone C covers all remaining countries including the Americas, Europe, Middle East, and Africa. Key countries include: United States, Canada, United Kingdom, Germany, France, Italy, Spain, UAE, Saudi Arabia, Qatar, and South Africa. Without a roaming package, pay-per-use rates are: Data: PHP 50/MB. Calls (outgoing): PHP 55/minute. Calls (incoming): PHP 25/minute. Texts (outgoing): PHP 15/text. Texts (incoming): Free.\n\nRecommended roaming packages (subscribe before departure):\n\n- World Roam Daily (PHP 799/day): 500MB data, 15 minutes outgoing calls, unlimited incoming calls, 20 outgoing texts. Auto-renews daily. Text ROAMWORLD799 to 2123.\n\n- World Roam Weekly (PHP 2,999/7 days): 3GB data, 60 minutes outgoing calls, unlimited incoming calls, 100 outgoing texts. Text ROAMWORLD2999 to 2123.\n\n- World Roam Monthly (PHP 5,999/30 days): 10GB data, 200 minutes outgoing calls to any country, unlimited incoming calls, unlimited texts. Best for OFWs and extended international travel. Text ROAMWORLD5999 to 2123.\n\nTip for OFWs: If staying in one country long-term, a local SIM with a roaming package for PH calls may be more economical. Use the ACMEIDD Sakto bundle (PHP 15/15 min) from the local SIM to call home. ACME also offers special OFW Data Packs for Middle East countries starting at PHP 399/week (2GB data + unlimited calls to PH ACME numbers). Text OFWPACK to 2123 for current offers.\n\nPartner networks: AT&T/T-Mobile (USA), Vodafone (UK/Europe), Etisalat (UAE), STC (Saudi Arabia). Data speeds available up to 4G LTE in most countries; 3G only in some African and island nations.",
+    "keywords": [
+      "rest of world roaming",
+      "Zone C",
+      "USA roaming",
+      "Europe roaming",
+      "Middle East roaming",
+      "OFW roaming",
+      "Africa roaming",
+      "worldwide roaming",
+      "UK roaming",
+      "UAE roaming",
+      "Saudi roaming",
+      "Europe",
+      "UK",
+      "USA",
+      "Canada",
+      "Middle East",
+      "Africa"
+    ],
+    "tags": [
+      "roaming",
+      "international",
+      "worldwide",
+      "ofw"
+    ],
+    "metadata": {
+      "zone": "Zone C - Rest of World",
+      "countries": "United States, Canada, United Kingdom, Germany, France, Italy, Spain, UAE, Saudi Arabia, Qatar, South Africa, and 100+ other countries",
+      "dailyRate": "PHP 799/day (with package) or PHP 50/MB, PHP 55/min (pay-per-use)",
+      "packages": [
+        {
+          "name": "World Roam Daily",
+          "price": 799,
+          "includes": "500MB data, 15 min calls, 20 texts, unlimited incoming"
+        },
+        {
+          "name": "World Roam Weekly",
+          "price": 2999,
+          "includes": "3GB data, 60 min calls, 100 texts, unlimited incoming"
+        },
+        {
+          "name": "World Roam Monthly",
+          "price": 5999,
+          "includes": "10GB data, 200 min calls worldwide, unlimited texts"
+        }
+      ]
+    }
+  }
+]

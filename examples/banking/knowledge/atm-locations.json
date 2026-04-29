@@ -1,0 +1,132 @@
+[
+  {
+    "id": "branch-downtown-main",
+    "category": "location",
+    "title": "PrimaBank Downtown Main Branch",
+    "content": "PrimaBank's flagship Downtown Main branch and full-service ATM center. This is the largest PrimaBank location, offering all banking services including personal banking, business banking, mortgage consultations, investment services, safe deposit boxes, notary services, and a dedicated small business center. The branch has drive-through banking lanes and a 24-hour ATM vestibule with two deposit-capable ATMs. Wheelchair accessible with reserved parking. Located in the financial district, one block from Central Station.",
+    "keywords": ["downtown", "main branch", "flagship", "financial district", "Central Station"],
+    "tags": ["location", "branch", "atm"],
+    "metadata": {
+      "city": "Midtown",
+      "address": "100 Commerce Street, Midtown, NY 10001",
+      "hours": "Mon-Fri 9:00 AM - 5:00 PM, Sat 9:00 AM - 1:00 PM",
+      "atmHours": "24/7",
+      "phone": "(212) 555-0100",
+      "services": ["Cash deposit ATM", "Drive-through", "Safe deposit box", "Notary", "Mortgage specialist", "Business banking", "Coin counter"],
+      "coordinates": {"lat": 40.7484, "lng": -73.9967}
+    }
+  },
+  {
+    "id": "branch-westfield-plaza",
+    "category": "location",
+    "title": "PrimaBank Westfield Plaza Branch",
+    "content": "Full-service PrimaBank branch located inside Westfield Plaza shopping center on the ground floor near the south entrance. Services include personal and business account opening, loan applications, safe deposit boxes, and a coin counting machine. The branch ATM accepts cash and check deposits. Extended weekend hours to serve shopping center visitors. Free customer parking available in the Westfield Plaza garage with validation.",
+    "keywords": ["Westfield Plaza", "shopping center", "mall branch", "south entrance"],
+    "tags": ["location", "branch", "atm"],
+    "metadata": {
+      "city": "Riverside",
+      "address": "2500 Westfield Plaza, Suite 104, Riverside, CA 92501",
+      "hours": "Mon-Fri 9:00 AM - 6:00 PM, Sat 10:00 AM - 4:00 PM, Sun 11:00 AM - 3:00 PM",
+      "atmHours": "Mall hours: 7:00 AM - 10:00 PM daily",
+      "phone": "(951) 555-0250",
+      "services": ["Cash deposit ATM", "Safe deposit box", "Coin counter", "Notary", "Loan specialist"],
+      "coordinates": {"lat": 33.9806, "lng": -117.3755}
+    }
+  },
+  {
+    "id": "branch-oak-hill",
+    "category": "location",
+    "title": "PrimaBank Oak Hill Branch",
+    "content": "A neighborhood PrimaBank branch in the Oak Hill residential area. This location focuses on personal banking, including account opening, basic loan services, and card replacement. Features a drive-through ATM and a walk-up ATM accessible 24/7. The branch has a small business corner for quick consultations. On-site parking available with 12 spaces.",
+    "keywords": ["Oak Hill", "neighborhood branch", "residential", "drive-through"],
+    "tags": ["location", "branch", "atm"],
+    "metadata": {
+      "city": "Oak Hill",
+      "address": "789 Oak Hill Road, Oak Hill, TX 78735",
+      "hours": "Mon-Fri 9:00 AM - 5:00 PM, Sat 9:00 AM - 12:00 PM",
+      "atmHours": "24/7",
+      "phone": "(512) 555-0789",
+      "services": ["Cash deposit ATM", "Drive-through ATM", "Card replacement"],
+      "coordinates": {"lat": 30.2292, "lng": -97.8606}
+    }
+  },
+  {
+    "id": "atm-airport-terminal-b",
+    "category": "location",
+    "title": "PrimaBank ATM - Metro Airport Terminal B",
+    "content": "PrimaBank ATM located inside Metro International Airport, Terminal B, near Gate B22 past security. This ATM dispenses cash in $20 and $50 denominations and supports balance inquiries and transfers between PrimaBank accounts. Foreign currency withdrawal is not available; use the currency exchange counter on the arrivals level. In-network ATM with no PrimaBank surcharge. Available 24/7. A second PrimaBank ATM is located in the Terminal B baggage claim area before security.",
+    "keywords": ["airport", "airport ATM", "Terminal B", "Metro Airport", "travel ATM"],
+    "tags": ["location", "atm"],
+    "metadata": {
+      "city": "Metro Airport",
+      "address": "Metro International Airport, Terminal B, Gate B22, Metro City, IL 60666",
+      "atmHours": "24/7",
+      "services": ["Cash withdrawal", "Balance inquiry", "Account transfer"],
+      "coordinates": {"lat": 41.9742, "lng": -87.9073}
+    }
+  },
+  {
+    "id": "atm-university-campus",
+    "category": "location",
+    "title": "PrimaBank ATM - State University Student Center",
+    "content": "PrimaBank ATM inside the State University Student Center, first floor near the bookstore. This ATM supports cash withdrawal, balance inquiry, and PrimaBank account transfers. Popular with students for its proximity to campus dining and the bookstore. In-network ATM with no PrimaBank surcharge. The nearest full-service PrimaBank branch is the College Town branch at 450 University Avenue, a 5-minute walk from campus.",
+    "keywords": ["university", "campus", "student center", "college ATM", "State University"],
+    "tags": ["location", "atm", "student"],
+    "metadata": {
+      "city": "College Town",
+      "address": "State University Student Center, 1st Floor, 200 Campus Drive, College Town, PA 19104",
+      "atmHours": "Student Center hours: 7:00 AM - 11:00 PM daily",
+      "services": ["Cash withdrawal", "Balance inquiry", "Account transfer"],
+      "coordinates": {"lat": 39.9522, "lng": -75.1932}
+    }
+  },
+  {
+    "id": "branch-harbor-view",
+    "category": "location",
+    "title": "PrimaBank Harbor View Branch",
+    "content": "PrimaBank branch in the Harbor View business park, serving the commercial and waterfront residential community. Full personal and business banking services including commercial lending, payroll services, and a merchant services specialist on Tuesdays and Thursdays. The branch has two drive-through lanes, a night deposit drop, and a 24-hour ATM with cash and check deposit capability. Free parking lot with 25 spaces.",
+    "keywords": ["Harbor View", "business park", "waterfront", "commercial", "night deposit"],
+    "tags": ["location", "branch", "atm", "business"],
+    "metadata": {
+      "city": "Harbor View",
+      "address": "3100 Harbor Boulevard, Suite 1, Harbor View, FL 33019",
+      "hours": "Mon-Fri 9:00 AM - 5:00 PM, Sat 9:00 AM - 1:00 PM",
+      "atmHours": "24/7",
+      "phone": "(954) 555-3100",
+      "services": ["Cash deposit ATM", "Drive-through", "Night deposit", "Business banking", "Merchant services", "Notary"],
+      "coordinates": {"lat": 26.0223, "lng": -80.1434}
+    }
+  },
+  {
+    "id": "atm-grocery-market-st",
+    "category": "location",
+    "title": "PrimaBank ATM - FreshMart Grocery, Market Street",
+    "content": "PrimaBank ATM located inside FreshMart Grocery on Market Street, near the customer service desk. Cash withdrawal and balance inquiry only; no deposit capability. In-network ATM with no PrimaBank surcharge. Convenient for banking while shopping. Store hours determine ATM availability.",
+    "keywords": ["grocery store", "FreshMart", "Market Street", "shopping ATM", "convenience ATM"],
+    "tags": ["location", "atm"],
+    "metadata": {
+      "city": "Springfield",
+      "address": "555 Market Street, Springfield, MO 65806",
+      "atmHours": "Store hours: 6:00 AM - 11:00 PM daily",
+      "services": ["Cash withdrawal", "Balance inquiry"],
+      "coordinates": {"lat": 37.2090, "lng": -93.2923}
+    }
+  },
+  {
+    "id": "branch-lakewood-north",
+    "category": "location",
+    "title": "PrimaBank Lakewood North Branch",
+    "content": "PrimaBank branch in the Lakewood North suburban area, serving families and local businesses. Full-service location with safe deposit boxes, notary services, a mortgage specialist available Monday through Friday, and a children's savings program corner. Features a drive-through with two lanes and a 24-hour walk-up ATM. The branch hosts free monthly financial literacy workshops open to the community. On-site parking lot with 20 spaces.",
+    "keywords": ["Lakewood", "suburban", "family branch", "financial literacy", "mortgage"],
+    "tags": ["location", "branch", "atm"],
+    "metadata": {
+      "city": "Lakewood",
+      "address": "1200 North Lake Drive, Lakewood, OH 44107",
+      "hours": "Mon-Fri 9:00 AM - 5:00 PM, Sat 9:00 AM - 1:00 PM",
+      "atmHours": "24/7",
+      "phone": "(216) 555-1200",
+      "services": ["Cash deposit ATM", "Drive-through", "Safe deposit box", "Notary", "Mortgage specialist", "Coin counter"],
+      "coordinates": {"lat": 41.4822, "lng": -81.7982}
+    }
+  }
+]

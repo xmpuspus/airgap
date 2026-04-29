@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Airgap, the offline-first AI support framework</title>
+    <meta name="description" content="An MIT-licensed React Native framework for shipping offline-first customer support apps. One config file. Seven industry templates. Real recordings, no fake mockups." />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="container">
+        <h1 class="brand">Airgap</h1>
+        <p class="lede">
+          Offline-first customer support, configured by one JSON file. Seven industry templates ship in this repo.
+          Pick one below to see the brand, theme, knowledge base stats, and the actual recorded chat for that vertical.
+        </p>
+        <div class="links">
+          <a class="link" href="https://github.com/xmpuspus/airgap" target="_blank" rel="noopener">View on GitHub</a>
+          <a class="link" href="https://github.com/xmpuspus/airgap/blob/main/README.md" target="_blank" rel="noopener">README</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="picker" aria-label="Industry switcher">
+        <label for="vertical" class="picker-label">Industry template</label>
+        <select id="vertical" aria-label="Choose an industry"></select>
+        <p class="picker-hint">Switching the dropdown swaps everything below: branding, theme, KB stats, recorded chat. The framework code is identical for every vertical.</p>
+      </section>
+
+      <section class="grid" aria-live="polite">
+        <article class="card brand-card">
+          <h2 class="card-title">Brand</h2>
+          <dl class="brand-meta">
+            <dt>Company</dt>
+            <dd id="brand-name"></dd>
+            <dt>Bot</dt>
+            <dd id="bot-name"></dd>
+            <dt>Tagline</dt>
+            <dd id="brand-tagline"></dd>
+            <dt>Region</dt>
+            <dd id="brand-region"></dd>
+            <dt>KB documents</dt>
+            <dd id="kb-count"></dd>
+            <dt>Tools wired</dt>
+            <dd id="tool-count"></dd>
+          </dl>
+        </article>
+
+        <article class="card theme-card">
+          <h2 class="card-title">Theme</h2>
+          <ul class="swatch-list" id="swatches"></ul>
+          <p class="card-hint">Operators set these in <code>theme</code> on <code>airgap.config.json</code>. The mobile app reads them at startup.</p>
+        </article>
+
+        <article class="card config-card">
+          <h2 class="card-title">Condensed config</h2>
+          <pre><code id="config-snippet"></code></pre>
+          <p class="card-hint">Full schema: <code>airgap.schema.json</code>. This is the brand and theme slice plus the LLM mode.</p>
+        </article>
+
+        <article class="card phone-card">
+          <h2 class="card-title">Recorded chat</h2>
+          <div class="phone" aria-live="polite">
+            <div class="phone-bezel">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <img id="phone-gif" alt="" />
+            </div>
+          </div>
+          <p class="card-hint">This GIF is a real recording from the Android emulator running the framework with the selected industry's config. Not a CSS mockup.</p>
+        </article>
+      </section>
+
+      <section class="footer-strip">
+        <p>
+          Want to ship your own? <code>npx create-airgap-bot &lt;name&gt; --template &lt;industry&gt;</code>
+          (coming once the scaffolder package lands). For now, fork the repo, copy <code>examples/&lt;industry&gt;/</code> over the defaults, and run <code>npx react-native run-android</code>.
+        </p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

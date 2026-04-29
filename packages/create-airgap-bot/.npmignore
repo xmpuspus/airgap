@@ -1,0 +1,13 @@
+src
+test
+tsconfig.json
+jest.config.js
+node_modules
+*.tsbuildinfo
+.eslintrc*
+.prettierrc*
+.editorconfig
+.git
+.github
+.vscode
+coverage

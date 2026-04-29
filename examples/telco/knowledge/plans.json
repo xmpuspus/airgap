@@ -1,0 +1,472 @@
+[
+  {
+    "id": "plan-prepaid-super99",
+    "category": "plan",
+    "title": "Super Surf 99",
+    "content": "Super Surf 99 gives you 5GB of mobile data valid for 7 days, plus 1GB bonus data for use between 12AM-6AM. Includes free access to Facebook and Messenger (up to 1GB daily). Auto-renews if you have sufficient balance. To subscribe, dial *123*2# and select Super Surf 99, or text SUPERSURF99 to 2123. 5G access included where available.",
+    "keywords": [
+      "super surf",
+      "prepaid data",
+      "5GB",
+      "99 pesos",
+      "weekly data",
+      "internet promo",
+      "prepaid plans",
+      "prepaid"
+    ],
+    "tags": [
+      "prepaid",
+      "data",
+      "promo"
+    ],
+    "metadata": {
+      "type": "prepaid",
+      "price": 99,
+      "currency": "PHP",
+      "validity": "7 days",
+      "data": "5GB + 1GB night data",
+      "calls": "None included",
+      "texts": "None included",
+      "channel": "*123*2# or text SUPERSURF99 to 2123"
+    }
+  },
+  {
+    "id": "plan-prepaid-mega149",
+    "category": "plan",
+    "title": "MegaSurf 149",
+    "content": "MegaSurf 149 provides 12GB of mobile data valid for 15 days with 5G access where available. Includes 2GB bonus data for streaming (YouTube, Netflix, iWantTFC). No speed cap until allocation is consumed. To subscribe, dial *123*2# and select MegaSurf 149, or text MEGASURF149 to 2123.",
+    "keywords": [
+      "mega surf",
+      "prepaid data",
+      "12GB",
+      "149 pesos",
+      "streaming data",
+      "two weeks",
+      "prepaid plans",
+      "prepaid"
+    ],
+    "tags": [
+      "prepaid",
+      "data",
+      "promo"
+    ],
+    "metadata": {
+      "type": "prepaid",
+      "price": 149,
+      "currency": "PHP",
+      "validity": "15 days",
+      "data": "12GB + 2GB streaming bonus",
+      "calls": "None included",
+      "texts": "None included",
+      "channel": "*123*2# or text MEGASURF149 to 2123"
+    }
+  },
+  {
+    "id": "plan-prepaid-giga299",
+    "category": "plan",
+    "title": "GigaSurf 299",
+    "content": "GigaSurf 299 is ACME's best-value prepaid data plan: 25GB of high-speed data valid for 30 days. Includes 5G access, 3GB bonus night data (12AM-6AM), and free 1GB daily for social media (Facebook, Instagram, TikTok, Twitter). Ideal for heavy mobile internet users. To subscribe, dial *123*2# and select GigaSurf 299, or text GIGASURF299 to 2123.",
+    "keywords": [
+      "giga surf",
+      "prepaid data",
+      "25GB",
+      "299 pesos",
+      "monthly data",
+      "30 days",
+      "prepaid plans",
+      "prepaid"
+    ],
+    "tags": [
+      "prepaid",
+      "data",
+      "promo",
+      "best-value"
+    ],
+    "metadata": {
+      "type": "prepaid",
+      "price": 299,
+      "currency": "PHP",
+      "validity": "30 days",
+      "data": "25GB + 3GB night data + 1GB daily social media",
+      "calls": "None included",
+      "texts": "None included",
+      "channel": "*123*2# or text GIGASURF299 to 2123"
+    }
+  },
+  {
+    "id": "plan-prepaid-combo50",
+    "category": "plan",
+    "title": "Combo Sakto 50",
+    "content": "Combo Sakto 50 is an all-around prepaid bundle for PHP 50 valid for 3 days. Includes 2GB data, unlimited texts to all networks, and 30 minutes of calls to ACME numbers. Perfect for short-term needs. To subscribe, dial *123*5# and select Combo Sakto 50, or text COMBO50 to 2123.",
+    "keywords": [
+      "combo",
+      "prepaid bundle",
+      "50 pesos",
+      "calls texts data",
+      "sakto",
+      "3 days",
+      "prepaid plans",
+      "prepaid"
+    ],
+    "tags": [
+      "prepaid",
+      "combo",
+      "budget"
+    ],
+    "metadata": {
+      "type": "prepaid",
+      "price": 50,
+      "currency": "PHP",
+      "validity": "3 days",
+      "data": "2GB",
+      "calls": "30 minutes to ACME",
+      "texts": "Unlimited to all networks",
+      "channel": "*123*5# or text COMBO50 to 2123"
+    }
+  },
+  {
+    "id": "plan-prepaid-combo199",
+    "category": "plan",
+    "title": "Combo Giga 199",
+    "content": "Combo Giga 199 provides the complete mobile experience for PHP 199 valid for 15 days. Includes 10GB data (5G where available), unlimited calls and texts to ACME numbers, and 60 minutes of calls to other networks. Great for users who need data, calls, and texts in one package. To subscribe, dial *123*5# and select Combo Giga 199, or text COMBOGIGA199 to 2123.",
+    "keywords": [
+      "combo giga",
+      "prepaid bundle",
+      "199 pesos",
+      "all-in-one",
+      "calls texts data",
+      "15 days",
+      "prepaid plans",
+      "prepaid"
+    ],
+    "tags": [
+      "prepaid",
+      "combo",
+      "all-in-one"
+    ],
+    "metadata": {
+      "type": "prepaid",
+      "price": 199,
+      "currency": "PHP",
+      "validity": "15 days",
+      "data": "10GB",
+      "calls": "Unlimited to ACME + 60 min to other networks",
+      "texts": "Unlimited to ACME",
+      "channel": "*123*5# or text COMBOGIGA199 to 2123"
+    }
+  },
+  {
+    "id": "plan-postpaid-599",
+    "category": "plan",
+    "title": "ACME Plan 599",
+    "content": "ACME Postpaid Plan 599 is the entry-level postpaid plan at PHP 599/month with a 24-month lock-in period. Includes 15GB monthly data (5G where available), unlimited calls and texts to ACME numbers, and 60 minutes of calls to other networks. Excess data is charged at PHP 2/MB. Excess calls to other networks at PHP 7.50/minute. Eligible for device installment plans on select smartphones. Apply at any ACME store or online at airgap.dev/postpaid.",
+    "keywords": [
+      "plan 599",
+      "postpaid",
+      "599 pesos",
+      "monthly plan",
+      "entry postpaid",
+      "postpaid plans",
+      "postpaid"
+    ],
+    "tags": [
+      "postpaid",
+      "plan"
+    ],
+    "metadata": {
+      "type": "postpaid",
+      "price": 599,
+      "currency": "PHP",
+      "validity": "monthly",
+      "data": "15GB/month",
+      "calls": "Unlimited to ACME + 60 min to other networks",
+      "texts": "Unlimited to ACME",
+      "channel": "ACME store or airgap.dev/postpaid"
+    }
+  },
+  {
+    "id": "plan-postpaid-999",
+    "category": "plan",
+    "title": "ACME Plan 999",
+    "content": "ACME Postpaid Plan 999 at PHP 999/month with a 24-month lock-in period. Includes 30GB monthly data (5G where available), unlimited calls and texts to all networks, and 120 minutes of international calls to ASEAN countries per month. Excess data throttled to 256 Kbps (no overage charges). Includes free 5GB monthly data rollover (unused data carries over for 1 month). Eligible for flagship device installment plans. Apply at any ACME store or online.",
+    "keywords": [
+      "plan 999",
+      "postpaid",
+      "999 pesos",
+      "unlimited calls",
+      "all networks",
+      "data rollover",
+      "postpaid plans",
+      "postpaid"
+    ],
+    "tags": [
+      "postpaid",
+      "plan",
+      "popular"
+    ],
+    "metadata": {
+      "type": "postpaid",
+      "price": 999,
+      "currency": "PHP",
+      "validity": "monthly",
+      "data": "30GB/month + 5GB rollover",
+      "calls": "Unlimited to all networks + 120 min IDD ASEAN",
+      "texts": "Unlimited to all networks",
+      "channel": "ACME store or airgap.dev/postpaid"
+    }
+  },
+  {
+    "id": "plan-postpaid-1499",
+    "category": "plan",
+    "title": "ACME Plan 1499",
+    "content": "ACME Postpaid Plan 1499 at PHP 1,499/month with a 24-month lock-in period. Includes 60GB monthly data (5G priority access), unlimited calls and texts to all networks, 240 minutes of international calls to ASEAN and Asia-Pacific per month, and 10GB monthly data rollover. Excess data throttled to 512 Kbps. Free ACME Fiber 50Mbps bundle discount (PHP 200 off fiber if bundled). Free ACMEPlay streaming access (local and ASEAN content). Priority customer service queue.",
+    "keywords": [
+      "plan 1499",
+      "postpaid",
+      "1499 pesos",
+      "premium plan",
+      "5G priority",
+      "streaming",
+      "postpaid plans",
+      "postpaid"
+    ],
+    "tags": [
+      "postpaid",
+      "plan",
+      "premium"
+    ],
+    "metadata": {
+      "type": "postpaid",
+      "price": 1499,
+      "currency": "PHP",
+      "validity": "monthly",
+      "data": "60GB/month + 10GB rollover + 5G priority",
+      "calls": "Unlimited to all networks + 240 min IDD ASEAN/APAC",
+      "texts": "Unlimited to all networks",
+      "channel": "ACME store or airgap.dev/postpaid"
+    }
+  },
+  {
+    "id": "plan-postpaid-1999",
+    "category": "plan",
+    "title": "ACME Plan 1999",
+    "content": "ACME Postpaid Plan 1999 is the top-tier postpaid plan at PHP 1,999/month with a 24-month lock-in period. Includes 100GB monthly data (5G priority access with guaranteed 50Mbps minimum), unlimited calls and texts to all networks, unlimited international calls to ASEAN countries, 300 minutes of calls to all other international destinations per month, 20GB monthly data rollover, free ACME Fiber 100Mbps bundle discount (PHP 500 off), free ACMEPlay Premium, free airport lounge access (4x/year via ACMEElite), and a dedicated account manager.",
+    "keywords": [
+      "plan 1999",
+      "postpaid",
+      "1999 pesos",
+      "top tier",
+      "unlimited",
+      "elite",
+      "premium",
+      "postpaid plans",
+      "postpaid"
+    ],
+    "tags": [
+      "postpaid",
+      "plan",
+      "premium",
+      "elite"
+    ],
+    "metadata": {
+      "type": "postpaid",
+      "price": 1999,
+      "currency": "PHP",
+      "validity": "monthly",
+      "data": "100GB/month + 20GB rollover + 5G priority 50Mbps min",
+      "calls": "Unlimited all networks + unlimited IDD ASEAN + 300 min IDD worldwide",
+      "texts": "Unlimited to all networks",
+      "channel": "ACME store or airgap.dev/postpaid"
+    }
+  },
+  {
+    "id": "plan-postpaid-799biz",
+    "category": "plan",
+    "title": "ACME Business 799",
+    "content": "ACME Business 799 is designed for professionals and small business owners at PHP 799/month with a 24-month lock-in period. Includes 25GB monthly data (5G where available), unlimited calls and texts to all networks, and a free landline number with unlimited local calls. Volume discounts available for 5+ lines (PHP 699/line for 5-9 lines, PHP 649/line for 10+ lines). All business plans include priority customer support with dedicated business hotline (02) 8888-5678.",
+    "keywords": [
+      "business plan",
+      "business 799",
+      "corporate",
+      "professional plan",
+      "SME",
+      "small business",
+      "postpaid plans",
+      "postpaid"
+    ],
+    "tags": [
+      "postpaid",
+      "plan",
+      "business"
+    ],
+    "metadata": {
+      "type": "postpaid",
+      "price": 799,
+      "currency": "PHP",
+      "validity": "monthly",
+      "data": "25GB/month",
+      "calls": "Unlimited to all networks + free landline",
+      "texts": "Unlimited to all networks",
+      "channel": "business@airgap.dev or (02) 8888-5678"
+    }
+  },
+  {
+    "id": "plan-fiber-50",
+    "category": "plan",
+    "title": "ACME Fiber 50Mbps",
+    "content": "ACME Fiber Plan at 50Mbps download speed and 25Mbps upload speed for PHP 899/month. Unlimited data with no data caps or throttling. Includes a free dual-band WiFi 5 router and free standard installation (up to 50 meters from the distribution box). Lock-in period is 24 months. The plan supports up to 15 devices simultaneously. Ideal for small households with basic streaming and browsing needs. Wired ethernet connection provides consistent speeds up to the rated 50Mbps. WiFi speeds may vary based on distance from router.",
+    "keywords": [
+      "fiber 50",
+      "50 Mbps",
+      "home internet",
+      "broadband",
+      "WiFi plan",
+      "899 pesos",
+      "fiber plans",
+      "broadband plans",
+      "internet plans"
+    ],
+    "tags": [
+      "fiber",
+      "plan",
+      "broadband"
+    ],
+    "metadata": {
+      "type": "fiber",
+      "price": 899,
+      "currency": "PHP",
+      "validity": "monthly",
+      "data": "Unlimited",
+      "speed": "50 Mbps download / 25 Mbps upload"
+    }
+  },
+  {
+    "id": "plan-fiber-100",
+    "category": "plan",
+    "title": "ACME Fiber 100Mbps",
+    "content": "ACME Fiber Plan at 100Mbps download speed and 50Mbps upload speed for PHP 1,499/month. Unlimited data with no caps or throttling. Includes a free dual-band WiFi 6 router for better multi-device performance and free standard installation. Lock-in period is 24 months. Supports up to 25 devices simultaneously. Ideal for medium households with multiple streamers, online gaming, and work-from-home setups. Includes free ACME Mesh WiFi extender if your home exceeds 80 square meters.",
+    "keywords": [
+      "fiber 100",
+      "100 Mbps",
+      "home internet",
+      "broadband",
+      "WiFi plan",
+      "1499 pesos",
+      "WiFi 6",
+      "fiber plans",
+      "broadband plans",
+      "internet plans"
+    ],
+    "tags": [
+      "fiber",
+      "plan",
+      "broadband",
+      "popular"
+    ],
+    "metadata": {
+      "type": "fiber",
+      "price": 1499,
+      "currency": "PHP",
+      "validity": "monthly",
+      "data": "Unlimited",
+      "speed": "100 Mbps download / 50 Mbps upload"
+    }
+  },
+  {
+    "id": "plan-fiber-300",
+    "category": "plan",
+    "title": "ACME Fiber 300Mbps",
+    "content": "ACME Fiber Plan at 300Mbps download speed and 150Mbps upload speed for PHP 2,499/month. Unlimited data with no caps or throttling. Includes a free WiFi 6 tri-band router, free installation, and one free ACME Mesh WiFi extender. Lock-in period is 24 months. Supports up to 50 devices simultaneously. Ideal for large households, content creators, and users who need maximum bandwidth. Includes priority support with 4-hour response time for service issues. Static IP address available upon request (additional PHP 300/month).",
+    "keywords": [
+      "fiber 300",
+      "300 Mbps",
+      "home internet",
+      "broadband",
+      "premium fiber",
+      "2499 pesos",
+      "fast internet",
+      "fiber plans",
+      "broadband plans",
+      "internet plans"
+    ],
+    "tags": [
+      "fiber",
+      "plan",
+      "broadband",
+      "premium"
+    ],
+    "metadata": {
+      "type": "fiber",
+      "price": 2499,
+      "currency": "PHP",
+      "validity": "monthly",
+      "data": "Unlimited",
+      "speed": "300 Mbps download / 150 Mbps upload"
+    }
+  },
+  {
+    "id": "plan-fiber-1000",
+    "category": "plan",
+    "title": "ACME Fiber 1Gbps",
+    "content": "ACME Fiber Plan at 1Gbps (1000Mbps) download speed and 500Mbps upload speed for PHP 4,999/month. Unlimited data with no caps or throttling. Includes a premium WiFi 6E router, free installation, and two ACME Mesh WiFi extenders. Lock-in period is 24 months. Supports up to 100 devices simultaneously. Designed for power users, streamers, gamers, and smart home enthusiasts. Includes free static IP address, priority support with 2-hour response time, and dedicated fiber line. Available in select areas of Metro Manila, Cebu City, and Davao City.",
+    "keywords": [
+      "fiber 1000",
+      "1 Gbps",
+      "gigabit",
+      "home internet",
+      "fastest fiber",
+      "4999 pesos",
+      "premium",
+      "fiber plans",
+      "broadband plans",
+      "internet plans"
+    ],
+    "tags": [
+      "fiber",
+      "plan",
+      "broadband",
+      "premium",
+      "gigabit"
+    ],
+    "metadata": {
+      "type": "fiber",
+      "price": 4999,
+      "currency": "PHP",
+      "validity": "monthly",
+      "data": "Unlimited",
+      "speed": "1 Gbps download / 500 Mbps upload"
+    }
+  },
+  {
+    "id": "plan-prepaid-allnet30",
+    "category": "plan",
+    "title": "AllNet 30",
+    "content": "AllNet 30 is ACME's budget-friendly all-network pack for PHP 30 valid for 2 days. Includes 1GB data, unlimited texts to all networks, and 15 minutes of calls to all networks. Designed for users who need basic connectivity without committing to a larger plan. To subscribe, dial *123*5# and select AllNet 30, or text ALLNET30 to 2123. Auto-renews when balance is sufficient.",
+    "keywords": [
+      "all net",
+      "allnet",
+      "30 pesos",
+      "budget plan",
+      "2 days",
+      "basic plan",
+      "cheap plan",
+      "prepaid plans",
+      "prepaid"
+    ],
+    "tags": [
+      "prepaid",
+      "combo",
+      "budget"
+    ],
+    "metadata": {
+      "type": "prepaid",
+      "price": 30,
+      "currency": "PHP",
+      "validity": "2 days",
+      "data": "1GB",
+      "calls": "15 minutes to all networks",
+      "texts": "Unlimited to all networks",
+      "channel": "*123*5# or text ALLNET30 to 2123"
+    }
+  }
+]

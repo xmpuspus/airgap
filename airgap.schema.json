@@ -1,0 +1,371 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://airgap.dev/schema/v1.json",
+  "title": "ACME Telecom Configuration",
+  "description": "Formal spec for offline-first enterprise chatbot. Edit this file to configure your bot — no code changes needed.",
+  "type": "object",
+  "required": ["specVersion", "brand", "theme", "model", "knowledge", "prompts", "actions"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {"type": "string"},
+    "specVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Spec version (semver). Current: 1.0.0"
+    },
+    "brand": {
+      "type": "object",
+      "required": ["name", "botName", "hotline"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "description": "Company/brand name (e.g., 'ACME Telecom')"},
+        "botName": {"type": "string", "description": "Bot display name (e.g., 'Alice')"},
+        "tagline": {"type": "string", "description": "Short description shown in onboarding"},
+        "hotline": {"type": "string", "description": "Support phone number for fallback"},
+        "hotlineLabel": {"type": "string", "description": "Note about hotline (e.g., 'free from mobile')"},
+        "website": {"type": "string", "description": "Company website domain"},
+        "logo": {"type": "string", "description": "Path to logo image asset"}
+      }
+    },
+    "theme": {
+      "type": "object",
+      "required": ["primary", "secondary", "background"],
+      "description": "Color theme. All values are hex color strings.",
+      "additionalProperties": false,
+      "properties": {
+        "primary": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "primaryLight": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "primaryDark": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "secondary": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "secondaryLight": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "background": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "surface": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "text": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "textSecondary": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "textInverse": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "botBubble": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "botBubbleText": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "userBubble": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "userBubbleText": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "success": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "warning": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "error": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+        "font": {"type": "string", "description": "Custom font family name. Default: 'System'"},
+        "darkMode": {
+          "oneOf": [
+            {"type": "boolean"},
+            {"type": "string", "const": "auto"}
+          ],
+          "description": "false=light only, true=dark only, 'auto'=follow system preference. Default: false"
+        },
+        "darkTheme": {
+          "type": "object",
+          "description": "Custom dark theme overrides. If omitted, dark palette is auto-generated from light theme.",
+          "additionalProperties": false,
+          "properties": {
+            "primary": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "primaryLight": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "primaryDark": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "secondary": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "secondaryLight": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "background": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "surface": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "text": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "textSecondary": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "textInverse": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "botBubble": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "botBubbleText": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "userBubble": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "userBubbleText": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "success": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "warning": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"},
+            "error": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}
+          }
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "required": ["provider", "url", "filename"],
+      "additionalProperties": false,
+      "properties": {
+        "provider": {"type": "string", "enum": ["llama.cpp", "execu-torch", "core-ml", "onnx", "cloud"], "description": "LLM inference engine"},
+        "url": {"type": "string", "format": "uri", "description": "Download URL for the GGUF model file"},
+        "filename": {"type": "string", "description": "Local filename for the downloaded model"},
+        "sha256": {"type": "string", "pattern": "^([a-f0-9]{64})?$", "description": "SHA256 checksum (lowercase hex) for integrity verification. Empty string skips verification but is strongly discouraged for production."},
+        "sizeMB": {"type": "integer", "minimum": 1, "description": "Expected model file size in MB (shown during download, purely informational)"},
+        "sizeBytes": {"type": "integer", "minimum": 1, "description": "Exact expected model file size in bytes (used for integrity verification alongside sha256)"},
+        "contextSize": {"type": "integer", "minimum": 512, "maximum": 131072, "default": 4096},
+        "maxTokens": {"type": "integer", "minimum": 32, "maximum": 4096, "default": 256},
+        "temperature": {"type": "number", "minimum": 0, "maximum": 2, "default": 0.3},
+        "topP": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.9},
+        "stopTokens": {"type": "array", "items": {"type": "string"}, "description": "Model-specific stop tokens"},
+        "gpuLayers": {"type": "integer", "minimum": 0, "default": 99},
+        "threads": {"type": "integer", "minimum": 1, "maximum": 16, "default": 4}
+      }
+    },
+    "knowledge": {
+      "type": "object",
+      "required": ["directory"],
+      "additionalProperties": false,
+      "properties": {
+        "directory": {"type": "string", "description": "Path to directory containing KB JSON files (relative to project root)"},
+        "schema": {"type": "string", "enum": ["kbdoc-v1"], "default": "kbdoc-v1", "description": "KB document schema version"},
+        "search": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "topK": {"type": "integer", "minimum": 1, "maximum": 20, "default": 3},
+            "fuzzy": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.2},
+            "boostTitle": {"type": "number", "minimum": 0, "default": 3},
+            "boostKeywords": {"type": "number", "minimum": 0, "default": 2},
+            "boostContent": {"type": "number", "minimum": 0, "default": 1}
+          }
+        }
+      }
+    },
+    "prompts": {
+      "type": "object",
+      "required": ["system", "welcome", "fallback"],
+      "additionalProperties": false,
+      "description": "Template strings. Variables: {{botName}}, {{brandName}}, {{hotline}}, {{hotlineLabel}}, {{currency}}, {{featureList}}, {{actionLabel}}, {{modelSizeMB}}",
+      "properties": {
+        "system": {"type": "string", "description": "LLM system prompt. Keep short for small models."},
+        "welcome": {"type": "string", "description": "First message shown to user"},
+        "fallback": {"type": "string", "description": "Shown when no KB results and no LLM available"},
+        "queued": {"type": "string", "description": "Shown when action is queued for online processing"},
+        "noModel": {"type": "string", "description": "Appended to search results when LLM not downloaded"}
+      }
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "offlineQueue": {"type": "boolean", "default": true, "description": "Queue online-required actions when offline"},
+        "streamingTokens": {"type": "boolean", "default": true, "description": "Show LLM tokens as they generate"},
+        "userFeedback": {"type": "boolean", "default": true, "description": "Show thumbs up/down on bot messages"},
+        "conversationPersistence": {"type": "boolean", "default": true, "description": "Persist chat history across app restarts"},
+        "sessionTimeoutMinutes": {"type": "integer", "minimum": 1, "default": 30, "description": "Clear conversation history after N minutes of inactivity"},
+        "modelDownloadOnboarding": {"type": "boolean", "default": true, "description": "Show model download screen on first launch"},
+        "diagnosticsPanel": {"type": "boolean", "default": false, "description": "Render the diagnostics/metrics panel in Settings (p50/p95 latency, zero-hit rate, tool success rate, sync staleness)"}
+      }
+    },
+    "onboarding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {"type": "string"},
+        "subtitle": {"type": "string"},
+        "features": {"type": "array", "items": {"type": "string"}, "description": "Bullet points shown on onboarding screen"},
+        "downloadPrompt": {"type": "string"},
+        "skipLabel": {"type": "string"},
+        "wifiNote": {"type": "string"}
+      }
+    },
+    "quickReplies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "value"],
+        "additionalProperties": false,
+        "properties": {
+          "title": {"type": "string", "description": "Button label"},
+          "value": {"type": "string", "description": "Message sent when tapped"}
+        }
+      },
+      "description": "Quick reply buttons shown after welcome message and fallback"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "keywords", "requiresOnline"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z_]+$", "description": "Unique action identifier"},
+          "label": {"type": "string", "description": "Human-readable label for the queued action"},
+          "keywords": {"type": "array", "items": {"type": "string"}, "description": "Substring patterns that trigger this action"},
+          "requiresOnline": {"type": "boolean", "description": "If true, action is queued when offline"},
+          "category": {"type": "string", "description": "Grouping category (e.g., 'account', 'support', 'network')"},
+          "mockResponse": {"type": "string", "description": "Response when backend.type is 'mock'. Supports {{hotline}} etc."}
+        }
+      },
+      "description": "Online-required actions. When user query matches keywords and device is offline, the action is queued."
+    },
+    "backend": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {"type": "string", "enum": ["mock", "rest", "graphql"], "description": "'mock' uses mockResponse from actions. 'rest' calls real endpoints."},
+        "baseUrl": {"type": "string", "description": "Base URL for REST/GraphQL backend (BFF server)"},
+        "auth": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {"type": "string", "enum": ["none", "bearer", "oauth2"]},
+            "tokenUrl": {"type": "string", "description": "OAuth2 token endpoint (relative to baseUrl)"},
+            "clientId": {"type": "string"},
+            "scope": {"type": "string"}
+          }
+        },
+        "endpoints": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "url": {"type": "string"},
+              "method": {"type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]}
+            }
+          },
+          "description": "Map of action_id → endpoint config. Used when type is 'rest'."
+        }
+      }
+    },
+    "support": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "value", "label"],
+        "additionalProperties": false,
+        "properties": {
+          "type": {"type": "string", "enum": ["phone", "email", "chat", "social", "website"]},
+          "value": {"type": "string"},
+          "label": {"type": "string"}
+        }
+      },
+      "description": "Support channels shown when bot cannot help"
+    },
+    "locale": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currency": {"type": "string", "default": "PHP", "description": "Currency code used in prompts"},
+        "language": {"type": "string", "default": "en", "description": "Primary language"},
+        "region": {"type": "string", "description": "Region code (e.g., 'PH', 'US')"}
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Privacy and data controls. Drives settings screen options.",
+      "properties": {
+        "dataRetentionDays": {"type": "integer", "minimum": 1, "default": 30, "description": "Auto-delete conversations older than N days"},
+        "allowExport": {"type": "boolean", "default": true, "description": "Show 'Export conversation' in settings"},
+        "allowDeleteData": {"type": "boolean", "default": true, "description": "Show 'Delete all my data' in settings"},
+        "privacyPolicyUrl": {"type": "string", "format": "uri", "description": "Link to privacy policy (shown in settings and onboarding)"}
+      }
+    },
+    "i18n": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Internationalization. Override any UI string by key.",
+      "properties": {
+        "strings": {
+          "type": "object",
+          "additionalProperties": {"type": "string"},
+          "description": "Map of string key → translated text. Keys: send, settings, clearChat, deleteModel, getHelp, about, aiModel, status, downloaded, notDownloaded, chat, privacy, exportChat, deleteAllData, privacyPolicy, appVersion, cancel, delete, clear"
+        }
+      }
+    },
+    "analytics": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Analytics configuration. Events are emitted via the analytics service hook.",
+      "properties": {
+        "enabled": {"type": "boolean", "default": false, "description": "Enable analytics event emission"}
+      }
+    },
+    "auth": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional app-level authentication gate before chat access.",
+      "properties": {
+        "enabled": {"type": "boolean", "default": false, "description": "Require authentication before accessing chat"},
+        "type": {"type": "string", "enum": ["pin", "biometric", "both"], "default": "pin", "description": "Authentication method"}
+      }
+    },
+    "llm": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "LLM routing policy. Controls whether responses come from on-device Gemma 4 E2B, a cloud model, or a mixture.",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["offline-only", "prefer-online", "prefer-offline", "demo"],
+          "default": "prefer-offline",
+          "description": "offline-only = always on-device; prefer-online = cloud first, fall back to on-device; prefer-offline = on-device first, escalate to cloud on failure; demo = no model download, format top-K KB hits as a streamed reply (deterministic, all-industry, intended for emulator/simulator recordings and quick local trials)"
+        },
+        "cacheByKbVersion": {
+          "type": "boolean",
+          "default": true,
+          "description": "Key the cloud response cache by (query, kbVersion) so a KB update invalidates stale cloud answers"
+        },
+        "cloud": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Cloud LLM proxy settings (hybrid mode only)",
+          "properties": {
+            "enabled": {"type": "boolean", "default": false},
+            "endpoint": {"type": "string", "description": "Full URL to the cloud LLM endpoint. Defaults to backend.baseUrl + /api/v1/llm/generate"},
+            "bearerToken": {"type": "string", "description": "Optional bearer token appended to Authorization header"},
+            "maxTokens": {"type": "integer", "minimum": 32, "default": 512},
+            "temperature": {"type": "number", "minimum": 0, "maximum": 2, "default": 0.3}
+          }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Fail-closed safety layer applied to every query and every LLM answer. Disable with enabled=false for pure KB retrieval. See docs/safety-layer.md.",
+      "properties": {
+        "enabled": {"type": "boolean", "default": true, "description": "Master switch for the safety layer"},
+        "confidenceThreshold": {"type": "number", "minimum": 0, "default": 0, "description": "Minimum KB match confidence before the LLM is invoked. 0 = any result allowed."},
+        "topicBlocklist": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "List of phrases that fail-close on user input. Use 'reason:phrase' to override the refusal template (e.g. 'not_medical_advice:prescribe me')."
+        },
+        "groundingRules": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requireCitations": {"type": "boolean", "default": false, "description": "Require the LLM answer to cite retrieved doc IDs. Advisory — warns if missing."},
+            "forbidUnsourcedAmounts": {"type": "boolean", "default": true, "description": "Reject answers with currency amounts not present in the retrieved KB"},
+            "forbidUnsourcedDates": {"type": "boolean", "default": true, "description": "Reject answers with dates not present in the retrieved KB"}
+          }
+        },
+        "refusalTemplates": {
+          "type": "object",
+          "additionalProperties": {"type": "string"},
+          "description": "Override the default refusal copy per reason. Known reasons: blocked_topic, low_confidence, ungrounded_answer, not_medical_advice, not_financial_advice, not_legal_advice, state_changing_offline. Supports {{brandName}} and {{hotline}} interpolation."
+        }
+      }
+    },
+    "tools": {
+      "type": "array",
+      "description": "Tool definitions for deterministic backend invocation. Tools are selected by keyword match against the user query, then executed against the backend connector, then fed back into the LLM as grounded context. See docs/tool-calling.md.",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "keywords"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {"type": "string", "description": "Unique tool identifier. Matches backendMethod by default."},
+          "description": {"type": "string", "description": "Human-readable purpose shown in docs and dev panel"},
+          "keywords": {"type": "array", "items": {"type": "string"}, "minItems": 1, "description": "Trigger phrases. Any whole-word match selects this tool."},
+          "parameters": {
+            "type": "object",
+            "description": "JSON schema for the tool arguments",
+            "additionalProperties": true
+          },
+          "offlineQueueEligible": {"type": "boolean", "default": true, "description": "If true, state-changing calls get queued offline instead of failing"},
+          "stateChanging": {"type": "boolean", "default": false, "description": "Does this tool mutate remote state?"},
+          "vertical": {"type": "string", "description": "Which vertical owns this tool (telco/banking/healthcare/airline/insurance/electric/water)"},
+          "refusalReason": {"type": "string", "enum": ["not_medical_advice", "not_financial_advice", "not_legal_advice", "state_changing_offline"], "description": "Override the default refusal reason on failure"},
+          "backendMethod": {"type": "string", "description": "Backend connector method name. Defaults to `name`."}
+        }
+      }
+    }
+  }
+}

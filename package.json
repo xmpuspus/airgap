@@ -1,0 +1,77 @@
+{
+  "name": "airgap",
+  "version": "0.0.1",
+  "author": "Xavier Puspus (https://github.com/xmpuspus)",
+  "repository": "https://github.com/xmpuspus/airgap",
+  "license": "MIT",
+  "keywords": [
+    "air-gapped",
+    "offline-first",
+    "customer-support",
+    "react-native",
+    "gemma",
+    "llm",
+    "rag",
+    "white-label",
+    "enterprise"
+  ],
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "lint": "eslint .",
+    "start": "react-native start",
+    "test": "jest",
+    "setup": "bash scripts/setup.sh",
+    "generate-manifest": "node scripts/generate-manifest.js",
+    "kb:validate": "node scripts/kb-validate.js",
+    "kb:import": "node scripts/kb-import.js",
+    "kb:studio": "node scripts/kb-studio.js",
+    "web:build": "node web/data/build.mjs",
+    "web:serve": "node web/data/build.mjs && python3 -m http.server -d web 8080"
+  },
+  "dependencies": {
+    "@react-native-community/netinfo": "12.0.1",
+    "@react-native/new-app-screen": "0.84.1",
+    "@react-navigation/native": "7.2.2",
+    "@react-navigation/native-stack": "7.14.10",
+    "llama.rn": "0.12.0-rc.3",
+    "minisearch": "7.2.0",
+    "react": "19.2.3",
+    "react-native": "0.84.1",
+    "react-native-fs": "2.20.0",
+    "react-native-get-random-values": "^2.0.0",
+    "react-native-mmkv": "4.3.0",
+    "react-native-nitro-modules": "^0.35.3",
+    "react-native-safe-area-context": "5.7.0",
+    "react-native-screens": "4.24.0",
+    "uuid": "13.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.29.0",
+    "@babel/preset-env": "7.29.2",
+    "@babel/runtime": "7.29.2",
+    "@react-native-community/cli": "20.1.0",
+    "@react-native-community/cli-platform-android": "20.1.0",
+    "@react-native-community/cli-platform-ios": "20.1.0",
+    "@react-native/babel-preset": "0.84.1",
+    "@react-native/eslint-config": "0.84.1",
+    "@react-native/metro-config": "0.84.1",
+    "@react-native/typescript-config": "0.84.1",
+    "@types/jest": "29.5.14",
+    "@types/react": "19.2.14",
+    "@types/react-test-renderer": "19.1.0",
+    "@types/uuid": "10.0.0",
+    "eslint": "8.57.1",
+    "jest": "29.7.0",
+    "node-llama-cpp": "3.18.1",
+    "prettier": "2.8.8",
+    "react-test-renderer": "19.2.3",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">= 22.11.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

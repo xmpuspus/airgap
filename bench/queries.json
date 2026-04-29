@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "rationale": "Cross-vertical KB coverage; same set used for every device row for fair comparison. Each query targets a category that exists in at least one of the 7 supported industry templates (telco, banking, healthcare, airline, insurance, electric-utility, water-utility) so the harness can be run against any active config without per-vertical tuning.",
+  "queries": [
+    "What plans do you have?",
+    "How do I check my balance?",
+    "Where is the nearest store?",
+    "What are your roaming rates for Singapore?",
+    "How do I dispute a transaction?",
+    "What is covered by my plan?",
+    "How do I cancel my appointment?",
+    "How do I report an outage?",
+    "What payment methods do you accept?",
+    "I need help troubleshooting my connection"
+  ]
+}

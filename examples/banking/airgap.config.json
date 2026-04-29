@@ -1,0 +1,254 @@
+{
+  "$schema": "../airgap.schema.json",
+  "specVersion": "1.0.0",
+  "brand": {
+    "name": "PrimaBank",
+    "botName": "PrimaAssist",
+    "tagline": "Your personal banking assistant",
+    "hotline": "1-800-PRIMA",
+    "hotlineLabel": "toll-free, 24/7",
+    "website": "primabank.com"
+  },
+  "theme": {
+    "primary": "#1B5E20",
+    "primaryLight": "#4CAF50",
+    "primaryDark": "#0D3311",
+    "secondary": "#FFB300",
+    "secondaryLight": "#FFC933",
+    "background": "#F1F8E9"
+  },
+  "model": {
+    "provider": "llama.cpp",
+    "url": "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q3_K_S.gguf",
+    "filename": "gemma-4-e2b-it-q3ks.gguf",
+    "sha256": "2d010e251ba1fc44b746eb4059825a1954df5f90a1b7a360cf18232a520709aa",
+    "sizeBytes": 2445645184,
+    "sizeMB": 2445
+  },
+  "knowledge": {
+    "directory": "knowledge"
+  },
+  "prompts": {
+    "system": "You are {{botName}}, a customer support assistant for {{brandName}}. Answer ONLY using the CONTEXT provided. Be concise. Use {{currency}} for amounts. Never provide financial advice or investment recommendations. If unsure, say: \"Please call {{hotline}} or visit your nearest branch.\"",
+    "welcome": "Hello! I'm {{botName}}, your {{brandName}} assistant.\n\nI can help you with:\n\n{{featureList}}\n\nHow can I assist you today?",
+    "fallback": "I don't have information about that. For assistance, please:\n- Call {{hotline}} ({{hotlineLabel}})\n- Visit your nearest PrimaBank branch\n- Use PrimaBank Online at {{website}}"
+  },
+  "features": {
+    "offlineQueue": true,
+    "streamingTokens": true,
+    "userFeedback": true,
+    "conversationPersistence": true,
+    "sessionTimeoutMinutes": 15
+  },
+  "onboarding": {
+    "title": "Welcome to {{botName}}",
+    "subtitle": "{{tagline}}",
+    "features": [
+      "Check account balances and recent transactions",
+      "Learn about loan and credit card products",
+      "Find ATM and branch locations",
+      "Get help with online banking setup",
+      "Report lost or stolen cards",
+      "Understand fees, rates, and insurance options"
+    ]
+  },
+  "quickReplies": [
+    {
+      "title": "Account info",
+      "value": "How do I check my account balance?"
+    },
+    {
+      "title": "Find ATM",
+      "value": "Where is the nearest ATM?"
+    },
+    {
+      "title": "Card help",
+      "value": "I need help with my card"
+    },
+    {
+      "title": "Loan products",
+      "value": "What loan products do you offer?"
+    }
+  ],
+  "actions": [
+    {
+      "id": "balance_check",
+      "label": "Check account balance",
+      "keywords": [
+        "my balance",
+        "my account",
+        "how much do i have",
+        "account balance",
+        "check balance"
+      ],
+      "requiresOnline": true,
+      "category": "account",
+      "mockResponse": "Your savings account ending in 4521 has a balance of $12,450.00. Your checking account ending in 7890 has $3,215.67."
+    },
+    {
+      "id": "card_block",
+      "label": "Block lost/stolen card",
+      "keywords": [
+        "lost card",
+        "stolen card",
+        "block my card",
+        "freeze my card",
+        "card stolen",
+        "freeze card"
+      ],
+      "requiresOnline": true,
+      "category": "security",
+      "mockResponse": "Your card ending in 4521 has been temporarily blocked. To get a replacement, visit any PrimaBank branch with a valid ID. Call 1-800-PRIMA for immediate assistance."
+    },
+    {
+      "id": "transaction_dispute",
+      "label": "Dispute a transaction",
+      "keywords": [
+        "dispute",
+        "unauthorized transaction",
+        "fraudulent charge",
+        "wrong charge",
+        "dispute transaction"
+      ],
+      "requiresOnline": true,
+      "category": "support",
+      "mockResponse": "Your dispute has been logged. A case manager will review it within 2 business days. You can also call 1-800-PRIMA or visit a branch with your ID and account statement for faster resolution."
+    },
+    {
+      "id": "loan_application",
+      "label": "Apply for a loan",
+      "keywords": [
+        "apply for loan",
+        "loan application",
+        "get a loan",
+        "borrow money",
+        "need a loan"
+      ],
+      "requiresOnline": true,
+      "category": "products",
+      "mockResponse": "Loan applications require identity verification. Please visit any PrimaBank branch with valid IDs and proof of income, or start your application at primabank.com/loans."
+    },
+    {
+      "id": "account_transfer",
+      "label": "Transfer funds",
+      "keywords": [
+        "transfer money",
+        "send money",
+        "move funds",
+        "transfer to another account",
+        "wire transfer"
+      ],
+      "requiresOnline": true,
+      "category": "account",
+      "mockResponse": "To transfer funds, please log in to PrimaBank Online or the mobile app. For wire transfers, visit a branch or call 1-800-PRIMA with your account details and recipient information."
+    },
+    {
+      "id": "statement_request",
+      "label": "Request account statement",
+      "keywords": [
+        "account statement",
+        "bank statement",
+        "monthly statement",
+        "download statement",
+        "get my statement"
+      ],
+      "requiresOnline": true,
+      "category": "account",
+      "mockResponse": "Your most recent statement has been sent to your registered email. You can also download statements from PrimaBank Online under Account > Statements."
+    }
+  ],
+  "backend": {
+    "type": "mock"
+  },
+  "support": [
+    {
+      "type": "phone",
+      "value": "1-800-PRIMA",
+      "label": "24/7 hotline (toll-free)"
+    },
+    {
+      "type": "email",
+      "value": "help@primabank.com",
+      "label": "Email support"
+    },
+    {
+      "type": "website",
+      "value": "primabank.com/help",
+      "label": "Online help center"
+    }
+  ],
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "safety": {
+    "enabled": true,
+    "confidenceThreshold": 0,
+    "topicBlocklist": [
+      "not_financial_advice:should I invest",
+      "not_financial_advice:what stock",
+      "not_financial_advice:investment advice",
+      "not_legal_advice:sue the bank",
+      "not_medical_advice:diagnose",
+      "not_medical_advice:prescribe",
+      "not_legal_advice:sue",
+      "not_legal_advice:legal advice"
+    ],
+    "groundingRules": {
+      "requireCitations": false,
+      "forbidUnsourcedAmounts": true,
+      "forbidUnsourcedDates": true
+    },
+    "refusalTemplates": {
+      "not_financial_advice": "I can't give investment or financial planning advice. For those questions, please consult a licensed financial advisor."
+    }
+  },
+  "tools": [
+    {
+      "name": "lookupBalance",
+      "description": "Look up the caller's checking, savings, or card balance",
+      "keywords": [
+        "my balance",
+        "my account balance",
+        "my checking balance",
+        "my savings balance"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "banking",
+      "backendMethod": "checkBalance"
+    },
+    {
+      "name": "listRecentTransactions",
+      "description": "List the caller's recent transactions",
+      "keywords": [
+        "recent transactions",
+        "my transactions",
+        "transaction history",
+        "last transactions"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "banking",
+      "backendMethod": "listRecentTransactions"
+    },
+    {
+      "name": "disputeTransaction",
+      "description": "Open a dispute on a specific transaction",
+      "keywords": [
+        "dispute transaction",
+        "dispute a charge",
+        "unauthorized transaction",
+        "unknown charge"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "banking",
+      "backendMethod": "disputeTransaction"
+    }
+  ],
+  "llm": {
+    "mode": "demo"
+  }
+}

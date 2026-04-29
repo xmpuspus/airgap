@@ -1,0 +1,80 @@
+[
+  {
+    "id": "loc-001",
+    "category": "location",
+    "title": "PowerGrid Service Center — Downtown Metro",
+    "content": "Located at 500 Main Street, Suite 100, Metro City. Open Monday through Friday 8:00 AM to 6:00 PM, Saturday 9:00 AM to 1:00 PM. Closed Sundays and holidays. Services available: account changes, payment processing, deposit payments, new service applications, medical baseline enrollment, and senior discount enrollment. Free parking in the rear lot. Wheelchair accessible. Walk-ins welcome; appointments available for complex requests.",
+    "keywords": ["metro city", "downtown", "main street", "service center", "office"],
+    "tags": ["location", "service-center"],
+    "metadata": {
+      "address": "500 Main Street, Suite 100, Metro City",
+      "hours": "Mon-Fri 8 AM - 6 PM, Sat 9 AM - 1 PM",
+      "phone": "555-100-1001"
+    }
+  },
+  {
+    "id": "loc-002",
+    "category": "location",
+    "title": "PowerGrid Service Center — Westfield",
+    "content": "Located at 2200 Commerce Boulevard, Westfield. Open Monday through Friday 8:30 AM to 5:00 PM. Closed weekends and holidays. Full-service location offering account management, payment collection, new connection applications, and energy efficiency consultations. Adjacent to Westfield Transit Center with bus routes 12 and 34 stopping within one block. Limited parking; public transit recommended during peak hours.",
+    "keywords": ["westfield", "commerce boulevard", "service center", "west side"],
+    "tags": ["location", "service-center"],
+    "metadata": {
+      "address": "2200 Commerce Boulevard, Westfield",
+      "hours": "Mon-Fri 8:30 AM - 5 PM",
+      "phone": "555-100-1002"
+    }
+  },
+  {
+    "id": "loc-003",
+    "category": "location",
+    "title": "PowerGrid Service Center — Riverside",
+    "content": "Located at 875 River Road, Riverside. Open Monday through Friday 8:00 AM to 5:30 PM, Saturday 9:00 AM to 12:00 PM. Full-service location with bilingual staff (English and Spanish). Offers all standard services including payment processing, new accounts, and senior/low-income program enrollment. Free parking lot with EV charging stations available for customers.",
+    "keywords": ["riverside", "river road", "service center", "spanish", "bilingual"],
+    "tags": ["location", "service-center"],
+    "metadata": {
+      "address": "875 River Road, Riverside",
+      "hours": "Mon-Fri 8 AM - 5:30 PM, Sat 9 AM - 12 PM",
+      "phone": "555-100-1003"
+    }
+  },
+  {
+    "id": "loc-004",
+    "category": "location",
+    "title": "PowerGrid Service Center — Northgate",
+    "content": "Located at 4100 Industrial Parkway, Northgate. Open Monday through Friday 8:00 AM to 5:00 PM. This location specializes in commercial and industrial accounts, offering rate analysis, demand management consultations, and new construction service planning. Residential customers are also welcome for all standard services. Large vehicle parking available for contractors.",
+    "keywords": ["northgate", "industrial parkway", "commercial", "industrial", "service center"],
+    "tags": ["location", "service-center", "commercial"],
+    "metadata": {
+      "address": "4100 Industrial Parkway, Northgate",
+      "hours": "Mon-Fri 8 AM - 5 PM",
+      "phone": "555-100-1004"
+    }
+  },
+  {
+    "id": "loc-005",
+    "category": "location",
+    "title": "PowerGrid Service Center — Lakewood",
+    "content": "Located at 1560 Lake Drive, Lakewood. Open Monday through Friday 9:00 AM to 5:00 PM. This satellite location offers basic services including payment collection, account inquiries, and program enrollment. New service applications and complex account changes are forwarded to the Downtown Metro center. Payment drop box available 24/7 in the vestibule for after-hours payments.",
+    "keywords": ["lakewood", "lake drive", "service center", "satellite", "payment drop box"],
+    "tags": ["location", "service-center"],
+    "metadata": {
+      "address": "1560 Lake Drive, Lakewood",
+      "hours": "Mon-Fri 9 AM - 5 PM",
+      "phone": "555-100-1005"
+    }
+  },
+  {
+    "id": "loc-006",
+    "category": "location",
+    "title": "PowerGrid Service Center — Southport",
+    "content": "Located at 3300 Harbor Avenue, Southport. Open Monday through Friday 8:00 AM to 6:00 PM, Saturday 10:00 AM to 2:00 PM. Full-service location with extended Saturday hours for customer convenience. Includes a self-service kiosk for bill payments and account lookups. Energy efficiency display showroom open during business hours featuring smart thermostats, LED lighting, and weatherization materials. Free home energy audit sign-ups available at the front desk.",
+    "keywords": ["southport", "harbor avenue", "service center", "kiosk", "energy showroom"],
+    "tags": ["location", "service-center"],
+    "metadata": {
+      "address": "3300 Harbor Avenue, Southport",
+      "hours": "Mon-Fri 8 AM - 6 PM, Sat 10 AM - 2 PM",
+      "phone": "555-100-1006"
+    }
+  }
+]

@@ -1,0 +1,214 @@
+{
+  "$schema": "../../airgap.schema.json",
+  "specVersion": "1.0.0",
+  "brand": {
+    "name": "CareFirst Medical",
+    "botName": "CareBot",
+    "tagline": "Your personal health services assistant",
+    "hotline": "1-800-CARE",
+    "hotlineLabel": "available 24/7",
+    "website": "carefirstmedical.com"
+  },
+  "theme": {
+    "primary": "#0D9488",
+    "primaryLight": "#5EEAD4",
+    "primaryDark": "#0F766E",
+    "secondary": "#7C3AED",
+    "background": "#F0FDFA"
+  },
+  "model": {
+    "provider": "llama.cpp",
+    "url": "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q3_K_S.gguf",
+    "filename": "gemma-4-e2b-it-q3ks.gguf",
+    "sha256": "2d010e251ba1fc44b746eb4059825a1954df5f90a1b7a360cf18232a520709aa",
+    "sizeBytes": 2445645184,
+    "sizeMB": 2445
+  },
+  "knowledge": {
+    "directory": "knowledge"
+  },
+  "prompts": {
+    "system": "You are {{botName}}, the patient services assistant for {{brandName}}. Answer ONLY using the CONTEXT provided. Be empathetic and clear. Use {{currency}} for prices. Never provide medical diagnoses or treatment recommendations. Always advise consulting a healthcare professional. Never confirm or modify appointments — direct to {{hotline}}. If unsure, say: \"Please contact us at {{hotline}}.\"",
+    "welcome": "Hello! I'm {{botName}} from {{brandName}}.\n\nI can help with:\n\n{{featureList}}\n\nHow can I assist you today?",
+    "fallback": "I don't have that information. Please contact {{brandName}} at {{hotline}} ({{hotlineLabel}}) or visit {{website}}."
+  },
+  "onboarding": {
+    "features": [
+      "Appointment scheduling information",
+      "Prescription refill process",
+      "Test results and lab work",
+      "Clinic locations and hours",
+      "Insurance and billing questions",
+      "Patient portal help"
+    ]
+  },
+  "quickReplies": [
+    {
+      "title": "Book appointment",
+      "value": "How do I book an appointment?"
+    },
+    {
+      "title": "Prescription refill",
+      "value": "How do I refill my prescription?"
+    },
+    {
+      "title": "Find a clinic",
+      "value": "Where are your clinic locations?"
+    },
+    {
+      "title": "Insurance coverage",
+      "value": "What insurance do you accept?"
+    }
+  ],
+  "actions": [
+    {
+      "id": "appointment_booking",
+      "label": "Book an appointment",
+      "keywords": [
+        "book appointment",
+        "schedule appointment",
+        "see a doctor",
+        "make appointment",
+        "next available"
+      ],
+      "requiresOnline": true,
+      "category": "appointments",
+      "mockResponse": "To book an appointment, please call 1-800-CARE or visit carefirstmedical.com/appointments. You can also book through the CareFirst patient portal."
+    },
+    {
+      "id": "prescription_refill",
+      "label": "Refill prescription",
+      "keywords": [
+        "refill prescription",
+        "prescription refill",
+        "need medication",
+        "renew prescription",
+        "out of medication"
+      ],
+      "requiresOnline": true,
+      "category": "pharmacy",
+      "mockResponse": "Prescription refill requests can be submitted through the patient portal or by calling your clinic's pharmacy line. Please have your prescription number ready. Allow 24-48 hours for processing."
+    },
+    {
+      "id": "test_results",
+      "label": "Check test results",
+      "keywords": [
+        "test results",
+        "lab results",
+        "blood test",
+        "blood work",
+        "my results"
+      ],
+      "requiresOnline": true,
+      "category": "records",
+      "mockResponse": "Test results are available through the CareFirst patient portal once reviewed by your physician. Most results are posted within 3-5 business days. For urgent results, please call your provider's office directly."
+    },
+    {
+      "id": "billing_inquiry",
+      "label": "Billing question",
+      "keywords": [
+        "billing",
+        "bill",
+        "payment",
+        "owe",
+        "invoice",
+        "statement",
+        "charges"
+      ],
+      "requiresOnline": true,
+      "category": "billing",
+      "mockResponse": "For billing inquiries, please call our billing department at 1-800-CARE ext. 2 or log into the patient portal to view statements. Payment plans are available for balances over $200."
+    },
+    {
+      "id": "referral_request",
+      "label": "Request a referral",
+      "keywords": [
+        "referral",
+        "refer me",
+        "specialist referral",
+        "see specialist",
+        "need referral"
+      ],
+      "requiresOnline": true,
+      "category": "referrals",
+      "mockResponse": "Referral requests are processed through your primary care provider. Please call your clinic or submit a request through the patient portal. Most referrals are processed within 2-3 business days."
+    }
+  ],
+  "backend": {
+    "type": "mock"
+  },
+  "support": [
+    {
+      "type": "phone",
+      "value": "1-800-CARE",
+      "label": "24/7 patient services"
+    },
+    {
+      "type": "website",
+      "value": "carefirstmedical.com/portal",
+      "label": "Patient portal"
+    }
+  ],
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "safety": {
+    "enabled": true,
+    "confidenceThreshold": 0,
+    "topicBlocklist": [
+      "not_medical_advice:diagnose me",
+      "not_medical_advice:prescribe",
+      "not_medical_advice:what medication",
+      "not_medical_advice:symptoms",
+      "not_medical_advice:should I take",
+      "not_medical_advice:diagnose",
+      "not_financial_advice:should I invest",
+      "not_financial_advice:investment advice",
+      "not_legal_advice:sue",
+      "not_legal_advice:legal advice"
+    ],
+    "groundingRules": {
+      "requireCitations": false,
+      "forbidUnsourcedAmounts": true,
+      "forbidUnsourcedDates": true
+    },
+    "refusalTemplates": {
+      "not_medical_advice": "I can't provide medical advice, diagnosis, or treatment recommendations. For medical concerns, please consult a licensed healthcare professional or call {{hotline}} to be routed to a nurse line."
+    }
+  },
+  "tools": [
+    {
+      "name": "bookAppointment",
+      "description": "Book a clinic appointment",
+      "keywords": [
+        "book appointment",
+        "schedule appointment",
+        "make an appointment",
+        "see a doctor"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "healthcare",
+      "backendMethod": "bookAppointment"
+    },
+    {
+      "name": "lookupMedication",
+      "description": "Look up generic information about a medication from the approved KB",
+      "keywords": [
+        "what is",
+        "information about",
+        "side effects of",
+        "generic name of"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "healthcare",
+      "backendMethod": "lookupMedication"
+    }
+  ],
+  "llm": {
+    "mode": "demo"
+  }
+}

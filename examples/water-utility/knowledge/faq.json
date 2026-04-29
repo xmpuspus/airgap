@@ -1,0 +1,191 @@
+[
+  {
+    "id": "faq-001",
+    "category": "faq",
+    "title": "Annual water quality report",
+    "content": "AquaFlow publishes an Annual Water Quality Report (Consumer Confidence Report) every July, as required by the EPA. The report shows the results of tests for over 80 contaminants including lead, copper, bacteria, nitrates, and disinfection byproducts. You can view the latest report at aquaflowwater.com/quality or request a printed copy by calling 1-800-AQUA. AquaFlow's water consistently meets or exceeds all EPA and state drinking water standards. Source water comes from the Cedar River watershed and is treated at the Clearwater Treatment Plant.",
+    "keywords": ["water quality report", "is my water safe", "water testing", "contaminants", "CCR", "consumer confidence report"],
+    "tags": ["quality", "report", "safety"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-002",
+    "category": "faq",
+    "title": "Billing cycle and due dates",
+    "content": "AquaFlow bills on a monthly cycle. Your water meter is read around the same date each month by an automated meter reading system. Bills are generated within 2 business days of the reading and payment is due 25 days after the bill date. Your specific billing cycle dates appear on your bill statement and in your online account under Billing > Billing Cycle. A late payment fee of 1.5% per month is applied to past-due balances. If payment is not received within 60 days, a disconnection notice will be mailed.",
+    "keywords": ["billing cycle", "due date", "when is my bill", "payment due", "bill date", "late fee"],
+    "tags": ["billing", "payments", "account"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-003",
+    "category": "faq",
+    "title": "How to read your water meter",
+    "content": "Your water meter measures usage in gallons. Most AquaFlow meters are digital with an LCD display showing a running total. To check for leaks, record the meter reading, avoid using water for 2 hours, then check again; if the reading changed, you have a leak. The small triangle or star-shaped indicator on the meter face is a low-flow detector that spins when even a small amount of water is flowing. Your meter is typically located in a concrete box near the curb, marked with a blue lid. Use a screwdriver to lift the lid and flip up the protective cap over the display.",
+    "keywords": ["read meter", "water meter", "meter reading", "gallons", "how to read", "meter box"],
+    "tags": ["meter", "self-service", "billing"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-004",
+    "category": "faq",
+    "title": "Water pressure issues",
+    "content": "Normal water pressure in AquaFlow's system ranges from 40 to 80 PSI. Low pressure throughout the home may indicate a partially closed main shutoff valve, a failing pressure regulator, or a utility-side issue. Check that the main shutoff valve at the meter and the house shutoff valve are fully open. If only hot water pressure is low, the water heater may have sediment buildup. If multiple neighbors have low pressure, there may be a main break or system maintenance in progress. Call 1-800-AQUA to report persistent low pressure and we will investigate within 2 business days. High pressure above 80 PSI should be addressed with a pressure reducing valve to protect plumbing and appliances.",
+    "keywords": ["water pressure", "low pressure", "no pressure", "high pressure", "weak flow", "pressure problem"],
+    "tags": ["troubleshooting", "pressure", "plumbing"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-005",
+    "category": "faq",
+    "title": "Discolored or brown water",
+    "content": "Brown or rust-colored water is usually caused by disturbed sediment in the water mains, often from nearby construction, a main break repair, fire hydrant flushing, or a sudden change in water flow direction. The water is generally safe but aesthetically unpleasant. Run cold water at the faucet closest to your meter for 5-10 minutes until it clears. Avoid running hot water during this time, as sediment can accumulate in the water heater. If the water does not clear after 15 minutes or the problem recurs, call 1-800-AQUA. Do not wash white laundry until the water runs clear, as sediment can stain fabric.",
+    "keywords": ["brown water", "discolored water", "rust water", "dirty water", "colored water", "yellow water", "sediment"],
+    "tags": ["quality", "troubleshooting"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-006",
+    "category": "faq",
+    "title": "Chlorine taste and odor",
+    "content": "AquaFlow uses chloramine (a combination of chlorine and ammonia) to disinfect drinking water, as required by the EPA. You may notice a slight taste or smell, especially during warmer months when higher disinfectant levels are needed. To reduce the taste, fill a pitcher and refrigerate it for 30 minutes; the chlorine dissipates as it cools. Activated carbon filters (Brita, PUR, etc.) effectively remove chloramine taste. The chloramine level in AquaFlow water is maintained at 1.0-2.0 mg/L, well below the EPA maximum of 4.0 mg/L. Fish tank owners should use a dechlorinator, as chloramine is toxic to fish.",
+    "keywords": ["chlorine taste", "chlorine smell", "water taste", "chemical taste", "chloramine", "water odor"],
+    "tags": ["quality", "treatment"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-007",
+    "category": "faq",
+    "title": "Boil water advisory procedures",
+    "content": "A boil water advisory is issued when water quality may be compromised due to a main break, treatment plant issue, or loss of system pressure. During an advisory: boil water at a rolling boil for at least 1 minute before drinking, cooking, brushing teeth, or making ice. Bottled water can be used as an alternative. Water is safe for hand washing and bathing. Do not use ice from your automatic ice maker until after the advisory is lifted. AquaFlow notifies affected customers via automated phone call, text, email, and the aquaflowwater.com homepage. The advisory is lifted only after lab tests confirm the water meets safety standards, typically within 24-48 hours.",
+    "keywords": ["boil water", "boil advisory", "water advisory", "unsafe water", "boil notice", "water contamination"],
+    "tags": ["quality", "emergency", "safety"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-008",
+    "category": "faq",
+    "title": "Fire hydrant use and flushing",
+    "content": "AquaFlow maintains over 4,500 fire hydrants across the service area. Hydrant flushing is performed twice a year (spring and fall) to remove sediment and ensure hydrants are operational. Flushing schedules are posted at aquaflowwater.com/flushing and on local news outlets at least 7 days in advance. During flushing in your area, you may experience temporary low pressure and discolored water. Unauthorized use of fire hydrants is illegal and carries a fine of up to $500. If you see an open or leaking hydrant, call 1-800-AQUA to report it.",
+    "keywords": ["fire hydrant", "hydrant flushing", "hydrant use", "flushing schedule", "hydrant leak"],
+    "tags": ["maintenance", "hydrants"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-009",
+    "category": "faq",
+    "title": "Water conservation tips for homeowners",
+    "content": "Reducing water usage saves money and protects the water supply. Effective conservation measures include: fixing leaky faucets (a drip wastes 3,000+ gallons per year), installing WaterSense-labeled fixtures (saves 20% over standard), running dishwashers and washing machines only with full loads, watering lawns in the early morning (before 9 AM) to reduce evaporation, and using a broom instead of a hose to clean driveways. Indoor use averages 80-100 gallons per person per day; conservation can reduce this to 50-60 gallons. AquaFlow offers free water conservation kits including faucet aerators and low-flow showerheads at any service center.",
+    "keywords": ["conservation", "save water", "reduce usage", "water saving tips", "lower water bill", "water efficiency"],
+    "tags": ["conservation", "tips", "residential"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-010",
+    "category": "faq",
+    "title": "Irrigation and lawn watering schedules",
+    "content": "AquaFlow implements seasonal watering restrictions from June through September. Odd-numbered addresses may water on Monday, Wednesday, and Friday. Even-numbered addresses may water on Tuesday, Thursday, and Saturday. No watering is permitted on Sundays. Watering is allowed only before 10 AM and after 6 PM. Drip irrigation and hand watering are exempt from these restrictions. Violations result in a written warning for the first offense, a $50 fine for the second, and $100 for subsequent offenses. Smart irrigation controllers with rain sensors are highly recommended and qualify for AquaFlow's conservation rebate program.",
+    "keywords": ["irrigation", "lawn watering", "watering schedule", "sprinkler", "watering restrictions", "outdoor watering"],
+    "tags": ["conservation", "irrigation", "restrictions"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-011",
+    "category": "faq",
+    "title": "Water use restrictions during drought",
+    "content": "During declared drought emergencies, AquaFlow implements mandatory water use restrictions in four stages. Stage 1: voluntary 10% reduction. Stage 2: mandatory outdoor watering limits (2 days per week). Stage 3: no outdoor watering except by hand for trees and shrubs, no vehicle washing at home. Stage 4: outdoor watering prohibited, commercial users must reduce 25%. Penalty surcharges of 25-100% are applied to usage exceeding your baseline allocation. Current drought stage information is posted at aquaflowwater.com and on your monthly bill. AquaFlow provides free drought-resistant landscape design consultations during Stage 2 and above.",
+    "keywords": ["drought", "water restrictions", "mandatory restrictions", "drought stage", "water shortage"],
+    "tags": ["conservation", "drought", "restrictions"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-012",
+    "category": "faq",
+    "title": "Lead pipes and service line information",
+    "content": "AquaFlow's water mains do not contain lead. However, some older homes (built before 1986) may have lead service lines connecting the main to the home, or lead solder on copper pipes. AquaFlow maintains corrosion control treatment to minimize lead leaching. You can check if your home has a lead service line using the lookup tool at aquaflowwater.com/lead-lookup. If a lead line is confirmed, AquaFlow will replace the utility-owned portion at no cost; homeowner-side replacement assistance of up to $2,000 is available for income-qualifying households. Free lead testing kits are available at any service center.",
+    "keywords": ["lead", "lead pipes", "lead service line", "lead testing", "lead in water", "lead replacement"],
+    "tags": ["quality", "safety", "lead"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-013",
+    "category": "faq",
+    "title": "Water meter relocation requests",
+    "content": "If you need to relocate your water meter due to construction, landscaping, or accessibility issues, submit a request at aquaflowwater.com/service-request or call 1-800-AQUA. A field inspector will visit within 5 business days to assess the new location. The customer is responsible for the cost of relocation, which typically ranges from $300 to $800 depending on distance and site conditions. The new meter location must be accessible for reading and maintenance, within 2 feet of the property line, and in a concrete meter box. Processing time is 10-15 business days from approval.",
+    "keywords": ["meter relocation", "move meter", "relocate meter", "meter location", "meter placement"],
+    "tags": ["meter", "service", "construction"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-014",
+    "category": "faq",
+    "title": "Water main break reporting and response",
+    "content": "If you see water gushing from the ground, a sudden sinkhole, or a flooded street, call 1-800-AQUA immediately to report a potential main break. Do not drive through flooded areas as the road surface may be undermined. AquaFlow dispatches emergency crews around the clock. Average response time for main breaks is 45 minutes. Repair time depends on pipe size and location: small mains (under 8 inches) typically take 4-6 hours, while large transmission mains may take 12-24 hours. Affected customers will be notified of estimated restoration and any boil water advisories via automated alerts.",
+    "keywords": ["main break", "water main break", "broken pipe", "burst pipe", "flooded street", "gushing water"],
+    "tags": ["emergency", "maintenance", "mains"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-015",
+    "category": "faq",
+    "title": "Sewer backup responsibility and reporting",
+    "content": "AquaFlow maintains the sewer main in the street. The homeowner is responsible for the sewer lateral (the pipe connecting your home to the main). If you experience a sewer backup, first check if the problem is isolated to one drain or affects the entire house. A single slow drain is likely a clog in your plumbing; call a plumber. If all drains are backing up simultaneously, the sewer lateral or main may be blocked. Call 1-800-AQUA to report the issue. AquaFlow will inspect the main within 4 hours and determine if the blockage is utility-side (repaired at no cost) or homeowner-side. Do not use bleach or chemical drain cleaners during a backup.",
+    "keywords": ["sewer backup", "sewer", "drain backup", "sewage", "sewer blockage", "sewer line"],
+    "tags": ["sewer", "emergency", "maintenance"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-016",
+    "category": "faq",
+    "title": "Backflow prevention device requirements",
+    "content": "Backflow prevention devices protect the public water supply from contamination caused by water flowing backward through a cross-connection. AquaFlow requires backflow preventer installation for all commercial accounts, fire sprinkler systems, irrigation systems connected to the potable supply, and residential homes with pools or hot tubs connected to a fill line. Devices must be tested annually by a certified backflow tester and results submitted to AquaFlow by December 31. Failure to test results in a $75 administrative fee and potential service disconnection. A list of certified testers is available at aquaflowwater.com/backflow.",
+    "keywords": ["backflow", "backflow prevention", "cross connection", "backflow test", "backflow device"],
+    "tags": ["quality", "safety", "regulations"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-017",
+    "category": "faq",
+    "title": "Winter pipe protection and freeze prevention",
+    "content": "When temperatures drop below 20 degrees Fahrenheit, exposed or poorly insulated pipes can freeze and burst. To protect your pipes: insulate exposed pipes in attics, crawl spaces, and garages with foam pipe insulation. Open cabinet doors under sinks on exterior walls to let warm air circulate. Let a thin stream of water drip from faucets served by exposed pipes (even a slow drip prevents freezing). Keep your thermostat at 55 degrees or higher, even when away. If pipes freeze, never use an open flame to thaw them; use a hair dryer or heating pad. If a pipe bursts, shut off the main water valve and call a plumber.",
+    "keywords": ["frozen pipes", "freeze prevention", "pipe burst", "winter", "cold weather", "pipe insulation"],
+    "tags": ["safety", "winter", "plumbing"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-018",
+    "category": "faq",
+    "title": "Water heater issues and sediment buildup",
+    "content": "Over time, mineral sediment accumulates at the bottom of water heaters, reducing efficiency and capacity. Signs include rumbling or popping noises, reduced hot water volume, and discolored hot water. AquaFlow recommends draining 1-2 gallons from the water heater's drain valve every 6 months to flush sediment. If your water heater is over 10 years old and showing these symptoms, replacement may be more cost-effective than repair. AquaFlow is not responsible for water heater maintenance, but our conservation rebate program offers $100 toward ENERGY STAR water heaters. Call a licensed plumber for water heater service.",
+    "keywords": ["water heater", "hot water", "sediment", "water heater noise", "no hot water", "hot water tank"],
+    "tags": ["plumbing", "troubleshooting", "appliance"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-019",
+    "category": "faq",
+    "title": "New construction water service connection",
+    "content": "To connect a new building to AquaFlow's water system, submit a Developer Service Application at aquaflowwater.com/developers or visit any service center. Requirements include site plans, building permits, and a plumbing plan. AquaFlow will provide a cost estimate for the tap connection and meter installation within 10 business days. Typical costs: residential tap and 3/4-inch meter, $1,500-$3,000; commercial tap and 2-inch meter, $5,000-$12,000. A system development charge of $3,200 per equivalent residential unit applies to new connections. Installation is scheduled 15-20 business days after payment and permit approval.",
+    "keywords": ["new construction", "new connection", "developer", "tap connection", "water hookup", "building permit"],
+    "tags": ["service", "new-construction", "development"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-020",
+    "category": "faq",
+    "title": "Understanding your water bill charges",
+    "content": "Your AquaFlow bill includes several components. The Base Charge ($15.50/month for 3/4-inch residential meter) covers meter maintenance, billing, and system infrastructure regardless of usage. The Water Usage Charge is calculated in tiered rates based on gallons consumed. The Sewer Charge is typically 90% of your water usage charge (since most indoor water usage enters the sewer system). Stormwater Fee is a flat $5.25/month based on impervious surface area. Taxes and regulatory surcharges are itemized separately. View a detailed breakdown in your online account under Billing > Bill Explained.",
+    "keywords": ["bill charges", "understand my bill", "base charge", "sewer charge", "what am I paying for", "stormwater fee"],
+    "tags": ["billing", "account", "education"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-021",
+    "category": "faq",
+    "title": "Leak adjustment credits on your bill",
+    "content": "If you experienced an undetected leak (such as a running toilet or underground pipe break), you may be eligible for a leak adjustment credit. AquaFlow will credit up to 50% of the excess water charges for one billing period per 12 months, provided the leak has been repaired. To apply, submit a leak adjustment request at aquaflowwater.com/leak-adjustment with your account number, a description of the leak, and proof of repair (plumber's receipt or photo of the repair). Adjustments are processed within 10 business days and appear as a credit on your next bill.",
+    "keywords": ["leak adjustment", "high bill leak", "leak credit", "bill adjustment", "toilet leak credit"],
+    "tags": ["billing", "leaks", "credits"],
+    "metadata": {}
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "vertical": "banking",
+  "description": "Golden cases for the banking example config. Tool router cases must select the right tool name; KB cases must surface KB content the example ships with.",
+  "cases": [
+    {"id": "bank-1", "query": "What is my checking balance", "expectTool": "lookupBalance"},
+    {"id": "bank-2", "query": "Show me my recent transactions", "expectTool": "listRecentTransactions"},
+    {"id": "bank-3", "query": "I want to dispute a charge from yesterday", "expectTool": "disputeTransaction"},
+    {"id": "bank-4", "query": "How do I open a savings account", "mustInclude": ["savings"]},
+    {"id": "bank-5", "query": "What are your wire transfer fees", "mustInclude": ["wire"]},
+    {"id": "bank-6", "query": "How do I report a lost debit card", "mustInclude": ["card"]},
+    {"id": "bank-7", "query": "What is your routing number", "mustInclude": ["routing"]},
+    {"id": "bank-8", "query": "How do I enroll in mobile banking", "mustInclude": ["mobile"]},
+    {"id": "bank-9", "query": "Should I invest in tech stocks", "expectRefusal": "not_financial_advice"},
+    {"id": "bank-10", "query": "Give me investment advice", "expectRefusal": "not_financial_advice"},
+    {"id": "bank-11", "query": "What are the branch hours", "mustInclude": ["hours"]}
+  ]
+}

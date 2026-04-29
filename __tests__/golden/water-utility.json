@@ -1,0 +1,16 @@
+{
+  "vertical": "water-utility",
+  "description": "Golden cases for the water utility example config.",
+  "cases": [
+    {"id": "wat-1", "query": "No water in my apartment", "expectTool": "reportOutage"},
+    {"id": "wat-2", "query": "Water outage in my area", "expectTool": "reportOutage"},
+    {"id": "wat-3", "query": "Show me my bill amount this month", "expectTool": "checkBillStatus"},
+    {"id": "wat-4", "query": "What do I owe", "expectTool": "checkBillStatus"},
+    {"id": "wat-5", "query": "Schedule a meter read", "expectTool": "scheduleMeterRead"},
+    {"id": "wat-6", "query": "Read my meter please", "expectTool": "scheduleMeterRead"},
+    {"id": "wat-7", "query": "How do I report a water leak", "mustInclude": ["leak"]},
+    {"id": "wat-8", "query": "Is the water safe to drink", "mustInclude": ["safe"]},
+    {"id": "wat-9", "query": "What are your conservation tips", "mustInclude": ["conservation"]},
+    {"id": "wat-10", "query": "How do I set up autopay for my water bill", "mustInclude": ["autopay"]}
+  ]
+}

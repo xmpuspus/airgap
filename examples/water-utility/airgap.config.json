@@ -1,0 +1,264 @@
+{
+  "$schema": "../../airgap.schema.json",
+  "specVersion": "1.0.0",
+  "brand": {
+    "name": "AquaFlow Water",
+    "botName": "AquaBot",
+    "tagline": "Your water utility assistant",
+    "hotline": "1-800-AQUA",
+    "hotlineLabel": "24/7 emergency and billing support",
+    "website": "aquaflowwater.com"
+  },
+  "theme": {
+    "primary": "#0891B2",
+    "primaryLight": "#22D3EE",
+    "primaryDark": "#0E7490",
+    "secondary": "#134E4A",
+    "secondaryLight": "#1E6B65",
+    "background": "#ECFEFF",
+    "surface": "#FFFFFF",
+    "text": "#134E4A",
+    "textSecondary": "#6B7280",
+    "textInverse": "#FFFFFF",
+    "botBubble": "#CFFAFE",
+    "botBubbleText": "#134E4A",
+    "userBubble": "#0891B2",
+    "userBubbleText": "#FFFFFF",
+    "success": "#10B981",
+    "warning": "#F59E0B",
+    "error": "#EF4444"
+  },
+  "model": {
+    "provider": "llama.cpp",
+    "url": "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q3_K_S.gguf",
+    "filename": "gemma-4-e2b-it-q3ks.gguf",
+    "sha256": "2d010e251ba1fc44b746eb4059825a1954df5f90a1b7a360cf18232a520709aa",
+    "sizeBytes": 2445645184,
+    "sizeMB": 2445
+  },
+  "knowledge": {
+    "directory": "knowledge"
+  },
+  "prompts": {
+    "system": "You are {{botName}}, a customer support assistant for {{brandName}}. Answer ONLY using the CONTEXT provided. Be concise. Use {{currency}} for amounts. For water emergencies (main breaks, flooding, sewage backup), advise the customer to call {{hotline}} immediately. For boil water advisories, always stress that water must be boiled for at least 1 minute before drinking. If unsure, say: \"Please call {{hotline}} for assistance.\"",
+    "welcome": "Hello! I'm {{botName}}, your {{brandName}} assistant.\n\nI can help you with:\n\n{{featureList}}\n\nHow can I help you today?",
+    "fallback": "I don't have information about that. For assistance, please:\n- Call {{hotline}} ({{hotlineLabel}})\n- Visit aquaflowwater.com/help\n- Visit your nearest AquaFlow service center",
+    "queued": "Your {{actionLabel}} request has been queued and will be processed when you're back online.",
+    "noModel": "For more detailed answers, download the AI assistant ({{modelSizeMB}} MB) in Settings."
+  },
+  "features": {
+    "offlineQueue": true,
+    "streamingTokens": true,
+    "userFeedback": true,
+    "conversationPersistence": true,
+    "sessionTimeoutMinutes": 30,
+    "modelDownloadOnboarding": true
+  },
+  "onboarding": {
+    "title": "Welcome to {{botName}}",
+    "subtitle": "{{tagline}}",
+    "features": [
+      "Check your water bill and balance",
+      "Report water leaks and main breaks",
+      "Request water quality information",
+      "Get water conservation tips",
+      "Apply for new water service connections",
+      "Learn about service plans and assistance programs"
+    ]
+  },
+  "quickReplies": [
+    {
+      "title": "Report a leak",
+      "value": "I want to report a water leak"
+    },
+    {
+      "title": "Check my bill",
+      "value": "What is my current water bill balance?"
+    },
+    {
+      "title": "Water quality",
+      "value": "Is my water safe to drink?"
+    },
+    {
+      "title": "Conservation tips",
+      "value": "How can I reduce my water bill?"
+    }
+  ],
+  "actions": [
+    {
+      "id": "balance_check",
+      "label": "Check account balance",
+      "keywords": [
+        "my bill",
+        "my balance",
+        "how much do i owe",
+        "account balance",
+        "water bill",
+        "amount due"
+      ],
+      "requiresOnline": true,
+      "category": "billing",
+      "mockResponse": "Your account ending in 5612 has a current balance of $78.45. Billing period: March 1 - March 31. Payment due date: April 20. Usage this period: 4,200 gallons. Last payment received: $72.10 on March 12."
+    },
+    {
+      "id": "leak_report",
+      "label": "Report a water leak",
+      "keywords": [
+        "water leak",
+        "leak",
+        "broken pipe",
+        "water main break",
+        "flooding",
+        "gushing water",
+        "water running"
+      ],
+      "requiresOnline": true,
+      "category": "emergency",
+      "mockResponse": "Your leak report has been submitted for the address on file at 842 Maple Court. A field crew has been dispatched. For major leaks or flooding, also call {{hotline}} for priority dispatch. Expected response time: within 2 hours for street-level leaks, within 4 hours for service line leaks."
+    },
+    {
+      "id": "service_request",
+      "label": "Submit a service request",
+      "keywords": [
+        "service request",
+        "start service",
+        "stop service",
+        "transfer service",
+        "disconnect water",
+        "reconnect water",
+        "turn on water"
+      ],
+      "requiresOnline": true,
+      "category": "service",
+      "mockResponse": "Your service request has been submitted. A representative will contact you within 1 business day to confirm details. New connections may require a site inspection. Call {{hotline}} for urgent requests."
+    },
+    {
+      "id": "water_quality_test",
+      "label": "Request water quality test",
+      "keywords": [
+        "water quality",
+        "water test",
+        "water safe",
+        "water taste",
+        "water smell",
+        "discolored water",
+        "brown water",
+        "chlorine"
+      ],
+      "requiresOnline": true,
+      "category": "quality",
+      "mockResponse": "Your water quality test request has been submitted. A technician will contact you within 3 business days to schedule a visit. In the meantime, the most recent Annual Water Quality Report is available at aquaflowwater.com/quality. If you are experiencing discolored water, run cold water at the faucet closest to the meter for 3-5 minutes."
+    },
+    {
+      "id": "new_connection",
+      "label": "Apply for new water service",
+      "keywords": [
+        "new connection",
+        "new service",
+        "new account",
+        "new construction",
+        "builder",
+        "connect water",
+        "water hookup"
+      ],
+      "requiresOnline": true,
+      "category": "service",
+      "mockResponse": "Your new service application has been submitted. A field representative will contact you within 5 business days to schedule a site assessment and provide a cost estimate for the tap and meter installation. You will need to provide a valid ID and proof of property ownership or lease agreement."
+    }
+  ],
+  "backend": {
+    "type": "mock"
+  },
+  "support": [
+    {
+      "type": "phone",
+      "value": "1-800-AQUA",
+      "label": "24/7 emergency and billing (toll-free)"
+    },
+    {
+      "type": "phone",
+      "value": "1-800-278-2111",
+      "label": "Water quality hotline"
+    },
+    {
+      "type": "email",
+      "value": "support@aquaflowwater.com",
+      "label": "Email support"
+    },
+    {
+      "type": "website",
+      "value": "aquaflowwater.com/help",
+      "label": "Online help center"
+    }
+  ],
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "safety": {
+    "enabled": true,
+    "confidenceThreshold": 0,
+    "topicBlocklist": [
+      "not_medical_advice:diagnose",
+      "not_medical_advice:prescribe",
+      "not_financial_advice:should I invest",
+      "not_financial_advice:investment advice",
+      "not_legal_advice:sue",
+      "not_legal_advice:legal advice"
+    ],
+    "groundingRules": {
+      "requireCitations": false,
+      "forbidUnsourcedAmounts": true,
+      "forbidUnsourcedDates": true
+    },
+    "refusalTemplates": {}
+  },
+  "tools": [
+    {
+      "name": "reportOutage",
+      "description": "Report a water outage or low pressure at the caller's address",
+      "keywords": [
+        "no water",
+        "water outage",
+        "report outage",
+        "low pressure"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "water",
+      "backendMethod": "reportOutage"
+    },
+    {
+      "name": "checkBillStatus",
+      "description": "Look up the current water bill status",
+      "keywords": [
+        "my bill",
+        "bill amount",
+        "what do I owe",
+        "bill status"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "water",
+      "backendMethod": "checkBalance"
+    },
+    {
+      "name": "scheduleMeterRead",
+      "description": "Schedule a technician to read the caller's meter",
+      "keywords": [
+        "meter read",
+        "read my meter",
+        "schedule meter",
+        "meter reading"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "water",
+      "backendMethod": "scheduleMeterRead"
+    }
+  ],
+  "llm": {
+    "mode": "demo"
+  }
+}

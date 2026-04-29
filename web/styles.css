@@ -1,0 +1,328 @@
+/* Airgap showcase — vanilla CSS, no framework. Aims for typographic
+   restraint and an editorial feel; the visual punch lives in the
+   recorded GIFs, not in chrome. */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0b0d12;
+  --surface: #11141b;
+  --surface-elevated: #181c25;
+  --border: #232733;
+  --text: #f0f3f8;
+  --text-muted: #98a1b3;
+  --accent: var(--brand-primary, #22d3ee);
+  --accent-soft: rgba(34, 211, 238, 0.12);
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --surface-elevated: #ffffff;
+    --border: #e5e7eb;
+    --text: #0f172a;
+    --text-muted: #64748b;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue',
+    Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+}
+
+code {
+  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 0.85em;
+  background: var(--surface-elevated);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.masthead {
+  padding: 48px 0 16px;
+}
+
+.brand {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+
+.lede {
+  font-size: 17px;
+  color: var(--text-muted);
+  max-width: 640px;
+  margin: 0 0 16px;
+}
+
+.links {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.link {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+}
+
+.link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.picker {
+  margin: 32px 0 24px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.picker-label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.picker select {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  background: var(--surface-elevated);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.picker select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.picker-hint {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (min-width: 880px) {
+  .grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+  .phone-card {
+    grid-row: span 3;
+  }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.card-title {
+  margin: 0 0 16px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.card-hint {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.brand-meta {
+  display: grid;
+  grid-template-columns: minmax(120px, 30%) 1fr;
+  row-gap: 12px;
+  column-gap: 16px;
+  margin: 0;
+}
+
+.brand-meta dt {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  align-self: center;
+}
+
+.brand-meta dd {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.swatch-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.swatch-color {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.swatch-hex {
+  font-family: 'SF Mono', 'Menlo', monospace;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+.config-card pre {
+  margin: 0;
+  padding: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  max-height: 320px;
+}
+
+.config-card code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  white-space: pre;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.phone-card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.phone {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.phone-bezel {
+  position: relative;
+  width: 280px;
+  aspect-ratio: 9 / 19;
+  background: #050608;
+  border-radius: 36px;
+  padding: 12px;
+  border: 1px solid #2a2e3a;
+  box-shadow:
+    inset 0 0 0 2px #0a0c12,
+    0 18px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 96px;
+  height: 22px;
+  background: #050608;
+  border-radius: 11px;
+  z-index: 2;
+}
+
+.phone-bezel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+  display: block;
+}
+
+.footer-strip {
+  margin: 48px 0;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.footer-strip code {
+  word-break: break-all;
+}
+
+@media (max-width: 600px) {
+  .masthead {
+    padding-top: 32px;
+  }
+  .grid {
+    gap: 16px;
+  }
+  .card {
+    padding: 20px;
+  }
+  .phone-bezel {
+    width: 240px;
+  }
+}

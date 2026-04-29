@@ -1,0 +1,56 @@
+[
+  {
+    "id": "fee-monthly-maintenance",
+    "category": "fee",
+    "title": "Monthly maintenance fees",
+    "content": "PrimaBank monthly account maintenance fees and waiver conditions: Standard Checking is $8/month, waived with $500 average daily balance or one direct deposit of $500+ per month. Basic Savings is $5/month, waived with $300 minimum daily balance. Premium Savings is $12/month, waived with $2,500 minimum daily balance. Money Market is $15/month, waived with $10,000 minimum daily balance. Business Checking is $15/month, waived for the first 12 months and thereafter with $5,000 average daily balance. Student Checking has no monthly fee. Fees are assessed on the last business day of each statement cycle. If you meet the waiver conditions for even one day during the cycle, the fee may still apply — the condition must be met for the entire cycle (average balance) or at least once per cycle (direct deposit).",
+    "keywords": ["monthly fee", "maintenance fee", "account fee", "service charge", "monthly charge", "bank fee"],
+    "tags": ["fee", "account"],
+    "metadata": {"type": "recurring"}
+  },
+  {
+    "id": "fee-atm",
+    "category": "fee",
+    "title": "ATM fees",
+    "content": "PrimaBank ATM fee schedule: Transactions at PrimaBank's 2,000+ in-network ATMs are free for all PrimaBank account holders, including cash withdrawals, deposits, balance inquiries, and transfers. Out-of-network domestic ATM withdrawals incur a $2.50 PrimaBank surcharge per transaction, plus any fee charged by the ATM operator (typically $2.00-$3.50). International ATM withdrawals incur a $5.00 PrimaBank surcharge per transaction plus a 3% foreign transaction fee on the converted amount. Premium Savings and Platinum credit card holders receive 4 free out-of-network ATM withdrawals per month and automatic refunds of other banks' ATM surcharges up to $10/month. Daily ATM withdrawal limit is $500 for most accounts ($1,000 for Premium).",
+    "keywords": ["ATM fee", "out of network ATM", "ATM surcharge", "ATM withdrawal fee", "international ATM", "ATM charge"],
+    "tags": ["fee", "atm"],
+    "metadata": {"type": "per-transaction"}
+  },
+  {
+    "id": "fee-wire-transfer",
+    "category": "fee",
+    "title": "Wire transfer fees",
+    "content": "PrimaBank wire transfer fees: Incoming domestic wire transfers are free. Outgoing domestic wire transfers are $25 per transfer when initiated online and $35 when initiated in-branch or by phone. Incoming international wire transfers are $15. Outgoing international wire transfers are $45 when initiated online and $55 in-branch or by phone. Wire transfer fees are deducted from the sending account at the time of transfer. Business accounts with the Business Plus package receive 5 free outgoing domestic wires per month. All wire transfers initiated before 4:00 PM ET on a business day are processed the same day. Transfers initiated after the cutoff are processed the next business day.",
+    "keywords": ["wire transfer fee", "wire fee", "cost to wire money", "wire transfer cost", "send wire cost"],
+    "tags": ["fee", "transfer"],
+    "metadata": {"type": "per-transaction"}
+  },
+  {
+    "id": "fee-overdraft",
+    "category": "fee",
+    "title": "Overdraft and NSF fees",
+    "content": "PrimaBank overdraft fees: If a transaction overdraws your checking account and you do not have overdraft protection, a $35 overdraft fee (also called NSF fee) is charged per item, up to a maximum of 4 fees per business day ($140 maximum daily). PrimaBank will not charge an overdraft fee if your account is overdrawn by $5 or less at the end of the business day (de minimis threshold). Overdraft Transfer from a linked savings account incurs a $10 transfer fee per transfer. Overdraft Line of Credit access incurs a $5 fee per advance. Continuous overdraft fee: if your account remains negative for 7 consecutive calendar days, an additional $7/day fee applies until the balance is positive or the account is brought current. To avoid overdraft fees, set up low balance alerts in the mobile app.",
+    "keywords": ["overdraft fee", "NSF fee", "bounced check fee", "insufficient funds", "negative balance fee", "overdraft charge"],
+    "tags": ["fee", "overdraft"],
+    "metadata": {"type": "per-occurrence"}
+  },
+  {
+    "id": "fee-returned-check",
+    "category": "fee",
+    "title": "Returned check and deposited item fees",
+    "content": "PrimaBank returned item fees: If a check you deposited is returned (bounced) by the issuing bank, a $12 deposited item return fee is charged, and the check amount is deducted from your available balance. If a check you wrote is returned due to insufficient funds in your account, a $35 returned check fee is charged (same as the overdraft fee). Stop payment requests cost $30 per check ($35 for a range of checks). If you frequently deposit third-party checks, consider verifying funds with the issuing bank before deposit. Cashier's checks and certified checks cannot be stopped once issued. For returned deposited items, PrimaBank will send you a notice with the reason for return and the original check will be available for pickup at your branch.",
+    "keywords": ["returned check", "bounced check", "check returned", "deposited check returned", "stop payment", "check bounced"],
+    "tags": ["fee", "check"],
+    "metadata": {"type": "per-occurrence"}
+  },
+  {
+    "id": "fee-foreign-transaction",
+    "category": "fee",
+    "title": "Foreign transaction fees",
+    "content": "PrimaBank foreign transaction fees apply when you make purchases or withdrawals in a foreign currency or with a foreign merchant. Debit card foreign transactions incur a 3% fee on the converted USD amount. The PrimaBank Standard credit card also charges 3% on foreign transactions. The PrimaBank Rewards and Platinum credit cards have no foreign transaction fee. International ATM withdrawals incur the 3% foreign transaction fee plus the $5.00 international ATM surcharge. The exchange rate used is the Visa or Mastercard network rate at the time of transaction processing, which may differ from the rate at the time of purchase. If you travel internationally frequently, consider the Rewards or Platinum credit card to avoid these fees.",
+    "keywords": ["foreign transaction fee", "international fee", "currency conversion fee", "overseas fee", "foreign purchase fee", "travel fee"],
+    "tags": ["fee", "international", "card"],
+    "metadata": {"type": "per-transaction"}
+  }
+]

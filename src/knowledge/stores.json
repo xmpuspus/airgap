@@ -1,0 +1,380 @@
+[
+  {
+    "id": "store-manila-sm-north",
+    "category": "store",
+    "title": "ACME Store - SM North EDSA",
+    "content": "ACME flagship store at SM North EDSA, Quezon City. Full-service center offering SIM activation, postpaid applications, device sales, bill payment, SIM replacement, fiber applications, device repair drop-off, and ACMEPay assistance. Located at the 2nd Floor, Cyberzone Wing near the food court. Wheelchair accessible. Free WiFi for ACME subscribers. This is one of the largest ACME stores in Metro Manila with dedicated counters for postpaid, prepaid, fiber, and business accounts.",
+    "keywords": [
+      "SM North EDSA",
+      "Quezon City",
+      "QC",
+      "North EDSA",
+      "flagship store",
+      "Metro Manila"
+    ],
+    "tags": [
+      "store",
+      "metro-manila",
+      "quezon-city"
+    ],
+    "metadata": {
+      "city": "Quezon City",
+      "address": "2nd Floor, Cyberzone Wing, SM North EDSA, North Avenue cor. EDSA, Quezon City 1105",
+      "hours": "10:00 AM - 9:00 PM daily",
+      "phone": "(02) 8888-1001",
+      "services": [
+        "SIM activation",
+        "Postpaid application",
+        "Device sales",
+        "Bill payment",
+        "SIM replacement",
+        "Fiber application",
+        "Device repair drop-off",
+        "ACMEPay assistance",
+        "Business accounts"
+      ],
+      "coordinates": {
+        "lat": 14.6567,
+        "lng": 121.031
+      }
+    }
+  },
+  {
+    "id": "store-manila-greenbelt",
+    "category": "store",
+    "title": "ACME Store - Greenbelt Makati",
+    "content": "ACME premium store at Greenbelt 3, Makati City. This location serves the Makati CBD area and specializes in postpaid premium plans, flagship device sales, and business accounts. Full services available: SIM activation, postpaid application, bill payment, device sales, SIM replacement, and fiber sign-ups. Located at the Ground Floor near the main entrance. Open daily with extended hours on weekdays to serve the business district crowd.",
+    "keywords": [
+      "Greenbelt",
+      "Makati",
+      "Makati City",
+      "CBD",
+      "Ayala",
+      "Metro Manila"
+    ],
+    "tags": [
+      "store",
+      "metro-manila",
+      "makati"
+    ],
+    "metadata": {
+      "city": "Makati City",
+      "address": "Ground Floor, Greenbelt 3, Ayala Center, Makati City 1226",
+      "hours": "10:00 AM - 9:00 PM (Sun-Thu), 10:00 AM - 10:00 PM (Fri-Sat)",
+      "phone": "(02) 8888-1002",
+      "services": [
+        "SIM activation",
+        "Postpaid application",
+        "Device sales",
+        "Bill payment",
+        "SIM replacement",
+        "Fiber application",
+        "Business accounts",
+        "Premium plan consultation"
+      ],
+      "coordinates": {
+        "lat": 14.5519,
+        "lng": 121.0198
+      }
+    }
+  },
+  {
+    "id": "store-manila-moa",
+    "category": "store",
+    "title": "ACME Store - SM Mall of Asia",
+    "content": "ACME store at SM Mall of Asia, Pasay City. A high-traffic location serving the Entertainment City, Bay Area, and southern Metro Manila communities. All standard services available: SIM activation, postpaid applications, device sales, bill payment, SIM replacement, fiber applications, and technical support. Located on the 2nd Floor of the Main Mall near the Atrium. Weekend and holiday hours extended. Large inventory of devices available for immediate purchase.",
+    "keywords": [
+      "Mall of Asia",
+      "MOA",
+      "Pasay",
+      "SM MOA",
+      "Bay Area",
+      "Metro Manila"
+    ],
+    "tags": [
+      "store",
+      "metro-manila",
+      "pasay"
+    ],
+    "metadata": {
+      "city": "Pasay City",
+      "address": "2nd Floor, Main Mall, SM Mall of Asia, J.W. Diokno Blvd., Pasay City 1300",
+      "hours": "10:00 AM - 10:00 PM daily",
+      "phone": "(02) 8888-1003",
+      "services": [
+        "SIM activation",
+        "Postpaid application",
+        "Device sales",
+        "Bill payment",
+        "SIM replacement",
+        "Fiber application",
+        "Technical support"
+      ],
+      "coordinates": {
+        "lat": 14.5351,
+        "lng": 120.9827
+      }
+    }
+  },
+  {
+    "id": "store-manila-bgc",
+    "category": "store",
+    "title": "ACME Store - Bonifacio High Street BGC",
+    "content": "ACME Telecom premium store at Bonifacio High Street, BGC, Taguig City. Features a VIP lounge for postpaid Plan 1499+ subscribers and a device experience zone.",
+    "keywords": [
+      "BGC",
+      "Bonifacio",
+      "Taguig",
+      "High Street",
+      "Fort Bonifacio",
+      "Global City",
+      "premium store"
+    ],
+    "tags": [
+      "store",
+      "metro-manila",
+      "taguig",
+      "bgc"
+    ],
+    "metadata": {
+      "city": "Taguig City",
+      "address": "Ground Floor, One Bonifacio High Street, 5th Ave cor. 28th St, BGC, Taguig City",
+      "hours": "11:00 AM - 9:00 PM daily",
+      "phone": "02-8888-0211 loc. 304",
+      "services": [
+        "SIM replacement",
+        "Bill payment",
+        "Device purchase",
+        "Plan change",
+        "Technical support",
+        "eSIM activation",
+        "VIP lounge"
+      ],
+      "coordinates": {
+        "lat": 14.5515,
+        "lng": 121.05
+      }
+    }
+  },
+  {
+    "id": "store-cebu-ayala",
+    "category": "store",
+    "title": "ACME Store - Ayala Center Cebu",
+    "content": "ACME regional hub at Ayala Center Cebu, Cebu City. This is the primary ACME store for the Visayas region. Full-service center including SIM activation, postpaid applications, device sales, bill payment, SIM replacement, fiber applications, device repair, and business accounts. Located on the 2nd Floor near the IT section. The Cebu store carries the full range of ACME devices and accessories, and has a dedicated fiber consultation desk for central Visayas applicants.",
+    "keywords": [
+      "Cebu",
+      "Ayala Center Cebu",
+      "Cebu City",
+      "Visayas",
+      "Cebu store"
+    ],
+    "tags": [
+      "store",
+      "cebu",
+      "visayas"
+    ],
+    "metadata": {
+      "city": "Cebu City",
+      "address": "2nd Floor, Ayala Center Cebu, Cardinal Rosales Ave., Cebu Business Park, Cebu City 6000",
+      "hours": "10:00 AM - 9:00 PM daily",
+      "phone": "(032) 888-2001",
+      "services": [
+        "SIM activation",
+        "Postpaid application",
+        "Device sales",
+        "Bill payment",
+        "SIM replacement",
+        "Fiber application",
+        "Device repair",
+        "Business accounts"
+      ],
+      "coordinates": {
+        "lat": 10.3181,
+        "lng": 123.905
+      }
+    }
+  },
+  {
+    "id": "store-davao-abreeza",
+    "category": "store",
+    "title": "ACME Store - Abreeza Mall Davao",
+    "content": "ACME regional hub at Abreeza Mall, Davao City. Primary ACME store for the Mindanao region. Full-service center with SIM activation, postpaid applications, device sales, bill payment, SIM replacement, fiber applications, and business accounts. Located on the Ground Floor near the main entrance. Serves Davao City, Davao del Sur, and nearby Mindanao provinces. Fiber applications for greater Davao area processed here. Extended hours on weekends.",
+    "keywords": [
+      "Davao",
+      "Abreeza",
+      "Davao City",
+      "Mindanao",
+      "Davao store"
+    ],
+    "tags": [
+      "store",
+      "davao",
+      "mindanao"
+    ],
+    "metadata": {
+      "city": "Davao City",
+      "address": "Ground Floor, Abreeza Mall, J.P. Laurel Ave., Bajada, Davao City 8000",
+      "hours": "10:00 AM - 9:00 PM (Mon-Thu), 10:00 AM - 10:00 PM (Fri-Sun)",
+      "phone": "(082) 888-3001",
+      "services": [
+        "SIM activation",
+        "Postpaid application",
+        "Device sales",
+        "Bill payment",
+        "SIM replacement",
+        "Fiber application",
+        "Business accounts"
+      ],
+      "coordinates": {
+        "lat": 7.0794,
+        "lng": 125.6137
+      }
+    }
+  },
+  {
+    "id": "store-iloilo-sm",
+    "category": "store",
+    "title": "ACME Store - SM City Iloilo",
+    "content": "ACME store at SM City Iloilo, serving the Western Visayas region. Standard services include SIM activation, postpaid applications, device sales, bill payment, SIM replacement, and fiber applications. Located on the 2nd Floor near the entertainment section. Serves Iloilo City, Iloilo Province, and nearby areas of Guimaras, Antique, and Capiz. Fiber consultations available for Iloilo City Metro area.",
+    "keywords": [
+      "Iloilo",
+      "SM Iloilo",
+      "Iloilo City",
+      "Western Visayas",
+      "Panay"
+    ],
+    "tags": [
+      "store",
+      "iloilo",
+      "visayas"
+    ],
+    "metadata": {
+      "city": "Iloilo City",
+      "address": "2nd Floor, SM City Iloilo, Benigno Aquino Ave., Mandurriao, Iloilo City 5000",
+      "hours": "10:00 AM - 9:00 PM daily",
+      "phone": "(033) 888-4001",
+      "services": [
+        "SIM activation",
+        "Postpaid application",
+        "Device sales",
+        "Bill payment",
+        "SIM replacement",
+        "Fiber application"
+      ],
+      "coordinates": {
+        "lat": 10.7132,
+        "lng": 122.5621
+      }
+    }
+  },
+  {
+    "id": "store-baguio-sm",
+    "category": "store",
+    "title": "ACME Store - SM City Baguio",
+    "content": "ACME store at SM City Baguio, serving the Cordillera Administrative Region and Northern Luzon highlands. Standard services: SIM activation, postpaid applications, device sales, bill payment, SIM replacement, and fiber consultations. Located on the 3rd Floor near the electronics area. Serves Baguio City, Benguet, and the broader Cordillera region. Fiber availability in Baguio City proper with expansion planned for surrounding municipalities.",
+    "keywords": [
+      "Baguio",
+      "SM Baguio",
+      "Baguio City",
+      "Cordillera",
+      "Northern Luzon"
+    ],
+    "tags": [
+      "store",
+      "baguio",
+      "luzon"
+    ],
+    "metadata": {
+      "city": "Baguio City",
+      "address": "3rd Floor, SM City Baguio, Luneta Hill, Upper Session Rd., Baguio City 2600",
+      "hours": "10:00 AM - 9:00 PM daily",
+      "phone": "(074) 888-5001",
+      "services": [
+        "SIM activation",
+        "Postpaid application",
+        "Device sales",
+        "Bill payment",
+        "SIM replacement",
+        "Fiber consultation"
+      ],
+      "coordinates": {
+        "lat": 16.4109,
+        "lng": 120.5961
+      }
+    }
+  },
+  {
+    "id": "store-cdo-centrio",
+    "category": "store",
+    "title": "ACME Store - Centrio Mall CDO",
+    "content": "ACME store at Centrio Mall, Cagayan de Oro City, serving Northern Mindanao. Standard services: SIM activation, postpaid applications, device sales, bill payment, SIM replacement, and fiber sign-ups. Located on the 2nd Floor of the main wing. Serves Cagayan de Oro, Misamis Oriental, Bukidnon, and nearby areas. CDO has full 4G LTE coverage and expanding fiber broadband service. Walk-in customers welcome; no appointment needed.",
+    "keywords": [
+      "Cagayan de Oro",
+      "CDO",
+      "Centrio",
+      "Northern Mindanao",
+      "Misamis Oriental"
+    ],
+    "tags": [
+      "store",
+      "cdo",
+      "mindanao"
+    ],
+    "metadata": {
+      "city": "Cagayan de Oro City",
+      "address": "2nd Floor, Centrio Mall, CM Recto cor. Corrales Ave., Cagayan de Oro City 9000",
+      "hours": "10:00 AM - 9:00 PM daily",
+      "phone": "(088) 888-6001",
+      "services": [
+        "SIM activation",
+        "Postpaid application",
+        "Device sales",
+        "Bill payment",
+        "SIM replacement",
+        "Fiber application"
+      ],
+      "coordinates": {
+        "lat": 8.4808,
+        "lng": 124.6479
+      }
+    }
+  },
+  {
+    "id": "store-clark-marquee",
+    "category": "store",
+    "title": "ACME Store - Marquee Mall Clark",
+    "content": "ACME store at Marquee Mall in Angeles City, Clark Freeport Zone, Pampanga. Serves Central Luzon including Angeles City, Clark, San Fernando, and the broader Pampanga area. Standard services: SIM activation, postpaid applications, device sales, bill payment, SIM replacement, and fiber applications. Located on the Ground Floor near the entrance. Fiber is available throughout Angeles City and parts of Clark. Convenient parking and accessible location near the Clark International Airport area.",
+    "keywords": [
+      "Clark",
+      "Pampanga",
+      "Angeles City",
+      "Marquee Mall",
+      "Central Luzon",
+      "Clark Freeport"
+    ],
+    "tags": [
+      "store",
+      "clark",
+      "pampanga",
+      "luzon"
+    ],
+    "metadata": {
+      "city": "Angeles City",
+      "address": "Ground Floor, Marquee Mall, Dona Aurora St., Angeles City, Pampanga 2009",
+      "hours": "10:00 AM - 9:00 PM daily",
+      "phone": "(045) 888-7001",
+      "services": [
+        "SIM activation",
+        "Postpaid application",
+        "Device sales",
+        "Bill payment",
+        "SIM replacement",
+        "Fiber application"
+      ],
+      "coordinates": {
+        "lat": 15.1693,
+        "lng": 120.5857
+      }
+    }
+  }
+]

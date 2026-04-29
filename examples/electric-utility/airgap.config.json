@@ -1,0 +1,261 @@
+{
+  "$schema": "../../airgap.schema.json",
+  "specVersion": "1.0.0",
+  "brand": {
+    "name": "PowerGrid Electric",
+    "botName": "PowerBot",
+    "tagline": "Your electric utility assistant",
+    "hotline": "1-800-POWER",
+    "hotlineLabel": "24/7 emergency and billing support",
+    "website": "powergridelectric.com"
+  },
+  "theme": {
+    "primary": "#F59E0B",
+    "primaryLight": "#FCD34D",
+    "primaryDark": "#D97706",
+    "secondary": "#1F2937",
+    "secondaryLight": "#374151",
+    "background": "#FFFBEB",
+    "surface": "#FFFFFF",
+    "text": "#1F2937",
+    "textSecondary": "#6B7280",
+    "textInverse": "#FFFFFF",
+    "botBubble": "#FEF3C7",
+    "botBubbleText": "#1F2937",
+    "userBubble": "#F59E0B",
+    "userBubbleText": "#FFFFFF",
+    "success": "#10B981",
+    "warning": "#F59E0B",
+    "error": "#EF4444"
+  },
+  "model": {
+    "provider": "llama.cpp",
+    "url": "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q3_K_S.gguf",
+    "filename": "gemma-4-e2b-it-q3ks.gguf",
+    "sha256": "2d010e251ba1fc44b746eb4059825a1954df5f90a1b7a360cf18232a520709aa",
+    "sizeBytes": 2445645184,
+    "sizeMB": 2445
+  },
+  "knowledge": {
+    "directory": "knowledge"
+  },
+  "prompts": {
+    "system": "You are {{botName}}, a customer support assistant for {{brandName}}. Answer ONLY using the CONTEXT provided. Be concise. Use {{currency}} for amounts. For any electrical emergency (downed power lines, sparking equipment, burning smell from panel), immediately tell the customer to call 911 and stay away from the hazard. Never advise customers to perform their own electrical repairs. If unsure, say: \"Please call {{hotline}} for assistance.\"",
+    "welcome": "Hello! I'm {{botName}}, your {{brandName}} assistant.\n\nI can help you with:\n\n{{featureList}}\n\nHow can I help you today?",
+    "fallback": "I don't have information about that. For assistance, please:\n- Call {{hotline}} ({{hotlineLabel}})\n- Visit powergridelectric.com/help\n- Visit your nearest PowerGrid service center",
+    "queued": "Your {{actionLabel}} request has been queued and will be processed when you're back online.",
+    "noModel": "For more detailed answers, download the AI assistant ({{modelSizeMB}} MB) in Settings."
+  },
+  "features": {
+    "offlineQueue": true,
+    "streamingTokens": true,
+    "userFeedback": true,
+    "conversationPersistence": true,
+    "sessionTimeoutMinutes": 30,
+    "modelDownloadOnboarding": true
+  },
+  "onboarding": {
+    "title": "Welcome to {{botName}}",
+    "subtitle": "{{tagline}}",
+    "features": [
+      "Check your electric bill and balance",
+      "Report power outages in your area",
+      "Submit meter readings",
+      "Get energy saving tips",
+      "Apply for new connections or service changes",
+      "Learn about rate plans and programs"
+    ]
+  },
+  "quickReplies": [
+    {
+      "title": "Report outage",
+      "value": "I want to report a power outage"
+    },
+    {
+      "title": "Check my bill",
+      "value": "What is my current electric bill balance?"
+    },
+    {
+      "title": "Power restoration",
+      "value": "When will my power be restored?"
+    },
+    {
+      "title": "Energy saving tips",
+      "value": "How can I reduce my electric bill?"
+    }
+  ],
+  "actions": [
+    {
+      "id": "balance_check",
+      "label": "Check account balance",
+      "keywords": [
+        "my bill",
+        "my balance",
+        "how much do i owe",
+        "account balance",
+        "electric bill",
+        "amount due"
+      ],
+      "requiresOnline": true,
+      "category": "billing",
+      "mockResponse": "Your account ending in 7834 has a current balance of $142.37. Billing period: March 1 - March 31. Payment due date: April 15. Last payment received: $128.50 on March 10."
+    },
+    {
+      "id": "outage_report",
+      "label": "Report a power outage",
+      "keywords": [
+        "power outage",
+        "no power",
+        "no electricity",
+        "lights out",
+        "power out",
+        "blackout",
+        "outage"
+      ],
+      "requiresOnline": true,
+      "category": "outages",
+      "mockResponse": "Your outage report has been submitted for the address on file at 1247 Oak Street. Estimated restoration: within 2-4 hours. Crew has been dispatched. Track status at powergridelectric.com/outage-map or call {{hotline}} for updates."
+    },
+    {
+      "id": "service_request",
+      "label": "Submit a service request",
+      "keywords": [
+        "service request",
+        "start service",
+        "stop service",
+        "transfer service",
+        "move service",
+        "disconnect",
+        "reconnect"
+      ],
+      "requiresOnline": true,
+      "category": "service",
+      "mockResponse": "Your service request has been submitted. A representative will contact you within 1 business day to confirm details. For urgent requests, call {{hotline}}."
+    },
+    {
+      "id": "payment_arrangement",
+      "label": "Set up a payment arrangement",
+      "keywords": [
+        "payment plan",
+        "payment arrangement",
+        "can't pay",
+        "extend due date",
+        "hardship",
+        "late payment"
+      ],
+      "requiresOnline": true,
+      "category": "billing",
+      "mockResponse": "A payment arrangement request has been submitted for your account. You will receive a call within 2 business days to discuss available options, including budget billing and extended payment plans. Call {{hotline}} for immediate assistance."
+    },
+    {
+      "id": "new_connection",
+      "label": "Apply for new electric service",
+      "keywords": [
+        "new connection",
+        "new service",
+        "new account",
+        "hook up electricity",
+        "new construction",
+        "builder"
+      ],
+      "requiresOnline": true,
+      "category": "service",
+      "mockResponse": "Your new service application has been submitted. A field representative will contact you within 3-5 business days to schedule a site assessment. You will need to provide a valid ID and proof of property ownership or lease agreement."
+    }
+  ],
+  "backend": {
+    "type": "mock"
+  },
+  "support": [
+    {
+      "type": "phone",
+      "value": "1-800-POWER",
+      "label": "24/7 emergency and billing (toll-free)"
+    },
+    {
+      "type": "phone",
+      "value": "1-800-769-3700",
+      "label": "Outage hotline"
+    },
+    {
+      "type": "email",
+      "value": "support@powergridelectric.com",
+      "label": "Email support"
+    },
+    {
+      "type": "website",
+      "value": "powergridelectric.com/help",
+      "label": "Online help center"
+    }
+  ],
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "safety": {
+    "enabled": true,
+    "confidenceThreshold": 0,
+    "topicBlocklist": [
+      "not_medical_advice:diagnose",
+      "not_medical_advice:prescribe",
+      "not_financial_advice:should I invest",
+      "not_financial_advice:investment advice",
+      "not_legal_advice:sue",
+      "not_legal_advice:legal advice"
+    ],
+    "groundingRules": {
+      "requireCitations": false,
+      "forbidUnsourcedAmounts": true,
+      "forbidUnsourcedDates": true
+    },
+    "refusalTemplates": {}
+  },
+  "tools": [
+    {
+      "name": "reportOutage",
+      "description": "Report a power outage at the caller's address",
+      "keywords": [
+        "power outage",
+        "no power",
+        "report outage",
+        "electricity out"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "electric",
+      "backendMethod": "reportOutage"
+    },
+    {
+      "name": "checkBillStatus",
+      "description": "Look up the current electricity bill status",
+      "keywords": [
+        "my bill",
+        "bill amount",
+        "what do I owe",
+        "bill status"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "electric",
+      "backendMethod": "checkBalance"
+    },
+    {
+      "name": "scheduleMeterRead",
+      "description": "Schedule a technician to read the caller's meter",
+      "keywords": [
+        "meter read",
+        "read my meter",
+        "schedule meter",
+        "meter reading"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "electric",
+      "backendMethod": "scheduleMeterRead"
+    }
+  ],
+  "llm": {
+    "mode": "demo"
+  }
+}

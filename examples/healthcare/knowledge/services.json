@@ -1,0 +1,74 @@
+[
+  {
+    "id": "svc-001",
+    "category": "services",
+    "title": "Primary care",
+    "content": "CareFirst Primary Care provides comprehensive healthcare for adults and families. Services include annual wellness exams, chronic disease management (diabetes, hypertension, asthma), acute illness treatment, preventive screenings, immunizations, health counseling, and referrals to specialists. Walk-in availability varies by location. Average appointment length is 20-30 minutes. Primary care providers include MDs, DOs, NPs, and PAs. Accepting new patients at most locations. Hours: Monday through Friday 8:00 AM to 5:00 PM, with extended hours until 7:00 PM at select locations.",
+    "keywords": ["primary care", "family medicine", "general doctor", "PCP", "family doctor", "general practitioner"],
+    "tags": ["primary-care", "services", "general"],
+    "metadata": {"department": "primary_care"}
+  },
+  {
+    "id": "svc-002",
+    "category": "services",
+    "title": "Urgent care",
+    "content": "CareFirst Urgent Care treats non-life-threatening conditions without an appointment. Common conditions: flu and cold, minor injuries and fractures, sprains and strains, cuts requiring stitches, minor burns, rashes, ear and eye infections, UTIs, allergic reactions, and back pain. On-site services include X-ray, basic lab testing, splinting, and wound care. Average visit cost: $50-$75 copay. Hours: Monday through Friday 8:00 AM to 8:00 PM, Saturday and Sunday 9:00 AM to 5:00 PM. Check-in online to reduce wait times at carefirstmedical.com/urgent-care.",
+    "keywords": ["urgent care", "walk-in clinic", "immediate care", "minor emergency", "no appointment needed"],
+    "tags": ["urgent-care", "walk-in", "services"],
+    "metadata": {"department": "urgent_care"}
+  },
+  {
+    "id": "svc-003",
+    "category": "services",
+    "title": "Pediatrics",
+    "content": "CareFirst Pediatrics provides care for children from birth through age 18. Services include well-child visits, vaccinations per CDC schedule, developmental screenings, sick visits, ADHD and behavioral evaluations, sports physicals, and adolescent care. Our pediatricians coordinate with schools for health forms and immunization records. Same-day sick visits are available. New parents receive a first-year visit schedule and milestones guide. Pediatric locations have child-friendly waiting areas. Hours: Monday through Friday 8:00 AM to 5:00 PM, Saturday 9:00 AM to 1:00 PM at select locations.",
+    "keywords": ["pediatrics", "children", "kids", "child doctor", "baby doctor", "well-child", "pediatrician"],
+    "tags": ["pediatrics", "children", "services"],
+    "metadata": {"department": "pediatrics"}
+  },
+  {
+    "id": "svc-004",
+    "category": "services",
+    "title": "OB/GYN and women's health",
+    "content": "CareFirst OB/GYN provides comprehensive women's health services including annual well-woman exams, Pap smears, prenatal and postnatal care, family planning and contraception counseling, menopause management, breast health screenings, and minimally invasive gynecologic procedures. Prenatal care includes ultrasounds, genetic screening options, and delivery planning. We deliver at St. Luke's Medical Center and Memorial Hospital. Self-referral accepted under most insurance plans. New OB patients are seen within 1 week. Hours: Monday through Friday 8:00 AM to 5:00 PM.",
+    "keywords": ["OB/GYN", "obgyn", "women's health", "pregnancy", "prenatal", "gynecologist", "Pap smear"],
+    "tags": ["obgyn", "women", "services"],
+    "metadata": {"department": "obgyn"}
+  },
+  {
+    "id": "svc-005",
+    "category": "services",
+    "title": "Dental services",
+    "content": "CareFirst Dental provides preventive and restorative dental care for patients of all ages. Services include routine cleanings and exams, X-rays, fillings, crowns and bridges, root canals, extractions, teeth whitening, and periodontal treatment. Preventive cleanings are recommended every 6 months. Dental plans accepted: Delta Dental, MetLife, Cigna Dental, Guardian, and CareFirst dental coverage. Uninsured patients receive a 20% discount on all services. Emergency dental (severe toothache, broken tooth) is seen same-day. Hours: Monday through Friday 8:00 AM to 5:00 PM, Saturday 9:00 AM to 2:00 PM.",
+    "keywords": ["dental", "dentist", "teeth", "cleaning", "dental checkup", "toothache", "dental care"],
+    "tags": ["dental", "services", "oral-health"],
+    "metadata": {"department": "dental"}
+  },
+  {
+    "id": "svc-006",
+    "category": "services",
+    "title": "Vision and eye care",
+    "content": "CareFirst Vision provides comprehensive eye exams, vision screening, prescription glasses and contact lenses, and treatment for common eye conditions (dry eye, conjunctivitis, glaucoma screening, diabetic eye exams). Eye exams include refraction, tonometry, and retinal imaging. On-site optical shop with frames starting at $79 (frame + single-vision lenses). Contact lens fittings: $50 in addition to exam. Vision insurance accepted: VSP, EyeMed, Davis Vision, and most major plans. Annual eye exams recommended for all adults. Hours: Monday through Friday 9:00 AM to 6:00 PM.",
+    "keywords": ["vision", "eye exam", "glasses", "contact lenses", "eye care", "optometrist", "eye doctor"],
+    "tags": ["vision", "eye-care", "services"],
+    "metadata": {"department": "vision"}
+  },
+  {
+    "id": "svc-007",
+    "category": "services",
+    "title": "Mental health and counseling",
+    "content": "CareFirst Behavioral Health provides outpatient mental health services including individual therapy, couples counseling, family therapy, group therapy, psychiatric evaluations, and medication management. Our team includes licensed therapists (LCSW, LPC, LMFT), psychologists, and psychiatrists. We treat depression, anxiety, PTSD, OCD, bipolar disorder, ADHD, grief, and substance use disorders. Telehealth therapy sessions are available. Self-referral accepted under most insurance plans. New patients are seen within 1-2 weeks. Crisis resources: call 988 (Suicide & Crisis Lifeline) or text HOME to 741741.",
+    "keywords": ["mental health", "therapy", "counseling", "psychiatrist", "depression", "anxiety", "behavioral health"],
+    "tags": ["mental-health", "counseling", "services"],
+    "metadata": {"department": "behavioral_health"}
+  },
+  {
+    "id": "svc-008",
+    "category": "services",
+    "title": "Pharmacy services",
+    "content": "CareFirst operates on-site pharmacies at 4 clinic locations with full dispensing services. Services include prescription filling (average 15-minute wait), medication counseling, immunizations (flu, COVID, shingles, pneumonia), medication therapy management, compounding for select medications, and home delivery (free for maintenance medications within 20 miles). Mail-order pharmacy available for 90-day supplies at reduced copay. Pharmacy hours: Monday through Friday 8:00 AM to 7:00 PM, Saturday 9:00 AM to 3:00 PM. Transfer prescriptions from other pharmacies by calling the CareFirst pharmacy directly.",
+    "keywords": ["pharmacy", "medication", "fill prescription", "drug store", "pharmacist", "medicine"],
+    "tags": ["pharmacy", "medication", "services"],
+    "metadata": {"department": "pharmacy"}
+  }
+]

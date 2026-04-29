@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" fill="none">
+  <!-- Logo mark (small) -->
+  <circle cx="80" cy="100" r="60" fill="#0047AB"/>
+  <path d="M80 45 L135 70 L135 115 C135 140 115 160 80 168 C45 160 25 140 25 115 L25 70 Z"
+        fill="#0047AB" stroke="white" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M80 65 C100 65 115 78 115 95" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M80 65 C60 65 45 78 45 95" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M80 80 C92 80 102 88 102 100" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <path d="M80 80 C68 80 58 88 58 100" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <circle cx="80" cy="105" r="6" fill="white"/>
+
+  <!-- Wordmark -->
+  <text x="170" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="72" font-weight="700" fill="#1A1A2E" letter-spacing="-2">
+    Airgap
+  </text>
+
+  <!-- Tagline -->
+  <text x="172" y="148" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="20" fill="#6B7280" letter-spacing="0.5">
+    Air-gapped AI support for enterprise
+  </text>
+</svg>

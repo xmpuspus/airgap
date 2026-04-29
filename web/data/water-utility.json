@@ -1,0 +1,73 @@
+{
+  "vertical": "water-utility",
+  "label": "AquaFlow Water",
+  "botName": "AquaBot",
+  "tagline": "Your water utility assistant",
+  "theme": {
+    "primary": "#0891B2",
+    "primaryDark": "#0E7490",
+    "secondary": "#134E4A",
+    "background": "#ECFEFF",
+    "surface": "#FFFFFF",
+    "text": "#134E4A",
+    "botBubble": "#CFFAFE",
+    "userBubble": "#0891B2"
+  },
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "knowledge": {
+    "totalDocs": 36,
+    "categories": {
+      "faq": 21,
+      "payments": 5,
+      "services": 6,
+      "troubleshooting": 4
+    }
+  },
+  "config": {
+    "brand": {
+      "name": "AquaFlow Water",
+      "botName": "AquaBot",
+      "tagline": "Your water utility assistant",
+      "hotline": "1-800-AQUA",
+      "hotlineLabel": "24/7 emergency and billing support",
+      "website": "aquaflowwater.com"
+    },
+    "theme": {
+      "primary": "#0891B2",
+      "secondary": "#134E4A",
+      "background": "#ECFEFF"
+    },
+    "locale": {
+      "currency": "USD",
+      "language": "en",
+      "region": "US"
+    },
+    "llm": {
+      "mode": "demo"
+    },
+    "quickReplies": [
+      {
+        "title": "Report a leak",
+        "value": "I want to report a water leak"
+      },
+      {
+        "title": "Check my bill",
+        "value": "What is my current water bill balance?"
+      },
+      {
+        "title": "Water quality",
+        "value": "Is my water safe to drink?"
+      },
+      {
+        "title": "Conservation tips",
+        "value": "How can I reduce my water bill?"
+      }
+    ],
+    "toolCount": 3
+  },
+  "gif": "assets/gifs/industry-water.gif"
+}

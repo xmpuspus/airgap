@@ -1,0 +1,8 @@
+
+# Release artifacts (use GitHub Releases instead)
+release/
+*.keystore
+*.jks
+
+# Native build artifacts  
+*.so

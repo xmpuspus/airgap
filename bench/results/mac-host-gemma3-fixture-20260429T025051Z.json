@@ -1,0 +1,55 @@
+{
+  "device": "mac-host-gemma3-fixture",
+  "model": "hf_bartowski_google_gemma-3-1b-it-Q4_K_M.gguf",
+  "mode": "real",
+  "capturedAt": "2026-04-29T02:50:51.009Z",
+  "notes": "fixture (Gemma 3 1B Q4), not Gemma 4",
+  "runs": [
+    {
+      "query": "What plans do you have?",
+      "loadMs": 610.7632919999996,
+      "firstTokenMs": 571,
+      "totalMs": 1497,
+      "tokenCount": 81,
+      "tokensPerSec": 54.1
+    },
+    {
+      "query": "How do I check my balance?",
+      "loadMs": null,
+      "firstTokenMs": 28,
+      "totalMs": 981,
+      "tokenCount": 81,
+      "tokensPerSec": 82.5
+    },
+    {
+      "query": "Where is the nearest store?",
+      "loadMs": null,
+      "firstTokenMs": 29,
+      "totalMs": 959,
+      "tokenCount": 81,
+      "tokensPerSec": 84.5
+    },
+    {
+      "query": "What are your roaming rates for Singapore?",
+      "loadMs": null,
+      "firstTokenMs": 29,
+      "totalMs": 945,
+      "tokenCount": 81,
+      "tokensPerSec": 85.7
+    },
+    {
+      "query": "How do I dispute a transaction?",
+      "loadMs": null,
+      "firstTokenMs": 32,
+      "totalMs": 950,
+      "tokenCount": 81,
+      "tokensPerSec": 85.3
+    }
+  ],
+  "summary": {
+    "p50FirstTokenMs": 29,
+    "p95FirstTokenMs": 32,
+    "p50TokensPerSec": 84.5,
+    "p95TokensPerSec": 85.3
+  }
+}

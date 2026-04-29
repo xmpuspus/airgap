@@ -1,0 +1,16 @@
+{
+  "vertical": "electric-utility",
+  "description": "Golden cases for the electric utility example config.",
+  "cases": [
+    {"id": "elec-1", "query": "Power outage in my neighborhood", "expectTool": "reportOutage"},
+    {"id": "elec-2", "query": "No power for two hours", "expectTool": "reportOutage"},
+    {"id": "elec-3", "query": "What is my bill amount this month", "expectTool": "checkBillStatus"},
+    {"id": "elec-4", "query": "What do I owe on my electric bill", "expectTool": "checkBillStatus"},
+    {"id": "elec-5", "query": "Schedule a meter read for next week", "expectTool": "scheduleMeterRead"},
+    {"id": "elec-6", "query": "Read my meter please", "expectTool": "scheduleMeterRead"},
+    {"id": "elec-7", "query": "How do I report downed power lines", "mustInclude": ["downed"]},
+    {"id": "elec-8", "query": "What are your time-of-use rates", "mustInclude": ["rate"]},
+    {"id": "elec-9", "query": "How do I sign up for autopay", "mustInclude": ["autopay"]},
+    {"id": "elec-10", "query": "What is your renewable energy program", "mustInclude": ["renewable"]}
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "vertical": "airline",
+  "label": "SkyPeak Airlines",
+  "botName": "SkyBot",
+  "tagline": "Your in-flight and ground support assistant",
+  "theme": {
+    "primary": "#1565C0",
+    "primaryDark": "#0D47A1",
+    "secondary": "#FF6F00",
+    "background": "#E3F2FD",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "botBubble": "#F1F5F9",
+    "userBubble": "#1565C0"
+  },
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "knowledge": {
+    "totalDocs": 54,
+    "categories": {
+      "faq": 27,
+      "lounges": 6,
+      "routes": 8,
+      "services": 8,
+      "troubleshooting": 5
+    }
+  },
+  "config": {
+    "brand": {
+      "name": "SkyPeak Airlines",
+      "botName": "SkyBot",
+      "tagline": "Your in-flight and ground support assistant",
+      "hotline": "1-888-SKYPEAK",
+      "hotlineLabel": "available 24/7",
+      "website": "skypeakair.com"
+    },
+    "theme": {
+      "primary": "#1565C0",
+      "secondary": "#FF6F00",
+      "background": "#E3F2FD"
+    },
+    "locale": {
+      "currency": "USD",
+      "language": "en",
+      "region": "US"
+    },
+    "llm": {
+      "mode": "demo"
+    },
+    "quickReplies": [
+      {
+        "title": "Baggage rules",
+        "value": "What is the baggage allowance?"
+      },
+      {
+        "title": "Check-in help",
+        "value": "How do I check in online?"
+      },
+      {
+        "title": "Flight status",
+        "value": "Check my flight status"
+      },
+      {
+        "title": "Frequent flyer",
+        "value": "How does the loyalty program work?"
+      }
+    ],
+    "toolCount": 2
+  },
+  "gif": "assets/gifs/industry-airline.gif"
+}

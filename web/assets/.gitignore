@@ -1,0 +1,4 @@
+# GIFs are copied from demo/ at build time by web/data/build.mjs.
+# They are not committed in this folder; the deploy workflow regenerates
+# them before publishing to GitHub Pages.
+gifs/

@@ -1,0 +1,31 @@
+# CODEOWNERS
+#
+# These owners will be the default owners for everything in the repo and
+# will be automatically requested for review when someone opens a pull
+# request. Replace these entries with your organization's actual handles
+# before forking for production use.
+
+* @airgap-maintainers
+
+# Native build files get extra review from the mobile team.
+/android/            @airgap-maintainers @airgap-mobile
+/ios/                @airgap-maintainers @airgap-mobile
+
+# The safety layer, sync pipeline, and tool router are load-bearing. Any
+# change here needs a second pair of eyes.
+/src/services/safetyLayer.ts      @airgap-maintainers @airgap-safety
+/src/services/syncService.ts      @airgap-maintainers @airgap-platform
+/src/services/tools.ts            @airgap-maintainers @airgap-safety
+/src/services/llmRouter.ts        @airgap-maintainers @airgap-platform
+/src/services/backendConnector.ts @airgap-maintainers @airgap-platform
+
+# The BFF is operator-facing. Protect its interface.
+/server/             @airgap-maintainers @airgap-platform
+
+# Config schema is the public API for operators. Treat it as stable.
+/airgap.schema.json  @airgap-maintainers
+
+# Docs updates don't require code review, but keep maintainers CC'd so the
+# truthfulness audit stays honest.
+/docs/               @airgap-maintainers
+/README.md           @airgap-maintainers

@@ -1,0 +1,95 @@
+{
+  "device": "mac-host-node",
+  "model": "gemma-4-e2b-it-q3ks.gguf",
+  "mode": "demo",
+  "capturedAt": "2026-04-29T01:17:34.168Z",
+  "pathTaken": "fallback",
+  "runs": [
+    {
+      "query": "What plans do you have?",
+      "loadMs": null,
+      "firstTokenMs": 1.68,
+      "tokensPerSec": null,
+      "totalMs": 1.68,
+      "tokenCount": 1322
+    },
+    {
+      "query": "How do I check my balance?",
+      "loadMs": null,
+      "firstTokenMs": 0.74,
+      "tokensPerSec": null,
+      "totalMs": 0.74,
+      "tokenCount": 1178
+    },
+    {
+      "query": "Where is the nearest store?",
+      "loadMs": null,
+      "firstTokenMs": 0.27,
+      "tokensPerSec": null,
+      "totalMs": 0.27,
+      "tokenCount": 1298
+    },
+    {
+      "query": "What are your roaming rates for Singapore?",
+      "loadMs": null,
+      "firstTokenMs": 0.54,
+      "tokensPerSec": null,
+      "totalMs": 0.54,
+      "tokenCount": 1355
+    },
+    {
+      "query": "How do I dispute a transaction?",
+      "loadMs": null,
+      "firstTokenMs": 1.16,
+      "tokensPerSec": null,
+      "totalMs": 1.16,
+      "tokenCount": 1314
+    },
+    {
+      "query": "What is covered by my plan?",
+      "loadMs": null,
+      "firstTokenMs": 0.22,
+      "tokensPerSec": null,
+      "totalMs": 0.22,
+      "tokenCount": 1313
+    },
+    {
+      "query": "How do I cancel my appointment?",
+      "loadMs": null,
+      "firstTokenMs": 0.55,
+      "tokensPerSec": null,
+      "totalMs": 0.55,
+      "tokenCount": 1314
+    },
+    {
+      "query": "How do I report an outage?",
+      "loadMs": null,
+      "firstTokenMs": 0.4,
+      "tokensPerSec": null,
+      "totalMs": 0.4,
+      "tokenCount": 1316
+    },
+    {
+      "query": "What payment methods do you accept?",
+      "loadMs": null,
+      "firstTokenMs": 0.3,
+      "tokensPerSec": null,
+      "totalMs": 0.3,
+      "tokenCount": 1305
+    },
+    {
+      "query": "I need help troubleshooting my connection",
+      "loadMs": null,
+      "firstTokenMs": 0.61,
+      "tokensPerSec": null,
+      "totalMs": 0.61,
+      "tokenCount": 1305
+    }
+  ],
+  "summary": {
+    "p50FirstTokenMs": 0.55,
+    "p95FirstTokenMs": 1.45,
+    "p50TokensPerSec": null,
+    "p95TokensPerSec": null
+  }
+}

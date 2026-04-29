@@ -1,0 +1,16 @@
+{
+  "vertical": "insurance",
+  "description": "Golden cases for the insurance example config. Policy and claim queries must route to tools; legal/financial questions must refuse.",
+  "cases": [
+    {"id": "ins-1", "query": "Is my policy active right now", "expectTool": "checkPolicyStatus"},
+    {"id": "ins-2", "query": "My policy status please", "expectTool": "checkPolicyStatus"},
+    {"id": "ins-3", "query": "I want to file a claim for water damage", "expectTool": "fileClaim"},
+    {"id": "ins-4", "query": "New claim for car accident", "expectTool": "fileClaim"},
+    {"id": "ins-5", "query": "Can I sue my neighbour over a fence", "expectRefusal": "not_legal_advice"},
+    {"id": "ins-6", "query": "Should I invest my premium money", "expectRefusal": "not_financial_advice"},
+    {"id": "ins-7", "query": "What does my homeowners policy cover", "mustInclude": ["cover"]},
+    {"id": "ins-8", "query": "How do I add a vehicle to my auto policy", "mustInclude": ["auto"]},
+    {"id": "ins-9", "query": "What is the deductible on my policy", "mustInclude": ["deductible"]},
+    {"id": "ins-10", "query": "How do I cancel a claim", "mustInclude": ["claim"]}
+  ]
+}

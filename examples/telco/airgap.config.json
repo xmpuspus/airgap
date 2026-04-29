@@ -1,0 +1,312 @@
+{
+  "$schema": "./airgap.schema.json",
+  "specVersion": "1.0.0",
+  "brand": {
+    "name": "ACME Telecom",
+    "botName": "Alice",
+    "tagline": "Your AI-powered customer support assistant",
+    "hotline": "211",
+    "hotlineLabel": "free from ACME mobile",
+    "website": "acme-telecom.ph",
+    "logo": "assets/images/acme-logo.png"
+  },
+  "theme": {
+    "primary": "#0047AB",
+    "primaryLight": "#3373C4",
+    "primaryDark": "#003080",
+    "secondary": "#FF6B00",
+    "secondaryLight": "#FF8A33",
+    "background": "#F5F7FA",
+    "surface": "#FFFFFF",
+    "text": "#1A1A2E",
+    "textSecondary": "#6B7280",
+    "textInverse": "#FFFFFF",
+    "botBubble": "#E8EEF6",
+    "botBubbleText": "#1A1A2E",
+    "userBubble": "#0047AB",
+    "userBubbleText": "#FFFFFF",
+    "success": "#10B981",
+    "warning": "#F59E0B",
+    "error": "#EF4444"
+  },
+  "model": {
+    "provider": "llama.cpp",
+    "url": "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q3_K_S.gguf",
+    "filename": "gemma-4-e2b-it-q3ks.gguf",
+    "sha256": "2d010e251ba1fc44b746eb4059825a1954df5f90a1b7a360cf18232a520709aa",
+    "sizeBytes": 2445645184,
+    "sizeMB": 2445,
+    "contextSize": 8192,
+    "maxTokens": 256,
+    "temperature": 0.3,
+    "topP": 0.9,
+    "stopTokens": [
+      "<end_of_turn>",
+      "<eos>",
+      "</s>"
+    ],
+    "gpuLayers": 99,
+    "threads": 4
+  },
+  "knowledge": {
+    "directory": "knowledge",
+    "schema": "kbdoc-v1",
+    "search": {
+      "topK": 3,
+      "fuzzy": 0.2,
+      "boostTitle": 3,
+      "boostKeywords": 2,
+      "boostContent": 1
+    }
+  },
+  "prompts": {
+    "system": "You are {{botName}}, customer support for {{brandName}}. Answer ONLY using the CONTEXT the user provides. Be concise and helpful. Use {{currency}} for prices. When multiple products are in the context, compare their key features. If the answer is not in the context, say: \"I don't have that information. Please call {{hotline}} for assistance.\" Never invent information.",
+    "welcome": "Hi! I'm {{botName}}, your {{brandName}} support assistant. I can help you with:\n\n{{featureList}}\n\nWhat can I help you with?",
+    "fallback": "I'm not sure I have information about that. I can help with:\n\n{{featureList}}\n\nFor other concerns, call {{hotline}} ({{hotlineLabel}}).",
+    "queued": "This requires an internet connection. I've saved your request and will process it when you're back online.\n\nQueued: {{actionLabel}}",
+    "noModel": "\n\n(Tip: Download the AI model in Settings for more detailed answers.)"
+  },
+  "features": {
+    "offlineQueue": true,
+    "streamingTokens": true,
+    "userFeedback": true,
+    "conversationPersistence": true,
+    "sessionTimeoutMinutes": 30,
+    "modelDownloadOnboarding": true
+  },
+  "onboarding": {
+    "title": "Welcome to {{botName}}",
+    "subtitle": "{{tagline}}",
+    "features": [
+      "Answer questions about plans, pricing & promos",
+      "Troubleshoot signal, data & WiFi issues",
+      "Find store locations and hours",
+      "Check roaming rates and packages",
+      "Guide you through SIM & eSIM setup",
+      "Show payment options and instructions"
+    ],
+    "downloadPrompt": "Download AI Assistant (~{{modelSizeMB}}MB)",
+    "skipLabel": "Skip for now",
+    "wifiNote": "WiFi recommended for download"
+  },
+  "quickReplies": [
+    {
+      "title": "Check plans",
+      "value": "What prepaid and postpaid plans do you have?"
+    },
+    {
+      "title": "Troubleshoot an issue",
+      "value": "I need help troubleshooting"
+    },
+    {
+      "title": "Find a store",
+      "value": "Where is the nearest store?"
+    },
+    {
+      "title": "Roaming rates",
+      "value": "What are your roaming rates?"
+    }
+  ],
+  "actions": [
+    {
+      "id": "balance_check",
+      "label": "Check account balance",
+      "keywords": [
+        "my balance",
+        "my bill amount",
+        "what is my bill",
+        "how much is my bill",
+        "my data usage",
+        "check my usage",
+        "my account details",
+        "my account info"
+      ],
+      "requiresOnline": true,
+      "category": "account",
+      "mockResponse": "Your current balance is PHP 127.50. Data remaining: 3.2GB (expires Apr 15). Active promo: MegaSurf 299."
+    },
+    {
+      "id": "plan_change",
+      "label": "Plan change request",
+      "keywords": [
+        "change my plan",
+        "switch my plan",
+        "upgrade my plan",
+        "activate my plan",
+        "change plan to",
+        "switch plan to",
+        "upgrade plan",
+        "activate plan"
+      ],
+      "requiresOnline": true,
+      "category": "account",
+      "mockResponse": "To change your plan, please specify which plan you'd like to switch to. You can say something like \"Switch to Plan 999\" and I'll process it."
+    },
+    {
+      "id": "ticket_create",
+      "label": "Create support ticket",
+      "keywords": [
+        "create a ticket",
+        "create ticket",
+        "file a complaint",
+        "file complaint",
+        "support ticket"
+      ],
+      "requiresOnline": true,
+      "category": "support",
+      "mockResponse": "I can help create a support ticket. Could you describe the issue you're experiencing?"
+    },
+    {
+      "id": "outage_check",
+      "label": "Check outage status",
+      "keywords": [
+        "outage status",
+        "service outage",
+        "outage in my area"
+      ],
+      "requiresOnline": true,
+      "category": "network",
+      "mockResponse": "No service outages are currently reported in your area. If you're still experiencing issues, I can help troubleshoot."
+    },
+    {
+      "id": "account_action",
+      "label": "Account change request",
+      "keywords": [
+        "cancel my plan",
+        "disconnect my",
+        "deactivate my",
+        "terminate my",
+        "unsubscribe"
+      ],
+      "requiresOnline": true,
+      "category": "account",
+      "mockResponse": "For account changes like cancellation or disconnection, please visit a store with a valid ID or call {{hotline}}."
+    }
+  ],
+  "backend": {
+    "type": "mock",
+    "baseUrl": "",
+    "auth": {
+      "type": "none"
+    },
+    "endpoints": {}
+  },
+  "support": [
+    {
+      "type": "phone",
+      "value": "211",
+      "label": "Hotline (free from mobile)"
+    },
+    {
+      "type": "phone",
+      "value": "02-8888-0211",
+      "label": "Landline"
+    },
+    {
+      "type": "email",
+      "value": "support@acme-telecom.ph",
+      "label": "Email support"
+    },
+    {
+      "type": "chat",
+      "value": "in-app",
+      "label": "Chat support (7AM-10PM)"
+    }
+  ],
+  "locale": {
+    "currency": "PHP",
+    "language": "en",
+    "region": "PH"
+  },
+  "safety": {
+    "enabled": true,
+    "confidenceThreshold": 0,
+    "topicBlocklist": [
+      "not_medical_advice:diagnose me",
+      "not_financial_advice:should I invest",
+      "not_legal_advice:sue",
+      "not_medical_advice:diagnose",
+      "not_medical_advice:prescribe",
+      "not_financial_advice:investment advice",
+      "not_legal_advice:legal advice"
+    ],
+    "groundingRules": {
+      "requireCitations": false,
+      "forbidUnsourcedAmounts": true,
+      "forbidUnsourcedDates": true
+    },
+    "refusalTemplates": {}
+  },
+  "tools": [
+    {
+      "name": "checkBalance",
+      "description": "Look up the caller's balance, data remaining, and active promo",
+      "keywords": [
+        "my balance",
+        "my bill amount",
+        "my data usage",
+        "check my usage"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "telco",
+      "backendMethod": "checkBalance"
+    },
+    {
+      "name": "reportOutage",
+      "description": "Check for a service outage in the caller's area",
+      "keywords": [
+        "outage status",
+        "service outage",
+        "outage in my area"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "telco",
+      "backendMethod": "checkOutage"
+    },
+    {
+      "name": "createTicket",
+      "description": "Open a support ticket",
+      "keywords": [
+        "create a ticket",
+        "file a complaint",
+        "support ticket"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "telco",
+      "backendMethod": "createTicket"
+    },
+    {
+      "name": "activateAddon",
+      "description": "Activate a data or voice add-on on the caller's plan",
+      "keywords": [
+        "activate addon",
+        "activate add-on",
+        "change my plan",
+        "upgrade my plan"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "telco",
+      "backendMethod": "changePlan"
+    },
+    {
+      "name": "scheduleCallback",
+      "description": "Schedule a callback from support",
+      "keywords": [
+        "call me back",
+        "schedule callback",
+        "request a callback"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "telco",
+      "backendMethod": "scheduleCallback"
+    }
+  ],
+  "llm": {
+    "mode": "demo"
+  }
+}

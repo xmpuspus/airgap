@@ -1,0 +1,236 @@
+[
+  {
+    "id": "faq-001",
+    "category": "faq",
+    "title": "How to book an appointment",
+    "content": "Book an appointment through the CareFirst patient portal at carefirstmedical.com/portal, by calling 1-800-CARE, or through the CareFirst mobile app. New patients can book online after completing registration. Same-day appointments are available at select locations on a first-come, first-served basis. When booking, have your insurance card and a list of current medications ready. You will receive a confirmation email and SMS with appointment details and any pre-visit instructions.",
+    "keywords": ["book appointment", "schedule appointment", "make appointment", "see doctor", "appointment booking"],
+    "tags": ["appointments", "booking", "getting-started"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-002",
+    "category": "faq",
+    "title": "Patient portal registration",
+    "content": "Register for the CareFirst patient portal at carefirstmedical.com/portal by clicking 'New User.' You will need your medical record number (found on your visit summary or billing statement), date of birth, and a valid email address. Set a password meeting security requirements (minimum 8 characters, one uppercase, one number, one special character). Two-factor authentication via SMS or authenticator app is required. Portal access is activated within 1 hour of registration. If you need your medical record number, call 1-800-CARE.",
+    "keywords": ["patient portal", "register portal", "create account", "portal registration", "sign up"],
+    "tags": ["portal", "registration", "digital"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-003",
+    "category": "faq",
+    "title": "Prescription refill process",
+    "content": "Refill prescriptions through the patient portal (My Medications > Request Refill), by calling your clinic's pharmacy line, or by asking your pharmacy to send a refill request to your provider. Routine refills are processed within 24-48 hours. Controlled substances require a new prescription from your provider and cannot be refilled online. Prescriptions can be sent to any pharmacy of your choice. For mail-order pharmacy (90-day supply at reduced copay), contact 1-800-CARE ext. 4. Please request refills at least 5 days before running out.",
+    "keywords": ["prescription refill", "refill medication", "renew prescription", "medication refill", "pharmacy"],
+    "tags": ["pharmacy", "prescriptions", "self-service"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-004",
+    "category": "faq",
+    "title": "Lab results timeline",
+    "content": "Lab results are posted to the patient portal after review by your physician. Typical timelines: routine blood work 2-3 business days, metabolic panels 1-2 business days, cultures and specialized tests 5-7 business days, pathology and biopsy results 7-10 business days. You will receive a portal notification when results are available. Your physician will contact you directly for any results requiring immediate attention. Questions about results should be directed to your provider through the portal messaging feature.",
+    "keywords": ["lab results", "test results", "blood work results", "how long for results", "when results ready"],
+    "tags": ["lab", "results", "testing"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-005",
+    "category": "faq",
+    "title": "Insurance plans accepted",
+    "content": "CareFirst Medical accepts most major insurance plans including Aetna, Anthem Blue Cross Blue Shield, Cigna, Humana, UnitedHealthcare, Kaiser (select locations), Medicare, and Medicaid. We also accept TRICARE and most workers' compensation plans. Coverage varies by location and provider. Verify your specific plan by calling 1-800-CARE or checking the provider directory at carefirstmedical.com/insurance. Bring your insurance card to every visit. We recommend verifying coverage before scheduling specialist appointments.",
+    "keywords": ["insurance accepted", "which insurance", "insurance plans", "do you take my insurance", "coverage"],
+    "tags": ["insurance", "coverage", "billing"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-006",
+    "category": "faq",
+    "title": "Copay information",
+    "content": "Copays are due at the time of your visit. Typical copay ranges (varies by plan): primary care visit $20-$40, specialist visit $40-$75, urgent care visit $50-$75, telehealth visit $0-$25, preventive/wellness visit $0 (covered at 100% for most plans). Copay amounts are determined by your insurance plan, not by CareFirst. If you are unsure of your copay, call the number on the back of your insurance card or ask at check-in. We accept cash, credit/debit cards, HSA/FSA cards, and personal checks.",
+    "keywords": ["copay", "co-pay", "how much does visit cost", "cost of visit", "payment at visit"],
+    "tags": ["billing", "copay", "payment"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-007",
+    "category": "faq",
+    "title": "Telehealth availability",
+    "content": "CareFirst offers telehealth video visits for primary care, mental health, dermatology, and follow-up appointments. Available Monday through Saturday, 7:00 AM to 9:00 PM. Book telehealth visits through the patient portal or app — select 'Video Visit' as the visit type. You will need a device with a camera and microphone, and a stable internet connection. A link to join is sent 15 minutes before your appointment. Telehealth copays are typically lower than in-person visits. Prescriptions can be sent to your pharmacy after a telehealth visit.",
+    "keywords": ["telehealth", "video visit", "virtual visit", "online doctor", "remote appointment"],
+    "tags": ["telehealth", "virtual", "appointments"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-008",
+    "category": "faq",
+    "title": "Walk-in and urgent care hours",
+    "content": "CareFirst Urgent Care locations accept walk-in patients with no appointment needed. Hours: Monday through Friday 8:00 AM to 8:00 PM, Saturday and Sunday 9:00 AM to 5:00 PM. Urgent care treats non-life-threatening conditions: minor injuries, sprains, flu/cold symptoms, minor burns, rashes, UTIs, ear infections, and minor allergic reactions. Average wait time is 20-40 minutes. Check real-time wait times at carefirstmedical.com/urgent-care. For emergencies (chest pain, difficulty breathing, severe bleeding), call 911.",
+    "keywords": ["walk-in", "urgent care", "no appointment", "walk in hours", "urgent care hours"],
+    "tags": ["urgent-care", "walk-in", "hours"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-009",
+    "category": "faq",
+    "title": "Medical records request",
+    "content": "Request copies of your medical records through the patient portal (My Records > Request Records), by completing a release form at any CareFirst clinic, or by mailing a signed authorization to the Health Information Management department. Electronic records via the portal are available within 3 business days. Paper copies take 10-15 business days and may incur a processing fee of $0.25 per page plus a $10 handling fee. Records transfers to another provider are free when requested through the portal. We comply with HIPAA regulations for all record releases.",
+    "keywords": ["medical records", "request records", "health records", "transfer records", "record copy"],
+    "tags": ["records", "HIPAA", "self-service"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-010",
+    "category": "faq",
+    "title": "Referral process",
+    "content": "Referrals to specialists are initiated by your primary care provider. Request a referral through the patient portal messaging feature or at your next visit. Most referrals are processed within 2-3 business days. You will receive a notification when the referral is approved, along with a list of in-network specialists. Some insurance plans require prior authorization for specialist visits — CareFirst handles this process. Self-referral is available for OB/GYN, dermatology, and mental health under most plans. Check your insurance plan for referral requirements.",
+    "keywords": ["referral", "specialist referral", "see specialist", "referral process", "need referral"],
+    "tags": ["referrals", "specialists", "process"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-011",
+    "category": "faq",
+    "title": "Immunization schedules",
+    "content": "CareFirst follows CDC-recommended immunization schedules for children and adults. Childhood vaccines (birth through 18 years) are available at all pediatric and family medicine locations. Adult vaccines include annual flu shot, COVID-19 boosters, Tdap, shingles (50+), pneumonia (65+), and travel vaccines. Most preventive vaccines are covered at 100% by insurance with no copay. Walk-in flu shots are available during flu season (September through March) at all locations. Check your immunization history in the patient portal under My Records > Immunizations.",
+    "keywords": ["immunization", "vaccination", "vaccine schedule", "flu shot", "shots", "immunize"],
+    "tags": ["immunizations", "preventive-care", "wellness"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-012",
+    "category": "faq",
+    "title": "Preventive care screenings",
+    "content": "CareFirst recommends regular preventive screenings per USPSTF guidelines. Common screenings: annual wellness exam (all ages), blood pressure check (annually, 18+), cholesterol (every 5 years, 20+), diabetes screening (every 3 years, 35+), mammogram (every 1-2 years, 40+), colonoscopy (every 10 years, 45+), cervical cancer screening (every 3-5 years, 21-65), prostate screening (discuss with provider, 50+). Most preventive screenings are covered at 100% with no copay under the Affordable Care Act. Schedule through the patient portal or call your clinic.",
+    "keywords": ["preventive care", "screening", "wellness exam", "annual physical", "checkup", "mammogram", "colonoscopy"],
+    "tags": ["preventive-care", "screenings", "wellness"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-013",
+    "category": "faq",
+    "title": "Billing and payment plans",
+    "content": "View and pay bills online through the patient portal or at carefirstmedical.com/pay. Payment methods: credit/debit card, HSA/FSA card, bank transfer, personal check, or cash at clinic locations. For balances over $200, interest-free payment plans are available (up to 12 months). Contact our billing department at 1-800-CARE ext. 2 to set up a plan. Itemized statements are available on request. If you believe there is a billing error, submit a dispute through the portal or call billing within 60 days of the statement date.",
+    "keywords": ["billing", "payment plan", "pay bill", "payment options", "medical bill", "statement"],
+    "tags": ["billing", "payment", "financial"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-014",
+    "category": "faq",
+    "title": "Financial assistance program",
+    "content": "CareFirst offers financial assistance for patients who are uninsured or underinsured. Eligibility is based on household income and family size (generally up to 300% of the federal poverty level). Assistance may cover 25% to 100% of the patient's bill. Apply through the patient portal, at any clinic registration desk, or by calling 1-800-CARE ext. 5. Required documents: proof of income (pay stubs, tax return), proof of household size, insurance denial letter (if applicable). Applications are processed within 10 business days.",
+    "keywords": ["financial assistance", "charity care", "can't afford", "no insurance", "help paying", "hardship"],
+    "tags": ["financial", "assistance", "uninsured"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-015",
+    "category": "faq",
+    "title": "HIPAA privacy rights",
+    "content": "Under HIPAA, you have the right to: access your medical records, request corrections to your records, know who has accessed your records (accounting of disclosures), request restrictions on how your information is used, receive a copy of CareFirst's Notice of Privacy Practices, and file a complaint if you believe your privacy has been violated. CareFirst will never share your health information without your written authorization except as required for treatment, payment, and healthcare operations, or as required by law. Privacy concerns: contact our Privacy Officer at privacy@carefirstmedical.com.",
+    "keywords": ["HIPAA", "privacy", "privacy rights", "health information", "medical privacy", "who can see my records"],
+    "tags": ["privacy", "HIPAA", "rights"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-016",
+    "category": "faq",
+    "title": "Advance directives",
+    "content": "An advance directive is a legal document that specifies your healthcare wishes if you become unable to communicate. CareFirst encourages all adult patients to complete advance directives. Types include: living will (treatment preferences), durable power of attorney for healthcare (designates a decision-maker), and POLST (Physician Orders for Life-Sustaining Treatment). Our staff can provide forms and answer questions during any visit. Completed directives are scanned into your medical record. Please inform your primary care provider and emergency contacts about your advance directives.",
+    "keywords": ["advance directive", "living will", "power of attorney", "healthcare proxy", "end of life wishes"],
+    "tags": ["legal", "advance-directives", "patient-rights"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-017",
+    "category": "faq",
+    "title": "Patient rights and responsibilities",
+    "content": "As a CareFirst patient, you have the right to: respectful care regardless of race, gender, religion, or ability; informed consent before treatment; refuse treatment; privacy and confidentiality; access your medical records; receive a clear explanation of your diagnosis and treatment plan; and file a grievance. Patient responsibilities include: providing accurate health information, following your treatment plan, keeping appointments (or canceling 24 hours in advance), treating staff with respect, and paying your financial obligations. Full Patient Rights document: carefirstmedical.com/rights.",
+    "keywords": ["patient rights", "my rights", "patient responsibilities", "grievance", "complaint about care"],
+    "tags": ["patient-rights", "responsibilities", "policy"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-018",
+    "category": "faq",
+    "title": "Language interpretation services",
+    "content": "CareFirst provides free language interpretation services for patients with limited English proficiency. In-person interpreters are available at major clinic locations for Spanish, Mandarin, Vietnamese, Korean, and Tagalog (request at scheduling). Phone interpretation in 200+ languages is available on demand at all locations via our language line. Video remote interpreting is available for American Sign Language (ASL) and common spoken languages. All interpretation services are free of charge. Translated written materials are available for common documents.",
+    "keywords": ["interpreter", "language services", "translation", "non-english", "spanish interpreter", "sign language"],
+    "tags": ["accessibility", "language", "interpretation"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-019",
+    "category": "faq",
+    "title": "Parking and transportation",
+    "content": "All CareFirst clinic locations offer free patient parking. Accessible parking spaces are available near entrances. For patients who need transportation assistance, CareFirst partners with local transit services — call 1-800-CARE ext. 6 to arrange a ride at least 48 hours before your appointment. Many insurance plans (especially Medicaid) cover medical transportation. Rideshare vouchers ($10 value) are available for patients in financial assistance programs. Bicycle racks are available at all locations.",
+    "keywords": ["parking", "transportation", "how to get there", "ride to appointment", "bus", "parking free"],
+    "tags": ["logistics", "parking", "transportation"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-020",
+    "category": "faq",
+    "title": "Visitor policies",
+    "content": "CareFirst clinic visit policies: patients may bring one support person to appointments. Children under 12 should not be left unattended in waiting areas. Service animals are welcome; emotional support animals require advance approval. Visitors showing symptoms of contagious illness (fever, cough, rash) should not accompany patients — consider telehealth instead. No photography or recording in clinical areas without staff consent. Waiting areas have free WiFi, water, and magazines. Visitor policies may change during public health emergencies — check carefirstmedical.com for updates.",
+    "keywords": ["visitor policy", "bring someone", "support person", "companion", "guest policy"],
+    "tags": ["visitor", "policy", "clinic"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-021",
+    "category": "faq",
+    "title": "After-hours care",
+    "content": "For medical concerns outside clinic hours, CareFirst offers: 24/7 nurse advice line at 1-800-CARE (press 1 for nurse), after-hours urgent care (Monday-Friday 5 PM-8 PM, weekends 9 AM-5 PM), and telehealth visits until 9:00 PM daily. For life-threatening emergencies, call 911 or go to your nearest emergency room. The nurse advice line can help determine if your symptoms require urgent care, an ER visit, or can wait for a regular appointment. After-hours prescriptions for urgent needs can be called in by the on-call provider.",
+    "keywords": ["after hours", "night care", "weekend care", "nurse line", "after-hours", "evening care"],
+    "tags": ["after-hours", "urgent-care", "nurse-line"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-022",
+    "category": "faq",
+    "title": "Emergency vs urgent care guidance",
+    "content": "Go to the Emergency Room (or call 911) for: chest pain, difficulty breathing, severe bleeding, sudden weakness or numbness, head injuries with loss of consciousness, high fever in infants, allergic reactions with throat swelling, or poisoning. Visit Urgent Care for: minor cuts needing stitches, sprains and strains, mild to moderate flu symptoms, ear infections, UTIs, rashes, minor burns, and pink eye. If you are unsure, call the CareFirst nurse advice line at 1-800-CARE (press 1) for guidance. This is general guidance — always err on the side of caution for serious symptoms.",
+    "keywords": ["emergency", "ER", "urgent care or ER", "when to go to ER", "is this an emergency"],
+    "tags": ["emergency", "urgent-care", "guidance"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-023",
+    "category": "faq",
+    "title": "New patient registration",
+    "content": "Welcome to CareFirst! New patient registration can be completed online at carefirstmedical.com/new-patient or in person at any clinic. You will need: valid photo ID, insurance card (front and back), list of current medications, medical history summary (if available), and emergency contact information. Online registration takes about 15 minutes. Please arrive 20 minutes early for your first in-person visit to complete any remaining paperwork. New patients receive a welcome packet with clinic information, patient portal access instructions, and preventive care reminders.",
+    "keywords": ["new patient", "register as patient", "first visit", "new to CareFirst", "sign up as patient"],
+    "tags": ["registration", "new-patient", "getting-started"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-024",
+    "category": "faq",
+    "title": "Specialist availability",
+    "content": "CareFirst has specialists in cardiology, dermatology, endocrinology, gastroenterology, neurology, OB/GYN, oncology, ophthalmology, orthopedics, pulmonology, rheumatology, and urology. Specialist availability varies by location. Referrals from your primary care provider are required for most specialist visits (exceptions: OB/GYN, dermatology, mental health under most plans). Average wait time for a specialist appointment is 1-3 weeks depending on specialty and urgency. Urgent referrals can be seen within 48-72 hours. Check specialist availability at carefirstmedical.com/specialists.",
+    "keywords": ["specialist", "specialist availability", "cardiologist", "dermatologist", "specialist wait time"],
+    "tags": ["specialists", "availability", "referrals"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-025",
+    "category": "faq",
+    "title": "Wellness programs",
+    "content": "CareFirst offers free wellness programs for patients: diabetes prevention (12-week lifestyle change program), smoking cessation (counseling and nicotine replacement), weight management (nutritionist consultations and group classes), stress management and mindfulness workshops, chronic disease management (asthma, hypertension, diabetes coaching), and annual wellness challenges with incentives. Many programs are covered by insurance at no additional cost. Enroll through the patient portal or ask your provider at your next visit. Group classes are held at larger clinic locations and via video.",
+    "keywords": ["wellness program", "health program", "weight loss program", "diabetes prevention", "quit smoking", "wellness"],
+    "tags": ["wellness", "programs", "preventive-care"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-026",
+    "category": "faq",
+    "title": "Appointment cancellation and no-show policy",
+    "content": "Please cancel or reschedule appointments at least 24 hours in advance through the patient portal, app, or by calling your clinic. Late cancellations (less than 24 hours) may incur a $25 fee. Missed appointments (no-shows) without notice may incur a $50 fee. Three consecutive no-shows may result in a review of your patient status. Fees are waived for emergencies and when rescheduled within 24 hours of the missed appointment. Same-day cancellations due to illness are not penalized if you reschedule within one week.",
+    "keywords": ["cancel appointment", "no-show", "reschedule appointment", "cancellation fee", "missed appointment"],
+    "tags": ["appointments", "cancellation", "policy"],
+    "metadata": {}
+  }
+]

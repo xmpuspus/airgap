@@ -1,0 +1,92 @@
+[
+  {
+    "id": "product-auto-basic",
+    "category": "product",
+    "title": "Auto Insurance - Basic Coverage",
+    "content": "ShieldGuard Basic Auto Insurance meets your state's minimum liability requirements at an affordable price. Includes Bodily Injury Liability (25/50) and Property Damage Liability ($25,000). Does not include collision or comprehensive coverage. Ideal for older vehicles where the cost of full coverage exceeds the vehicle's value. Uninsured Motorist coverage is included where required by state law. Monthly premiums start from approximately $45/month for a single driver with a clean record, though actual rates depend on your driving history, location, vehicle, and credit score. Basic coverage does not include rental reimbursement, roadside assistance, or gap insurance. Upgrade to Standard or Premium for more comprehensive protection.",
+    "keywords": ["basic auto insurance", "minimum coverage", "liability only", "cheap auto insurance", "state minimum"],
+    "tags": ["product", "auto"],
+    "metadata": {"type": "auto", "tier": "basic", "coverage": "Liability only (25/50/25)", "startingPrice": "$45/month", "currency": "USD"}
+  },
+  {
+    "id": "product-auto-standard",
+    "category": "product",
+    "title": "Auto Insurance - Standard Coverage",
+    "content": "ShieldGuard Standard Auto Insurance provides well-rounded protection for most drivers. Includes Bodily Injury Liability (100/300), Property Damage Liability ($100,000), Collision ($500 deductible), Comprehensive ($500 deductible), Uninsured/Underinsured Motorist (100/300), and Medical Payments ($5,000). Also includes 24/7 roadside assistance (towing, flat tire, lockout, jump start, fuel delivery) and rental reimbursement ($30/day, 30-day maximum) after a covered claim. This is ShieldGuard's most popular auto insurance package. Monthly premiums start from approximately $95/month for a single driver with a clean record. Deductible options of $250, $500, or $1,000 are available for collision and comprehensive.",
+    "keywords": ["standard auto insurance", "full coverage", "collision and comprehensive", "popular auto plan"],
+    "tags": ["product", "auto", "popular"],
+    "metadata": {"type": "auto", "tier": "standard", "coverage": "100/300/100 + Collision + Comprehensive", "startingPrice": "$95/month", "currency": "USD"}
+  },
+  {
+    "id": "product-auto-premium",
+    "category": "product",
+    "title": "Auto Insurance - Premium Coverage",
+    "content": "ShieldGuard Premium Auto Insurance is our highest level of protection. Includes everything in Standard plus: higher liability limits (250/500/250), lower deductibles ($250 collision, $100 comprehensive), new car replacement (if totaled within the first 2 years and 24,000 miles, ShieldGuard pays for a brand-new replacement of the same make and model instead of actual cash value), gap insurance, rental reimbursement ($50/day, 45-day maximum), accident forgiveness (your first at-fault accident will not increase your premium), and vanishing deductible ($100 off your deductible for each year of claim-free driving). Monthly premiums start from approximately $145/month for a single driver with a clean record.",
+    "keywords": ["premium auto insurance", "best auto coverage", "new car replacement", "accident forgiveness", "top tier auto"],
+    "tags": ["product", "auto", "premium"],
+    "metadata": {"type": "auto", "tier": "premium", "coverage": "250/500/250 + full options", "startingPrice": "$145/month", "currency": "USD"}
+  },
+  {
+    "id": "product-homeowners",
+    "category": "product",
+    "title": "Homeowners Insurance",
+    "content": "ShieldGuard Homeowners Insurance protects your home, belongings, and liability. Coverage includes: Dwelling coverage (rebuilding cost of your home's structure), Other Structures (detached garage, fence, shed — typically 10% of dwelling coverage), Personal Property (belongings inside and outside the home — typically 50-70% of dwelling coverage), Loss of Use (living expenses if your home is uninhabitable after a covered loss), Personal Liability ($100,000-$500,000 for lawsuits from injuries on your property), and Medical Payments ($1,000-$5,000 for guest injuries regardless of fault). Covered perils include fire, windstorm, hail, lightning, theft, vandalism, and water damage from burst pipes. Flood and earthquake damage require separate policies. Premiums vary based on location, home value, construction type, and claims history.",
+    "keywords": ["homeowners insurance", "home insurance", "house insurance", "property insurance", "dwelling coverage"],
+    "tags": ["product", "homeowners"],
+    "metadata": {"type": "homeowners", "coverage": "Dwelling, personal property, liability", "currency": "USD"}
+  },
+  {
+    "id": "product-renters",
+    "category": "product",
+    "title": "Renters Insurance",
+    "content": "ShieldGuard Renters Insurance protects your personal belongings and provides liability coverage for tenants renting a house or apartment. Your landlord's insurance covers the building but NOT your possessions. Coverage includes: Personal Property (typically $15,000-$50,000 for your belongings — furniture, electronics, clothing, etc.), Loss of Use (temporary living expenses if your rental is uninhabitable after a covered loss), and Personal Liability ($100,000-$300,000 for accidents in your home or damage you cause to others' property). Covered perils include fire, theft, vandalism, water damage from burst pipes, and more. Renters insurance is affordable, starting from approximately $15/month. Many landlords require renters insurance as a condition of the lease. Add your landlord as an 'additional interest' for no extra cost.",
+    "keywords": ["renters insurance", "tenant insurance", "apartment insurance", "renter coverage", "lease insurance"],
+    "tags": ["product", "renters"],
+    "metadata": {"type": "renters", "startingPrice": "$15/month", "coverage": "Personal property + liability", "currency": "USD"}
+  },
+  {
+    "id": "product-life-term",
+    "category": "product",
+    "title": "Term Life Insurance",
+    "content": "ShieldGuard Term Life Insurance provides affordable coverage for a specific period: 10-year, 20-year, or 30-year terms. If you pass away during the term, your beneficiaries receive a tax-free death benefit to replace lost income, pay off a mortgage, fund education, or cover final expenses. Coverage amounts from $100,000 to $2,000,000. Premiums are fixed for the entire term and are significantly lower than whole or universal life. A 30-year-old non-smoking male can get $500,000 of 20-year term coverage for approximately $25-35/month. At the end of the term, you can renew at a higher rate or convert to a permanent policy without a new medical exam (conversion available during the first 15 years). A health questionnaire is required; a medical exam may be needed for coverage above $500,000.",
+    "keywords": ["term life insurance", "term life", "life insurance quotes", "affordable life insurance", "temporary life insurance"],
+    "tags": ["product", "life"],
+    "metadata": {"type": "life-term", "terms": "10, 20, 30 years", "coverageRange": "$100,000 - $2,000,000", "currency": "USD"}
+  },
+  {
+    "id": "product-health-supplemental",
+    "category": "product",
+    "title": "Supplemental Health Insurance",
+    "content": "ShieldGuard Supplemental Health Insurance pays cash benefits directly to you when you are hospitalized or diagnosed with a covered critical illness. This is not a replacement for major medical insurance — it supplements your existing health plan by helping cover out-of-pocket costs like deductibles, copays, lost income during recovery, and non-medical expenses. Hospital Indemnity pays $200/day for each day of hospitalization (up to 30 days per year). Critical Illness coverage pays a lump sum of $10,000-$50,000 upon first diagnosis of a covered condition (heart attack, stroke, cancer, organ transplant). Premiums start at approximately $30/month for Hospital Indemnity and $20/month for Critical Illness, depending on age and coverage level. No network restrictions — use any doctor or hospital.",
+    "keywords": ["supplemental health", "hospital indemnity", "critical illness", "health supplement", "extra health coverage"],
+    "tags": ["product", "health"],
+    "metadata": {"type": "health-supplemental", "currency": "USD"}
+  },
+  {
+    "id": "product-umbrella",
+    "category": "product",
+    "title": "Umbrella Liability Policy",
+    "content": "The ShieldGuard Umbrella Liability Policy provides extra protection beyond the limits of your auto and homeowners insurance. Coverage starts at $1 million in $1 million increments, up to $5 million. If a lawsuit or claim exceeds your underlying policy limits, the umbrella policy covers the excess amount and legal defense costs. It also covers certain claims not covered by standard policies, including libel, slander, false arrest, and invasion of privacy. To qualify, you need underlying auto liability limits of at least 250/500/100 and homeowners liability of at least $300,000. Premiums are approximately $150-$300/year for the first $1 million and $75-$100 for each additional million. An umbrella policy is essential for protecting your personal assets (home, savings, investments) from a major lawsuit.",
+    "keywords": ["umbrella policy", "umbrella insurance", "million dollar coverage", "excess liability", "extra liability"],
+    "tags": ["product", "umbrella"],
+    "metadata": {"type": "umbrella", "coverageRange": "$1M - $5M", "startingPrice": "$150/year", "currency": "USD"}
+  },
+  {
+    "id": "product-motorcycle",
+    "category": "product",
+    "title": "Motorcycle Insurance",
+    "content": "ShieldGuard Motorcycle Insurance covers motorcycles, scooters, and mopeds with flexible options. Coverage includes liability, collision, comprehensive, uninsured motorist, medical payments, and custom parts and equipment coverage (up to $5,000 for aftermarket accessories). Optional coverages: roadside assistance with motorcycle-specific towing, trip interruption ($500 for lodging and transportation if your bike breaks down more than 100 miles from home), and safety apparel coverage ($3,000 for helmet, jacket, and riding gear damaged in a covered accident). Lay-up option: reduce coverage to comprehensive-only during off-season months (typically November-March) and save up to 25% on those months' premiums. Premiums start from approximately $35/month depending on the motorcycle type, engine size, and rider experience.",
+    "keywords": ["motorcycle insurance", "bike insurance", "scooter insurance", "motorcycle coverage", "riding insurance"],
+    "tags": ["product", "motorcycle"],
+    "metadata": {"type": "motorcycle", "startingPrice": "$35/month", "currency": "USD"}
+  },
+  {
+    "id": "product-commercial-auto",
+    "category": "product",
+    "title": "Commercial Auto Insurance",
+    "content": "ShieldGuard Commercial Auto Insurance covers vehicles used for business purposes, including company cars, delivery vans, trucks, and fleet vehicles. Coverage includes commercial liability (up to $1 million), collision, comprehensive, hired and non-owned auto (for employees using personal vehicles for business), cargo coverage, and uninsured motorist. Fleet discounts are available for 5+ vehicles: 5-9 vehicles save 10%, 10-24 vehicles save 15%, 25+ vehicles save 20%. All commercial policies include 24/7 roadside assistance and rental reimbursement for covered claims. Risk management services are available for fleets of 10+ vehicles, including driver safety training and telematics-based monitoring. Contact a ShieldGuard commercial insurance specialist at 1-800-SHIELD ext. 3 for a customized quote.",
+    "keywords": ["commercial auto", "business auto", "fleet insurance", "company vehicle", "commercial vehicle insurance", "work truck insurance"],
+    "tags": ["product", "commercial", "auto"],
+    "metadata": {"type": "commercial-auto", "fleetDiscount": "10-20% for 5+ vehicles", "currency": "USD"}
+  }
+]

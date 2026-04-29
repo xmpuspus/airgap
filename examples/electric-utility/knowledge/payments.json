@@ -1,0 +1,86 @@
+[
+  {
+    "id": "pay-001",
+    "category": "payment",
+    "title": "Online payment via PowerGrid website",
+    "content": "Pay your electric bill online at powergridelectric.com/pay. Log in with your account number and password, or use the one-time guest payment option with your account number and ZIP code. Accepted payment methods include Visa, Mastercard, Discover, American Express, and bank account (ACH) transfers. ACH payments are free; credit/debit card payments incur a $2.50 convenience fee charged by the payment processor. Payments posted before 3:00 PM are credited the same business day. You will receive a confirmation email with a transaction number.",
+    "keywords": ["online payment", "pay online", "website payment", "pay bill online", "credit card payment"],
+    "tags": ["payment", "online"],
+    "metadata": {
+      "channel": "PowerGrid Website",
+      "type": "Online",
+      "fee": "Free for ACH; $2.50 for credit/debit cards",
+      "processingTime": "Same business day if before 3 PM"
+    }
+  },
+  {
+    "id": "pay-002",
+    "category": "payment",
+    "title": "AutoPay automatic payment",
+    "content": "Enroll in AutoPay to have your monthly bill automatically deducted from your bank account or charged to your credit/debit card on the due date. Sign up at powergridelectric.com/autopay or call 1-800-POWER. Bank account (ACH) AutoPay has no fee. Credit/debit card AutoPay incurs a $2.50 monthly convenience fee. You will still receive your monthly bill statement showing the amount to be deducted. You can cancel AutoPay at any time, effective the next billing cycle. Payments are processed on the due date; ensure sufficient funds are available to avoid a returned payment fee of $25.",
+    "keywords": ["autopay", "automatic payment", "auto-pay", "auto deduct", "automatic deduction"],
+    "tags": ["payment", "autopay"],
+    "metadata": {
+      "channel": "AutoPay",
+      "type": "Automatic",
+      "fee": "Free for bank account; $2.50/month for card",
+      "processingTime": "Deducted on due date"
+    }
+  },
+  {
+    "id": "pay-003",
+    "category": "payment",
+    "title": "Pay by phone (IVR)",
+    "content": "Pay your electric bill by phone by calling 1-800-POWER and selecting option 2 for billing, then option 1 for payments. The automated system accepts payments via bank account (ACH), debit card, or credit card. Have your account number and payment method ready. ACH payments are free; card payments have a $2.50 convenience fee. You will receive a confirmation number at the end of the call. Phone payments are processed within 1 business day. To speak with a representative for payment assistance, press 0 at any time during the call.",
+    "keywords": ["phone payment", "pay by phone", "call to pay", "IVR", "automated phone"],
+    "tags": ["payment", "phone"],
+    "metadata": {
+      "channel": "Phone (IVR)",
+      "type": "Phone",
+      "fee": "Free for ACH; $2.50 for cards",
+      "processingTime": "1 business day"
+    }
+  },
+  {
+    "id": "pay-004",
+    "category": "payment",
+    "title": "Pay by mail",
+    "content": "Mail your payment with the remittance stub from your bill to: PowerGrid Electric, P.O. Box 5500, Metro City, USA 12345. Make checks or money orders payable to 'PowerGrid Electric' and write your account number on the check. Do not send cash by mail. Allow 5-7 business days for mail delivery and processing. Payments received after the due date will incur a 1.5% late fee. For fastest processing, use the pre-addressed return envelope included with your paper bill. If you have paperless billing, print the remittance stub from your online account.",
+    "keywords": ["mail payment", "pay by mail", "check payment", "money order", "mail a check"],
+    "tags": ["payment", "mail"],
+    "metadata": {
+      "channel": "Mail",
+      "type": "Mail",
+      "fee": "None",
+      "processingTime": "5-7 business days"
+    }
+  },
+  {
+    "id": "pay-005",
+    "category": "payment",
+    "title": "In-person payment at service centers",
+    "content": "Pay your electric bill in person at any PowerGrid service center. We accept cash, check, money order, and debit/credit cards. No fee for cash or check payments; a $2.50 fee applies for card payments. Bring your bill stub or account number. Service centers are open Monday through Friday and select Saturdays. Payment drop boxes are available at all locations for 24/7 after-hours check or money order payments (do not deposit cash in drop boxes). Receipts are issued for all in-person payments.",
+    "keywords": ["in-person payment", "pay in person", "service center payment", "walk-in payment", "cash payment"],
+    "tags": ["payment", "in-person"],
+    "metadata": {
+      "channel": "Service Center",
+      "type": "In-Person",
+      "fee": "Free for cash/check; $2.50 for cards",
+      "processingTime": "Credited same day"
+    }
+  },
+  {
+    "id": "pay-006",
+    "category": "payment",
+    "title": "Third-party payment locations (7-Eleven, Walmart, etc.)",
+    "content": "Pay your PowerGrid bill at authorized third-party locations including 7-Eleven, Walmart, Walgreens, and CVS stores. Bring your bill stub or account number and pay in cash, debit card, or money order. A convenience fee of $1.50-$3.00 is charged by the payment agent (varies by location). Payments at these locations typically post to your PowerGrid account within 24-48 hours. Keep your receipt as proof of payment. To find the nearest authorized payment location, visit powergridelectric.com/payment-locations or call 1-800-POWER.",
+    "keywords": ["7-Eleven", "Walmart", "Walgreens", "CVS", "third party", "convenience store", "pay at store"],
+    "tags": ["payment", "third-party", "in-person"],
+    "metadata": {
+      "channel": "Authorized Third-Party Locations",
+      "type": "In-Person (Third-Party)",
+      "fee": "$1.50-$3.00 (varies by location)",
+      "processingTime": "24-48 hours"
+    }
+  }
+]

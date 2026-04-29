@@ -1,0 +1,7 @@
+id,category,title,content,keywords,tags
+plan-99,plan,Super Surf 99,PHP 99 for 5GB data over 7 days. Free Facebook bonus.,plan;data;5gb,promo
+plan-149,plan,MegaSurf 149,PHP 149 for 12GB data over 15 days. Includes 2GB streaming bonus.,plan;data;12gb,promo
+plan-499,plan,MegaSurf 499,PHP 499 for 60GB data over 30 days. Free Disney+ trial.,plan;data;60gb,premium
+faq-recharge,faq,How to recharge,Dial *143# from your handset and follow the prompts.,recharge;reload;topup,help
+faq-store,store,Find a store,Stores open daily 10am-9pm. Use the store locator at acme-telecom.ph/locator.,store;locations;hours,help
+roaming-zone-a,roaming,Zone A countries,Indonesia Malaysia Singapore Thailand Vietnam.,roaming;abroad;asean,travel

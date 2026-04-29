@@ -1,0 +1,74 @@
+[
+  {
+    "id": "ts-001",
+    "category": "troubleshooting",
+    "title": "Complete power outage at your home",
+    "content": "If you have no power at all: First, check if your neighbors also have power out, which indicates a utility-side outage. If only your home is affected, check your main circuit breaker panel. The main breaker may have tripped to the middle position; flip it fully off, then back on. If the breaker trips again immediately, you may have a short circuit and should call a licensed electrician. If the main breaker is fine, check for a blown fuse at the meter panel (older homes). Report the outage to PowerGrid at 1-800-POWER or online at powergridelectric.com/outage. Do not open your refrigerator or freezer unnecessarily; food stays safe for 4 hours in a closed refrigerator and 48 hours in a full freezer.",
+    "keywords": ["no power", "power outage", "complete outage", "all lights out", "no electricity", "everything off"],
+    "tags": ["troubleshooting", "outage", "emergency"],
+    "metadata": {
+      "severity": "high",
+      "safetyWarning": "If you smell burning or see sparks, leave the home and call 911"
+    }
+  },
+  {
+    "id": "ts-002",
+    "category": "troubleshooting",
+    "title": "Partial outage (some rooms have power, some do not)",
+    "content": "A partial outage where only some rooms or circuits lose power usually indicates a problem on your side of the meter. Check your circuit breaker panel for tripped breakers. A tripped breaker will be in the middle position between ON and OFF. To reset, push it fully to OFF, then back to ON. If the same breaker trips repeatedly, unplug all devices on that circuit and try again. If it still trips, the circuit may have a wiring fault and you need a licensed electrician. A partial outage can also indicate a lost phase at the utility transformer; if breakers are not tripped but you only have power in some rooms, call 1-800-POWER to report the issue.",
+    "keywords": ["partial outage", "some rooms", "half power", "lost phase", "tripped breaker", "some lights out"],
+    "tags": ["troubleshooting", "outage", "electrical"],
+    "metadata": {
+      "severity": "medium",
+      "safetyWarning": "Do not repeatedly reset a tripping breaker. This indicates a fault."
+    }
+  },
+  {
+    "id": "ts-003",
+    "category": "troubleshooting",
+    "title": "Flickering lights throughout the home",
+    "content": "Flickering lights affecting the entire home may indicate a loose connection at the meter base, weatherhead, or utility service line. Check if the flicker happens during windy conditions, which suggests a loose overhead service connection. Also check if large appliances (AC, dryer, oven) cause brief dimming when they start, which is normal and caused by the motor's startup current draw. If flickering is persistent, unrelated to appliance starts, or accompanied by a buzzing sound at the panel, call 1-800-POWER for a free power quality investigation. Prolonged voltage fluctuations can damage sensitive electronics and appliances.",
+    "keywords": ["flickering lights", "lights dimming", "blinking lights", "lights flashing", "unstable power", "voltage fluctuation"],
+    "tags": ["troubleshooting", "power-quality"],
+    "metadata": {
+      "severity": "medium",
+      "safetyWarning": "Buzzing or burning smell from the panel is an emergency; call 911"
+    }
+  },
+  {
+    "id": "ts-004",
+    "category": "troubleshooting",
+    "title": "Circuit breaker keeps tripping",
+    "content": "A circuit breaker that repeatedly trips is protecting you from an overloaded or short-circuited wire. To diagnose: unplug everything on the affected circuit, reset the breaker, then plug devices back in one at a time. If the breaker trips with nothing plugged in, the problem is in the wiring itself. If it trips when a specific device is plugged in, that device is faulty. Common overload causes: running a space heater, hair dryer, and microwave on the same circuit simultaneously. Never replace a breaker with a higher-amperage one, as this creates a fire hazard. If you cannot identify the cause, contact a licensed electrician for inspection.",
+    "keywords": ["breaker tripping", "circuit breaker", "keeps tripping", "overloaded circuit", "short circuit", "breaker won't stay on"],
+    "tags": ["troubleshooting", "electrical", "safety"],
+    "metadata": {
+      "severity": "medium",
+      "safetyWarning": "Never use aluminum foil, pennies, or other objects to bypass a breaker or fuse"
+    }
+  },
+  {
+    "id": "ts-005",
+    "category": "troubleshooting",
+    "title": "Unusually high electric bill investigation",
+    "content": "If your bill is unexpectedly high, first compare kWh usage (not just the dollar amount) against previous months. Common causes of higher usage: seasonal changes (AC in summer, heating in winter), new appliances, house guests, a malfunctioning appliance (especially water heaters, AC units, or old refrigerators running constantly), or a pool pump running longer than necessary. Check your online account for daily usage patterns to spot spikes. If usage looks abnormal, request a free meter test by calling 1-800-POWER; meters are tested to ANSI standards and results are provided within 10 business days. You can also request an energy audit to identify inefficiencies.",
+    "keywords": ["high bill", "bill too high", "expensive bill", "usage spike", "why is my bill so high", "meter wrong"],
+    "tags": ["troubleshooting", "billing"],
+    "metadata": {
+      "severity": "low",
+      "safetyWarning": null
+    }
+  },
+  {
+    "id": "ts-006",
+    "category": "troubleshooting",
+    "title": "Burning smell or sparking from electrical panel",
+    "content": "A burning smell, visible sparks, or scorch marks on your electrical panel is an emergency. Immediately move everyone away from the panel area. Do not touch the panel. If it is safe to do so, turn off the main breaker by pushing the largest breaker in the panel to the OFF position. Call 911 if you see active flames or heavy smoke. Call PowerGrid at 1-800-POWER to request an emergency service disconnection at the meter. Do not attempt to remove the meter cover yourself. After the emergency is resolved, a licensed electrician must inspect and repair the panel before service can be restored.",
+    "keywords": ["burning smell", "sparks", "panel fire", "electrical fire", "smoke from panel", "scorched panel"],
+    "tags": ["troubleshooting", "emergency", "safety"],
+    "metadata": {
+      "severity": "critical",
+      "safetyWarning": "This is a life-threatening emergency. Call 911 immediately."
+    }
+  }
+]

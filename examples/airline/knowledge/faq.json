@@ -1,0 +1,245 @@
+[
+  {
+    "id": "faq-001",
+    "category": "faq",
+    "title": "Carry-on baggage allowance",
+    "content": "Each passenger may bring one carry-on bag (max 7 kg / 15 lbs, dimensions 56 x 36 x 23 cm) and one personal item (handbag, laptop bag, or small backpack). Economy passengers are limited to one carry-on; Business and First class passengers may carry two. Musical instruments that fit within the overhead bin are permitted as your carry-on item. Duty-free purchases in sealed STEB bags are allowed in addition to your allowance.",
+    "keywords": ["carry-on", "hand luggage", "cabin baggage", "carry on allowance", "hand carry"],
+    "tags": ["baggage", "carry-on", "allowance"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-002",
+    "category": "faq",
+    "title": "Checked baggage allowance and fees",
+    "content": "Economy class includes one checked bag up to 23 kg (50 lbs). Premium Economy includes one bag up to 28 kg (62 lbs). Business class includes two bags up to 32 kg (70 lbs) each. First class includes three bags up to 32 kg each. Additional bags cost $50 per bag for domestic flights and $75 per bag for international flights when pre-purchased online. Airport counter rates are $15 higher. Maximum single bag weight is 32 kg for all classes.",
+    "keywords": ["checked baggage", "luggage allowance", "baggage fee", "extra bag", "checked bag weight"],
+    "tags": ["baggage", "checked", "fees"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-003",
+    "category": "faq",
+    "title": "Oversized and overweight baggage",
+    "content": "Bags exceeding 23 kg but under 32 kg incur a $40 overweight fee. Bags exceeding standard dimensions (158 cm total linear dimensions) are charged $100 as oversized. Sports equipment (surfboards, golf bags, skis) counts as one checked bag but may incur an oversized fee if it exceeds 158 cm. Bicycles must be boxed or bagged and are charged $75 per flight segment. Items over 45 kg must be shipped as cargo.",
+    "keywords": ["overweight", "oversized", "heavy bag", "sports equipment", "bicycle", "golf bag", "surfboard"],
+    "tags": ["baggage", "overweight", "oversized", "fees"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-004",
+    "category": "faq",
+    "title": "Dangerous goods and prohibited items",
+    "content": "The following items are prohibited in carry-on and checked baggage: explosives, compressed gases, flammable liquids over 100 ml, corrosives, and radioactive materials. Lithium batteries over 160 Wh are banned entirely. Spare lithium batteries (under 160 Wh) must be in carry-on only, with terminals taped. Power banks are carry-on only. Liquids in carry-on must follow the 100 ml / 3.4 oz rule in a single 1-liter clear zip-lock bag. Lighters and e-cigarettes are prohibited in checked baggage.",
+    "keywords": ["dangerous goods", "prohibited items", "banned items", "lithium battery", "liquids", "power bank"],
+    "tags": ["baggage", "safety", "prohibited"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-005",
+    "category": "faq",
+    "title": "Online check-in timing",
+    "content": "Online check-in opens 48 hours before departure and closes 1 hour before departure for domestic flights, 2 hours for international flights. Check in at skypeakair.com/checkin or on the SkyPeak mobile app. You will receive a digital boarding pass via email and in the app. If you have checked baggage, visit the bag drop counter at the airport. Self-service kiosks are available at major airports for boarding pass printing.",
+    "keywords": ["online check-in", "check in", "web check-in", "check-in time", "when to check in"],
+    "tags": ["check-in", "online", "boarding"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-006",
+    "category": "faq",
+    "title": "Mobile boarding pass",
+    "content": "After completing online check-in, your mobile boarding pass is available in the SkyPeak app and sent to your email. The boarding pass includes a QR code accepted at security checkpoints and boarding gates at all SkyPeak destinations. Save it to Apple Wallet or Google Wallet for quick access. Ensure your phone brightness is set to maximum when scanning. If you cannot display the mobile pass, print it at an airport kiosk or visit the check-in counter.",
+    "keywords": ["mobile boarding pass", "digital boarding pass", "boarding pass on phone", "QR code boarding"],
+    "tags": ["check-in", "boarding-pass", "mobile"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-007",
+    "category": "faq",
+    "title": "Seat selection",
+    "content": "Seat selection is available during booking or anytime before check-in closes. Standard seats are free for Premium Economy, Business, and First class passengers. Economy passengers can select standard seats for $5-$15 depending on the route. Preferred seats (extra legroom, exit row, front-of-cabin) cost $20-$50. Seat assignments can be changed on the SkyPeak app or website under Manage Booking. SkyPeak Rewards Gold and Platinum members get complimentary preferred seat selection.",
+    "keywords": ["seat selection", "choose seat", "seat assignment", "extra legroom", "exit row", "preferred seat"],
+    "tags": ["booking", "seats", "upgrade"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-008",
+    "category": "faq",
+    "title": "Unaccompanied minor policy",
+    "content": "SkyPeak accepts unaccompanied minors (UM) aged 5-11 on non-stop flights only. Minors aged 12-17 may travel unaccompanied on all flights without the UM service, though the service can be requested. The UM fee is $100 per flight segment. A parent or guardian must complete the UM form at check-in and remain at the airport until the flight departs. A designated adult must meet the child at the destination gate with valid photo ID. UM service must be booked at least 48 hours before departure by calling 1-888-SKYPEAK.",
+    "keywords": ["unaccompanied minor", "child travel alone", "UM service", "minor flying alone", "kids travel"],
+    "tags": ["family", "minors", "special-services"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-009",
+    "category": "faq",
+    "title": "Pet travel policy",
+    "content": "Small dogs and cats (under 8 kg including carrier) may travel in the cabin for $75 per segment in an approved soft-sided carrier that fits under the seat. Larger pets travel in the climate-controlled cargo hold for $200 per segment in an IATA-compliant hard-shell crate. Maximum two pets in cabin per flight. Snub-nosed breeds (brachycephalic) are restricted from cargo due to health risks. A veterinary health certificate issued within 10 days of travel is required. Service animals travel free in the cabin with documentation.",
+    "keywords": ["pet travel", "pet in cabin", "fly with dog", "fly with cat", "animal transport", "service animal"],
+    "tags": ["pets", "special-services", "cabin"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-010",
+    "category": "faq",
+    "title": "Special assistance and wheelchair service",
+    "content": "SkyPeak provides complimentary wheelchair assistance and mobility aid at all airports. Request special assistance at least 48 hours before departure via the website, app, or by calling 1-888-SKYPEAK. Services include wheelchair transport from check-in to gate, priority boarding, onboard wheelchair for aisle access, and assistance at arrival. Passengers may bring their own wheelchair (stored free in cargo) or request airport-provided wheelchairs. Mobility aids with lithium batteries must have batteries removable and under 300 Wh.",
+    "keywords": ["wheelchair", "special assistance", "mobility aid", "disabled", "accessibility", "reduced mobility"],
+    "tags": ["accessibility", "special-services", "assistance"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-011",
+    "category": "faq",
+    "title": "Connecting flights and layovers",
+    "content": "For connecting flights booked on a single SkyPeak itinerary, checked baggage is automatically transferred to your final destination. Minimum connection time is 1.5 hours for domestic-to-domestic, 2.5 hours for international connections. If you miss a connection due to a SkyPeak delay, we will rebook you on the next available flight at no charge. For self-connecting itineraries (separate bookings), you must collect baggage, clear customs, and re-check bags. SkyPeak is not responsible for missed self-connections.",
+    "keywords": ["connecting flights", "layover", "transit", "connection time", "transfer", "stopover"],
+    "tags": ["flights", "connections", "transit"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-012",
+    "category": "faq",
+    "title": "Missed connection policy",
+    "content": "If you miss a connection due to a delay on a preceding SkyPeak flight, our staff will rebook you on the next available flight at no cost. If the next flight is not until the following day, SkyPeak provides hotel accommodation, meal vouchers, and ground transport for connections over 8 hours. You must be on a single SkyPeak booking for this protection. For connections to partner airlines, the rebooking policy depends on the interline agreement. Contact airport staff or call 1-888-SKYPEAK immediately after missing a connection.",
+    "keywords": ["missed connection", "missed flight", "rebooking", "delay connection", "late arrival"],
+    "tags": ["flights", "connections", "delay"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-013",
+    "category": "faq",
+    "title": "Flight cancellation rights",
+    "content": "If SkyPeak cancels your flight, you are entitled to a full refund or rebooking on the next available flight at no charge. For cancellations within 14 days of departure, you may also be entitled to compensation depending on route distance and delay duration. Domestic flights: $100 compensation for delays over 3 hours. International flights under 3,500 km: $200 compensation. International flights over 3,500 km: $400 compensation. Compensation does not apply for extraordinary circumstances (weather, air traffic control, security threats).",
+    "keywords": ["flight cancellation", "cancelled flight", "cancellation rights", "compensation", "refund cancelled"],
+    "tags": ["flights", "cancellation", "compensation", "rights"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-014",
+    "category": "faq",
+    "title": "Delay compensation policy",
+    "content": "For SkyPeak-caused delays: delays over 2 hours include complimentary snacks and drinks at the gate. Delays over 4 hours include a meal voucher ($15 domestic, $25 international). Delays over 8 hours requiring an overnight stay include hotel accommodation, meals, and ground transport. If you choose not to travel due to a delay over 5 hours, you may request a full refund. Delay notifications are sent via SMS, email, and app push notification. Track real-time status at skypeakair.com/status.",
+    "keywords": ["delay compensation", "flight delay", "delayed flight", "long delay", "overnight delay"],
+    "tags": ["flights", "delay", "compensation"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-015",
+    "category": "faq",
+    "title": "Travel documents — passport and visa",
+    "content": "All international passengers must carry a valid passport with at least 6 months validity beyond the return date. Visa requirements depend on your nationality and destination. Check visa requirements at skypeakair.com/visa-checker or contact the embassy of your destination country. SkyPeak is not responsible for denied boarding due to inadequate travel documents. Transit visas may be required for connections through certain countries. Bring printed copies of your visa, hotel booking, and return ticket as immigration may request them.",
+    "keywords": ["passport", "visa", "travel documents", "ID requirements", "entry requirements"],
+    "tags": ["travel-documents", "passport", "visa"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-016",
+    "category": "faq",
+    "title": "Health requirements for travel",
+    "content": "Some destinations require proof of vaccination (e.g., yellow fever for certain African and South American countries). Check destination health requirements at skypeakair.com/health-info. Travel health insurance is recommended for all international travel. Passengers with medical conditions requiring onboard oxygen must notify SkyPeak at least 72 hours before departure. Pregnant passengers up to 36 weeks (single pregnancy) or 32 weeks (multiple pregnancy) may travel with a medical certificate dated within 7 days of departure.",
+    "keywords": ["health requirements", "vaccination", "medical clearance", "pregnant travel", "onboard oxygen"],
+    "tags": ["travel-documents", "health", "medical"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-017",
+    "category": "faq",
+    "title": "Duty-free allowances",
+    "content": "Duty-free allowances vary by destination. General guidelines for most destinations: up to 1 liter of alcohol, 200 cigarettes or 50 cigars, and perfume for personal use. Purchases must be in sealed STEB (Security Tamper Evident Bags) to pass through transit security. Some countries have stricter limits on alcohol, tobacco, and currency. Always check your destination's customs regulations before purchasing. Items bought at SkyPeak partner duty-free shops can be pre-ordered online and collected at the boarding gate.",
+    "keywords": ["duty-free", "customs allowance", "alcohol allowance", "cigarette allowance", "tax-free shopping"],
+    "tags": ["duty-free", "customs", "shopping"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-018",
+    "category": "faq",
+    "title": "WiFi onboard",
+    "content": "SkyPeak offers inflight WiFi on most long-haul aircraft (A330, A350, 787 fleet). Pricing: Basic browsing (messaging, email) is $5 for the full flight. Standard (web browsing, social media) is $12. Premium (streaming-capable) is $18. SkyPeak Rewards Gold and Platinum members receive complimentary Basic WiFi. Business and First class passengers receive complimentary Premium WiFi. WiFi is not available on regional turboprop aircraft. Connection quality may vary over oceans and remote areas.",
+    "keywords": ["wifi", "inflight wifi", "internet onboard", "wifi price", "wifi on plane"],
+    "tags": ["inflight", "wifi", "services"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-019",
+    "category": "faq",
+    "title": "Meal options and special dietary needs",
+    "content": "Economy class on flights over 3 hours includes a complimentary meal. On flights under 3 hours, snacks and beverages are provided. Premium Economy, Business, and First class meals are included on all flights. Special meals (vegetarian, vegan, halal, kosher, gluten-free, diabetic, low-sodium, Hindu, child meal) must be requested at least 24 hours before departure via Manage Booking or by calling 1-888-SKYPEAK. Alcoholic beverages are complimentary in Business and First class; in Economy they are available for purchase.",
+    "keywords": ["meal", "food on plane", "special meal", "dietary needs", "vegetarian", "halal", "kosher", "inflight dining"],
+    "tags": ["inflight", "meals", "dietary"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-020",
+    "category": "faq",
+    "title": "Inflight entertainment system",
+    "content": "SkyPeak's seatback entertainment system is available on all wide-body aircraft with 200+ movies, 400+ TV episodes, music, podcasts, and games. Regional jets offer streaming entertainment to your personal device via the SkyPeak Player app (download before boarding). Noise-canceling headphones are provided in Business and First class. Economy passengers may use their own headphones or purchase a set onboard for $3. Content is refreshed monthly. USB and AC power outlets are available at every seat on wide-body aircraft.",
+    "keywords": ["entertainment", "movies", "TV shows", "seatback screen", "inflight entertainment", "IFE"],
+    "tags": ["inflight", "entertainment", "services"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-021",
+    "category": "faq",
+    "title": "Child discount and infant travel",
+    "content": "Children aged 2-11 receive a 25% discount on the base fare for international flights. Domestic flights do not have a child discount but children pay adult fare. Infants under 2 travel on a parent's lap for 10% of the adult fare (no seat) on international flights, and free on domestic flights. An infant bassinet is available on bulkhead rows for long-haul flights — request at booking. Only one lap infant per adult. Child car seats (FAA-approved) may be used onboard if a seat is purchased for the child.",
+    "keywords": ["child discount", "infant travel", "baby on plane", "child fare", "infant bassinet", "kids fare"],
+    "tags": ["family", "children", "fares"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-022",
+    "category": "faq",
+    "title": "Flight change fees and policies",
+    "content": "Change fees depend on your fare type. Basic Economy: changes not permitted (cancel and rebook at current price). Standard Economy: $75 domestic, $150 international change fee plus any fare difference. Flexible Economy: no change fee, fare difference applies. Premium Economy, Business, and First class: no change fee. Changes must be made at least 2 hours before departure. Same-day standby is $50 for Economy, free for Business/First. SkyPeak Rewards Platinum members are exempt from change fees on all fare types.",
+    "keywords": ["change flight", "change fee", "reschedule flight", "modify booking", "flight change policy"],
+    "tags": ["booking", "changes", "fees"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-023",
+    "category": "faq",
+    "title": "Name correction policy",
+    "content": "Minor name corrections (up to 3 characters, typos) can be made free of charge via Manage Booking or by calling 1-888-SKYPEAK. Corrections must be requested at least 24 hours before departure. Legal name changes (marriage, court order) require supporting documentation and a $50 processing fee. Name transfers to a different person are not permitted. The name on your ticket must match your passport or government-issued ID exactly. Middle names are optional but if included must match your document.",
+    "keywords": ["name correction", "fix name", "name change", "wrong name on ticket", "name typo"],
+    "tags": ["booking", "name-change", "corrections"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-024",
+    "category": "faq",
+    "title": "Group bookings",
+    "content": "Group bookings (10 or more passengers on the same flight) are handled by the SkyPeak Groups desk. Group fares include a discounted rate, flexible payment schedule (deposit of 10% at booking, full payment 60 days before departure), and the ability to add passenger names up to 30 days before travel. Group bookings receive one complimentary name change per passenger. Contact groups@skypeakair.com or call 1-888-SKYPEAK ext. 3 for a quote. Group bookings cannot be made online and do not earn SkyPeak Rewards miles at the group fare rate.",
+    "keywords": ["group booking", "group travel", "group discount", "10 or more", "group fare"],
+    "tags": ["booking", "groups", "corporate"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-025",
+    "category": "faq",
+    "title": "SkyPeak Rewards frequent flyer program",
+    "content": "SkyPeak Rewards is our loyalty program with three tiers: Silver (0-24,999 miles/year), Gold (25,000-49,999 miles/year), and Platinum (50,000+ miles/year). Benefits include: Silver — priority check-in, 10% bonus miles. Gold — lounge access, free seat selection, 25% bonus miles, free WiFi. Platinum — two free checked bags, complimentary upgrades (subject to availability), 50% bonus miles, priority boarding. Miles can be earned on SkyPeak flights and partner airlines. Redeem miles for flights, upgrades, and partner rewards. Miles expire after 24 months of account inactivity.",
+    "keywords": ["frequent flyer", "loyalty program", "SkyPeak Rewards", "miles", "points", "silver", "gold", "platinum"],
+    "tags": ["loyalty", "rewards", "miles"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-026",
+    "category": "faq",
+    "title": "Priority boarding",
+    "content": "Priority boarding is available for Business and First class passengers, SkyPeak Rewards Gold and Platinum members, and passengers who purchase Priority Boarding for $10 per flight segment. Priority passengers board after pre-boarding (families with small children, passengers needing assistance) and before general boarding. Priority boarding is included with Premium Economy fares on international flights. It can be added via Manage Booking up to 1 hour before departure.",
+    "keywords": ["priority boarding", "early boarding", "board first", "boarding groups"],
+    "tags": ["boarding", "priority", "services"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-027",
+    "category": "faq",
+    "title": "Refund policy",
+    "content": "Refund eligibility depends on your fare type. Basic Economy: non-refundable (airline credit only, valid 12 months). Standard Economy: refundable minus a $75 cancellation fee. Flexible Economy: fully refundable. Premium Economy, Business, and First class: fully refundable. Refunds are processed to the original payment method within 7 business days for credit cards, 20 business days for other methods. Tickets purchased with miles are refunded as miles. The $75 cancellation fee is waived for SkyPeak Rewards Platinum members and for cancellations within 24 hours of booking.",
+    "keywords": ["refund", "cancellation", "cancel ticket", "refund policy", "get money back", "non-refundable"],
+    "tags": ["booking", "refund", "cancellation"],
+    "metadata": {}
+  }
+]

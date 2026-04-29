@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="#0047AB"/>
+
+  <!-- Inner shield shape — represents air-gapped protection -->
+  <path d="M256 80 L400 160 L400 300 C400 380 340 440 256 460 C172 440 112 380 112 300 L112 160 Z"
+        fill="#0047AB" stroke="white" stroke-width="8" stroke-linejoin="round"/>
+
+  <!-- Gap lines — the "air gap" visual metaphor -->
+  <!-- Three broken concentric arcs inside the shield -->
+  <path d="M256 140 C320 140 370 180 370 240" stroke="white" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.4"/>
+  <path d="M256 140 C192 140 142 180 142 240" stroke="white" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.4"/>
+
+  <path d="M256 180 C300 180 340 210 340 260" stroke="white" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.6"/>
+  <path d="M256 180 C212 180 172 210 172 260" stroke="white" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.6"/>
+
+  <path d="M256 220 C280 220 310 240 310 280" stroke="white" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.8"/>
+  <path d="M256 220 C232 220 202 240 202 280" stroke="white" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.8"/>
+
+  <!-- Center dot — the device/AI core -->
+  <circle cx="256" cy="280" r="16" fill="white"/>
+
+  <!-- Small lightning bolt in center — AI/intelligence -->
+  <path d="M252 272 L258 278 L254 278 L260 288 L254 282 L258 282 L252 272Z" fill="#0047AB"/>
+
+  <!-- Disconnected signal waves outside shield — showing "gapped" from cloud -->
+  <path d="M420 120 C460 140 480 180 480 220" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.2" stroke-dasharray="8 8"/>
+  <path d="M92 120 C52 140 32 180 32 220" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.2" stroke-dasharray="8 8"/>
+</svg>

@@ -1,0 +1,236 @@
+[
+  {
+    "id": "faq-001",
+    "category": "faq",
+    "title": "How to open a bank account",
+    "content": "To open a PrimaBank account, visit any branch with a valid government-issued photo ID (driver's license, passport, or state ID), your Social Security number, and proof of address (utility bill or lease agreement dated within 90 days). You can also start the application online at primabank.com/open-account and finish in-branch. A minimum opening deposit of $25 is required for most accounts. The process takes about 20 minutes in-branch. You will receive your debit card by mail within 5-7 business days, and temporary checks are available immediately.",
+    "keywords": ["open account", "new account", "create account", "sign up", "join", "start account", "apply for account"],
+    "tags": ["account", "getting-started"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-002",
+    "category": "faq",
+    "title": "Account types: Savings accounts",
+    "content": "PrimaBank offers three savings account options. The Basic Savings account has no monthly maintenance fee if you maintain a $300 minimum balance, and earns 0.50% APY. The Premium Savings account requires a $2,500 minimum balance, earns 2.10% APY, and includes free cashier's checks. The Money Market account requires $10,000 minimum, earns 2.75% APY, and allows up to 6 withdrawals per statement cycle with check-writing privileges. All savings accounts are FDIC insured up to $250,000 per depositor.",
+    "keywords": ["savings account", "savings", "interest rate", "APY", "money market", "types of accounts", "account types"],
+    "tags": ["account", "savings", "products"],
+    "metadata": {"type": "savings"}
+  },
+  {
+    "id": "faq-003",
+    "category": "faq",
+    "title": "Account types: Checking accounts",
+    "content": "PrimaBank checking accounts include: Standard Checking with no monthly fee (with $500 minimum balance or direct deposit), free debit card, and free online bill pay. Student Checking is fee-free for ages 17-24 with no minimum balance required. Business Checking is designed for small businesses with 200 free transactions per month and merchant deposit services. All checking accounts include free access to PrimaBank's 2,000+ ATM network and mobile check deposit.",
+    "keywords": ["checking account", "checking", "debit account", "student checking", "business checking"],
+    "tags": ["account", "checking", "products"],
+    "metadata": {"type": "checking"}
+  },
+  {
+    "id": "faq-004",
+    "category": "faq",
+    "title": "Certificate of Deposit (CD) rates",
+    "content": "PrimaBank CDs offer guaranteed returns with FDIC insurance. Current rates: 6-month CD at 3.50% APY ($1,000 minimum), 12-month CD at 4.00% APY ($1,000 minimum), 24-month CD at 4.25% APY ($2,500 minimum), 60-month CD at 4.50% APY ($5,000 minimum). Early withdrawal penalties apply: 90 days of interest for CDs under 12 months, 180 days for 12-24 months, and 365 days for terms over 24 months. CD interest can be paid monthly or compounded to maturity. Rates are subject to change and are locked at the time of opening.",
+    "keywords": ["CD", "certificate of deposit", "CD rates", "fixed deposit", "term deposit", "CD interest"],
+    "tags": ["products", "savings", "CD"],
+    "metadata": {"type": "cd"}
+  },
+  {
+    "id": "faq-005",
+    "category": "faq",
+    "title": "Interest rates on savings accounts",
+    "content": "PrimaBank savings interest rates as of the current period: Basic Savings earns 0.50% APY on all balances. Premium Savings earns 2.10% APY on balances of $2,500 or more (0.50% APY below that threshold). Money Market earns 2.75% APY on balances of $10,000+ (1.50% APY for $2,500-$9,999, 0.50% APY below $2,500). Interest is compounded daily and credited monthly. Rates are variable and may change at any time. Check primabank.com/rates for current rates.",
+    "keywords": ["interest rate", "savings rate", "APY", "how much interest", "savings interest", "earn interest"],
+    "tags": ["savings", "rates"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-006",
+    "category": "faq",
+    "title": "Minimum balance requirements",
+    "content": "Minimum balance requirements by account type: Basic Savings requires $300 to waive the $5/month maintenance fee. Premium Savings requires $2,500 to waive the $12/month fee. Money Market requires $10,000 to waive the $15/month fee. Standard Checking requires $500 average daily balance or one direct deposit of $500+ per month to waive the $8/month fee. Student Checking and Business Checking (first year) have no minimum balance requirement. If balances fall below the minimum, the monthly maintenance fee is charged on the last business day of the statement cycle.",
+    "keywords": ["minimum balance", "minimum deposit", "balance requirement", "maintenance fee", "monthly fee"],
+    "tags": ["account", "fees"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-007",
+    "category": "faq",
+    "title": "Overdraft protection",
+    "content": "PrimaBank offers two overdraft protection options. Overdraft Transfer links your checking account to a savings account and automatically transfers funds in $100 increments when your checking balance goes negative; the transfer fee is $10 per transfer. Overdraft Line of Credit provides a revolving credit line of $500-$5,000 at 18.00% APR, with a $5 transfer fee each time the line is accessed. Without overdraft protection, transactions that overdraw your account may be declined (for debit card purchases) or returned (for checks), with a $35 overdraft fee per item up to 4 per day. You can opt out of overdraft coverage for debit card and ATM transactions at any time.",
+    "keywords": ["overdraft", "overdraft protection", "overdrawn", "negative balance", "bounced check", "NSF"],
+    "tags": ["account", "fees", "checking"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-008",
+    "category": "faq",
+    "title": "Direct deposit setup",
+    "content": "To set up direct deposit, provide your employer with PrimaBank's routing number (021000248) and your account number, which you can find on your checks, in the mobile app under Account Details, or by calling 1-800-PRIMA. Most employers process direct deposit setup within 1-2 pay cycles. You can split your direct deposit between multiple PrimaBank accounts. Early direct deposit is available on all checking accounts: if your employer sends the payroll file early, you may receive your deposit up to 2 days before payday. There is no fee for direct deposit.",
+    "keywords": ["direct deposit", "payroll", "routing number", "set up direct deposit", "automatic deposit", "paycheck"],
+    "tags": ["account", "getting-started"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-009",
+    "category": "faq",
+    "title": "Wire transfer process",
+    "content": "PrimaBank supports both domestic and international wire transfers. Domestic wires typically arrive within the same business day if initiated before 4:00 PM ET. To send a domestic wire, you need the recipient's bank name, routing number, account number, and account holder name. The fee is $25 for outgoing domestic wires and free for incoming. International wires take 1-5 business days depending on the destination country and intermediary banks. Outgoing international wire fee is $45. You can initiate wires online through PrimaBank Online (up to $50,000/day) or in-branch for larger amounts. Wire transfers cannot be reversed once sent.",
+    "keywords": ["wire transfer", "send wire", "wire money", "wire fee", "domestic wire", "international wire"],
+    "tags": ["transfers", "fees"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-010",
+    "category": "faq",
+    "title": "International transfer",
+    "content": "For international money transfers, PrimaBank offers wire transfers and PrimaBank Global Send. Wire transfers cost $45 per outgoing transfer and arrive in 1-5 business days. PrimaBank Global Send is available through the mobile app for transfers to 50+ countries at a flat fee of $5 for transfers up to $1,000 and $10 for transfers up to $5,000. Exchange rates are set at the time of transfer and displayed before you confirm. Daily limit for Global Send is $5,000. You will need the recipient's full name, bank account or mobile wallet number, and country. Regulations may require additional documentation for transfers over $3,000.",
+    "keywords": ["international transfer", "send money abroad", "foreign transfer", "global send", "remittance", "exchange rate"],
+    "tags": ["transfers", "international"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-011",
+    "category": "faq",
+    "title": "Mobile check deposit",
+    "content": "Deposit checks using the PrimaBank mobile app by selecting Deposit > Mobile Check Deposit. Endorse the check by signing the back and writing \"For mobile deposit only - PrimaBank.\" Take clear photos of the front and back of the check. Standard accounts have a $5,000 daily mobile deposit limit and $15,000 monthly limit. Premium and Business accounts have higher limits. Funds from mobile deposits are typically available the next business day, though the first $225 is available immediately. Keep the physical check for 14 days after deposit, then shred it securely. ATM check deposits are also available at any PrimaBank ATM with deposit capability.",
+    "keywords": ["mobile deposit", "check deposit", "deposit check", "mobile check", "ATM deposit", "deposit a check"],
+    "tags": ["deposits", "mobile", "self-service"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-012",
+    "category": "faq",
+    "title": "Debit card PIN reset",
+    "content": "To reset your debit card PIN: (1) Visit any PrimaBank ATM, insert your card, and select 'PIN Change' from the menu. (2) Call 1-800-PRIMA and follow the automated prompts for PIN change after verifying your identity. (3) Visit any PrimaBank branch with a valid photo ID. (4) Use the PrimaBank mobile app under Card Management > Change PIN. For security, you cannot set a PIN that matches your date of birth, Social Security number, or sequential numbers (1234, etc.). Your new PIN is effective immediately. If your card is locked due to too many incorrect PIN attempts, call 1-800-PRIMA or visit a branch to unlock it.",
+    "keywords": ["PIN reset", "change PIN", "forgot PIN", "debit card PIN", "card PIN", "PIN locked"],
+    "tags": ["card", "security", "self-service"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-013",
+    "category": "faq",
+    "title": "Credit card application",
+    "content": "Apply for a PrimaBank credit card online at primabank.com/credit-cards, through the mobile app, by phone at 1-800-PRIMA, or at any branch. You will need your Social Security number, annual income, employment information, and housing costs. Applications are typically reviewed within 2-3 business days. If approved, your card arrives by mail in 7-10 business days; expedited delivery is available for $25. PrimaBank offers three credit card tiers: Standard (no annual fee, 1% cash back), Rewards (annual fee $95, 2% cash back on dining and travel), and Platinum (annual fee $195, 3% cash back on all purchases plus airport lounge access). A credit score of 670+ is generally required for approval.",
+    "keywords": ["credit card", "apply for credit card", "credit card application", "new credit card", "credit card approval"],
+    "tags": ["card", "credit", "products"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-014",
+    "category": "faq",
+    "title": "Credit limit increase",
+    "content": "To request a credit limit increase, log in to PrimaBank Online and go to Credit Cards > Request Credit Limit Increase, or call 1-800-PRIMA. You can request an increase after your account has been open for at least 6 months and is in good standing (no late payments in the last 12 months). A soft credit inquiry is performed for increases up to 30% of your current limit; a hard inquiry may be required for larger increases. Decisions are typically made within 1-2 business days. Automatic credit limit increases may be offered periodically based on your account history and creditworthiness.",
+    "keywords": ["credit limit", "increase limit", "higher limit", "credit limit increase", "raise credit limit"],
+    "tags": ["card", "credit"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-015",
+    "category": "faq",
+    "title": "Rewards program",
+    "content": "PrimaBank Rewards points are earned on eligible credit card purchases. The Standard card earns 1 point per dollar, the Rewards card earns 2 points per dollar on dining and travel (1 point on everything else), and the Platinum card earns 3 points per dollar on all purchases. Points can be redeemed for statement credits (1,000 points = $10), gift cards, travel bookings through the PrimaBank Travel portal, or merchandise. Points expire 36 months after the billing cycle in which they were earned. Check your balance and redeem at primabank.com/rewards or in the mobile app under Rewards.",
+    "keywords": ["rewards", "points", "cash back", "rewards program", "redeem points", "earn points"],
+    "tags": ["card", "credit", "rewards"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-016",
+    "category": "faq",
+    "title": "Online banking registration",
+    "content": "To register for PrimaBank Online, visit primabank.com/register and enter your account number, Social Security number, and date of birth. Create a username and strong password (minimum 12 characters, including uppercase, lowercase, number, and special character). Set up your security questions and verify your email address and phone number. Two-factor authentication (2FA) is enabled by default and uses SMS or the PrimaBank Authenticator app. After registration, you can access account balances, transfer funds, pay bills, view statements, manage cards, and set up alerts. The mobile app uses the same credentials.",
+    "keywords": ["online banking", "register online", "sign up online", "internet banking", "create login", "online access"],
+    "tags": ["online-banking", "getting-started"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-017",
+    "category": "faq",
+    "title": "Mobile app features",
+    "content": "The PrimaBank mobile app (available on iOS and Android) provides: account balance and transaction history, mobile check deposit, person-to-person payments (PrimaPay), bill pay and scheduled payments, card management (lock/unlock, set travel notices, change PIN), ATM and branch locator with real-time wait times, spending insights and budgeting tools, fingerprint and Face ID login, push notifications for transactions over a custom threshold, and direct messaging with customer support. Download from the App Store or Google Play. The app requires iOS 15+ or Android 10+.",
+    "keywords": ["mobile app", "app features", "PrimaBank app", "download app", "mobile banking app"],
+    "tags": ["mobile", "self-service"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-018",
+    "category": "faq",
+    "title": "Two-factor authentication",
+    "content": "PrimaBank requires two-factor authentication (2FA) for online banking and the mobile app. You can receive verification codes via SMS text message to your registered phone number, or use the PrimaBank Authenticator app for time-based one-time passwords (TOTP). The authenticator app is recommended for better security. To set up or change your 2FA method, log in to PrimaBank Online, go to Security Settings > Two-Factor Authentication. If you lose access to your 2FA device, call 1-800-PRIMA with your account information and government-issued ID to regain access. Never share your verification codes with anyone, including PrimaBank employees.",
+    "keywords": ["2FA", "two factor", "verification code", "authenticator", "security code", "login security"],
+    "tags": ["security", "online-banking"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-019",
+    "category": "faq",
+    "title": "Account statements",
+    "content": "PrimaBank provides monthly account statements. Electronic statements (e-statements) are available through PrimaBank Online and the mobile app, and are retained for 7 years. To switch to paperless statements, go to Account Settings > Statement Preferences. Paper statements are mailed to your address on file and incur a $3/month fee per account (waived for Premium and Platinum account holders). You can download statements as PDF files. For statements older than 7 years, contact a branch or call 1-800-PRIMA; a $10 research fee applies per statement.",
+    "keywords": ["statement", "account statement", "bank statement", "e-statement", "paperless", "monthly statement"],
+    "tags": ["account", "self-service"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-020",
+    "category": "faq",
+    "title": "Tax documents (1099)",
+    "content": "PrimaBank issues 1099-INT forms for accounts that earned $10 or more in interest during the tax year. Forms are available by January 31 each year in PrimaBank Online under Documents > Tax Forms. Paper copies are mailed to your address on file. If you have a CD or Money Market account, interest is reported on the 1099-INT. For combined reporting across multiple accounts, refer to your year-end summary statement. If you need a corrected 1099, contact us at 1-800-PRIMA. PrimaBank does not provide tax advice; consult a tax professional for guidance on reporting interest income.",
+    "keywords": ["1099", "tax form", "tax document", "1099-INT", "interest tax", "tax reporting"],
+    "tags": ["account", "tax"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-021",
+    "category": "faq",
+    "title": "Beneficiary designation",
+    "content": "You can designate beneficiaries on your PrimaBank deposit accounts to ensure funds transfer directly to your chosen recipients in the event of your passing, bypassing probate. This is called a Payable on Death (POD) designation. To add or change beneficiaries, visit any branch with a valid ID or download the beneficiary designation form from primabank.com/forms. You can name multiple beneficiaries and specify percentage allocations. Beneficiary designations override will instructions for bank accounts. Review your beneficiaries periodically, especially after major life events.",
+    "keywords": ["beneficiary", "POD", "payable on death", "death beneficiary", "add beneficiary", "change beneficiary"],
+    "tags": ["account", "estate"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-022",
+    "category": "faq",
+    "title": "Joint account",
+    "content": "PrimaBank joint accounts allow two or more individuals to share ownership of a checking or savings account. Both owners have equal access to funds and can make deposits, withdrawals, and transfers. To open a joint account, all owners must visit a branch together with valid photo IDs and Social Security numbers, or one owner can add another online through Account Settings > Add Joint Owner (the new owner will need to verify their identity). Joint accounts can be set up as Joint Tenants with Rights of Survivorship (JTWROS) or Tenants in Common. All account holders are equally liable for any negative balance or fees.",
+    "keywords": ["joint account", "shared account", "add someone to account", "two people account", "joint ownership"],
+    "tags": ["account"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-023",
+    "category": "faq",
+    "title": "Power of attorney",
+    "content": "PrimaBank accepts Durable Power of Attorney (DPOA) documents that authorize a designated agent to act on behalf of the account holder. To set up POA access, the account holder (while competent) and the agent must visit a branch with the original notarized POA document, valid photo IDs for both parties, and the account holder's Social Security number. PrimaBank's legal department reviews POA documents, which may take 3-5 business days. POA agents can perform transactions, access account information, and manage the account, but cannot change beneficiaries or close accounts unless specifically authorized in the POA document.",
+    "keywords": ["power of attorney", "POA", "authorized agent", "DPOA", "legal authority", "act on behalf"],
+    "tags": ["account", "legal"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-024",
+    "category": "faq",
+    "title": "Dormant account reactivation",
+    "content": "A PrimaBank account is classified as dormant after 12 months of no customer-initiated transactions (automatic transfers and interest credits do not count). Dormant accounts incur a $10/month dormant account fee. After 3 years of dormancy, accounts may be escheated (turned over) to the state as unclaimed property per state law. To reactivate a dormant account, visit any branch with a valid photo ID and make a deposit or withdrawal, or log in to PrimaBank Online and perform a transaction. If your account has been escheated, contact your state's unclaimed property office to reclaim your funds.",
+    "keywords": ["dormant account", "inactive account", "reactivate account", "unclaimed funds", "escheat", "abandoned account"],
+    "tags": ["account"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-025",
+    "category": "faq",
+    "title": "Safe deposit box",
+    "content": "PrimaBank offers safe deposit boxes at select branch locations for secure storage of important documents, valuables, and irreplaceable items. Annual rental fees: Small (3x5 inches) $50/year, Medium (5x10 inches) $100/year, Large (10x10 inches) $175/year. A refundable key deposit of $25 is required. Box access is available during branch business hours. Two keys are provided; lost key replacement costs $150 and requires drilling the lock. Safe deposit box contents are not FDIC insured; PrimaBank recommends obtaining separate insurance coverage for stored valuables. Contact your local branch for availability.",
+    "keywords": ["safe deposit box", "safety deposit", "secure storage", "safe deposit", "valuables storage"],
+    "tags": ["branch-services"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-026",
+    "category": "faq",
+    "title": "Notary services",
+    "content": "PrimaBank provides free notary public services to account holders at all branch locations during business hours. Services include notarization of legal documents, affidavits, real estate documents, and powers of attorney. No appointment is necessary, but calling ahead to confirm a notary is available is recommended. You must bring a valid government-issued photo ID and the unsigned document (the notary must witness your signature). Non-account holders may use notary services for a fee of $10 per document. Mobile notary services are not available.",
+    "keywords": ["notary", "notarize", "notary services", "notary public", "notarization"],
+    "tags": ["branch-services"],
+    "metadata": {}
+  }
+]

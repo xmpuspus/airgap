@@ -1,0 +1,38 @@
+[
+  {
+    "id": "trouble-claim-denied",
+    "category": "troubleshooting",
+    "title": "Claim denied or partially denied",
+    "content": "If your ShieldGuard claim is denied, you will receive a written explanation letter detailing the reason. Common denial reasons: the type of loss is not covered under your policy (e.g., flood damage on a standard homeowners policy), the damage occurred before your policy start date, the claim exceeds your coverage limits, or the deductible exceeds the damage amount. Steps to take: (1) Review the denial letter and compare the stated reason against your policy's declarations page and coverage terms. (2) Gather any additional documentation that supports your claim (photos, receipts, expert opinions). (3) Call 1-800-SHIELD and request a reconsideration, providing the new evidence. (4) If still unsatisfied, request a formal review by a claims supervisor. (5) You have the right to hire a public adjuster or attorney to advocate on your behalf. (6) You can also file a complaint with your state's Department of Insurance if you believe the denial was unfair.",
+    "keywords": ["claim denied", "claim rejected", "denial letter", "appeal claim", "claim dispute", "not covered"],
+    "tags": ["troubleshooting", "claims"],
+    "metadata": {}
+  },
+  {
+    "id": "trouble-premium-increased",
+    "category": "troubleshooting",
+    "title": "Premium increased unexpectedly",
+    "content": "If your ShieldGuard premium increased at renewal, common reasons include: (1) A recent at-fault accident or traffic violation added to your driving record. (2) A claim you filed during the policy term — filing a claim, especially an at-fault one, often increases premiums at renewal. (3) General rate increases approved by your state's insurance department, affecting all policyholders in your area. (4) Changes to your credit-based insurance score (in states where credit is used for rating). (5) A change in your coverage or vehicle (e.g., a new car with a higher value). (6) Losing a discount you previously had (e.g., good driver discount after a violation). To reduce your premium: ask your agent about available discounts you may not be using, increase your deductibles, remove optional coverages you no longer need, or bundle multiple policies. Call 1-800-SHIELD for a premium review.",
+    "keywords": ["premium increase", "rate increase", "insurance more expensive", "higher premium", "why did my rate go up", "cost more"],
+    "tags": ["troubleshooting", "billing"],
+    "metadata": {}
+  },
+  {
+    "id": "trouble-id-card-not-showing",
+    "category": "troubleshooting",
+    "title": "Insurance ID card not showing in app",
+    "content": "If your ShieldGuard digital insurance ID card is not displaying in the mobile app: (1) Ensure you are logged in with the correct account — the ID card is only shown for active policies. (2) Pull down to refresh the screen (the app may be showing cached data). (3) Check that your policy is active and not lapsed due to non-payment — a lapsed policy will not display an ID card. (4) Update the app to the latest version from the App Store or Google Play. (5) Clear the app cache: on Android, go to Settings > Apps > ShieldGuard > Storage > Clear Cache. On iOS, delete and reinstall the app. (6) If you recently started a new policy, the ID card may take up to 24 hours to appear in the app after your first payment is processed. (7) If none of these work, call 1-800-SHIELD or email support@shieldguard.com. In the meantime, you can download and print your ID card from shieldguard.com/my-policy.",
+    "keywords": ["ID card not showing", "insurance card missing", "can't see ID card", "digital card not working", "app ID card"],
+    "tags": ["troubleshooting", "mobile"],
+    "metadata": {}
+  },
+  {
+    "id": "trouble-policy-docs-not-loading",
+    "category": "troubleshooting",
+    "title": "Policy documents not loading",
+    "content": "If your ShieldGuard policy documents are not loading on the website or mobile app: (1) Check your internet connection — policy documents are PDF files that require an active connection to download. (2) Try a different browser — some browsers block PDF downloads by default. Ensure your browser allows pop-ups from shieldguard.com. (3) On the mobile app, ensure you have a PDF viewer installed on your device. (4) Clear your browser cache and cookies, or clear the app cache and try again. (5) If documents show as 'Processing,' your policy may have been recently issued or changed — allow 24-48 hours for documents to be generated and uploaded. (6) If you need documents immediately, call 1-800-SHIELD and a representative can email them to you or mail printed copies. Policy documents include your declarations page (summary of coverages and limits), policy contract, and any endorsements or amendments.",
+    "keywords": ["documents not loading", "can't download policy", "policy PDF", "declarations page missing", "policy documents error"],
+    "tags": ["troubleshooting", "self-service"],
+    "metadata": {}
+  }
+]

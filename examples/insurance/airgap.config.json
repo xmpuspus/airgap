@@ -1,0 +1,230 @@
+{
+  "$schema": "../airgap.schema.json",
+  "specVersion": "1.0.0",
+  "brand": {
+    "name": "ShieldGuard Insurance",
+    "botName": "ShieldBot",
+    "tagline": "Protection you can count on",
+    "hotline": "1-800-SHIELD",
+    "hotlineLabel": "toll-free, 24/7 claims",
+    "website": "shieldguard.com"
+  },
+  "theme": {
+    "primary": "#1E3A5F",
+    "primaryLight": "#2E5A8F",
+    "primaryDark": "#0F1F33",
+    "secondary": "#D4A843",
+    "secondaryLight": "#E0C06A",
+    "background": "#F5F6F8"
+  },
+  "model": {
+    "provider": "llama.cpp",
+    "url": "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q3_K_S.gguf",
+    "filename": "gemma-4-e2b-it-q3ks.gguf",
+    "sha256": "2d010e251ba1fc44b746eb4059825a1954df5f90a1b7a360cf18232a520709aa",
+    "sizeBytes": 2445645184,
+    "sizeMB": 2445
+  },
+  "knowledge": {
+    "directory": "knowledge"
+  },
+  "prompts": {
+    "system": "You are {{botName}}, a customer support assistant for {{brandName}}. Answer ONLY using the CONTEXT provided. Be concise. Use {{currency}} for amounts. Never guarantee coverage or claim outcomes. Always refer to the specific policy terms. If unsure, say: \"Please call {{hotline}} or contact your local agent for policy-specific details.\"",
+    "welcome": "Hello! I'm {{botName}}, your {{brandName}} assistant.\n\nI can help you with:\n\n{{featureList}}\n\nHow can I help you today?",
+    "fallback": "I don't have information about that. For assistance, please:\n- Call {{hotline}} ({{hotlineLabel}})\n- Contact your local ShieldGuard agent\n- Visit {{website}}"
+  },
+  "features": {
+    "offlineQueue": true,
+    "streamingTokens": true,
+    "userFeedback": true,
+    "conversationPersistence": true,
+    "sessionTimeoutMinutes": 15
+  },
+  "onboarding": {
+    "title": "Welcome to {{botName}}",
+    "subtitle": "{{tagline}}",
+    "features": [
+      "File and track insurance claims",
+      "View your coverage details and policy documents",
+      "Make premium payments and check billing",
+      "Request roadside assistance",
+      "Find a local ShieldGuard agent",
+      "Access and download policy documents"
+    ]
+  },
+  "quickReplies": [
+    {
+      "title": "File a claim",
+      "value": "How do I file an insurance claim?"
+    },
+    {
+      "title": "My coverage",
+      "value": "What does my policy cover?"
+    },
+    {
+      "title": "Find an agent",
+      "value": "Where is the nearest ShieldGuard agent?"
+    },
+    {
+      "title": "Payment options",
+      "value": "How can I pay my premium?"
+    }
+  ],
+  "actions": [
+    {
+      "id": "claim_filing",
+      "label": "File an insurance claim",
+      "keywords": [
+        "file a claim",
+        "new claim",
+        "submit claim",
+        "report accident",
+        "report damage",
+        "make a claim",
+        "claim filing"
+      ],
+      "requiresOnline": true,
+      "category": "claims",
+      "mockResponse": "Your claim has been started. Claim reference: SG-2026-04872. A claims adjuster will contact you within 24 hours. For urgent matters, call 1-800-SHIELD."
+    },
+    {
+      "id": "policy_change",
+      "label": "Request policy change",
+      "keywords": [
+        "change my policy",
+        "update policy",
+        "add coverage",
+        "remove coverage",
+        "change address",
+        "add a driver",
+        "add vehicle"
+      ],
+      "requiresOnline": true,
+      "category": "policy",
+      "mockResponse": "Policy change requests require verification. Please call 1-800-SHIELD or log in to shieldguard.com/my-policy to make changes. Changes typically take effect within 24 hours."
+    },
+    {
+      "id": "premium_inquiry",
+      "label": "Check premium or billing",
+      "keywords": [
+        "my premium",
+        "how much is my insurance",
+        "payment due",
+        "billing",
+        "premium amount",
+        "next payment"
+      ],
+      "requiresOnline": true,
+      "category": "billing",
+      "mockResponse": "Your auto insurance premium is $142.00/month. Next payment due: April 15, 2026. Payment method on file: Visa ending in 3344. You can update your payment method at shieldguard.com/billing."
+    },
+    {
+      "id": "roadside_assistance",
+      "label": "Request roadside assistance",
+      "keywords": [
+        "roadside assistance",
+        "tow truck",
+        "flat tire",
+        "locked out",
+        "car broke down",
+        "jump start",
+        "towing"
+      ],
+      "requiresOnline": true,
+      "category": "emergency",
+      "mockResponse": "Roadside assistance has been requested. A service vehicle will be dispatched to your location. Estimated wait time: 30-45 minutes. For immediate help, call 1-800-SHIELD and press 3."
+    },
+    {
+      "id": "agent_connect",
+      "label": "Connect with an agent",
+      "keywords": [
+        "talk to agent",
+        "speak to someone",
+        "agent help",
+        "need an agent",
+        "insurance agent",
+        "contact agent"
+      ],
+      "requiresOnline": true,
+      "category": "support",
+      "mockResponse": "To connect with a ShieldGuard agent, call 1-800-SHIELD or use the agent locator at shieldguard.com/agents to find an office near you. Agents are available Mon-Fri 8 AM - 8 PM, Sat 9 AM - 5 PM."
+    }
+  ],
+  "backend": {
+    "type": "mock"
+  },
+  "support": [
+    {
+      "type": "phone",
+      "value": "1-800-SHIELD",
+      "label": "24/7 claims & support"
+    },
+    {
+      "type": "email",
+      "value": "support@shieldguard.com",
+      "label": "Email support"
+    },
+    {
+      "type": "website",
+      "value": "shieldguard.com/help",
+      "label": "Online help center"
+    }
+  ],
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "safety": {
+    "enabled": true,
+    "confidenceThreshold": 0,
+    "topicBlocklist": [
+      "not_legal_advice:sue",
+      "not_legal_advice:legal advice",
+      "not_financial_advice:should I invest",
+      "not_medical_advice:diagnose",
+      "not_medical_advice:prescribe",
+      "not_financial_advice:investment advice"
+    ],
+    "groundingRules": {
+      "requireCitations": false,
+      "forbidUnsourcedAmounts": true,
+      "forbidUnsourcedDates": true
+    },
+    "refusalTemplates": {
+      "not_legal_advice": "I can't give legal advice. For legal questions about your policy or a claim, please consult a licensed attorney."
+    }
+  },
+  "tools": [
+    {
+      "name": "checkPolicyStatus",
+      "description": "Look up the status of a policy",
+      "keywords": [
+        "my policy status",
+        "is my policy",
+        "policy active"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "insurance",
+      "backendMethod": "checkPolicyStatus"
+    },
+    {
+      "name": "fileClaim",
+      "description": "Open a new insurance claim",
+      "keywords": [
+        "file a claim",
+        "file claim",
+        "new claim",
+        "start a claim"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "insurance",
+      "backendMethod": "fileClaim"
+    }
+  ],
+  "llm": {
+    "mode": "demo"
+  }
+}

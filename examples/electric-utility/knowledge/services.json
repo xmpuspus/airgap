@@ -1,0 +1,121 @@
+[
+  {
+    "id": "svc-001",
+    "category": "service",
+    "title": "Residential Standard Rate Plan",
+    "content": "The Standard Rate plan charges a flat rate of $0.12 per kWh for all electricity usage, regardless of time of day. This plan includes a $12.50 monthly service charge. It is the default rate for all new residential accounts and works best for households with consistent usage patterns that cannot easily shift demand to off-peak hours. No enrollment required; all new accounts start on this plan.",
+    "keywords": ["standard rate", "flat rate", "residential plan", "default plan", "basic plan"],
+    "tags": ["service", "rates", "residential"],
+    "metadata": {
+      "planType": "Residential",
+      "rate": "$0.12/kWh flat",
+      "serviceCharge": "$12.50/month"
+    }
+  },
+  {
+    "id": "svc-002",
+    "category": "service",
+    "title": "Time-of-Use Rate Plan",
+    "content": "The Time-of-Use (TOU) plan offers lower rates during off-peak hours and higher rates during peak demand. Off-peak rate is $0.08/kWh (9 PM to 1 PM weekdays, all day weekends/holidays) and peak rate is $0.18/kWh (1 PM to 9 PM weekdays). Monthly service charge is $12.50. Customers who can shift laundry, dishwashing, EV charging, and pool pump operation to off-peak hours typically save 15-25% compared to the Standard Rate. Smart meter required (installed at no cost upon enrollment).",
+    "keywords": ["time of use", "TOU", "peak rate", "off-peak rate", "variable rate", "time-of-use plan"],
+    "tags": ["service", "rates", "residential"],
+    "metadata": {
+      "planType": "Residential",
+      "peakRate": "$0.18/kWh",
+      "offPeakRate": "$0.08/kWh",
+      "serviceCharge": "$12.50/month"
+    }
+  },
+  {
+    "id": "svc-003",
+    "category": "service",
+    "title": "Green Energy Rate Plan",
+    "content": "The Green Energy plan sources 100% of your electricity from certified renewable sources including wind, solar, and hydroelectric power. The rate is $0.14/kWh with a $12.50 monthly service charge. You receive a monthly statement showing your environmental impact, including estimated CO2 offset in pounds. This plan supports the development of new renewable energy projects in the region. Enrollment is open to all residential and small commercial customers. No equipment changes needed.",
+    "keywords": ["green energy", "renewable", "clean energy", "wind power", "solar plan", "green plan", "eco"],
+    "tags": ["service", "rates", "renewable"],
+    "metadata": {
+      "planType": "Residential / Small Commercial",
+      "rate": "$0.14/kWh",
+      "source": "100% renewable"
+    }
+  },
+  {
+    "id": "svc-004",
+    "category": "service",
+    "title": "Small Commercial Rate Plan",
+    "content": "The Small Commercial plan is designed for businesses with demand under 50 kW. The energy rate is $0.10/kWh plus a demand charge of $4.50 per kW based on your highest 15-minute average demand during the billing period. Monthly service charge is $25.00. Businesses can reduce demand charges by staggering equipment startup times and using energy management systems. A commercial account manager is available to review your usage and recommend cost-saving measures at no charge.",
+    "keywords": ["commercial rate", "business plan", "small business", "commercial service", "demand charge"],
+    "tags": ["service", "rates", "commercial"],
+    "metadata": {
+      "planType": "Small Commercial",
+      "energyRate": "$0.10/kWh",
+      "demandCharge": "$4.50/kW",
+      "serviceCharge": "$25.00/month"
+    }
+  },
+  {
+    "id": "svc-005",
+    "category": "service",
+    "title": "Solar Buyback Program",
+    "content": "PowerGrid's Solar Buyback program credits customers for excess solar energy exported to the grid. The buyback rate is $0.06/kWh, credited monthly on your bill. To participate, you must have an approved interconnection agreement and a bi-directional net meter (installed free by PowerGrid). Credits roll over month-to-month and are settled annually in April. The system size is limited to 110% of your annual consumption. Annual true-up payments are issued for any remaining credit balance exceeding $50.",
+    "keywords": ["solar buyback", "net metering", "sell solar", "solar credits", "excess solar", "solar export"],
+    "tags": ["service", "solar", "renewable"],
+    "metadata": {
+      "planType": "Add-on (Residential / Commercial)",
+      "buybackRate": "$0.06/kWh",
+      "requirements": "Approved interconnection, bi-directional meter"
+    }
+  },
+  {
+    "id": "svc-006",
+    "category": "service",
+    "title": "EV Charging Rate Plan",
+    "content": "The EV Charging plan provides a discounted overnight rate of $0.05/kWh between 11 PM and 6 AM for electric vehicle charging on a dedicated circuit. Standard residential rates apply to EV charging outside the overnight window. A separate smart meter is installed on the EV charging circuit at no cost to the customer. Compatible with Level 2 (240V) home chargers. Enrollment requires proof of EV ownership or lease. This plan can be combined with any residential base rate plan.",
+    "keywords": ["EV plan", "electric vehicle plan", "car charging plan", "EV rate", "overnight charging"],
+    "tags": ["service", "ev", "residential"],
+    "metadata": {
+      "planType": "Residential Add-on",
+      "overnightRate": "$0.05/kWh (11 PM - 6 AM)",
+      "requirements": "Dedicated EV circuit, proof of EV ownership"
+    }
+  },
+  {
+    "id": "svc-007",
+    "category": "service",
+    "title": "Senior Citizen Discount Program",
+    "content": "Residential customers age 65 and older are eligible for a 15% discount on the first 500 kWh of monthly usage. The discount applies to the energy charge only; service charges, taxes, and fees are not discounted. To enroll, bring a government-issued photo ID showing date of birth to any PowerGrid service center. Only one discount per household. The discount is applied automatically each billing cycle after enrollment and does not need to be renewed. This program can be combined with Budget Billing.",
+    "keywords": ["senior discount", "elderly discount", "65 and older", "senior citizen", "age discount"],
+    "tags": ["service", "programs", "discount", "residential"],
+    "metadata": {
+      "planType": "Discount Program",
+      "discount": "15% on first 500 kWh/month",
+      "eligibility": "Age 65+"
+    }
+  },
+  {
+    "id": "svc-008",
+    "category": "service",
+    "title": "Low-Income Assistance (LIHEAP and Care Rate)",
+    "content": "PowerGrid partners with the federal Low Income Home Energy Assistance Program (LIHEAP) to provide grants for heating and cooling costs. Apply through your local community action agency; PowerGrid cannot process LIHEAP applications directly. Separately, PowerGrid's Care Rate program provides a 30% discount on all energy charges for households earning below 200% of the federal poverty level. Bring proof of household income (tax return, pay stubs, or benefits letter) to any service center to apply. Care Rate eligibility is reviewed annually.",
+    "keywords": ["LIHEAP", "low income", "assistance", "care rate", "energy assistance", "financial help", "hardship"],
+    "tags": ["service", "programs", "assistance"],
+    "metadata": {
+      "planType": "Assistance Program",
+      "careRateDiscount": "30% on energy charges",
+      "eligibility": "Household income below 200% FPL"
+    }
+  },
+  {
+    "id": "svc-009",
+    "category": "service",
+    "title": "Budget Billing Program",
+    "content": "Budget Billing averages your annual electricity costs into 12 equal monthly payments, smoothing out seasonal highs and lows. Your monthly amount is calculated from the most recent 12 months of usage and reviewed every 6 months. If actual costs differ significantly from projections, the monthly amount is adjusted. Your account must be current with no past-due balance to enroll. There is no fee for the program. Enroll online at powergridelectric.com/budget-billing, through the mobile app, or by calling 1-800-POWER.",
+    "keywords": ["budget billing", "level billing", "equal payments", "predictable bill", "averaged billing"],
+    "tags": ["service", "billing", "programs"],
+    "metadata": {
+      "planType": "Billing Program",
+      "fee": "None",
+      "requirement": "Account in good standing"
+    }
+  }
+]

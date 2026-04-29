@@ -1,0 +1,74 @@
+[
+  {
+    "id": "svc-001",
+    "category": "services",
+    "title": "Economy class",
+    "content": "SkyPeak Economy class offers a 31-inch seat pitch with adjustable headrests and personal device holders. Features include USB charging at every seat, streaming entertainment to personal devices on narrow-body aircraft, and seatback screens on wide-body aircraft. Complimentary snacks and beverages on all flights. Meals included on flights over 3 hours. One checked bag up to 23 kg included. Seat selection from $5. Fares start at $89 for domestic and $199 for international short-haul routes.",
+    "keywords": ["economy", "economy class", "standard class", "coach"],
+    "tags": ["cabin", "economy", "services"],
+    "metadata": {"cabin": "economy"}
+  },
+  {
+    "id": "svc-002",
+    "category": "services",
+    "title": "Premium Economy class",
+    "content": "SkyPeak Premium Economy offers a 36-inch seat pitch with 8 inches of recline, leather headrests, and a dedicated cabin section. Includes priority check-in and boarding, one checked bag up to 28 kg, complimentary seat selection, enhanced meal service with a choice of entree, amenity kit, and noise-reducing headphones. Seatback entertainment screens on all aircraft. USB and AC power outlets. WiFi at Standard tier included. Premium Economy fares are typically 40-60% above Economy.",
+    "keywords": ["premium economy", "premium class", "extra legroom class"],
+    "tags": ["cabin", "premium-economy", "services"],
+    "metadata": {"cabin": "premium_economy"}
+  },
+  {
+    "id": "svc-003",
+    "category": "services",
+    "title": "Business class",
+    "content": "SkyPeak Business class features lie-flat seats with direct aisle access on long-haul routes and 40-inch pitch recliner seats on short-haul routes. Includes lounge access at departure and connecting airports, two checked bags up to 32 kg each, priority check-in/boarding/baggage, multi-course dining with wine pairings, Bose noise-canceling headphones, amenity kit by Aesop, complimentary Premium WiFi, and turndown service on overnight flights. Earn 150% SkyPeak Rewards miles.",
+    "keywords": ["business class", "business", "lie-flat", "flat bed"],
+    "tags": ["cabin", "business", "premium"],
+    "metadata": {"cabin": "business"}
+  },
+  {
+    "id": "svc-004",
+    "category": "services",
+    "title": "First class",
+    "content": "SkyPeak First class offers enclosed private suites with a sliding door, a 6-foot-6 lie-flat bed with mattress pad and duvet, and a separate seat for dining and working. Includes chauffeur airport transfer (within 60 miles of departure airport), exclusive First class lounge with a la carte dining and spa, three checked bags up to 32 kg each, fine dining with champagne service, pajama set and premium amenity kit, and complimentary Premium WiFi. Available on select long-haul routes. Earn 200% SkyPeak Rewards miles.",
+    "keywords": ["first class", "first", "suite", "private suite"],
+    "tags": ["cabin", "first", "ultra-premium"],
+    "metadata": {"cabin": "first"}
+  },
+  {
+    "id": "svc-005",
+    "category": "services",
+    "title": "SkyPeak Rewards loyalty program",
+    "content": "SkyPeak Rewards has three tiers: Silver (entry level, earned at sign-up), Gold (25,000+ qualifying miles/year), and Platinum (50,000+ qualifying miles/year). Silver benefits: priority check-in, 10% bonus miles, online seat selection discount. Gold benefits: all Silver perks plus lounge access, free preferred seats, 25% bonus miles, complimentary Basic WiFi, extra checked bag. Platinum benefits: all Gold perks plus complimentary upgrades (when available), 50% bonus miles, free flight changes, companion lounge access. Miles can be redeemed for flights starting at 8,000 miles one-way domestic.",
+    "keywords": ["loyalty", "rewards", "frequent flyer", "miles", "tier", "silver", "gold", "platinum", "SkyPeak Rewards"],
+    "tags": ["loyalty", "rewards", "tiers"],
+    "metadata": {"program": "skypeak_rewards"}
+  },
+  {
+    "id": "svc-006",
+    "category": "services",
+    "title": "Airport lounge access",
+    "content": "SkyPeak operates SkyPeak Lounges at 12 airports. Complimentary access for Business and First class passengers, SkyPeak Rewards Gold and Platinum members. Day passes available for $45. Lounges feature hot and cold buffet, premium bar, shower suites, high-speed WiFi, business center with printers, quiet rooms, and flight monitors. Hours vary by location but generally open 5:00 AM to last departure. First class passengers at Manila and Singapore hubs have access to the exclusive SkyPeak First Lounge with a la carte restaurant and spa treatments.",
+    "keywords": ["lounge", "airport lounge", "lounge access", "SkyPeak lounge", "day pass"],
+    "tags": ["lounge", "airport", "premium"],
+    "metadata": {}
+  },
+  {
+    "id": "svc-007",
+    "category": "services",
+    "title": "Priority boarding service",
+    "content": "Priority boarding lets you board the aircraft before general boarding zones, giving first access to overhead bin space. Included for: Business and First class, Premium Economy (international flights), SkyPeak Rewards Gold and Platinum members. Available for purchase at $10 per segment via Manage Booking or at check-in. Priority boarding passengers also receive a priority lane at security where available. Boarding order: pre-board (families, assistance) then Priority, then general zones back-to-front.",
+    "keywords": ["priority boarding", "early boarding", "board first", "fast boarding"],
+    "tags": ["boarding", "priority", "services"],
+    "metadata": {}
+  },
+  {
+    "id": "svc-008",
+    "category": "services",
+    "title": "Travel insurance",
+    "content": "SkyPeak offers travel insurance through partner SafeTravel Insurance, available during booking or up to 24 hours before departure. Basic plan ($19): trip cancellation up to $2,000, medical emergency up to $50,000, baggage delay $500. Comprehensive plan ($49): trip cancellation up to $5,000, medical emergency up to $250,000, baggage delay $1,000, trip interruption $3,000, flight delay (6+ hours) $200 per day. Claims are filed directly with SafeTravel at safetravel.com/claims. Pre-existing medical conditions are excluded unless the Premium rider ($29 add-on) is purchased.",
+    "keywords": ["travel insurance", "insurance", "trip protection", "cancellation insurance", "medical coverage"],
+    "tags": ["insurance", "services", "protection"],
+    "metadata": {}
+  }
+]

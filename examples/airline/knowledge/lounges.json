@@ -1,0 +1,56 @@
+[
+  {
+    "id": "lounge-001",
+    "category": "lounges",
+    "title": "SkyPeak Lounge — Manila (MNL) Terminal 1",
+    "content": "Located after immigration in Terminal 1, Gate 8 area. Open daily 5:00 AM to 12:00 AM. Capacity: 120 seats. Amenities: hot buffet (local and international cuisine refreshed every 4 hours), premium bar with cocktails, 6 shower suites, high-speed WiFi, business center with printing and scanning, quiet zone with recliners, kids play area, flight information displays, and charging stations at every seat. Complimentary for Business/First passengers and SkyPeak Rewards Gold/Platinum members. Day pass: $45.",
+    "keywords": ["manila lounge", "MNL lounge", "terminal 1 lounge", "SkyPeak lounge manila"],
+    "tags": ["lounge", "manila", "airport"],
+    "metadata": {"airport": "MNL", "terminal": "1"}
+  },
+  {
+    "id": "lounge-002",
+    "category": "lounges",
+    "title": "SkyPeak First Lounge — Manila (MNL) Terminal 1",
+    "content": "Exclusive lounge for First class passengers and SkyPeak Rewards Platinum members. Located after immigration in Terminal 1, near Gate 10. Open daily 6:00 AM to 11:00 PM. Capacity: 40 seats. Amenities: a la carte restaurant with chef-prepared meals, champagne bar, private suites for resting (up to 3 hours), luxury shower suites with premium toiletries, personal concierge service, private security screening, and limousine transfer to aircraft for First class departures. No day pass available.",
+    "keywords": ["first class lounge", "first lounge manila", "MNL first lounge", "platinum lounge"],
+    "tags": ["lounge", "manila", "first-class"],
+    "metadata": {"airport": "MNL", "terminal": "1", "class": "first"}
+  },
+  {
+    "id": "lounge-003",
+    "category": "lounges",
+    "title": "SkyPeak Lounge — Singapore (SIN) Terminal 3",
+    "content": "Located in Changi Airport Terminal 3 transit area, Level 3 near Gate B6. Open 24 hours. Capacity: 90 seats. Amenities: hot and cold buffet with Asian and Western options, noodle bar with made-to-order laksa and ramen, full bar, 4 shower suites, high-speed WiFi, quiet nap pods (30-minute reservations), business center, and panoramic runway views. Complimentary for Business/First passengers and SkyPeak Rewards Gold/Platinum members. Day pass: $45. Access also available via Priority Pass.",
+    "keywords": ["singapore lounge", "SIN lounge", "changi lounge", "SkyPeak lounge singapore"],
+    "tags": ["lounge", "singapore", "airport"],
+    "metadata": {"airport": "SIN", "terminal": "3"}
+  },
+  {
+    "id": "lounge-004",
+    "category": "lounges",
+    "title": "SkyPeak Lounge — Tokyo Narita (NRT) Terminal 2",
+    "content": "Located in Narita Airport Terminal 2 satellite building, near Gate 67. Open daily 6:30 AM to 9:30 PM. Capacity: 60 seats. Amenities: Japanese breakfast set and bento boxes, sushi counter (lunch hours), sake and beer selection, 3 shower suites, high-speed WiFi, Japanese garden view seating, work desks with monitors, and international newspapers. Complimentary for Business/First passengers and SkyPeak Rewards Gold/Platinum members. Day pass: $45.",
+    "keywords": ["tokyo lounge", "NRT lounge", "narita lounge", "SkyPeak lounge tokyo", "japan lounge"],
+    "tags": ["lounge", "tokyo", "airport"],
+    "metadata": {"airport": "NRT", "terminal": "2"}
+  },
+  {
+    "id": "lounge-005",
+    "category": "lounges",
+    "title": "SkyPeak Lounge — Hong Kong (HKG) Terminal 1",
+    "content": "Located near Gate 35 in the East Hall transit area. Open daily 5:30 AM to 11:00 PM. Capacity: 75 seats. Amenities: dim sum station, congee bar, Western buffet options, cocktail bar, 4 shower suites, high-speed WiFi, tarmac-view window seating, phone booths for private calls, massage chairs, and device charging stations. Complimentary for Business/First passengers and SkyPeak Rewards Gold/Platinum members. Day pass: $45.",
+    "keywords": ["hong kong lounge", "HKG lounge", "SkyPeak lounge hong kong"],
+    "tags": ["lounge", "hong-kong", "airport"],
+    "metadata": {"airport": "HKG", "terminal": "1"}
+  },
+  {
+    "id": "lounge-006",
+    "category": "lounges",
+    "title": "SkyPeak Lounge — Los Angeles (LAX) Tom Bradley Terminal",
+    "content": "Located in the Tom Bradley International Terminal (TBIT), after security near Gate 148. Open daily 6:00 AM to 11:00 PM. Capacity: 80 seats. Amenities: California-inspired buffet, fresh juice bar, premium wine and spirits, 5 shower suites, high-speed WiFi, outdoor terrace with runway views, work pods with USB-C and AC power, relaxation room with recliners, and complimentary magazines. Complimentary for Business/First passengers and SkyPeak Rewards Gold/Platinum members. Day pass: $50.",
+    "keywords": ["los angeles lounge", "LAX lounge", "SkyPeak lounge LA", "tom bradley lounge"],
+    "tags": ["lounge", "los-angeles", "airport"],
+    "metadata": {"airport": "LAX", "terminal": "TBIT"}
+  }
+]

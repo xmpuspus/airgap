@@ -1,0 +1,47 @@
+[
+  {
+    "id": "security-phishing",
+    "category": "security",
+    "title": "How to spot phishing scams",
+    "content": "Phishing scams try to trick you into revealing personal or account information. Watch for these red flags: emails or texts claiming to be from PrimaBank that ask you to click a link and enter your login credentials; messages with urgent language like \"Your account will be closed\" or \"Suspicious activity detected — verify now\"; sender addresses that look similar but are not from primabank.com (e.g., primabank-security.com); requests for your full Social Security number, PIN, or password. PrimaBank will never ask for your password, PIN, or full SSN via email, text, or phone. If you receive a suspicious message, do not click any links. Forward the email to phishing@primabank.com or call 1-800-PRIMA to report it.",
+    "keywords": ["phishing", "scam", "fake email", "suspicious email", "fraud email", "scam text", "smishing"],
+    "tags": ["security", "fraud"],
+    "metadata": {}
+  },
+  {
+    "id": "security-stolen-card",
+    "category": "security",
+    "title": "What to do if your card is stolen",
+    "content": "If your debit or credit card is lost or stolen, act immediately: (1) Lock your card instantly using the PrimaBank mobile app under Card Management > Lock Card, or call 1-800-PRIMA (available 24/7). (2) Review your recent transactions in the app or PrimaBank Online for any unauthorized charges. (3) Report any fraudulent transactions — PrimaBank's zero liability policy means you will not be held responsible for unauthorized transactions reported within 60 days. (4) A replacement card will be issued and mailed within 5-7 business days; expedited delivery (1-2 business days) is available for $25. (5) Update any automatic payments linked to the old card number. Your account number and routing number are not affected when a card is replaced.",
+    "keywords": ["stolen card", "lost card", "card theft", "missing card", "card replacement", "report stolen"],
+    "tags": ["security", "card"],
+    "metadata": {}
+  },
+  {
+    "id": "security-fraud-alerts",
+    "category": "security",
+    "title": "Fraud alerts and transaction monitoring",
+    "content": "PrimaBank monitors your accounts 24/7 for suspicious activity using real-time fraud detection. If unusual activity is detected, you will receive an immediate SMS or push notification asking you to confirm or deny the transaction. You can also set custom alerts in PrimaBank Online or the mobile app: transaction amount thresholds (e.g., notify me for purchases over $100), international transactions, online purchases, ATM withdrawals, and card-not-present transactions. If you suspect fraud on your account, call 1-800-PRIMA immediately. You can also place a temporary freeze on your account through the mobile app while you investigate. PrimaBank partners with Visa and Mastercard fraud monitoring networks for additional protection.",
+    "keywords": ["fraud alert", "suspicious activity", "transaction alert", "fraud detection", "fraud monitoring", "suspicious transaction"],
+    "tags": ["security", "fraud", "alerts"],
+    "metadata": {}
+  },
+  {
+    "id": "security-passwords",
+    "category": "security",
+    "title": "Secure password and login tips",
+    "content": "Protect your PrimaBank Online and mobile app accounts with strong security practices: Use a unique password of at least 12 characters with a mix of uppercase letters, lowercase letters, numbers, and special characters. Never reuse passwords from other websites. Enable two-factor authentication (2FA) using the PrimaBank Authenticator app or SMS verification. Never share your password or verification codes with anyone, including people claiming to be PrimaBank employees. Log out of PrimaBank Online when using shared or public computers. Avoid accessing your accounts on public WiFi networks; use a VPN if necessary. PrimaBank will lock your account after 5 consecutive failed login attempts for your protection — call 1-800-PRIMA to unlock.",
+    "keywords": ["password", "login security", "strong password", "secure login", "account security", "protect account"],
+    "tags": ["security", "online-banking"],
+    "metadata": {}
+  },
+  {
+    "id": "security-mobile-banking",
+    "category": "security",
+    "title": "Mobile banking security",
+    "content": "PrimaBank's mobile app uses multiple layers of security: 256-bit AES encryption for all data in transit and at rest, biometric login (fingerprint and Face ID), device binding that alerts you when a new device accesses your account, automatic session timeout after 5 minutes of inactivity, and jailbreak/root detection that disables the app on compromised devices. Best practices: Keep your phone's operating system updated, only download the PrimaBank app from the official App Store or Google Play, enable device lock (PIN, pattern, or biometric), and do not store your banking password in your phone's notes app. If your phone is lost or stolen, call 1-800-PRIMA to deactivate mobile banking access immediately.",
+    "keywords": ["mobile security", "app security", "phone banking safety", "mobile banking safe", "biometric login"],
+    "tags": ["security", "mobile"],
+    "metadata": {}
+  }
+]

@@ -1,0 +1,54 @@
+{
+  "generated": "2026-04-29T05:54:48.363Z",
+  "verticals": [
+    {
+      "vertical": "airline",
+      "label": "SkyPeak Airlines",
+      "tagline": "Your in-flight and ground support assistant",
+      "primary": "#1565C0",
+      "kbDocs": 54
+    },
+    {
+      "vertical": "banking",
+      "label": "PrimaBank",
+      "tagline": "Your personal banking assistant",
+      "primary": "#1B5E20",
+      "kbDocs": 62
+    },
+    {
+      "vertical": "electric-utility",
+      "label": "PowerGrid Electric",
+      "tagline": "Your electric utility assistant",
+      "primary": "#F59E0B",
+      "kbDocs": 53
+    },
+    {
+      "vertical": "healthcare",
+      "label": "CareFirst Medical",
+      "tagline": "Your personal health services assistant",
+      "primary": "#0D9488",
+      "kbDocs": 50
+    },
+    {
+      "vertical": "insurance",
+      "label": "ShieldGuard Insurance",
+      "tagline": "Protection you can count on",
+      "primary": "#1E3A5F",
+      "kbDocs": 47
+    },
+    {
+      "vertical": "telco",
+      "label": "ACME Telecom",
+      "tagline": "Your AI-powered customer support assistant",
+      "primary": "#0047AB",
+      "kbDocs": 105
+    },
+    {
+      "vertical": "water-utility",
+      "label": "AquaFlow Water",
+      "tagline": "Your water utility assistant",
+      "primary": "#0891B2",
+      "kbDocs": 36
+    }
+  ]
+}

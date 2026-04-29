@@ -1,0 +1,236 @@
+[
+  {
+    "id": "faq-001",
+    "category": "faq",
+    "title": "How to read your electric meter",
+    "content": "Your electric meter measures energy usage in kilowatt-hours (kWh). For a digital meter, simply read the display showing your current reading. For an analog meter with dials, read each dial from left to right, recording the lower of the two numbers when the pointer is between digits. Subtract last month's reading from the current reading to calculate your usage for the period. Smart meters transmit readings automatically.",
+    "keywords": ["read meter", "meter reading", "kWh", "kilowatt-hours", "electric meter", "how to read"],
+    "tags": ["meter", "self-service", "billing"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-002",
+    "category": "faq",
+    "title": "Billing cycle and due dates",
+    "content": "PowerGrid Electric bills on a monthly cycle. Your meter is read around the same date each month, and your bill is generated within 3 business days. Payment is due 21 days after the bill date. You can find your specific billing cycle dates on your bill statement or in your online account under Billing > Billing Cycle. A late payment fee of 1.5% is applied to balances not paid by the due date.",
+    "keywords": ["billing cycle", "due date", "when is my bill", "payment due", "bill date", "late fee"],
+    "tags": ["billing", "payments", "account"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-003",
+    "category": "faq",
+    "title": "Residential rate plans",
+    "content": "PowerGrid offers three residential rate plans. Standard Rate: a flat rate of $0.12 per kWh at all times, best for consistent usage patterns. Time-of-Use Rate: $0.08/kWh during off-peak hours (9 PM - 1 PM) and $0.18/kWh during peak hours (1 PM - 9 PM), ideal if you can shift usage to off-peak times. Green Energy Rate: $0.14/kWh sourced 100% from renewable energy, for customers who want to support clean power. All plans include a $12.50 monthly service charge.",
+    "keywords": ["rate plan", "residential rate", "price per kWh", "electricity rate", "how much per kilowatt", "standard rate", "time of use"],
+    "tags": ["billing", "rates", "residential"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-004",
+    "category": "faq",
+    "title": "Commercial and industrial rate plans",
+    "content": "Commercial customers are billed based on both energy usage (kWh) and demand (kW). Small Commercial rate starts at $0.10/kWh plus a $4.50/kW demand charge. Large Commercial and Industrial customers receive custom rate quotes based on voltage level, load profile, and contract term. Contact your commercial account manager or call 1-800-POWER for a rate analysis. Demand charges are based on your highest 15-minute average usage during the billing period.",
+    "keywords": ["commercial rate", "industrial rate", "business rate", "demand charge", "commercial plan"],
+    "tags": ["billing", "rates", "commercial"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-005",
+    "category": "faq",
+    "title": "Budget billing program",
+    "content": "Budget Billing spreads your annual electric costs into equal monthly payments, eliminating seasonal spikes. Your monthly amount is calculated by averaging the past 12 months of usage. The amount is reviewed and adjusted every 6 months. To enroll, your account must be in good standing with no past-due balance. Sign up online at powergridelectric.com/budget-billing or call 1-800-POWER. There is no fee to participate.",
+    "keywords": ["budget billing", "level billing", "equal payments", "average billing", "even payments", "monthly average"],
+    "tags": ["billing", "programs", "residential"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-006",
+    "category": "faq",
+    "title": "Power restoration process during outages",
+    "content": "When an outage occurs, PowerGrid follows a priority restoration process. First, we repair transmission lines and substations that serve the largest number of customers. Next, we restore main distribution lines serving neighborhoods and commercial areas. Finally, we address individual service lines and transformer issues. Estimated restoration times depend on the cause: equipment failure typically takes 1-4 hours, storm damage may take 8-24 hours, and major events can take several days. Track real-time restoration progress on our outage map at powergridelectric.com/outage-map.",
+    "keywords": ["power restoration", "when will power come back", "outage restoration", "restoration process", "how long outage"],
+    "tags": ["outages", "restoration", "emergency"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-007",
+    "category": "faq",
+    "title": "Connecting solar panels to the grid",
+    "content": "To connect a solar panel system to the PowerGrid network, you must submit an interconnection application before installation begins. Requirements include a licensed electrician's installation plan, equipment specifications (inverter must be UL 1741 certified), and a site diagram. PowerGrid will review the application within 10 business days and schedule a meter upgrade to a bi-directional net meter at no charge. After installation, a field inspection is required before the system can be energized. The Solar Buyback program credits excess generation at $0.06/kWh.",
+    "keywords": ["solar panels", "solar connection", "net metering", "solar interconnection", "rooftop solar", "solar power"],
+    "tags": ["solar", "renewable", "interconnection"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-008",
+    "category": "faq",
+    "title": "Electric vehicle charging rates",
+    "content": "PowerGrid offers a dedicated EV Charging rate plan for residential customers with home chargers. The EV rate is $0.05/kWh for overnight charging between 11 PM and 6 AM, and standard residential rates apply during other hours. A separate meter is required for the EV charging circuit, installed at no cost if you enroll in the EV plan. Level 2 chargers (240V) are recommended for home use and typically deliver a full charge in 6-8 hours. Apply for the EV rate plan online or call 1-800-POWER.",
+    "keywords": ["EV charging", "electric vehicle", "EV rate", "car charging", "electric car", "charging station", "level 2 charger"],
+    "tags": ["ev", "rates", "residential", "programs"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-009",
+    "category": "faq",
+    "title": "Energy efficiency programs and rebates",
+    "content": "PowerGrid offers rebates and incentives to help you save energy. Eligible upgrades include: ENERGY STAR appliances (up to $200 rebate), smart thermostats ($75 rebate), attic insulation ($500 rebate for qualifying homes), LED lighting kits (free for income-qualified customers), and HVAC tune-ups ($50 rebate annually). You can also request a free home energy audit where a technician visits your home to identify savings opportunities. Apply for rebates at powergridelectric.com/rebates with your purchase receipt.",
+    "keywords": ["energy efficiency", "rebates", "energy savings", "save energy", "energy audit", "ENERGY STAR", "incentives"],
+    "tags": ["efficiency", "programs", "rebates", "residential"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-010",
+    "category": "faq",
+    "title": "Senior citizen and low-income discounts",
+    "content": "PowerGrid provides rate assistance for eligible customers. The Senior Discount offers a 15% reduction on the first 500 kWh per month for customers age 65 and older. The Low-Income Home Energy Assistance Program (LIHEAP) provides federal grants to help pay heating and cooling bills; apply through your local community action agency. PowerGrid's own Care Rate program provides a 30% discount for households earning below 200% of the federal poverty level. Bring proof of age or income to any service center to enroll, or call 1-800-POWER.",
+    "keywords": ["senior discount", "low-income", "LIHEAP", "assistance program", "discount", "elderly", "financial help", "care rate"],
+    "tags": ["assistance", "programs", "discount", "residential"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-011",
+    "category": "faq",
+    "title": "Storm preparation and electrical safety",
+    "content": "Before a storm: charge devices, gather flashlights and batteries, and unplug sensitive electronics to prevent surge damage. If you lose power, turn off major appliances to prevent a surge when power returns; leave one light on so you know when service is restored. Never use a generator indoors or in an enclosed garage, as carbon monoxide is lethal. If you see a downed power line, stay at least 35 feet away, assume it is energized, and call 911 immediately. Do not drive over downed lines.",
+    "keywords": ["storm preparation", "hurricane", "severe weather", "power outage preparation", "downed power line", "safety"],
+    "tags": ["safety", "emergency", "outages", "weather"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-012",
+    "category": "faq",
+    "title": "Generator safety guidelines",
+    "content": "Portable generators must be operated outdoors, at least 20 feet from windows, doors, and vents. Never connect a generator directly to your home's wiring without a transfer switch, as this creates backfeed that can electrocute utility workers repairing lines. Use heavy-duty extension cords rated for the generator's output. Refuel only when the generator is off and cool. A licensed electrician can install a manual transfer switch ($300-$800 typical cost) so you can safely power select circuits during an outage. PowerGrid requires notification if you install a permanent standby generator.",
+    "keywords": ["generator", "backup generator", "portable generator", "transfer switch", "generator safety", "backfeed"],
+    "tags": ["safety", "generator", "emergency"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-013",
+    "category": "faq",
+    "title": "Tree trimming near power lines",
+    "content": "PowerGrid maintains vegetation clearance around power lines to prevent outages and fire hazards. We trim trees within 10 feet of high-voltage distribution lines on a 3-year cycle at no cost to you. You will receive a notice 30 days before scheduled trimming. Property owners are responsible for trees near the service line running from the pole to your home. Never attempt to trim branches near power lines yourself. Call 1-800-POWER to request a trim if a tree is growing into your service line, and we will send a crew within 10 business days.",
+    "keywords": ["tree trimming", "tree near power line", "vegetation management", "branches on line", "tree cutting"],
+    "tags": ["safety", "maintenance", "vegetation"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-014",
+    "category": "faq",
+    "title": "Underground cable locating (Call Before You Dig)",
+    "content": "Before any digging project, you are required by law to call 811 at least 3 business days in advance. PowerGrid will send a locator to mark underground electric lines with red paint or flags at no charge. Other utilities will mark their lines as well (gas is yellow, water is blue, telecom is orange). Digging into an underground power line can cause fatal electrocution and extended outages. The 811 service is free and applies to all projects, including fence posts, landscaping, and deck foundations.",
+    "keywords": ["underground cable", "call before you dig", "811", "digging", "buried cable", "locate utility"],
+    "tags": ["safety", "underground", "construction"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-015",
+    "category": "faq",
+    "title": "Smart meter information",
+    "content": "PowerGrid has deployed smart meters across its service territory. Smart meters record your usage in 15-minute intervals and transmit data wirelessly, eliminating the need for manual meter reads. Benefits include more accurate bills, faster outage detection, and access to detailed usage data through your online account. Smart meters use low-power radio frequency signals that meet all FCC safety standards. If you have concerns, you can opt out and retain an analog meter for a monthly fee of $15 plus a $75 one-time setup charge.",
+    "keywords": ["smart meter", "digital meter", "AMI", "advanced meter", "meter upgrade", "wireless meter"],
+    "tags": ["meter", "technology", "billing"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-016",
+    "category": "faq",
+    "title": "Peak vs off-peak electricity rates",
+    "content": "Peak hours are Monday through Friday, 1 PM to 9 PM, when electricity demand is highest. Off-peak hours are 9 PM to 1 PM weekdays and all day on weekends and holidays. On the Time-of-Use rate plan, peak electricity costs $0.18/kWh and off-peak costs $0.08/kWh. You can save significantly by running dishwashers, laundry, and EV charging during off-peak hours. Your online account shows hourly usage charts so you can see when you use the most electricity and shift usage to cheaper periods.",
+    "keywords": ["peak hours", "off-peak", "time of use", "TOU", "peak rate", "when is electricity cheapest"],
+    "tags": ["rates", "billing", "time-of-use"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-017",
+    "category": "faq",
+    "title": "Understanding estimated bills",
+    "content": "An estimated bill is generated when PowerGrid cannot obtain an actual meter reading due to access issues, meter malfunction, or extreme weather. Estimates are based on your usage during the same period in the prior year, adjusted for weather. The bill will be clearly marked 'ESTIMATED' in the billing details section. When an actual reading is obtained the following month, your bill will be adjusted to reflect real usage. If you receive frequent estimated bills, ensure your meter is accessible and clear of obstructions. You can also submit a self-read online.",
+    "keywords": ["estimated bill", "estimate", "estimated reading", "inaccurate bill", "bill too high", "wrong reading"],
+    "tags": ["billing", "meter", "account"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-018",
+    "category": "faq",
+    "title": "Deposit requirements for new accounts",
+    "content": "New residential customers may be required to pay a security deposit equal to twice the average monthly bill for the service address (typically $100-$300). The deposit earns interest at the rate set by the state public utility commission. After 12 consecutive months of on-time payments, the deposit plus interest is credited to your account. Commercial accounts require a deposit based on estimated monthly usage. Customers transferring service within PowerGrid's territory with good payment history may have the deposit waived.",
+    "keywords": ["deposit", "security deposit", "new account deposit", "deposit refund", "deposit requirement"],
+    "tags": ["account", "billing", "new-service"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-019",
+    "category": "faq",
+    "title": "Changing the name on your account",
+    "content": "To change the name on your electric account, visit any PowerGrid service center with a valid government-issued photo ID and proof of residence (lease agreement, deed, or recent utility bill). For name changes due to marriage or divorce, bring the legal documentation (marriage certificate or court order). Spouse-to-spouse transfers can often be done by phone at 1-800-POWER if both parties are present on the call. Name changes are processed within 1-2 business days. There is no fee for a name change.",
+    "keywords": ["name change", "change account name", "transfer account", "account holder", "change name"],
+    "tags": ["account", "self-service"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-020",
+    "category": "faq",
+    "title": "Landlord and tenant responsibilities",
+    "content": "Tenants are responsible for the electric service in their unit and must open their own account before moving in. Landlords may keep the account in their name for vacant units. When a tenant moves out and does not request a final bill, service remains active and the landlord is billed after 5 business days. Landlords can set up a landlord agreement so service automatically reverts to them between tenants, preventing disconnection. Contact 1-800-POWER or visit powergridelectric.com/landlord to set up a landlord agreement.",
+    "keywords": ["landlord", "tenant", "rental", "move in", "move out", "landlord agreement", "renter"],
+    "tags": ["account", "service", "rental"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-021",
+    "category": "faq",
+    "title": "Power quality and voltage issues",
+    "content": "Standard residential voltage in the US is 120/240 volts. If you experience flickering lights, dimming appliances, or electronics resetting, you may have a power quality issue. Common causes include loose connections at the meter or panel, overloaded circuits, or a problem on the utility side. Call 1-800-POWER to request a free power quality investigation. A technician will install monitoring equipment for 7 days to identify voltage fluctuations. Sensitive equipment like computers and medical devices should use surge protectors or uninterruptible power supplies (UPS).",
+    "keywords": ["power quality", "voltage", "flickering", "voltage drop", "brownout", "surge", "power fluctuation"],
+    "tags": ["power-quality", "troubleshooting", "safety"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-022",
+    "category": "faq",
+    "title": "Street light outage reporting",
+    "content": "To report a broken or malfunctioning street light, note the pole number (a metal tag on the pole, usually 4-6 digits) and the nearest cross street. Report online at powergridelectric.com/streetlights or call 1-800-POWER. Repairs are typically completed within 5-7 business days. If the street light is sparking, making noise, or the pole is damaged, call 1-800-POWER immediately as this may be an emergency. Streetlight maintenance is included in your municipal service charges at no additional cost to you.",
+    "keywords": ["street light", "streetlight", "broken light", "light out", "pole light", "street lamp"],
+    "tags": ["maintenance", "streetlights", "reporting"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-023",
+    "category": "faq",
+    "title": "Construction and digging near power lines",
+    "content": "Overhead power line clearance requirements: maintain at least 10 feet from lines under 50kV and 35 feet from transmission lines. Any construction equipment (cranes, boom trucks, scaffolding) must stay outside these clearance zones. For projects requiring work near power lines, contact PowerGrid at 1-800-POWER to request a temporary line de-energization or protective covering. Always call 811 before digging to locate underground utilities. Violations can result in fines, service disconnection, and criminal liability if a worker is injured.",
+    "keywords": ["construction near power lines", "clearance", "overhead lines", "crane near lines", "building near lines"],
+    "tags": ["safety", "construction", "regulations"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-024",
+    "category": "faq",
+    "title": "Medical baseline and life support equipment",
+    "content": "Customers who depend on electrically powered medical equipment (oxygen concentrators, dialysis machines, ventilators, etc.) can apply for the Medical Baseline program. Benefits include additional baseline kWh at the lowest rate tier, priority power restoration during outages, and advance notice before planned maintenance outages. To enroll, have your physician complete the Medical Baseline Certification form available at powergridelectric.com/medical or any service center. Certification must be renewed annually. There is no fee for this program.",
+    "keywords": ["medical baseline", "life support", "medical equipment", "oxygen concentrator", "dialysis", "medical alert"],
+    "tags": ["medical", "programs", "assistance"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-025",
+    "category": "faq",
+    "title": "Understanding your electric bill charges",
+    "content": "Your PowerGrid bill includes several line items. The Service Charge ($12.50/month residential) covers meter maintenance, billing, and customer service regardless of usage. The Energy Charge is your actual kWh consumption multiplied by your rate. The Fuel Adjustment reflects changes in the cost of generating electricity and varies monthly. Taxes and Fees include state and local taxes, franchise fees, and regulatory surcharges. If you have solar, a Net Metering Credit line shows energy exported to the grid. View a detailed breakdown in your online account under Billing > Bill Details.",
+    "keywords": ["bill charges", "understand my bill", "service charge", "fuel adjustment", "line items", "what am I paying for"],
+    "tags": ["billing", "account", "education"],
+    "metadata": {}
+  },
+  {
+    "id": "faq-026",
+    "category": "faq",
+    "title": "How to report a downed power line",
+    "content": "If you see a downed power line, assume it is live and dangerous. Stay at least 35 feet away and keep others away from the area. Call 911 first, then call PowerGrid at 1-800-POWER. Do not touch anything the line is in contact with, including fences, vehicles, or puddles. If a power line falls on your car, stay inside and call 911. Only exit if the vehicle is on fire, and if you must exit, jump clear without touching the car and the ground at the same time. Shuffle away with small steps to avoid ground current.",
+    "keywords": ["downed power line", "fallen line", "power line down", "line on ground", "emergency", "wire down"],
+    "tags": ["safety", "emergency"],
+    "metadata": {}
+  }
+]

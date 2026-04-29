@@ -1,0 +1,74 @@
+[
+  {
+    "id": "route-001",
+    "category": "routes",
+    "title": "Manila to Singapore",
+    "content": "SkyPeak operates 3 daily flights from Manila (MNL) to Singapore (SIN). Flight time is approximately 3 hours 40 minutes. Departures at 06:15, 13:00, and 20:45. Aircraft: Airbus A320neo (Economy and Business class). Fares start at $129 one-way Economy. Business class from $489. Changi Airport Terminal 3. Online check-in available. This route is popular for weekend getaways and business travel.",
+    "keywords": ["manila singapore", "MNL SIN", "singapore flight", "manila to singapore"],
+    "tags": ["routes", "southeast-asia", "short-haul"],
+    "metadata": {"origin": "MNL", "destination": "SIN", "flightTime": "3h40m"}
+  },
+  {
+    "id": "route-002",
+    "category": "routes",
+    "title": "Manila to Tokyo Narita",
+    "content": "SkyPeak operates 2 daily flights from Manila (MNL) to Tokyo Narita (NRT). Flight time is approximately 4 hours 30 minutes. Departures at 08:00 and 22:30 (red-eye). Aircraft: Boeing 787 Dreamliner (Economy, Premium Economy, Business, and First class). Fares start at $249 one-way Economy. The red-eye flight arrives at 04:45 local time, ideal for catching early Shinkansen trains. Narita Express train connects to central Tokyo in 60 minutes.",
+    "keywords": ["manila tokyo", "MNL NRT", "tokyo flight", "japan flight", "narita"],
+    "tags": ["routes", "northeast-asia", "medium-haul"],
+    "metadata": {"origin": "MNL", "destination": "NRT", "flightTime": "4h30m"}
+  },
+  {
+    "id": "route-003",
+    "category": "routes",
+    "title": "Manila to Hong Kong",
+    "content": "SkyPeak operates 4 daily flights from Manila (MNL) to Hong Kong (HKG). Flight time is approximately 2 hours 10 minutes. Departures at 07:00, 10:30, 15:00, and 19:30. Aircraft: Airbus A321neo. Fares start at $99 one-way Economy. This is SkyPeak's most frequent short-haul route. Hong Kong International Airport has an Airport Express train to Central station in 24 minutes.",
+    "keywords": ["manila hong kong", "MNL HKG", "hong kong flight", "manila to hong kong"],
+    "tags": ["routes", "northeast-asia", "short-haul"],
+    "metadata": {"origin": "MNL", "destination": "HKG", "flightTime": "2h10m"}
+  },
+  {
+    "id": "route-004",
+    "category": "routes",
+    "title": "Manila to Sydney",
+    "content": "SkyPeak operates daily flights from Manila (MNL) to Sydney (SYD). Flight time is approximately 8 hours 15 minutes. Departure at 23:55 (arrives 11:10+1 local time). Aircraft: Airbus A350-900 (Economy, Premium Economy, Business, and First class). Fares start at $399 one-way Economy. Meals and entertainment included on all classes. This is a popular route for Filipino diaspora and Australian holidaymakers.",
+    "keywords": ["manila sydney", "MNL SYD", "sydney flight", "australia flight", "manila to sydney"],
+    "tags": ["routes", "oceania", "long-haul"],
+    "metadata": {"origin": "MNL", "destination": "SYD", "flightTime": "8h15m"}
+  },
+  {
+    "id": "route-005",
+    "category": "routes",
+    "title": "Manila to Los Angeles",
+    "content": "SkyPeak operates daily flights from Manila (MNL) to Los Angeles (LAX). Flight time is approximately 13 hours 30 minutes eastbound and 15 hours westbound. Departure at 23:30 (arrives 21:00 same day LAX local time). Aircraft: Boeing 787-9 Dreamliner (Economy, Premium Economy, Business, and First class). Fares start at $549 one-way Economy. All long-haul amenities included. LAX Tom Bradley International Terminal.",
+    "keywords": ["manila los angeles", "MNL LAX", "LA flight", "USA flight", "manila to LA"],
+    "tags": ["routes", "north-america", "ultra-long-haul"],
+    "metadata": {"origin": "MNL", "destination": "LAX", "flightTime": "13h30m"}
+  },
+  {
+    "id": "route-006",
+    "category": "routes",
+    "title": "Manila to Seoul Incheon",
+    "content": "SkyPeak operates 2 daily flights from Manila (MNL) to Seoul Incheon (ICN). Flight time is approximately 4 hours 15 minutes. Departures at 09:00 and 21:00. Aircraft: Airbus A330-300. Fares start at $219 one-way Economy. Seoul is a popular destination for shopping and K-culture. AREX express train connects Incheon Airport to Seoul Station in 43 minutes.",
+    "keywords": ["manila seoul", "MNL ICN", "korea flight", "seoul flight", "incheon"],
+    "tags": ["routes", "northeast-asia", "medium-haul"],
+    "metadata": {"origin": "MNL", "destination": "ICN", "flightTime": "4h15m"}
+  },
+  {
+    "id": "route-007",
+    "category": "routes",
+    "title": "Manila to Bangkok",
+    "content": "SkyPeak operates 2 daily flights from Manila (MNL) to Bangkok Suvarnabhumi (BKK). Flight time is approximately 3 hours 20 minutes. Departures at 07:30 and 16:45. Aircraft: Airbus A320neo. Fares start at $119 one-way Economy. Bangkok is a top leisure destination with rich culture, street food, and shopping. Airport Rail Link connects to central Bangkok in 30 minutes.",
+    "keywords": ["manila bangkok", "MNL BKK", "bangkok flight", "thailand flight"],
+    "tags": ["routes", "southeast-asia", "short-haul"],
+    "metadata": {"origin": "MNL", "destination": "BKK", "flightTime": "3h20m"}
+  },
+  {
+    "id": "route-008",
+    "category": "routes",
+    "title": "Manila to Dubai",
+    "content": "SkyPeak operates daily flights from Manila (MNL) to Dubai (DXB). Flight time is approximately 9 hours 30 minutes. Departure at 01:30 (arrives 06:00 local time). Aircraft: Airbus A350-900. Fares start at $349 one-way Economy. Dubai serves as a major transit hub connecting to Europe, Africa, and the Middle East. SkyPeak has interline agreements with regional carriers for onward connections from DXB.",
+    "keywords": ["manila dubai", "MNL DXB", "dubai flight", "UAE flight", "middle east flight"],
+    "tags": ["routes", "middle-east", "long-haul"],
+    "metadata": {"origin": "MNL", "destination": "DXB", "flightTime": "9h30m"}
+  }
+]

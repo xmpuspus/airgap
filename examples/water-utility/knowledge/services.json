@@ -1,0 +1,83 @@
+[
+  {
+    "id": "svc-001",
+    "category": "service",
+    "title": "Residential Water Service",
+    "content": "AquaFlow residential water service includes metered water delivery, meter maintenance, and access to conservation programs. Rates use a tiered structure to encourage conservation: Tier 1 (0-4,000 gallons) at $3.50 per 1,000 gallons, Tier 2 (4,001-8,000 gallons) at $5.25 per 1,000 gallons, and Tier 3 (over 8,000 gallons) at $8.00 per 1,000 gallons. Monthly base charge is $15.50 for a standard 3/4-inch meter. New accounts require a $75 security deposit, refundable after 12 months of on-time payments.",
+    "keywords": ["residential service", "home water", "residential rate", "water rate", "tiered rate"],
+    "tags": ["service", "residential", "rates"],
+    "metadata": {
+      "planType": "Residential",
+      "tier1Rate": "$3.50/1,000 gal (0-4,000)",
+      "tier2Rate": "$5.25/1,000 gal (4,001-8,000)",
+      "tier3Rate": "$8.00/1,000 gal (8,000+)",
+      "baseCharge": "$15.50/month"
+    }
+  },
+  {
+    "id": "svc-002",
+    "category": "service",
+    "title": "Commercial Water Service",
+    "content": "AquaFlow commercial water service is designed for businesses, offices, and multi-family complexes. Commercial accounts are billed at a uniform rate of $4.75 per 1,000 gallons. Base charges vary by meter size: 1-inch meter is $25/month, 1.5-inch is $45/month, 2-inch is $72/month, and larger meters are priced on request. Commercial customers are assigned a dedicated account manager for billing questions and service planning. High-volume users (over 100,000 gallons per month) may qualify for a negotiated contract rate. New commercial accounts require a deposit equal to two months of estimated usage.",
+    "keywords": ["commercial service", "business water", "commercial rate", "office water", "multi-family"],
+    "tags": ["service", "commercial", "rates"],
+    "metadata": {
+      "planType": "Commercial",
+      "rate": "$4.75/1,000 gal (uniform)",
+      "baseCharge": "Varies by meter size ($25-$72+/month)"
+    }
+  },
+  {
+    "id": "svc-003",
+    "category": "service",
+    "title": "Irrigation Water Service",
+    "content": "Dedicated irrigation meters allow outdoor water usage to be billed separately, eliminating the sewer charge on landscape watering (since irrigation water does not enter the sewer system). This typically saves 30-40% on outdoor water costs. The irrigation rate is $5.00 per 1,000 gallons with a $10.00 monthly base charge. A separate meter and backflow prevention device are required. Installation cost for the meter and backflow preventer ranges from $800 to $1,500 depending on location. Apply at aquaflowwater.com/irrigation or call 1-800-AQUA. Irrigation meters are subject to all watering restrictions during drought stages.",
+    "keywords": ["irrigation service", "irrigation meter", "landscape watering", "sprinkler meter", "separate meter"],
+    "tags": ["service", "irrigation", "outdoor"],
+    "metadata": {
+      "planType": "Irrigation",
+      "rate": "$5.00/1,000 gal",
+      "baseCharge": "$10.00/month",
+      "benefit": "No sewer charge on irrigation usage"
+    }
+  },
+  {
+    "id": "svc-004",
+    "category": "service",
+    "title": "Fire Line Service",
+    "content": "AquaFlow provides fire line connections for commercial buildings, industrial facilities, and multi-family properties requiring fire sprinkler systems or fire hydrant connections on private property. Fire lines are dedicated to fire suppression only and are not metered for normal usage. A monthly standby charge applies based on line size: 4-inch at $20/month, 6-inch at $35/month, and 8-inch at $55/month. A backflow prevention assembly is required and must be tested annually. Unauthorized use of a fire line for non-fire purposes results in fines and immediate disconnection. System development charges apply to new fire line installations.",
+    "keywords": ["fire line", "fire service", "fire sprinkler", "fire suppression", "fire hydrant private"],
+    "tags": ["service", "fire", "commercial"],
+    "metadata": {
+      "planType": "Fire Line",
+      "standbyCharge": "$20-$55/month (by line size)",
+      "requirement": "Annual backflow test"
+    }
+  },
+  {
+    "id": "svc-005",
+    "category": "service",
+    "title": "Water Conservation Rebate Program",
+    "content": "AquaFlow's conservation rebate program helps customers upgrade to water-efficient fixtures and appliances. Eligible rebates include: WaterSense-labeled toilets ($100 per toilet, max 2), high-efficiency washing machines ($75), smart irrigation controllers ($100), drip irrigation conversion ($50 per zone, max 4 zones), rain barrel ($25, max 2), and ENERGY STAR water heaters ($100). Rebates are available to all AquaFlow residential customers with an active account in good standing. Apply at aquaflowwater.com/rebates within 90 days of purchase with a receipt and product model number. Rebates are issued as credits on your water bill.",
+    "keywords": ["rebate", "conservation rebate", "water efficient", "fixture rebate", "smart irrigation rebate", "toilet rebate"],
+    "tags": ["service", "conservation", "rebates"],
+    "metadata": {
+      "planType": "Rebate Program",
+      "maxRebate": "Varies by fixture",
+      "eligibility": "Active residential account in good standing"
+    }
+  },
+  {
+    "id": "svc-006",
+    "category": "service",
+    "title": "Low-Income Water Assistance Program",
+    "content": "AquaFlow's Helping Hands program provides billing assistance to low-income customers. Eligible households receive a 25% discount on water and sewer charges plus a waived base charge. Eligibility requires household income at or below 150% of the federal poverty level. Apply in person at any service center with proof of income (most recent tax return, 3 months of pay stubs, or benefits letter showing SNAP/TANF enrollment). Eligibility is reviewed annually. Additionally, AquaFlow's crisis assistance fund provides one-time grants of up to $200 to prevent service disconnection for customers facing temporary financial hardship. Call 1-800-AQUA to inquire.",
+    "keywords": ["low income", "assistance", "financial help", "helping hands", "discount", "hardship", "crisis assistance"],
+    "tags": ["service", "assistance", "programs"],
+    "metadata": {
+      "planType": "Assistance Program",
+      "discount": "25% on water/sewer charges + waived base charge",
+      "eligibility": "Household income at or below 150% FPL"
+    }
+  }
+]

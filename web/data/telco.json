@@ -1,0 +1,77 @@
+{
+  "vertical": "telco",
+  "label": "ACME Telecom",
+  "botName": "Alice",
+  "tagline": "Your AI-powered customer support assistant",
+  "theme": {
+    "primary": "#0047AB",
+    "primaryDark": "#003080",
+    "secondary": "#FF6B00",
+    "background": "#F5F7FA",
+    "surface": "#FFFFFF",
+    "text": "#1A1A2E",
+    "botBubble": "#E8EEF6",
+    "userBubble": "#0047AB"
+  },
+  "locale": {
+    "currency": "PHP",
+    "language": "en",
+    "region": "PH"
+  },
+  "knowledge": {
+    "totalDocs": 105,
+    "categories": {
+      "faq": 55,
+      "payments": 8,
+      "plans": 15,
+      "promos": 9,
+      "roaming": 3,
+      "stores": 10,
+      "troubleshooting": 5
+    }
+  },
+  "config": {
+    "brand": {
+      "name": "ACME Telecom",
+      "botName": "Alice",
+      "tagline": "Your AI-powered customer support assistant",
+      "hotline": "211",
+      "hotlineLabel": "free from ACME mobile",
+      "website": "acme-telecom.ph",
+      "logo": "assets/images/acme-logo.png"
+    },
+    "theme": {
+      "primary": "#0047AB",
+      "secondary": "#FF6B00",
+      "background": "#F5F7FA"
+    },
+    "locale": {
+      "currency": "PHP",
+      "language": "en",
+      "region": "PH"
+    },
+    "llm": {
+      "mode": "demo"
+    },
+    "quickReplies": [
+      {
+        "title": "Check plans",
+        "value": "What prepaid and postpaid plans do you have?"
+      },
+      {
+        "title": "Troubleshoot an issue",
+        "value": "I need help troubleshooting"
+      },
+      {
+        "title": "Find a store",
+        "value": "Where is the nearest store?"
+      },
+      {
+        "title": "Roaming rates",
+        "value": "What are your roaming rates?"
+      }
+    ],
+    "toolCount": 5
+  },
+  "gif": "assets/gifs/industry-telco.gif"
+}

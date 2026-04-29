@@ -1,0 +1,38 @@
+[
+  {
+    "id": "ts-001",
+    "category": "troubleshooting",
+    "title": "Patient portal login issues",
+    "content": "If you cannot log in to the CareFirst patient portal: 1) Verify your email address and password (passwords are case-sensitive). 2) Use 'Forgot Password' to receive a reset link via email (check spam/junk folder). 3) After 5 failed login attempts, your account is locked for 30 minutes for security. 4) Ensure you are using the correct URL: carefirstmedical.com/portal. 5) Clear your browser cache and cookies, or try a different browser. 6) The portal requires two-factor authentication — ensure your phone number is correct in your profile. If none of these work, call 1-800-CARE ext. 1 for technical support.",
+    "keywords": ["login problem", "cant login", "portal login", "forgot password", "account locked", "portal not working"],
+    "tags": ["troubleshooting", "portal", "login"],
+    "metadata": {}
+  },
+  {
+    "id": "ts-002",
+    "category": "troubleshooting",
+    "title": "Appointment confirmation not received",
+    "content": "If you did not receive an appointment confirmation email or SMS: 1) Check your spam/junk folder for emails from noreply@carefirstmedical.com. 2) Verify your email and phone number are correct in your patient portal profile. 3) Appointments booked by phone may take up to 2 hours for confirmation to send. 4) Add noreply@carefirstmedical.com to your email contacts to prevent future filtering. 5) Check the patient portal under Appointments to verify the booking exists. If the appointment does not appear in the portal, it may not have been completed — call your clinic to confirm.",
+    "keywords": ["no confirmation", "appointment confirmation", "didnt get email", "no text confirmation", "booking confirmation missing"],
+    "tags": ["troubleshooting", "appointments", "email"],
+    "metadata": {}
+  },
+  {
+    "id": "ts-003",
+    "category": "troubleshooting",
+    "title": "Prescription not ready at pharmacy",
+    "content": "If your prescription is not ready when expected: 1) Routine refills take 24-48 hours to process from the time of request. 2) New prescriptions from an appointment are sent electronically and are typically ready within 2-4 hours. 3) Your provider may need to authorize or review the refill, especially for controlled substances. 4) Insurance may require prior authorization for certain medications (1-3 business days). 5) The medication may be on backorder — your pharmacist can suggest alternatives. 6) Check with the pharmacy directly, as the prescription may have been sent to a different location. Contact 1-800-CARE ext. 4 for pharmacy support.",
+    "keywords": ["prescription not ready", "medication not ready", "pharmacy not filled", "refill not ready", "waiting for prescription"],
+    "tags": ["troubleshooting", "pharmacy", "prescriptions"],
+    "metadata": {}
+  },
+  {
+    "id": "ts-004",
+    "category": "troubleshooting",
+    "title": "Insurance claim denied",
+    "content": "If your insurance claim was denied: 1) Review the Explanation of Benefits (EOB) from your insurance company — it includes the denial reason code. 2) Common denial reasons: service not covered, prior authorization not obtained, out-of-network provider, incorrect coding, or lapsed coverage. 3) For coding errors, contact CareFirst billing at 1-800-CARE ext. 2 — we will review and resubmit with corrected codes. 4) For coverage disputes, call your insurance company's member services number (on your card) to appeal. 5) CareFirst can provide a letter of medical necessity from your provider to support the appeal. Appeals must be filed within 180 days of the denial. Financial assistance may be available if the appeal is unsuccessful.",
+    "keywords": ["claim denied", "insurance denied", "rejected claim", "insurance appeal", "EOB denial", "not covered"],
+    "tags": ["troubleshooting", "insurance", "billing"],
+    "metadata": {}
+  }
+]

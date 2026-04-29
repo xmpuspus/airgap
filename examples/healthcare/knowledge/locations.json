@@ -1,0 +1,56 @@
+[
+  {
+    "id": "loc-001",
+    "category": "locations",
+    "title": "CareFirst Medical — Downtown Main Campus",
+    "content": "Full-service medical center with primary care, urgent care, specialists, lab, imaging, pharmacy, dental, and vision. Address: 200 Health Plaza Drive, Suite 100, Downtown. Phone: (555) 100-2000. Hours: Monday-Friday 7:00 AM to 7:00 PM, Saturday 8:00 AM to 4:00 PM, Sunday closed. Urgent care open until 8:00 PM weekdays, 5:00 PM weekends. On-site parking garage (free for patients). Wheelchair accessible. Specialties on-site: cardiology, endocrinology, dermatology, orthopedics, OB/GYN, pediatrics, behavioral health. Lab and imaging open Monday-Saturday.",
+    "keywords": ["downtown", "main campus", "health plaza", "downtown clinic"],
+    "tags": ["location", "downtown", "main-campus"],
+    "metadata": {"address": "200 Health Plaza Drive, Downtown", "phone": "(555) 100-2000"}
+  },
+  {
+    "id": "loc-002",
+    "category": "locations",
+    "title": "CareFirst Medical — Northside Family Clinic",
+    "content": "Family medicine and pediatrics clinic with on-site lab and pharmacy. Address: 4500 Maple Creek Road, Northside. Phone: (555) 100-3000. Hours: Monday-Friday 8:00 AM to 6:00 PM, Saturday 9:00 AM to 1:00 PM, Sunday closed. Services: primary care, pediatrics, women's health, immunizations, preventive screenings, and chronic disease management. Walk-in sick visits accepted Monday-Friday until 4:00 PM. Free surface parking. Wheelchair accessible. Spanish-speaking staff available.",
+    "keywords": ["northside", "maple creek", "family clinic", "northside clinic"],
+    "tags": ["location", "northside", "family-medicine"],
+    "metadata": {"address": "4500 Maple Creek Road, Northside", "phone": "(555) 100-3000"}
+  },
+  {
+    "id": "loc-003",
+    "category": "locations",
+    "title": "CareFirst Medical — Eastgate Urgent Care & Walk-In",
+    "content": "Urgent care and walk-in clinic with extended hours. Address: 780 Eastgate Mall, Suite 210, East District. Phone: (555) 100-4000. Hours: Monday-Friday 8:00 AM to 8:00 PM, Saturday-Sunday 9:00 AM to 5:00 PM. Services: urgent care, X-ray, basic lab, wound care, splinting, sports physicals, DOT exams, and flu testing. Average wait time 20-40 minutes. Online check-in available at carefirstmedical.com/urgent-care. Free parking in mall lot. Wheelchair accessible. No appointment needed.",
+    "keywords": ["eastgate", "urgent care", "walk-in", "east district", "extended hours"],
+    "tags": ["location", "eastgate", "urgent-care"],
+    "metadata": {"address": "780 Eastgate Mall, Suite 210, East District", "phone": "(555) 100-4000"}
+  },
+  {
+    "id": "loc-004",
+    "category": "locations",
+    "title": "CareFirst Medical — Westbrook Wellness Center",
+    "content": "Primary care and wellness-focused clinic. Address: 1200 Sunset Boulevard, Westbrook. Phone: (555) 100-5000. Hours: Monday-Friday 8:00 AM to 5:00 PM, Saturday closed. Services: primary care, preventive wellness, nutrition counseling, diabetes prevention program, weight management, mental health counseling, and group wellness classes. On-site pharmacy. Lab draw station (samples sent to main campus lab, results in 2-3 days). Free parking. Wheelchair accessible. Telehealth rooms available for specialist video consultations.",
+    "keywords": ["westbrook", "wellness center", "sunset boulevard", "wellness"],
+    "tags": ["location", "westbrook", "wellness"],
+    "metadata": {"address": "1200 Sunset Boulevard, Westbrook", "phone": "(555) 100-5000"}
+  },
+  {
+    "id": "loc-005",
+    "category": "locations",
+    "title": "CareFirst Medical — Southpark Pediatrics & Women's Health",
+    "content": "Dedicated pediatric and women's health clinic. Address: 3300 Southpark Way, Building B, Southpark. Phone: (555) 100-6000. Hours: Monday-Friday 8:00 AM to 5:00 PM, Saturday 9:00 AM to 1:00 PM (pediatrics only). Services: pediatrics (birth to 18), OB/GYN, prenatal care, lactation consulting, well-child visits, immunizations, and adolescent care. Child-friendly waiting area with play zone. On-site ultrasound for prenatal patients. Free parking. Wheelchair accessible. Mandarin-speaking staff available.",
+    "keywords": ["southpark", "pediatrics", "women's health", "children's clinic", "OB"],
+    "tags": ["location", "southpark", "pediatrics", "women"],
+    "metadata": {"address": "3300 Southpark Way, Building B, Southpark", "phone": "(555) 100-6000"}
+  },
+  {
+    "id": "loc-006",
+    "category": "locations",
+    "title": "CareFirst Medical — Lakeside Senior Health Center",
+    "content": "Clinic focused on adult and senior care. Address: 900 Lakeview Drive, Lakeside. Phone: (555) 100-7000. Hours: Monday-Friday 8:00 AM to 5:00 PM, Saturday closed. Services: Medicare wellness visits, geriatric assessments, fall risk evaluations, memory screening, chronic disease management, podiatry, hearing tests, and medication reviews. On-site lab, pharmacy, and medical equipment fitting (walkers, braces). Free parking with covered drop-off. Wheelchair accessible. Transportation assistance available for eligible patients. Social worker on staff for benefits counseling.",
+    "keywords": ["lakeside", "senior health", "geriatrics", "elderly care", "Medicare clinic"],
+    "tags": ["location", "lakeside", "senior", "geriatrics"],
+    "metadata": {"address": "900 Lakeview Drive, Lakeside", "phone": "(555) 100-7000"}
+  }
+]

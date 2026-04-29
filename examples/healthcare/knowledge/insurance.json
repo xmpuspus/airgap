@@ -1,0 +1,56 @@
+[
+  {
+    "id": "ins-001",
+    "category": "insurance",
+    "title": "Accepted insurance plans",
+    "content": "CareFirst Medical accepts the following insurance plans: Aetna (PPO, HMO, POS), Anthem Blue Cross Blue Shield (PPO, HMO, EPO), Cigna (PPO, HMO, OAP), Humana (PPO, HMO, Gold Plus), UnitedHealthcare (PPO, HMO, Choice Plus), Kaiser Permanente (select locations only), Molina Healthcare, Ambetter, and most employer-sponsored group plans. Coverage varies by location and specific provider. Verify your plan's in-network status by calling 1-800-CARE or entering your insurance details at carefirstmedical.com/insurance. Bring your insurance card to every visit.",
+    "keywords": ["accepted insurance", "which insurance", "insurance plans", "in-network", "Aetna", "BCBS", "Cigna", "UnitedHealthcare"],
+    "tags": ["insurance", "coverage", "plans"],
+    "metadata": {}
+  },
+  {
+    "id": "ins-002",
+    "category": "insurance",
+    "title": "Medicare coverage",
+    "content": "CareFirst accepts Original Medicare (Parts A and B), Medicare Advantage plans (Part C) from most major carriers, and Medicare Supplement (Medigap) policies. Medicare covers: annual wellness visits (no copay), preventive screenings per USPSTF guidelines, chronic care management, and many specialist services with referral. Medicare Part B typically covers 80% of approved charges after the annual deductible ($240 in 2026). Most preventive services have no deductible or copay. Medicare patients should bring their red-white-blue card or Medicare Advantage card to each visit.",
+    "keywords": ["Medicare", "Medicare Advantage", "Part A", "Part B", "Medigap", "senior insurance"],
+    "tags": ["insurance", "Medicare", "senior"],
+    "metadata": {}
+  },
+  {
+    "id": "ins-003",
+    "category": "insurance",
+    "title": "Medicaid coverage",
+    "content": "CareFirst accepts Medicaid and Medicaid managed care plans in our state. Covered services include primary care visits, preventive care, immunizations, lab and imaging, prescriptions, mental health services, dental (limited), and vision (children). Copays for Medicaid patients are $0-$4 depending on the service. Medicaid eligibility is based on income and household size — apply through your state's Medicaid office or healthcare.gov. CareFirst staff can help with Medicaid applications at any clinic. Medicaid covers transportation to medical appointments — call your Medicaid plan for details.",
+    "keywords": ["Medicaid", "state insurance", "low income insurance", "government insurance", "Medicaid coverage"],
+    "tags": ["insurance", "Medicaid", "assistance"],
+    "metadata": {}
+  },
+  {
+    "id": "ins-004",
+    "category": "insurance",
+    "title": "Out-of-network policies",
+    "content": "If your insurance plan is not listed as in-network with CareFirst, you may still receive care as an out-of-network patient. Out-of-network costs are typically higher: you may be responsible for a larger copay, higher coinsurance (often 40-50% vs. 10-20% in-network), and the balance between our charges and what your insurance approves. CareFirst does not balance-bill for emergency services. For non-emergency out-of-network care, we provide a cost estimate before your visit. Self-pay rates are available for uninsured patients — ask about our financial assistance program.",
+    "keywords": ["out of network", "not in network", "out-of-network cost", "balance billing", "self-pay"],
+    "tags": ["insurance", "out-of-network", "costs"],
+    "metadata": {}
+  },
+  {
+    "id": "ins-005",
+    "category": "insurance",
+    "title": "Copay schedule and deductible information",
+    "content": "Copay amounts are set by your insurance plan, not by CareFirst. Common copay ranges for in-network visits: primary care $20-$40, specialist $40-$75, urgent care $50-$75, telehealth $0-$25, preventive/wellness $0 (most plans). Your deductible is the amount you pay out-of-pocket before insurance starts covering costs. Common deductible ranges: individual $500-$3,000, family $1,000-$6,000. Preventive services are usually covered before the deductible under ACA rules. Check your plan's Summary of Benefits or call your insurance company for exact amounts. HSA and FSA cards are accepted.",
+    "keywords": ["copay", "deductible", "out of pocket", "cost of visit", "HSA", "FSA", "how much will I pay"],
+    "tags": ["insurance", "copay", "deductible", "costs"],
+    "metadata": {}
+  },
+  {
+    "id": "ins-006",
+    "category": "insurance",
+    "title": "Prior authorization process",
+    "content": "Some insurance plans require prior authorization (pre-approval) before certain services. Common services requiring authorization: MRI and CT scans, specialty referrals (plan-dependent), certain medications, outpatient procedures, durable medical equipment, and physical therapy beyond initial evaluation. CareFirst handles the authorization process on your behalf — our staff submits the request to your insurance company after your provider orders the service. Authorization typically takes 3-5 business days. Urgent authorizations are processed in 24-48 hours. You will be notified of the outcome by phone or portal message.",
+    "keywords": ["prior authorization", "pre-approval", "insurance approval", "authorization required", "pre-auth"],
+    "tags": ["insurance", "authorization", "process"],
+    "metadata": {}
+  }
+]

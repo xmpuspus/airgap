@@ -1,0 +1,74 @@
+{
+  "vertical": "healthcare",
+  "label": "CareFirst Medical",
+  "botName": "CareBot",
+  "tagline": "Your personal health services assistant",
+  "theme": {
+    "primary": "#0D9488",
+    "primaryDark": "#0F766E",
+    "secondary": "#7C3AED",
+    "background": "#F0FDFA",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "botBubble": "#F1F5F9",
+    "userBubble": "#0D9488"
+  },
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "knowledge": {
+    "totalDocs": 50,
+    "categories": {
+      "faq": 26,
+      "insurance": 6,
+      "locations": 6,
+      "services": 8,
+      "troubleshooting": 4
+    }
+  },
+  "config": {
+    "brand": {
+      "name": "CareFirst Medical",
+      "botName": "CareBot",
+      "tagline": "Your personal health services assistant",
+      "hotline": "1-800-CARE",
+      "hotlineLabel": "available 24/7",
+      "website": "carefirstmedical.com"
+    },
+    "theme": {
+      "primary": "#0D9488",
+      "secondary": "#7C3AED",
+      "background": "#F0FDFA"
+    },
+    "locale": {
+      "currency": "USD",
+      "language": "en",
+      "region": "US"
+    },
+    "llm": {
+      "mode": "demo"
+    },
+    "quickReplies": [
+      {
+        "title": "Book appointment",
+        "value": "How do I book an appointment?"
+      },
+      {
+        "title": "Prescription refill",
+        "value": "How do I refill my prescription?"
+      },
+      {
+        "title": "Find a clinic",
+        "value": "Where are your clinic locations?"
+      },
+      {
+        "title": "Insurance coverage",
+        "value": "What insurance do you accept?"
+      }
+    ],
+    "toolCount": 2
+  },
+  "gif": "assets/gifs/industry-healthcare.gif"
+}

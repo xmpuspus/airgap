@@ -1,0 +1,1100 @@
+[
+  {
+    "id": "faq-001",
+    "category": "faq",
+    "title": "How to check prepaid balance",
+    "content": "To check your ACME prepaid balance, dial *123# and press Call. You will receive an SMS with your current balance, data allocation, and promo status. You can also check via the ACME app under Account > Balance, or send BAL to 2123 for a free SMS reply. For airtime load balance only, dial *123*1#.",
+    "keywords": [
+      "balance",
+      "check balance",
+      "prepaid balance",
+      "load balance",
+      "*123#",
+      "remaining load"
+    ],
+    "tags": [
+      "prepaid",
+      "balance",
+      "self-service"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-002",
+    "category": "faq",
+    "title": "How to check data usage",
+    "content": "Check your remaining data by dialing *123*3# or texting DATA to 2123. The ACME app shows a detailed breakdown under Account > Data Usage, including per-app usage for the current cycle. For postpaid subscribers, data usage updates every 15 minutes. For prepaid, updates are near real-time. You will also receive an SMS alert when you reach 75% and 90% of your data allocation.",
+    "keywords": [
+      "data usage",
+      "check data",
+      "remaining data",
+      "data balance",
+      "internet usage",
+      "data consumption"
+    ],
+    "tags": [
+      "data",
+      "self-service",
+      "prepaid",
+      "postpaid"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-003",
+    "category": "faq",
+    "title": "How to activate a new ACME SIM",
+    "content": "To activate your new ACME SIM: 1) Insert the SIM into your phone and power it on. 2) Wait for network registration (up to 5 minutes). 3) Dial *888# to start the activation wizard. 4) Enter the 13-digit SIM serial number printed on the SIM card holder. 5) Complete SIM registration by providing your full name, address, valid ID type, and ID number as required by Philippine law (RA 11934). 6) You will receive a confirmation SMS once activation is complete. New SIMs come with 1GB free data valid for 3 days.",
+    "keywords": [
+      "activate SIM",
+      "new SIM",
+      "SIM activation",
+      "register SIM",
+      "new number"
+    ],
+    "tags": [
+      "sim",
+      "activation",
+      "getting-started"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-004",
+    "category": "faq",
+    "title": "eSIM setup and activation",
+    "content": "ACME supports eSIM on compatible devices (iPhone XS and later, Samsung Galaxy S20 and later, Google Pixel 3 and later). To activate: 1) Visit any ACME store with a valid ID or request an eSIM online at airgap.dev/esim. 2) You will receive a QR code via email. 3) Go to Settings > Cellular/Mobile > Add eSIM (iOS) or Settings > Connections > SIM Manager > Add eSIM (Android). 4) Scan the QR code. 5) Your eSIM will activate within 5 minutes. Note: eSIM profiles cannot be transferred between devices. You must request a new eSIM if you change phones. There is a one-time eSIM fee of PHP 50. To convert your existing physical SIM to eSIM: Go to Account > SIM Management > Convert to eSIM in the ACME app. You will receive a QR code via email. Scan the QR code on your phone to activate the eSIM. Your physical SIM will be deactivated once the eSIM is active.",
+    "keywords": [
+      "eSIM",
+      "digital SIM",
+      "QR code",
+      "eSIM activation",
+      "embedded SIM",
+      "virtual SIM",
+      "convert",
+      "convert SIM",
+      "physical to eSIM",
+      "SIM conversion"
+    ],
+    "tags": [
+      "sim",
+      "esim",
+      "activation"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-005",
+    "category": "faq",
+    "title": "ACMEPay e-wallet setup",
+    "content": "ACMEPay is ACME's integrated e-wallet for bills payment, load purchase, and money transfers. To set up: 1) Download or update the ACME app. 2) Go to ACMEPay tab and tap 'Get Started'. 3) Verify your mobile number via OTP. 4) Complete basic KYC by taking a selfie and uploading one valid government ID. 5) Basic accounts have a PHP 50,000 wallet limit. Upgrade to fully verified (two valid IDs) for PHP 100,000 limit. ACMEPay can be used to pay ACME bills, buy load, send money to other ACMEPay users, and pay at QR-enabled merchants.",
+    "keywords": [
+      "ACMEPay",
+      "e-wallet",
+      "ewallet",
+      "digital wallet",
+      "mobile wallet",
+      "payment app"
+    ],
+    "tags": [
+      "meridiapay",
+      "wallet",
+      "payment"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-006",
+    "category": "faq",
+    "title": "Customer service contact numbers",
+    "content": "Reach ACME Customer Service through: Hotline: Dial 211 (free from ACME numbers) or (02) 8888-0211 (from other networks/landlines). Available 24/7. Chat Support: Open the ACME app and tap the chat icon, available 7AM-10PM daily. Email: support@acme-telecom.ph (response within 24 hours). Social Media: @ACMETelecomPH on Facebook, Twitter, and Instagram.",
+    "keywords": [
+      "customer service",
+      "contact",
+      "hotline",
+      "call center",
+      "support",
+      "help",
+      "phone number",
+      "211",
+      "email"
+    ],
+    "tags": [
+      "support",
+      "contact"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-007",
+    "category": "faq",
+    "title": "Lost or stolen SIM replacement",
+    "content": "If your SIM is lost or stolen: 1) Immediately call 211 from another phone or (02) 8888-1234 to request a temporary line block. 2) Visit any ACME store with one valid government-issued ID. 3) Request a SIM replacement. The fee is PHP 50 for a standard SIM or PHP 75 for an eSIM replacement. 4) Your old number will be transferred to the new SIM within 2 hours. 5) All active promos and remaining balance will be carried over. If you had ACMEPay, you will need to re-verify your identity on the new SIM for security.",
+    "keywords": [
+      "lost SIM",
+      "stolen SIM",
+      "SIM replacement",
+      "replace SIM",
+      "blocked SIM",
+      "lost phone"
+    ],
+    "tags": [
+      "sim",
+      "replacement",
+      "security"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-008",
+    "category": "faq",
+    "title": "How to change or upgrade your postpaid plan",
+    "content": "Postpaid subscribers can change their plan after the minimum lock-in period (24 months). To upgrade: 1) Dial *888*1# or call 211. 2) You can also visit any ACME store or submit a request through the ACME app under Account > Plan > Change Plan. Early termination incurs a fee equal to the remaining months multiplied by PHP 500. Upgrading to a higher plan during lock-in is allowed without penalty. Downgrades during lock-in require the early termination difference. Plan changes take effect on the next billing cycle.",
+    "keywords": [
+      "change plan",
+      "upgrade plan",
+      "switch plan",
+      "postpaid upgrade",
+      "plan change"
+    ],
+    "tags": [
+      "postpaid",
+      "plan",
+      "upgrade"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-009",
+    "category": "faq",
+    "title": "How to register for data add-ons",
+    "content": "Buy additional data on top of your plan by dialing *123*2# and selecting from available data add-ons. Options include: DATA10 (1GB/1 day, PHP 10), DATA30 (3GB/3 days, PHP 30), DATA50 (5GB/7 days, PHP 50), DATA99 (10GB/15 days, PHP 99), DATA149 (20GB/30 days, PHP 149). You can also text the promo keyword to 2123 (e.g., text DATA50 to 2123). Data add-ons stack with your existing allocation and do not replace your base plan data.",
+    "keywords": [
+      "data add-on",
+      "buy data",
+      "extra data",
+      "additional data",
+      "data package",
+      "data promo"
+    ],
+    "tags": [
+      "data",
+      "add-on",
+      "prepaid",
+      "postpaid"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-010",
+    "category": "faq",
+    "title": "Call forwarding setup",
+    "content": "To enable call forwarding on your ACME line: Forward all calls: Dial **21*[destination number]# then press Call. Forward when busy: Dial **67*[destination number]#. Forward when no answer: Dial **61*[destination number]#. Forward when unreachable: Dial **62*[destination number]#. To cancel all forwarding: Dial ##21#. To check forwarding status: Dial *#21#. Call forwarding charges apply based on your plan's standard call rates to the forwarded number. International forwarding is charged at international call rates.",
+    "keywords": [
+      "call forwarding",
+      "forward calls",
+      "divert calls",
+      "call divert",
+      "redirect calls"
+    ],
+    "tags": [
+      "calls",
+      "forwarding",
+      "self-service"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-011",
+    "category": "faq",
+    "title": "Voicemail setup and access",
+    "content": "ACME voicemail lets callers leave messages when you cannot answer. To activate: Dial *888*55# or text VOICEMAIL ON to 2123. To access voicemail: Dial 211 then press 1, or long-press the 1 key on your phone dialer. First-time setup requires creating a 4-digit PIN. Voicemail stores up to 20 messages for 7 days. To deactivate: Text VOICEMAIL OFF to 2123. Voicemail is free for postpaid subscribers. Prepaid subscribers pay PHP 1.50/day when active.",
+    "keywords": [
+      "voicemail",
+      "voice mail",
+      "missed call",
+      "message recording",
+      "voice message"
+    ],
+    "tags": [
+      "calls",
+      "voicemail",
+      "self-service"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-012",
+    "category": "faq",
+    "title": "Mobile Number Portability (MNP)",
+    "content": "You can keep your existing number when switching to ACME through Mobile Number Portability. To port your number: 1) Ensure your current account is active and has no outstanding balance. 2) Visit any ACME store or apply online at airgap.dev/mnp. 3) Bring one valid ID and your current SIM. 4) Fill out the MNP request form. 5) You will receive a Unique Subscriber Code from your old provider. 6) Porting completes within 2 business days. 7) Your old SIM deactivates and the ACME SIM takes over your number. There is no porting fee.",
+    "keywords": [
+      "number portability",
+      "MNP",
+      "port number",
+      "keep number",
+      "switch network",
+      "transfer number"
+    ],
+    "tags": [
+      "sim",
+      "mnp",
+      "switching"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-013",
+    "category": "faq",
+    "title": "International call rates and IDD",
+    "content": "To make international calls from ACME, dial +[country code][number] or 00[country code][number]. Standard IDD rates: ASEAN countries: PHP 13/minute. East Asia (Japan, Korea, China, HK, Taiwan): PHP 16/minute. North America, Europe, Australia: PHP 20/minute. Rest of World: PHP 25/minute. For cheaper rates, subscribe to ACMEIDD Sakto: Text IDDSAKTO to 2123 for a daily plan of PHP 15 for 15 minutes to any ASEAN number. IDD calls are billed per 6-second increment after the first minute.",
+    "keywords": [
+      "international calls",
+      "IDD",
+      "overseas calls",
+      "call abroad",
+      "international dialing",
+      "country code"
+    ],
+    "tags": [
+      "calls",
+      "international",
+      "idd"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-014",
+    "category": "faq",
+    "title": "Coverage map and network availability",
+    "content": "ACME provides 4G LTE coverage across 95% of the Philippine population and 5G in select areas of Metro Manila, Cebu, and Davao. Check coverage for your area at airgap.dev/coverage or in the ACME app under Network > Coverage Map. The map shows 5G, 4G LTE, and 3G availability by location. If you experience coverage issues in an area that should be covered, report it through the app or call 211 so our network team can investigate. Coverage may be limited in mountainous, remote island, or underground areas.",
+    "keywords": [
+      "coverage",
+      "signal coverage",
+      "network coverage",
+      "4G",
+      "5G",
+      "LTE",
+      "coverage map",
+      "network area"
+    ],
+    "tags": [
+      "network",
+      "coverage"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-015",
+    "category": "faq",
+    "title": "Device compatibility check",
+    "content": "ACME operates on the following frequency bands: 4G LTE: Bands 1 (2100 MHz), 3 (1800 MHz), 7 (2600 MHz), 28 (700 MHz). 5G NR: n78 (3500 MHz). 3G WCDMA: Band 1 (2100 MHz). Most phones sold in the Philippines are compatible. To verify your device, text DEVICE [phone model] to 2123 or check airgap.dev/devices. If your device is locked to another carrier, you will need to request an unlock from your previous provider before using a ACME SIM.",
+    "keywords": [
+      "device compatibility",
+      "phone compatibility",
+      "supported phones",
+      "frequency bands",
+      "LTE bands",
+      "compatible devices"
+    ],
+    "tags": [
+      "device",
+      "compatibility",
+      "network"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-016",
+    "category": "faq",
+    "title": "Bill payment methods and due dates",
+    "content": "Postpaid and fiber bills are generated on the 1st of each month with payment due by the 15th. Late payments incur a 3% monthly surcharge. Pay through: ACME app or website (ACMEPay, credit/debit card), GCash, Maya, bank transfer (BDO, BPI), 7-Eleven (Cliqq), SM Bills Payment, Bayad Center, or auto-debit. For auto-debit setup, visit the ACME app > Billing > Auto-Pay and link your bank account or credit card. Bills are viewable in the app or at airgap.dev/mybill.",
+    "keywords": [
+      "pay bill",
+      "billing",
+      "payment",
+      "due date",
+      "bill payment",
+      "postpaid bill",
+      "fiber bill"
+    ],
+    "tags": [
+      "billing",
+      "payment",
+      "postpaid",
+      "fiber"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-017",
+    "category": "faq",
+    "title": "Auto-debit enrollment and management",
+    "content": "Set up auto-debit to never miss a payment. In the ACME app, go to Billing > Auto-Pay > Set Up Auto-Debit. Supported: BDO, BPI, Metrobank, UnionBank savings/checking accounts, and Visa/Mastercard credit cards. Enter your bank details or card number and authorize the recurring charge. Auto-debit processes on the 13th of each month (2 days before due date). To cancel auto-debit, go to the same menu and tap 'Disable Auto-Pay'. Changes take one billing cycle to apply. You will still receive monthly bill notifications via SMS and email.",
+    "keywords": [
+      "auto-debit",
+      "auto pay",
+      "automatic payment",
+      "recurring payment",
+      "autopay"
+    ],
+    "tags": [
+      "billing",
+      "payment",
+      "auto-debit"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-018",
+    "category": "faq",
+    "title": "Referral program and rewards",
+    "content": "Earn rewards by referring friends to ACME. Share your unique referral code (found in the ACME app under Rewards > Refer a Friend). When your friend activates a new ACME SIM and loads at least PHP 100, you both receive 2GB free data valid for 7 days. For postpaid referrals, both parties get PHP 200 bill credit after the referee's first full billing month. There is no limit to the number of referrals. Top referrers each quarter are featured in the ACMEStars program and receive exclusive merchandise.",
+    "keywords": [
+      "referral",
+      "refer a friend",
+      "referral code",
+      "referral bonus",
+      "invite friend"
+    ],
+    "tags": [
+      "rewards",
+      "referral",
+      "promo"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-019",
+    "category": "faq",
+    "title": "Loyalty rewards program",
+    "content": "ACME Rewards lets you earn points on every transaction. Prepaid subscribers earn 1 point per PHP 10 loaded. Postpaid subscribers earn 1 point per PHP 10 billed. Fiber subscribers earn 2 points per PHP 10 billed. Redeem points in the ACME app under Rewards: 100 points = PHP 10 load or 500MB data. 500 points = PHP 50 bill credit. 1,000 points = PHP 100 GCash credit. 5,000 points = Free device accessories. Points expire 12 months after earning. Gold tier (5,000+ annual points) gets 1.5x earn rate and priority customer service.",
+    "keywords": [
+      "loyalty",
+      "rewards",
+      "points",
+      "loyalty program",
+      "ACME Rewards",
+      "redeem points"
+    ],
+    "tags": [
+      "rewards",
+      "loyalty"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-020",
+    "category": "faq",
+    "title": "5G availability and compatible devices",
+    "content": "ACME 5G is available in select areas of Metro Manila (BGC, Makati CBD, Ortigas, Eastwood, Mall of Asia area), Cebu IT Park, and Davao CBD. Expanding to Clark, Iloilo, and Baguio by Q3 2026. 5G delivers speeds up to 1Gbps with latency under 10ms. Compatible devices include iPhone 12 and later, Samsung Galaxy S21 and later, and other 5G phones supporting n78 band. You must be on a 5G-eligible plan (all postpaid plans and prepaid plans PHP 99+ include 5G access). No additional fee for 5G. Check availability at airgap.dev/5g.",
+    "keywords": [
+      "5G",
+      "fifth generation",
+      "5G coverage",
+      "5G phone",
+      "5G speed",
+      "5G plan"
+    ],
+    "tags": [
+      "network",
+      "5g",
+      "coverage"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-021",
+    "category": "faq",
+    "title": "Data privacy and account security",
+    "content": "ACME is committed to protecting your data under the Philippine Data Privacy Act of 2012 (RA 10173). Your personal information is encrypted and stored securely. We never share your data with third parties without consent. Manage your privacy settings in the ACME app under Account > Privacy. You can: review what data we collect, opt out of marketing communications, request a copy of your data, or request account deletion. Enable two-factor authentication (2FA) via SMS OTP for additional account security. Report suspected unauthorized access by calling 123 immediately.",
+    "keywords": [
+      "privacy",
+      "data privacy",
+      "security",
+      "account security",
+      "personal data",
+      "2FA",
+      "two-factor"
+    ],
+    "tags": [
+      "security",
+      "privacy",
+      "account"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-022",
+    "category": "faq",
+    "title": "Call barring and blocking",
+    "content": "Restrict certain types of outgoing or incoming calls: Bar all outgoing calls: Dial *33*[PIN]# (default PIN is 0000). Bar outgoing international calls: Dial *331*[PIN]#. Bar all incoming calls: Dial *35*[PIN]#. Bar incoming calls when roaming: Dial *351*[PIN]#. Cancel all barring: Dial #330*[PIN]#. To change your barring PIN, call 211 or visit the ACME app under Settings > Call Barring. Call barring is useful for controlling charges, especially when lending your phone or traveling.",
+    "keywords": [
+      "call barring",
+      "block calls",
+      "restrict calls",
+      "call blocking",
+      "bar calls"
+    ],
+    "tags": [
+      "calls",
+      "barring",
+      "security"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-023",
+    "category": "faq",
+    "title": "How to run a speed test",
+    "content": "To check your ACME connection speed: 1) Open the ACME app and go to Tools > Speed Test. This uses ACME's own test servers for accurate results. 2) Alternatively, visit speedtest.airgap.dev in any browser. 3) You can also use third-party apps like Speedtest by Ookla. For best results, close background apps, test in different locations, and run at least 3 tests. Expected speeds: 4G LTE: 20-75 Mbps download. 5G: 100-500 Mbps download. If speeds are consistently below expected ranges, see our slow data troubleshooting guide or call 211.",
+    "keywords": [
+      "speed test",
+      "internet speed",
+      "connection speed",
+      "bandwidth test",
+      "slow internet",
+      "check speed"
+    ],
+    "tags": [
+      "data",
+      "speed",
+      "self-service"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-024",
+    "category": "faq",
+    "title": "Dual SIM setup with ACME",
+    "content": "If your phone supports dual SIM (or eSIM + physical SIM), you can use ACME alongside another carrier. Go to Settings > Cellular/Mobile Network on your device. Assign ACME as your preferred line for data, calls, or both. On iOS: Settings > Cellular > select ACME line > turn on data. On Android: Settings > SIM Card Manager > set ACME as default for data. Note: Only one SIM can use mobile data at a time. Calls and texts can be received on both SIMs simultaneously. If using eSIM, ensure your device supports dual active SIM.",
+    "keywords": [
+      "dual SIM",
+      "two SIM",
+      "eSIM dual",
+      "multiple SIM",
+      "secondary SIM"
+    ],
+    "tags": [
+      "device",
+      "sim",
+      "dual-sim"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-025",
+    "category": "faq",
+    "title": "Hotspot and tethering",
+    "content": "All ACME plans include free hotspot/tethering. To enable: iOS: Settings > Personal Hotspot > toggle on. Android: Settings > Network > Hotspot & Tethering > toggle Mobile Hotspot on. Set a strong password to prevent unauthorized connections. Hotspot uses your plan's data allocation at the same speed. Maximum connected devices: typically 10 for most phones. For fiber subscribers, your ACME router supports up to 32 WiFi devices. If hotspot does not work, verify your APN is set correctly (see APN troubleshooting guide) and restart your phone.",
+    "keywords": [
+      "hotspot",
+      "tethering",
+      "WiFi sharing",
+      "mobile hotspot",
+      "share data",
+      "personal hotspot"
+    ],
+    "tags": [
+      "data",
+      "hotspot",
+      "self-service"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-026",
+    "category": "faq",
+    "title": "Parental controls and content filtering",
+    "content": "ACME Safe offers parental controls to protect young users. To activate: Text SAFE ON to 2123 or enable in the ACME app under Account > Parental Controls. Features include: blocking adult content, setting daily data limits, restricting premium SMS services, and usage reports sent to the parent's number weekly. The service costs PHP 30/month. To add a child's ACME number to your control panel, text SAFE ADD [child's number] to 2123. To remove restrictions, text SAFE OFF to 2123 from the parent's registered number.",
+    "keywords": [
+      "parental controls",
+      "content filter",
+      "child safety",
+      "safe browsing",
+      "block content",
+      "ACME Safe"
+    ],
+    "tags": [
+      "safety",
+      "parental",
+      "content-filter"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-027",
+    "category": "faq",
+    "title": "Device unlock request",
+    "content": "If you purchased a device through ACME's installment plans, it may be network-locked during the contract period. To request an unlock after your contract ends: 1) Call 123 or visit a ACME store. 2) Provide your account number and device IMEI (dial *#06# to find it). 3) Your account must be in good standing with no remaining balance. 4) Unlock is processed within 3-5 business days. You will receive an unlock code via SMS for Android devices, or an automatic over-the-air unlock for iPhones (restart required). The unlock is free after contract completion.",
+    "keywords": [
+      "device unlock",
+      "phone unlock",
+      "carrier unlock",
+      "network unlock",
+      "SIM unlock",
+      "IMEI"
+    ],
+    "tags": [
+      "device",
+      "unlock",
+      "postpaid"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-028",
+    "category": "faq",
+    "title": "How to buy prepaid load",
+    "content": "Top up your ACME prepaid balance through multiple channels: ACME app (ACMEPay, credit/debit card), GCash or Maya (search 'ACME'), retailer load (any sari-sari store or loading station \u2014 ask for ACME load), 7-Eleven Cliqq kiosk, bank apps (BDO, BPI \u2014 under Bills > Telco > ACME), or scratch cards (available at convenience stores in PHP 50, 100, 300, 500 denominations). For scratch cards, dial *123*[14-digit PIN]# to load. Electronic load reflects instantly. Minimum load amount is PHP 10.",
+    "keywords": [
+      "buy load",
+      "top up",
+      "prepaid load",
+      "reload",
+      "load up",
+      "pasaload",
+      "recharge"
+    ],
+    "tags": [
+      "prepaid",
+      "load",
+      "payment"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-029",
+    "category": "faq",
+    "title": "Share-a-Load and Pasaload",
+    "content": "Share your prepaid balance with other ACME subscribers using Pasaload. Dial *123*4# and follow the prompts, or text PASALOAD [amount] [recipient number] to 2123. Minimum share amount is PHP 5. Maximum is PHP 500 per transaction. A service fee of PHP 1 applies per transfer. You must have at least PHP 6 in your balance (transfer amount + fee). Pasaload is available for airtime balance only; data allocations cannot be shared. For sharing data, see our GoShare feature: text GOSHARE [amount in MB] [recipient number] to 2123 (PHP 2 per 100MB shared).",
+    "keywords": [
+      "pasaload",
+      "share load",
+      "send load",
+      "transfer load",
+      "share balance",
+      "GoShare"
+    ],
+    "tags": [
+      "prepaid",
+      "load",
+      "sharing"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-030",
+    "category": "faq",
+    "title": "SIM registration requirements (RA 11934)",
+    "content": "Under the Philippine SIM Registration Act (RA 11934), all SIM cards must be registered. To register or update your registration: 1) Visit airgap.dev/simreg or use the ACME app. 2) Provide your full name, date of birth, address, and gender. 3) Upload a clear photo of one valid government-issued ID (passport, driver's license, PhilSys/national ID, SSS, UMID, voter's ID, or postal ID). 4) Take a live selfie for facial verification. 5) Registration is confirmed via SMS within 24 hours. Failure to register may result in SIM deactivation as required by law.",
+    "keywords": [
+      "SIM registration",
+      "register SIM",
+      "RA 11934",
+      "SIM card registration",
+      "SIM reg"
+    ],
+    "tags": [
+      "sim",
+      "registration",
+      "compliance"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-031",
+    "category": "faq",
+    "title": "How to subscribe to call and text promos",
+    "content": "Subscribe to ACME call and text bundles by dialing *123*5# and browsing available offers. Popular bundles: ALLTEXT20 (unlimited texts to all networks, 1 day, PHP 20), CALL10 (30 minutes to ACME numbers, 1 day, PHP 10), COMBO30 (unlimited texts + 30 min calls to all networks, 2 days, PHP 30). You can also text the promo keyword to 2123. To check active subscriptions, dial *123*6#. To cancel a recurring promo, text STOP [promo keyword] to 2123.",
+    "keywords": [
+      "call promo",
+      "text promo",
+      "call and text",
+      "bundle",
+      "unli text",
+      "unli call"
+    ],
+    "tags": [
+      "prepaid",
+      "calls",
+      "texts",
+      "promo"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-032",
+    "category": "faq",
+    "title": "ACME app download and features",
+    "content": "Download the ACME app from the App Store (iOS) or Google Play Store (Android). Search 'ACME Telecom' or 'ACMEPH'. The app provides: account management (balance, usage, plan details), bill payment and ACMEPay wallet, promo subscription, coverage map, speed test, customer support chat, store locator, and device management. Log in with your ACME mobile number and OTP. The app is free and works on both mobile data and WiFi. Requires iOS 15+ or Android 10+.",
+    "keywords": [
+      "ACME app",
+      "download app",
+      "mobile app",
+      "application",
+      "app store"
+    ],
+    "tags": [
+      "app",
+      "self-service",
+      "digital"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-033",
+    "category": "faq",
+    "title": "Fiber internet installation process",
+    "content": "After subscribing to a ACME Fiber plan, here is the installation process: 1) A technical survey team visits your location within 3-5 business days to check fiber availability. 2) If feasible, installation is scheduled within 5-7 business days after the survey. 3) A technician installs the fiber cable, ONT (modem), and WiFi router. Standard installation covers up to 50 meters of fiber cable from the nearest distribution box. 4) Installation takes 2-4 hours. 5) An installation fee of PHP 2,500 applies (waived for 24-month lock-in). 6) The technician will test your connection and ensure rated speeds before leaving.",
+    "keywords": [
+      "fiber installation",
+      "internet installation",
+      "home WiFi",
+      "fiber setup",
+      "broadband installation"
+    ],
+    "tags": [
+      "fiber",
+      "installation",
+      "getting-started"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-034",
+    "category": "faq",
+    "title": "Fiber plan upgrade or downgrade",
+    "content": "To change your ACME Fiber plan: 1) Call 123 or visit the ACME app under Account > Plan > Change Plan. 2) Upgrades take effect within 24 hours; a technician visit may be needed for speed changes above 100Mbps. 3) Downgrades take effect on the next billing cycle. 4) No fee for upgrades during lock-in. Downgrades during lock-in period incur a PHP 1,000 processing fee. 5) Lock-in periods reset on plan changes. 6) Your router will be reconfigured remotely or replaced if the new plan requires different hardware.",
+    "keywords": [
+      "fiber upgrade",
+      "fiber downgrade",
+      "change fiber plan",
+      "internet upgrade",
+      "broadband change"
+    ],
+    "tags": [
+      "fiber",
+      "plan",
+      "upgrade"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-035",
+    "category": "faq",
+    "title": "What to do during a network outage",
+    "content": "If you suspect a network outage: 1) Check the ACME app or airgap.dev/status for real-time service status and known outages in your area. 2) Try toggling airplane mode on/off. 3) Restart your phone. 4) If the outage is confirmed, you do not need to report it \u2014 our team is already working on it. 5) Estimated restoration times are posted on the status page and updated every 30 minutes. 6) Affected customers receive bill credits automatically for outages exceeding 4 hours. 7) For urgent matters during an outage, call 211 from a different network.",
+    "keywords": [
+      "outage",
+      "network outage",
+      "service down",
+      "no service",
+      "network down",
+      "disruption"
+    ],
+    "tags": [
+      "network",
+      "outage",
+      "support"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-036",
+    "category": "faq",
+    "title": "Postpaid billing cycle and charges explained",
+    "content": "Postpaid billing runs from the 1st to the last day of each month. Your bill includes: monthly plan fee, excess usage charges (data: PHP 2/MB, calls: PHP 7.50/min, texts: PHP 1/text beyond plan allocation), one-time charges (device installment, activation fee for new accounts: PHP 200), taxes (12% VAT included in all prices), and third-party charges (subscriptions, premium services). Bills are emailed and available in-app by the 3rd of the following month. Dispute charges within 60 days by calling 123.",
+    "keywords": [
+      "billing cycle",
+      "bill charges",
+      "postpaid billing",
+      "bill explained",
+      "excess charges",
+      "overage"
+    ],
+    "tags": [
+      "billing",
+      "postpaid",
+      "charges"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-037",
+    "category": "faq",
+    "title": "Prepaid load expiry and validity",
+    "content": "ACME prepaid load has the following validity: PHP 10-29 load: 3 days. PHP 30-99 load: 15 days. PHP 100-299 load: 30 days. PHP 300-499 load: 60 days. PHP 500+ load: 120 days. Each new load extends your SIM's active status. If your SIM has zero balance and no active validity, it enters a 60-day grace period where you can receive calls/texts but cannot make them. After 60 days of inactivity, the number is deactivated. Reactivate within 180 days by loading any amount at a ACME store.",
+    "keywords": [
+      "load expiry",
+      "load validity",
+      "prepaid expiry",
+      "SIM expiry",
+      "inactive SIM",
+      "deactivated SIM"
+    ],
+    "tags": [
+      "prepaid",
+      "load",
+      "validity"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-038",
+    "category": "faq",
+    "title": "Free services included with every ACME SIM",
+    "content": "Every ACME SIM includes these free services: Free calls to 123 (customer service), free calls to 911 (emergency), free balance check via *123#, free SIM registration portal access, free ACME app usage (does not consume data), 1GB welcome data for new activations (valid 3 days), free call waiting and caller ID, and free SMS delivery reports. Postpaid subscribers additionally get free WiFi at all ACME store hotspots (connect to 'ACME_WiFi', log in with your number).",
+    "keywords": [
+      "free services",
+      "included services",
+      "default services",
+      "complimentary",
+      "free features"
+    ],
+    "tags": [
+      "general",
+      "free-services"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-039",
+    "category": "faq",
+    "title": "How to enable WiFi calling",
+    "content": "WiFi calling lets you make and receive calls over WiFi when mobile signal is weak. To enable: iPhone: Settings > Phone > WiFi Calling > toggle on. Android: Settings > Connections > WiFi Calling > toggle on (varies by device). Requirements: compatible device, active ACME SIM, connected to WiFi. WiFi calls are charged at the same rate as regular calls (or deducted from your call allocation). WiFi calling works domestically only \u2014 it is not available while roaming. If you have trouble enabling it, ensure your device firmware is updated and the feature is supported for your phone model.",
+    "keywords": [
+      "WiFi calling",
+      "VoWiFi",
+      "call over WiFi",
+      "WiFi call",
+      "weak signal calling"
+    ],
+    "tags": [
+      "calls",
+      "wifi",
+      "feature"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-040",
+    "category": "faq",
+    "title": "How to block spam and unwanted messages",
+    "content": "To reduce spam on your ACME line: 1) Forward spam messages to 7726 (SPAM) \u2014 this helps ACME identify and block spammers. 2) Text BLOCK [sender number] to 2123 to block a specific number. 3) Register on the Do Not Call/Text list: text DNC ON to 2123 to opt out of marketing messages. 4) Enable the ACME app's built-in spam filter under Settings > Spam Protection. 5) Report phishing or scam messages to security@airgap.dev. ACME will never ask for your PIN, password, or OTP via text. If you receive such messages, do not respond.",
+    "keywords": [
+      "spam",
+      "block spam",
+      "unwanted messages",
+      "scam",
+      "phishing",
+      "junk messages",
+      "block number"
+    ],
+    "tags": [
+      "security",
+      "spam",
+      "messaging"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-041",
+    "category": "faq",
+    "title": "Roaming activation and deactivation",
+    "content": "To use your ACME SIM abroad, activate roaming before traveling: Dial *888*77# or text ROAMING ON to 2123, or enable in the ACME app under Account > Roaming. Prepaid subscribers must have a minimum balance of PHP 500 to activate roaming. Postpaid subscribers have roaming enabled by default but can deactivate it for safety: text ROAMING OFF to 2123. When abroad, your phone will automatically connect to partner networks. To avoid bill shock, subscribe to a roaming data pack before departure (see Roaming section for packages). Disable mobile data if you don't have a roaming pack.",
+    "keywords": [
+      "roaming",
+      "activate roaming",
+      "international roaming",
+      "travel abroad",
+      "roaming settings"
+    ],
+    "tags": [
+      "roaming",
+      "international",
+      "travel"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-042",
+    "category": "faq",
+    "title": "ACME fiber router admin access",
+    "content": "To access your ACME Fiber router settings: 1) Connect to your WiFi network. 2) Open a browser and go to 192.168.1.1 or airgap.router (default). 3) Default login: admin / airgap2024 (change this after first login). 4) From the admin panel you can: change WiFi network name and password, set up guest WiFi, configure port forwarding, view connected devices, set parental controls, and update firmware. 5) If you forget your custom password, press and hold the reset button on the router for 10 seconds to restore factory defaults (you'll need to reconfigure WiFi name/password).",
+    "keywords": [
+      "router settings",
+      "WiFi password",
+      "admin panel",
+      "router login",
+      "change WiFi",
+      "fiber router"
+    ],
+    "tags": [
+      "fiber",
+      "router",
+      "self-service"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-043",
+    "category": "faq",
+    "title": "Postpaid application requirements",
+    "content": "To apply for a ACME postpaid plan: 1) Visit any ACME store or apply online at airgap.dev/postpaid. 2) Requirements: Filipino citizen or resident with valid visa, at least 18 years old, one valid government-issued ID, proof of billing address (utility bill, bank statement, or government ID with address), and a recent payslip or ITR for plans PHP 1499 and above. 3) Credit evaluation takes 1-3 business days. 4) Once approved, you can pick up your SIM at the store or have it delivered for free. 5) A one-time activation fee of PHP 200 applies.",
+    "keywords": [
+      "postpaid application",
+      "apply postpaid",
+      "postpaid requirements",
+      "sign up postpaid",
+      "postpaid eligibility"
+    ],
+    "tags": [
+      "postpaid",
+      "application",
+      "getting-started"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-044",
+    "category": "faq",
+    "title": "How to request a billing statement or SOA",
+    "content": "To get a copy of your billing statement or Statement of Account (SOA): 1) Open the ACME app > Billing > Statements. Download any of the last 12 months. 2) Visit airgap.dev/mybill and log in. 3) Call 123 and request a statement to be emailed. 4) Visit a ACME store for a printed copy (PHP 25 per page). SOAs for loan or visa purposes can be requested with an official ACME letterhead \u2014 call 211 or email billing@airgap.dev and allow 5 business days for processing.",
+    "keywords": [
+      "billing statement",
+      "SOA",
+      "statement of account",
+      "bill copy",
+      "bill download"
+    ],
+    "tags": [
+      "billing",
+      "postpaid",
+      "fiber",
+      "documents"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-045",
+    "category": "faq",
+    "title": "Reconnection after disconnection for non-payment",
+    "content": "If your postpaid or fiber service was disconnected due to non-payment: 1) Pay all outstanding balances including late fees. 2) A reconnection fee of PHP 500 applies. 3) For postpaid mobile: service resumes within 2 hours after payment confirmation. 4) For fiber: a technician visit may be required, scheduled within 3 business days. 5) Pay at any ACME store, through the app, or via authorized payment channels. 6) After 3 consecutive months of non-payment, the account is permanently terminated. 7) Terminated accounts with outstanding balances are reported to credit bureaus.",
+    "keywords": [
+      "reconnection",
+      "disconnected",
+      "non-payment",
+      "cut off",
+      "service suspended",
+      "reconnect"
+    ],
+    "tags": [
+      "billing",
+      "disconnection",
+      "postpaid",
+      "fiber"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-046",
+    "category": "faq",
+    "title": "Account cancellation and contract termination",
+    "content": "To cancel your ACME account: Prepaid: No cancellation needed; SIM deactivates after 180 days of inactivity. Postpaid: Call 123 or visit a ACME store. If within the 24-month lock-in period, an early termination fee applies (remaining months x PHP 500). Settle all outstanding bills. Return any leased devices in good condition. Fiber: Call 123 to schedule disconnection. A technician will retrieve the router and ONT within 7 business days. Early termination fee for fiber is remaining months x PHP 1,000. Final bill is issued within 30 days. Refunds for advance payments are processed within 45 days.",
+    "keywords": [
+      "cancel account",
+      "terminate",
+      "close account",
+      "end contract",
+      "early termination",
+      "discontinue"
+    ],
+    "tags": [
+      "account",
+      "cancellation",
+      "postpaid",
+      "fiber"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-047",
+    "category": "faq",
+    "title": "How to check if my area has ACME Fiber",
+    "content": "Check ACME Fiber availability in your area: 1) Visit airgap.dev/fiber and enter your address. 2) In the ACME app, go to Fiber > Check Availability. 3) Call 123 and provide your complete address. 4) The system will confirm if fiber is available, or place you on a waitlist if expansion is planned. ACME Fiber is currently available in Metro Manila, Cebu City, Davao City, Iloilo City, Cagayan de Oro, Baguio, Angeles City, Antipolo, Bacoor, and Dasmarinas. New areas are added monthly.",
+    "keywords": [
+      "fiber availability",
+      "check fiber",
+      "fiber coverage",
+      "fiber area",
+      "broadband availability"
+    ],
+    "tags": [
+      "fiber",
+      "coverage",
+      "availability"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-048",
+    "category": "faq",
+    "title": "VoLTE and HD voice calling",
+    "content": "Voice over LTE (VoLTE) provides high-definition voice calls with clearer sound and faster call setup times. VoLTE is automatically enabled on all ACME SIMs with compatible devices. To verify it's active: iPhone: Settings > Cellular > Cellular Data Options > Voice & Data > should show 'LTE, VoLTE On'. Android: Settings > Connections > Mobile Networks > VoLTE Calls > toggle on. VoLTE calls are billed at the same rate as regular calls. Benefits include simultaneous voice and data (no dropped data connection during calls), HD audio quality, and call setup in under 2 seconds.",
+    "keywords": [
+      "VoLTE",
+      "HD voice",
+      "high definition calling",
+      "voice over LTE",
+      "clear calls"
+    ],
+    "tags": [
+      "calls",
+      "volte",
+      "network"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-049",
+    "category": "faq",
+    "title": "ACME for Business plans",
+    "content": "ACME offers business-specific plans for companies: Business Mobile: starting at PHP 799/line/month (25GB data, unlimited calls/texts to ACME). Volume discounts for 10+ lines. Business Fiber: dedicated connections from 100Mbps to 1Gbps with 99.5% uptime SLA. Business Solutions: fleet tracking, unified communications, and bulk SMS services. Contact our enterprise team at business@airgap.dev or call (02) 8888-5678. A dedicated account manager is assigned for businesses with 20+ lines.",
+    "keywords": [
+      "business plan",
+      "corporate plan",
+      "enterprise",
+      "company plan",
+      "fleet",
+      "business internet"
+    ],
+    "tags": [
+      "business",
+      "enterprise",
+      "plans"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-050",
+    "category": "faq",
+    "title": "How to transfer postpaid account ownership",
+    "content": "To transfer your ACME postpaid account to another person: 1) Both the current and new account holders must visit a ACME store together. 2) Bring valid government IDs for both parties. 3) The current account holder must have no outstanding balance. 4) The new holder must meet postpaid eligibility requirements (credit check). 5) A transfer fee of PHP 300 applies. 6) The new holder assumes the remaining lock-in period and any device installment obligations. 7) Processing takes 3-5 business days. The transferred number retains all its existing promos and data.",
+    "keywords": [
+      "transfer account",
+      "change ownership",
+      "account transfer",
+      "assign number",
+      "new owner"
+    ],
+    "tags": [
+      "account",
+      "postpaid",
+      "transfer"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-051",
+    "category": "faq",
+    "title": "ACME coverage in CALABARZON and nearby provinces",
+    "content": "ACME provides 4G LTE coverage throughout CALABARZON (Cavite, Laguna, Batangas, Rizal, Quezon). Major cities like Antipolo, Calamba, Lipa, Batangas City, Lucena, Dasmari\u00f1as, Bacoor, and Imus have full 4G LTE coverage. 5G is available in select areas of Antipolo, Bacoor, and Dasmari\u00f1as. Fiber broadband is available in key residential areas of Bacoor, Dasmari\u00f1as, Antipolo, and Calamba, with expansion ongoing. Mountain and remote barangay areas may have limited 3G-only coverage. Check the coverage map at airgap.dev/coverage for street-level accuracy.",
+    "keywords": [
+      "CALABARZON",
+      "Cavite",
+      "Laguna",
+      "Batangas",
+      "Rizal",
+      "Quezon",
+      "provincial coverage"
+    ],
+    "tags": [
+      "network",
+      "coverage",
+      "provincial"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-052",
+    "category": "faq",
+    "title": "How to set up ACMEPay QR payments",
+    "content": "ACMEPay supports QR code payments at partner merchants. To pay with QR: 1) Open the ACME app and tap ACMEPay. 2) Tap 'Pay QR' and scan the merchant's QR code. 3) Enter the amount and confirm with your ACMEPay PIN. Transactions are instant with zero fees for payments under PHP 5,000. ACMEPay QR works at any QRPh-enabled merchant nationwide. To receive payments (for small businesses), go to ACMEPay > My QR Code. Cash in to ACMEPay through ACME stores, GCash, Maya, 7-Eleven, and linked bank accounts (BDO, BPI, UnionBank).",
+    "keywords": [
+      "ACMEPay QR",
+      "QR payment",
+      "scan to pay",
+      "QRPh",
+      "mobile payment",
+      "contactless"
+    ],
+    "tags": [
+      "meridiapay",
+      "payment",
+      "qr"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-053",
+    "category": "faq",
+    "title": "What happens when I use up all my data",
+    "content": "When your data allocation is fully consumed: Prepaid: mobile data stops until you buy a new data promo or add-on. You can still make calls and send texts if you have airtime balance. You will receive an SMS notification offering data add-on options. Postpaid: data does not stop but speed is throttled to 256 Kbps for the rest of the billing cycle. You can buy a data booster to restore full speed. To purchase, dial *123*2# or text BOOST [amount] to 2123. Fiber: there are no data caps on ACME Fiber plans; usage is unlimited.",
+    "keywords": [
+      "data cap",
+      "data used up",
+      "no more data",
+      "data depleted",
+      "throttle",
+      "data limit",
+      "consumed data"
+    ],
+    "tags": [
+      "data",
+      "usage",
+      "prepaid",
+      "postpaid"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-054",
+    "category": "faq",
+    "title": "How to set a mobile data limit to prevent overuse",
+    "content": "Prevent unexpected charges by setting a data usage limit. On Android: Settings > Network > Data Usage > Set Data Limit. On iOS: no built-in limit, but use the ACME app's data monitor. In the ACME app, go to Account > Data Controls > Set Alert/Limit. You can set alerts at any percentage (e.g., 50%, 75%, 90%) and a hard cutoff that disables data when reached. For postpaid, this prevents excess data charges. For prepaid, this helps you conserve your data allocation. Fiber users can set per-device limits through the router admin panel.",
+    "keywords": [
+      "data limit",
+      "data cap",
+      "data control",
+      "prevent overuse",
+      "data warning",
+      "usage limit"
+    ],
+    "tags": [
+      "data",
+      "self-service",
+      "controls"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "faq-055",
+    "category": "faq",
+    "title": "How to access ACME Free WiFi hotspots",
+    "content": "ACME operates free WiFi hotspots in select public areas and all ACME stores. To connect: 1) Enable WiFi on your device. 2) Select the network 'ACME_FreeWiFi' or 'ACME_WiFi'. 3) Open a browser \u2014 you will be redirected to the login portal. 4) ACME subscribers: log in with your mobile number and receive an OTP. You get 1GB daily free. 5) Non-subscribers: register with any mobile number for 300MB daily free. Hotspot locations include ACME stores, select SM malls, Ayala malls, and transport terminals. For postpaid subscribers, WiFi at ACME stores is unlimited.",
+    "keywords": [
+      "free WiFi",
+      "WiFi hotspot",
+      "public WiFi",
+      "ACME WiFi",
+      "free internet"
+    ],
+    "tags": [
+      "wifi",
+      "free-services",
+      "hotspot"
+    ],
+    "metadata": {}
+  }
+]

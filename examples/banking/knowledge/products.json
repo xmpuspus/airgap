@@ -1,0 +1,110 @@
+[
+  {
+    "id": "product-basic-savings",
+    "category": "product",
+    "title": "Basic Savings Account",
+    "content": "The PrimaBank Basic Savings account is our entry-level savings option with no monthly maintenance fee when you maintain a $300 minimum daily balance. Earn 0.50% APY on all balances. Features include free online and mobile banking access, free e-statements, and unlimited deposits. Withdrawals in excess of 6 per statement cycle incur a $5 fee per excess withdrawal. FDIC insured up to $250,000 per depositor. Open with as little as $25. Ideal for building an emergency fund or starting a savings habit.",
+    "keywords": ["basic savings", "savings account", "entry savings", "simple savings", "starter savings"],
+    "tags": ["product", "savings"],
+    "metadata": {"type": "savings", "minimumBalance": 300, "apy": "0.50%", "monthlyFee": "$5 (waived with $300 balance)", "currency": "USD"}
+  },
+  {
+    "id": "product-premium-savings",
+    "category": "product",
+    "title": "Premium Savings Account",
+    "content": "PrimaBank Premium Savings is a high-yield savings account offering 2.10% APY on balances of $2,500 or more. The $12 monthly maintenance fee is waived when you maintain a $2,500 minimum daily balance. Includes free cashier's checks (up to 4 per month), priority customer service phone line, and a complimentary annual financial review with a PrimaBank advisor. Interest is compounded daily and credited monthly. No limit on the number of deposits. FDIC insured up to $250,000. Ideal for customers with a stable savings base seeking higher returns.",
+    "keywords": ["premium savings", "high yield savings", "high interest savings", "better savings rate"],
+    "tags": ["product", "savings", "premium"],
+    "metadata": {"type": "savings", "minimumBalance": 2500, "apy": "2.10%", "monthlyFee": "$12 (waived with $2,500 balance)", "currency": "USD"}
+  },
+  {
+    "id": "product-checking",
+    "category": "product",
+    "title": "Standard Checking Account",
+    "content": "The PrimaBank Standard Checking account provides everyday banking with no monthly maintenance fee when you maintain a $500 average daily balance or receive at least one direct deposit of $500+ per month. Includes a free Visa debit card, free online bill pay, unlimited check writing, mobile check deposit, and access to PrimaBank's 2,000+ fee-free ATM network. Overdraft protection options available. The $8 monthly fee applies when the waiver conditions are not met. Earn 0.01% APY on balances. Open with a $25 minimum deposit.",
+    "keywords": ["checking account", "standard checking", "debit account", "everyday banking"],
+    "tags": ["product", "checking"],
+    "metadata": {"type": "checking", "minimumBalance": 500, "monthlyFee": "$8 (waived with $500 balance or direct deposit)", "currency": "USD"}
+  },
+  {
+    "id": "product-student-checking",
+    "category": "product",
+    "title": "Student Checking Account",
+    "content": "PrimaBank Student Checking is designed for students ages 17-24 with no monthly maintenance fee and no minimum balance requirement. Includes a free Visa debit card, free online and mobile banking, mobile check deposit, and access to the 2,000+ fee-free ATM network. Students receive a free box of checks and one free replacement debit card per year. Overdraft Transfer from a linked savings account is available at no fee (first 3 per year). The account automatically converts to Standard Checking when the account holder turns 25. A student ID or proof of enrollment is required to open.",
+    "keywords": ["student checking", "student account", "college account", "young adult account", "student banking"],
+    "tags": ["product", "checking", "student"],
+    "metadata": {"type": "checking", "minimumBalance": 0, "monthlyFee": "$0", "eligibility": "Ages 17-24 with valid student ID", "currency": "USD"}
+  },
+  {
+    "id": "product-business-checking",
+    "category": "product",
+    "title": "Business Checking Account",
+    "content": "PrimaBank Business Checking is built for small businesses and sole proprietors. The account includes 200 free transactions per month (each additional transaction is $0.25), free incoming wire transfers, merchant deposit services, and a dedicated business support line. Monthly maintenance fee of $15 is waived for the first year and thereafter when you maintain a $5,000 average daily balance. Integrates with QuickBooks and other accounting software via PrimaBank Business Online. To open, bring your business license, EIN, articles of incorporation (or equivalent), and owner identification to any branch.",
+    "keywords": ["business checking", "business account", "small business", "merchant account", "commercial account"],
+    "tags": ["product", "checking", "business"],
+    "metadata": {"type": "checking", "minimumBalance": 5000, "monthlyFee": "$15 (waived first year or with $5,000 balance)", "freeTransactions": 200, "currency": "USD"}
+  },
+  {
+    "id": "product-personal-loan",
+    "category": "product",
+    "title": "Personal Loan",
+    "content": "PrimaBank personal loans range from $2,000 to $50,000 with fixed APR from 6.99% to 17.99% depending on creditworthiness. Loan terms of 12, 24, 36, 48, or 60 months are available. No origination fee and no prepayment penalty. Funds are disbursed within 2 business days of approval, deposited directly into your PrimaBank account. Use for debt consolidation, home improvement, major purchases, or unexpected expenses. Apply online, in the mobile app, or at any branch. A minimum credit score of 640 is generally required. Rate discount of 0.25% available for automatic payments from a PrimaBank checking account.",
+    "keywords": ["personal loan", "borrow money", "loan rates", "unsecured loan", "installment loan"],
+    "tags": ["product", "loan"],
+    "metadata": {"type": "loan", "amountRange": "$2,000 - $50,000", "aprRange": "6.99% - 17.99%", "terms": "12-60 months", "currency": "USD"}
+  },
+  {
+    "id": "product-mortgage",
+    "category": "product",
+    "title": "Home Mortgage",
+    "content": "PrimaBank home mortgages are available for purchase, refinance, and construction loans. Fixed-rate mortgages at 15-year and 30-year terms, and adjustable-rate mortgages (5/1 ARM and 7/1 ARM) are offered. Minimum down payment of 3% for conventional loans (20% to avoid PMI). FHA loans available with 3.5% down. Jumbo loans for amounts exceeding $726,200. Rate lock options of 30, 45, or 60 days. Pre-approval takes 1-3 business days. PrimaBank's mortgage team guides you from application through closing. Apply at primabank.com/mortgage or schedule an appointment with a mortgage specialist at any branch.",
+    "keywords": ["mortgage", "home loan", "buy a house", "refinance", "home purchase", "housing loan"],
+    "tags": ["product", "loan", "mortgage"],
+    "metadata": {"type": "mortgage", "minDownPayment": "3%", "terms": "15-year, 30-year fixed; 5/1, 7/1 ARM", "currency": "USD"}
+  },
+  {
+    "id": "product-auto-loan",
+    "category": "product",
+    "title": "Auto Loan",
+    "content": "PrimaBank auto loans finance new and used vehicle purchases with competitive fixed rates. New vehicle loans from 4.49% APR, used vehicle loans from 5.49% APR, depending on credit profile and loan term. Loan amounts from $5,000 to $100,000 with terms of 24, 36, 48, 60, or 72 months. No application fee. Pre-approval available online or in-branch so you can shop with confidence. Refinancing of existing auto loans from other lenders is also available and may lower your rate. GAP insurance can be added at origination for an additional cost. 0.25% rate discount for autopay from a PrimaBank checking account.",
+    "keywords": ["auto loan", "car loan", "vehicle loan", "car financing", "auto finance", "buy a car"],
+    "tags": ["product", "loan", "auto"],
+    "metadata": {"type": "loan", "amountRange": "$5,000 - $100,000", "newVehicleAPR": "from 4.49%", "usedVehicleAPR": "from 5.49%", "terms": "24-72 months", "currency": "USD"}
+  },
+  {
+    "id": "product-credit-card-standard",
+    "category": "product",
+    "title": "PrimaBank Standard Credit Card",
+    "content": "The PrimaBank Standard Visa credit card has no annual fee and offers 1% unlimited cash back on all purchases. APR ranges from 17.99% to 24.99% variable, based on creditworthiness. Includes zero fraud liability, free credit score monitoring through PrimaBank Online, and Visa purchase protection. Cash advance APR is 25.99%. Balance transfer introductory offer: 0% APR for 12 months on transfers made within the first 60 days (3% transfer fee applies, minimum $5). Minimum payment is the greater of $25 or 2% of the statement balance. Good for everyday spending with straightforward rewards.",
+    "keywords": ["standard credit card", "no fee credit card", "basic credit card", "cash back card", "visa card"],
+    "tags": ["product", "credit-card"],
+    "metadata": {"type": "credit-card", "annualFee": "$0", "cashBack": "1% unlimited", "apr": "17.99% - 24.99%", "currency": "USD"}
+  },
+  {
+    "id": "product-credit-card-rewards",
+    "category": "product",
+    "title": "PrimaBank Rewards Credit Card",
+    "content": "The PrimaBank Rewards Visa Signature card earns 2x points per dollar on dining and travel, and 1x point per dollar on all other purchases. Annual fee of $95 (waived the first year). Points are redeemable for statement credits, gift cards, travel, or merchandise at a rate of 1,000 points = $10. Includes travel accident insurance up to $250,000, rental car collision damage waiver, no foreign transaction fees, and concierge service. APR ranges from 16.99% to 23.99% variable. Sign-up bonus: 30,000 points after spending $3,000 in the first 90 days (worth $300).",
+    "keywords": ["rewards credit card", "points card", "travel card", "dining rewards", "visa signature"],
+    "tags": ["product", "credit-card", "rewards"],
+    "metadata": {"type": "credit-card", "annualFee": "$95 (waived first year)", "rewardsRate": "2x dining/travel, 1x everything else", "signupBonus": "30,000 points", "currency": "USD"}
+  },
+  {
+    "id": "product-credit-card-platinum",
+    "category": "product",
+    "title": "PrimaBank Platinum Credit Card",
+    "content": "The PrimaBank Platinum Visa Infinite card is our premium credit card offering 3x points per dollar on all purchases. Annual fee of $195. Includes complimentary airport lounge access (Priority Pass Select with unlimited visits), $200 annual travel credit, global entry or TSA PreCheck fee credit ($100 value), no foreign transaction fees, trip cancellation insurance, cell phone protection ($800/claim), and dedicated Platinum concierge line. APR ranges from 15.99% to 22.99% variable. Sign-up bonus: 60,000 points after spending $5,000 in the first 90 days (worth $600). Requires excellent credit (720+).",
+    "keywords": ["platinum credit card", "premium card", "luxury card", "airport lounge", "visa infinite", "best credit card"],
+    "tags": ["product", "credit-card", "premium"],
+    "metadata": {"type": "credit-card", "annualFee": "$195", "rewardsRate": "3x on all purchases", "signupBonus": "60,000 points", "perks": "Airport lounge, $200 travel credit, Global Entry", "currency": "USD"}
+  },
+  {
+    "id": "product-cd-rates",
+    "category": "product",
+    "title": "Certificates of Deposit (CD) Rate Schedule",
+    "content": "PrimaBank CD rates offer guaranteed returns with FDIC insurance. Current annual percentage yields: 6-month CD at 3.50% APY (minimum $1,000), 12-month CD at 4.00% APY (minimum $1,000), 18-month CD at 4.15% APY (minimum $1,000), 24-month CD at 4.25% APY (minimum $2,500), 36-month CD at 4.35% APY (minimum $2,500), 60-month CD at 4.50% APY (minimum $5,000). Interest can be paid monthly or compounded to maturity. Rates are locked at the time of purchase. Jumbo CDs ($100,000+) receive a 0.10% APY bonus. Early withdrawal penalties apply. Rates are subject to change without notice.",
+    "keywords": ["CD rates", "certificate of deposit", "CD", "term deposit", "fixed rate", "CD schedule"],
+    "tags": ["product", "CD", "savings"],
+    "metadata": {"type": "cd", "terms": "6, 12, 18, 24, 36, 60 months", "topRate": "4.50% APY (60-month)", "currency": "USD"}
+  }
+]

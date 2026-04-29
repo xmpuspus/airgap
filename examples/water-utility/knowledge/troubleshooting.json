@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ts-001",
+    "category": "troubleshooting",
+    "title": "No water at any faucet",
+    "content": "If you have no water at all: First, check if the main shutoff valve at the meter is open (turn counterclockwise to open). Check the house shutoff valve, usually located where the service line enters the house. If both valves are open, check with your neighbors to see if they are also without water, which indicates a utility-side issue such as a main break or planned maintenance. AquaFlow posts planned shutdowns at aquaflowwater.com/outages at least 48 hours in advance. If the issue is not a known outage, call 1-800-AQUA to report no water service. Emergency crews respond within 2 hours. Do not attempt to operate the meter valve yourself if it appears stuck or damaged.",
+    "keywords": ["no water", "water outage", "no water coming out", "water shut off", "water not working", "dry faucet"],
+    "tags": ["troubleshooting", "outage", "emergency"],
+    "metadata": {
+      "severity": "high",
+      "safetyWarning": "Do not force a stuck meter valve; call 1-800-AQUA"
+    }
+  },
+  {
+    "id": "ts-002",
+    "category": "troubleshooting",
+    "title": "Low water pressure throughout the home",
+    "content": "Low pressure at all faucets may be caused by a partially closed shutoff valve, a failing pressure regulator, corroded galvanized pipes, or a utility-side issue. Step 1: Verify the main shutoff valve at the meter and the house shutoff valve are fully open. Step 2: Check if you have a pressure reducing valve (PRV), usually a bell-shaped device on the main water line near where it enters the house; it may need adjustment or replacement. Step 3: Check with neighbors to determine if the issue is widespread. Step 4: If only your home is affected and valves are open, call 1-800-AQUA for a pressure investigation. AquaFlow targets a minimum delivery pressure of 40 PSI at the meter. Homes on higher elevations may naturally have lower pressure.",
+    "keywords": ["low pressure", "weak pressure", "slow water", "pressure drop", "trickle", "not enough pressure"],
+    "tags": ["troubleshooting", "pressure"],
+    "metadata": {
+      "severity": "medium",
+      "safetyWarning": null
+    }
+  },
+  {
+    "id": "ts-003",
+    "category": "troubleshooting",
+    "title": "Discolored water from taps",
+    "content": "Discolored water can appear brown, yellow, orange, or milky white. Brown/orange water is typically caused by disturbed iron sediment in water mains from nearby construction, main break repair, or hydrant flushing. Run cold water at the lowest faucet for 5-10 minutes until it clears. Do not run hot water, as sediment can enter the water heater. Milky or white water is caused by tiny air bubbles and is harmless; fill a glass and watch from the bottom up as it clears. If brown water persists beyond 15 minutes or occurs repeatedly, call 1-800-AQUA. AquaFlow will investigate and may flush nearby hydrants to resolve the issue. Do not wash laundry until water runs clear.",
+    "keywords": ["discolored water", "brown water", "yellow water", "milky water", "cloudy water", "white water", "orange water"],
+    "tags": ["troubleshooting", "quality"],
+    "metadata": {
+      "severity": "low",
+      "safetyWarning": "If water has a chemical or petroleum smell, do not use it and call 1-800-AQUA immediately"
+    }
+  },
+  {
+    "id": "ts-004",
+    "category": "troubleshooting",
+    "title": "Unusually high water bill or suspected leak",
+    "content": "If your bill is unexpectedly high, first compare gallons used (not just the dollar amount) against previous months. The most common cause of a sudden usage spike is a running toilet, which can waste 200 gallons per day without any visible or audible sign. To check: add 5 drops of food coloring to the toilet tank, wait 15 minutes without flushing, and check the bowl. If color appears, the flapper valve needs replacement ($5-$10 part). Other hidden leaks: check the water meter with all fixtures off; if the low-flow indicator is spinning, water is flowing somewhere. Check outdoor hose bibs, irrigation systems, and the water heater pressure relief valve. AquaFlow offers a free meter accuracy test; call 1-800-AQUA. If a leak is confirmed and repaired, you may be eligible for a leak adjustment credit of up to 50% of excess charges.",
+    "keywords": ["high bill", "bill too high", "water leak", "running toilet", "meter spinning", "suspected leak", "usage spike"],
+    "tags": ["troubleshooting", "billing", "leaks"],
+    "metadata": {
+      "severity": "medium",
+      "safetyWarning": null
+    }
+  }
+]

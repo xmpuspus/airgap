@@ -1,0 +1,72 @@
+[
+  {
+    "id": "pay-001",
+    "category": "payment",
+    "title": "Online payment via AquaFlow website",
+    "content": "Pay your water bill online at aquaflowwater.com/pay. Log in with your account number and password, or use the guest payment option with your account number and ZIP code. Accepted methods include Visa, Mastercard, Discover, American Express, and bank account (ACH/eCheck) transfers. ACH payments are free; credit/debit card payments carry a $2.95 convenience fee charged by the third-party payment processor. Payments posted before 4:00 PM Eastern are credited the same business day. A confirmation email with transaction number is sent immediately.",
+    "keywords": ["online payment", "pay online", "website payment", "pay bill online", "credit card payment"],
+    "tags": ["payment", "online"],
+    "metadata": {
+      "channel": "AquaFlow Website",
+      "type": "Online",
+      "fee": "Free for ACH; $2.95 for credit/debit cards",
+      "processingTime": "Same business day if before 4 PM"
+    }
+  },
+  {
+    "id": "pay-002",
+    "category": "payment",
+    "title": "AutoPay automatic payment enrollment",
+    "content": "AutoPay automatically deducts your monthly water bill from your bank account or credit/debit card on the due date. Enroll at aquaflowwater.com/autopay, through the AquaFlow mobile app, or by calling 1-800-AQUA. Bank account (ACH) AutoPay is free. Credit/debit card AutoPay incurs a $2.95 monthly convenience fee. You continue to receive your monthly bill statement before the deduction date. Cancel anytime, effective the next billing cycle. Ensure sufficient funds are available on the due date; returned payments incur a $25 returned payment fee. AutoPay customers also receive paperless billing by default.",
+    "keywords": ["autopay", "automatic payment", "auto-pay", "auto deduct", "automatic deduction", "recurring payment"],
+    "tags": ["payment", "autopay"],
+    "metadata": {
+      "channel": "AutoPay",
+      "type": "Automatic",
+      "fee": "Free for bank account; $2.95/month for card",
+      "processingTime": "Deducted on due date"
+    }
+  },
+  {
+    "id": "pay-003",
+    "category": "payment",
+    "title": "Pay by phone",
+    "content": "Call 1-800-AQUA and select option 2 for billing, then option 1 for payments. The automated system accepts payments via bank account (ACH), debit card, or credit card. Have your account number and payment details ready. ACH payments are free; card payments carry a $2.95 convenience fee. You will receive a confirmation number at the end of the call. Phone payments are processed within 1 business day. To speak with a billing representative about payment plans or account questions, press 0 during the call. Phone payment is available 24/7.",
+    "keywords": ["phone payment", "pay by phone", "call to pay", "IVR", "automated phone payment"],
+    "tags": ["payment", "phone"],
+    "metadata": {
+      "channel": "Phone (IVR)",
+      "type": "Phone",
+      "fee": "Free for ACH; $2.95 for cards",
+      "processingTime": "1 business day"
+    }
+  },
+  {
+    "id": "pay-004",
+    "category": "payment",
+    "title": "Pay by mail",
+    "content": "Mail your payment with the remittance stub from your bill to: AquaFlow Water, P.O. Box 8800, Metro City, USA 12345. Make checks or money orders payable to 'AquaFlow Water' and include your account number on the check. Do not send cash by mail. Allow 5-7 business days for delivery and processing. Payments received after the due date will incur a 1.5% late fee on the past-due balance. Use the pre-addressed return envelope included with your paper bill for fastest delivery. If you have paperless billing, print the remittance stub from your online account.",
+    "keywords": ["mail payment", "pay by mail", "check payment", "money order", "send a check"],
+    "tags": ["payment", "mail"],
+    "metadata": {
+      "channel": "Mail",
+      "type": "Mail",
+      "fee": "None",
+      "processingTime": "5-7 business days"
+    }
+  },
+  {
+    "id": "pay-005",
+    "category": "payment",
+    "title": "In-person payment at service centers",
+    "content": "Pay your water bill in person at any AquaFlow service center. We accept cash, checks, money orders, and debit/credit cards. Cash and check payments have no fee; card payments carry a $2.95 convenience fee. Bring your bill stub or account number. Service centers are open Monday through Friday; some locations offer Saturday hours. A 24-hour payment drop box is available at each service center for check or money order payments after hours (do not deposit cash in drop boxes). Receipts are issued for all walk-in payments. Self-service payment kiosks are available at the Downtown and Southside locations.",
+    "keywords": ["in-person payment", "pay in person", "service center", "walk-in payment", "cash payment", "payment kiosk"],
+    "tags": ["payment", "in-person"],
+    "metadata": {
+      "channel": "Service Center",
+      "type": "In-Person",
+      "fee": "Free for cash/check; $2.95 for cards",
+      "processingTime": "Credited same day"
+    }
+  }
+]

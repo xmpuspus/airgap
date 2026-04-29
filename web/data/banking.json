@@ -1,0 +1,75 @@
+{
+  "vertical": "banking",
+  "label": "PrimaBank",
+  "botName": "PrimaAssist",
+  "tagline": "Your personal banking assistant",
+  "theme": {
+    "primary": "#1B5E20",
+    "primaryDark": "#0D3311",
+    "secondary": "#FFB300",
+    "background": "#F1F8E9",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "botBubble": "#F1F5F9",
+    "userBubble": "#1B5E20"
+  },
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "knowledge": {
+    "totalDocs": 62,
+    "categories": {
+      "atm-locations": 8,
+      "faq": 26,
+      "fees": 6,
+      "products": 12,
+      "security": 5,
+      "troubleshooting": 5
+    }
+  },
+  "config": {
+    "brand": {
+      "name": "PrimaBank",
+      "botName": "PrimaAssist",
+      "tagline": "Your personal banking assistant",
+      "hotline": "1-800-PRIMA",
+      "hotlineLabel": "toll-free, 24/7",
+      "website": "primabank.com"
+    },
+    "theme": {
+      "primary": "#1B5E20",
+      "secondary": "#FFB300",
+      "background": "#F1F8E9"
+    },
+    "locale": {
+      "currency": "USD",
+      "language": "en",
+      "region": "US"
+    },
+    "llm": {
+      "mode": "demo"
+    },
+    "quickReplies": [
+      {
+        "title": "Account info",
+        "value": "How do I check my account balance?"
+      },
+      {
+        "title": "Find ATM",
+        "value": "Where is the nearest ATM?"
+      },
+      {
+        "title": "Card help",
+        "value": "I need help with my card"
+      },
+      {
+        "title": "Loan products",
+        "value": "What loan products do you offer?"
+      }
+    ],
+    "toolCount": 3
+  },
+  "gif": "assets/gifs/industry-banking.gif"
+}

@@ -1,0 +1,73 @@
+{
+  "vertical": "insurance",
+  "label": "ShieldGuard Insurance",
+  "botName": "ShieldBot",
+  "tagline": "Protection you can count on",
+  "theme": {
+    "primary": "#1E3A5F",
+    "primaryDark": "#0F1F33",
+    "secondary": "#D4A843",
+    "background": "#F5F6F8",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "botBubble": "#F1F5F9",
+    "userBubble": "#1E3A5F"
+  },
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "knowledge": {
+    "totalDocs": 47,
+    "categories": {
+      "agents": 6,
+      "faq": 27,
+      "products": 10,
+      "troubleshooting": 4
+    }
+  },
+  "config": {
+    "brand": {
+      "name": "ShieldGuard Insurance",
+      "botName": "ShieldBot",
+      "tagline": "Protection you can count on",
+      "hotline": "1-800-SHIELD",
+      "hotlineLabel": "toll-free, 24/7 claims",
+      "website": "shieldguard.com"
+    },
+    "theme": {
+      "primary": "#1E3A5F",
+      "secondary": "#D4A843",
+      "background": "#F5F6F8"
+    },
+    "locale": {
+      "currency": "USD",
+      "language": "en",
+      "region": "US"
+    },
+    "llm": {
+      "mode": "demo"
+    },
+    "quickReplies": [
+      {
+        "title": "File a claim",
+        "value": "How do I file an insurance claim?"
+      },
+      {
+        "title": "My coverage",
+        "value": "What does my policy cover?"
+      },
+      {
+        "title": "Find an agent",
+        "value": "Where is the nearest ShieldGuard agent?"
+      },
+      {
+        "title": "Payment options",
+        "value": "How can I pay my premium?"
+      }
+    ],
+    "toolCount": 2
+  },
+  "gif": "assets/gifs/industry-insurance.gif"
+}

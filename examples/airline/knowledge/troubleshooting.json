@@ -1,0 +1,47 @@
+[
+  {
+    "id": "ts-001",
+    "category": "troubleshooting",
+    "title": "Booking not showing in Manage Booking",
+    "content": "If your booking does not appear in Manage Booking, verify you are using the same email address and booking reference (PNR) used at the time of purchase. Bookings made through travel agents or third-party websites may not appear in the SkyPeak system for up to 24 hours. If you booked by phone, ensure the agent sent your confirmation email. Try entering your booking reference and last name at skypeakair.com/retrieve. If the issue persists, call 1-888-SKYPEAK with your payment confirmation or receipt for manual lookup.",
+    "keywords": ["booking not showing", "cant find booking", "booking disappeared", "reservation missing", "PNR not working"],
+    "tags": ["troubleshooting", "booking", "manage-booking"],
+    "metadata": {}
+  },
+  {
+    "id": "ts-002",
+    "category": "troubleshooting",
+    "title": "Online check-in not available",
+    "content": "Online check-in may be unavailable for several reasons: 1) Check-in has not opened yet (opens 48 hours before departure). 2) Check-in has closed (1 hour before domestic, 2 hours before international). 3) Your booking requires airport check-in due to travel document verification, unaccompanied minor service, or oversized special items. 4) You have an incomplete booking (unpaid balance, missing passport details). 5) System maintenance (usually resolved within 1 hour). Add your passport details in Manage Booking before attempting check-in for international flights.",
+    "keywords": ["check-in not working", "cant check in", "check-in unavailable", "online check-in error", "check in failed"],
+    "tags": ["troubleshooting", "check-in", "online"],
+    "metadata": {}
+  },
+  {
+    "id": "ts-003",
+    "category": "troubleshooting",
+    "title": "Boarding pass not loading in app",
+    "content": "If your boarding pass does not display in the SkyPeak app: 1) Ensure you have completed check-in (boarding pass is only available after check-in). 2) Pull down to refresh the app home screen. 3) Check your internet connection — the pass needs to download once, then works offline. 4) Force close and reopen the app. 5) Update to the latest app version from the App Store or Google Play. 6) Clear the app cache (Settings > Apps > SkyPeak > Clear Cache). If none of these work, your boarding pass was also emailed to you — check your inbox and spam folder, or print it at an airport kiosk.",
+    "keywords": ["boarding pass not loading", "cant see boarding pass", "boarding pass error", "app boarding pass", "pass not showing"],
+    "tags": ["troubleshooting", "boarding-pass", "app"],
+    "metadata": {}
+  },
+  {
+    "id": "ts-004",
+    "category": "troubleshooting",
+    "title": "SkyPeak app login issues",
+    "content": "If you cannot log in to the SkyPeak app: 1) Verify your email and password are correct (passwords are case-sensitive). 2) Use 'Forgot Password' to reset — a reset link is sent to your registered email. 3) Check that your account has not been locked after 5 failed attempts (wait 30 minutes or contact support). 4) Ensure the app is updated to the latest version. 5) If using social login (Google/Apple), ensure you are using the same account you registered with. 6) Try logging in on the website at skypeakair.com to rule out app-specific issues. Contact 1-888-SKYPEAK if the problem persists.",
+    "keywords": ["login problem", "cant login", "forgot password", "account locked", "app login", "sign in error"],
+    "tags": ["troubleshooting", "app", "login"],
+    "metadata": {}
+  },
+  {
+    "id": "ts-005",
+    "category": "troubleshooting",
+    "title": "SkyPeak Rewards miles not credited",
+    "content": "Miles are typically credited within 72 hours after your flight. If miles have not appeared: 1) Verify your SkyPeak Rewards number was added to the booking before the flight. 2) Check that the fare class is eligible for miles (deeply discounted and award tickets may earn reduced or zero miles). 3) For partner airline flights, crediting may take up to 8 weeks. 4) Submit a retroactive mileage claim at skypeakair.com/rewards/claim within 6 months of the flight date — you will need your boarding pass or e-ticket receipt. 5) Miles are not earned on infant fares or group discounted fares.",
+    "keywords": ["miles not credited", "missing miles", "miles not showing", "reward points missing", "didnt get miles"],
+    "tags": ["troubleshooting", "loyalty", "miles"],
+    "metadata": {}
+  }
+]

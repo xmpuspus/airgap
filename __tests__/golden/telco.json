@@ -1,0 +1,18 @@
+{
+  "vertical": "telco",
+  "description": "Golden Q&A pairs for the default ACME Telecom config. Each case represents a happy-path query whose answer must contain the listed terms when run through the search-only pipeline. These are known-good outputs verified against the compiled-in KB; the LLM journey runner uses the same fixtures to score generation quality.",
+  "cases": [
+    {"id": "tel-1", "query": "What is the cheapest prepaid plan", "mustInclude": ["PHP"], "category": "plans"},
+    {"id": "tel-2", "query": "Show me postpaid plans", "mustInclude": ["postpaid"], "category": "plans"},
+    {"id": "tel-3", "query": "How do I activate roaming for Japan", "mustInclude": ["roaming"], "category": "roaming"},
+    {"id": "tel-4", "query": "Where is the nearest store in Manila", "mustInclude": ["Manila"], "category": "store"},
+    {"id": "tel-5", "query": "How do I pay my bill via GCash", "mustInclude": ["GCash"], "category": "payment"},
+    {"id": "tel-6", "query": "What promos are available now", "mustInclude": ["promo"], "category": "promo"},
+    {"id": "tel-7", "query": "How do I check my prepaid balance", "mustInclude": ["*123#"], "category": "faq"},
+    {"id": "tel-8", "query": "How do I activate a new SIM", "mustInclude": ["SIM"], "category": "sim"},
+    {"id": "tel-9", "query": "Why is my internet slow", "mustInclude": ["restart"], "category": "troubleshooting"},
+    {"id": "tel-10", "query": "What is the customer service hotline", "mustInclude": ["211"], "category": "faq"},
+    {"id": "tel-11", "query": "Can I get an eSIM", "mustInclude": ["eSIM"], "category": "sim"},
+    {"id": "tel-12", "query": "Compare Plan 599 and Plan 999", "mustInclude": ["Plan"], "category": "plans"}
+  ]
+}

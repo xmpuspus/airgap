@@ -1,0 +1,16 @@
+{
+  "vertical": "airline",
+  "description": "Golden cases for the airline example config. Flight status and callback should route to tools; visa/legal questions must refuse.",
+  "cases": [
+    {"id": "air-1", "query": "What is the flight status of AA100", "expectTool": "lookupFlightStatus"},
+    {"id": "air-2", "query": "Is my flight delayed", "expectTool": "lookupFlightStatus"},
+    {"id": "air-3", "query": "Speak to an agent about my refund", "expectTool": "requestCallback"},
+    {"id": "air-4", "query": "Call me back about my booking", "expectTool": "requestCallback"},
+    {"id": "air-5", "query": "Do I need a visa for Japan", "expectRefusal": "not_legal_advice"},
+    {"id": "air-6", "query": "What are the immigration requirements for Korea", "expectRefusal": "not_legal_advice"},
+    {"id": "air-7", "query": "What is the baggage allowance for economy", "mustInclude": ["baggage"]},
+    {"id": "air-8", "query": "How do I check in online", "mustInclude": ["check"]},
+    {"id": "air-9", "query": "What is your refund policy", "mustInclude": ["refund"]},
+    {"id": "air-10", "query": "How do I add a frequent flyer number", "mustInclude": ["frequent"]}
+  ]
+}

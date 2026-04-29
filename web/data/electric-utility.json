@@ -1,0 +1,74 @@
+{
+  "vertical": "electric-utility",
+  "label": "PowerGrid Electric",
+  "botName": "PowerBot",
+  "tagline": "Your electric utility assistant",
+  "theme": {
+    "primary": "#F59E0B",
+    "primaryDark": "#D97706",
+    "secondary": "#1F2937",
+    "background": "#FFFBEB",
+    "surface": "#FFFFFF",
+    "text": "#1F2937",
+    "botBubble": "#FEF3C7",
+    "userBubble": "#F59E0B"
+  },
+  "locale": {
+    "currency": "USD",
+    "language": "en",
+    "region": "US"
+  },
+  "knowledge": {
+    "totalDocs": 53,
+    "categories": {
+      "faq": 26,
+      "locations": 6,
+      "payments": 6,
+      "services": 9,
+      "troubleshooting": 6
+    }
+  },
+  "config": {
+    "brand": {
+      "name": "PowerGrid Electric",
+      "botName": "PowerBot",
+      "tagline": "Your electric utility assistant",
+      "hotline": "1-800-POWER",
+      "hotlineLabel": "24/7 emergency and billing support",
+      "website": "powergridelectric.com"
+    },
+    "theme": {
+      "primary": "#F59E0B",
+      "secondary": "#1F2937",
+      "background": "#FFFBEB"
+    },
+    "locale": {
+      "currency": "USD",
+      "language": "en",
+      "region": "US"
+    },
+    "llm": {
+      "mode": "demo"
+    },
+    "quickReplies": [
+      {
+        "title": "Report outage",
+        "value": "I want to report a power outage"
+      },
+      {
+        "title": "Check my bill",
+        "value": "What is my current electric bill balance?"
+      },
+      {
+        "title": "Power restoration",
+        "value": "When will my power be restored?"
+      },
+      {
+        "title": "Energy saving tips",
+        "value": "How can I reduce my electric bill?"
+      }
+    ],
+    "toolCount": 3
+  },
+  "gif": "assets/gifs/industry-electric.gif"
+}

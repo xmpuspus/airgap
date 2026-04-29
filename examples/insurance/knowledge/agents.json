@@ -1,0 +1,105 @@
+[
+  {
+    "id": "agent-hartford-main",
+    "category": "agent",
+    "title": "ShieldGuard Hartford Main Office",
+    "content": "ShieldGuard corporate office and full-service agency in Hartford, Connecticut. This is the flagship location with specialists in all lines of insurance: auto, homeowners, renters, life, health supplemental, umbrella, commercial, and motorcycle. The office also handles complex claims that require in-person support and hosts monthly free insurance education seminars open to the public. Walk-ins welcome during business hours. Ample free parking available.",
+    "keywords": ["Hartford", "main office", "corporate office", "headquarters", "Connecticut"],
+    "tags": ["agent", "office"],
+    "metadata": {
+      "city": "Hartford",
+      "address": "750 Main Street, Suite 200, Hartford, CT 06103",
+      "hours": "Mon-Fri 8:00 AM - 6:00 PM, Sat 9:00 AM - 1:00 PM",
+      "phone": "(860) 555-7500",
+      "agents": ["Karen Mitchell, CPCU - Personal Lines Manager", "David Torres - Commercial Lines Specialist"],
+      "specialties": ["All lines", "Commercial insurance", "Claims support"],
+      "coordinates": {"lat": 41.7658, "lng": -72.6734}
+    }
+  },
+  {
+    "id": "agent-chicago-loop",
+    "category": "agent",
+    "title": "ShieldGuard Chicago Loop Agency",
+    "content": "ShieldGuard agency office in Chicago's Loop business district, serving the greater Chicago metropolitan area. Specializes in auto, homeowners, and renters insurance for urban customers, as well as condo insurance and umbrella policies. The office is conveniently located one block from the Millennium Park Metra station. On-street metered parking and nearby parking garages available. Bilingual services available in English and Spanish.",
+    "keywords": ["Chicago", "Loop", "downtown Chicago", "Illinois", "metro Chicago"],
+    "tags": ["agent", "office"],
+    "metadata": {
+      "city": "Chicago",
+      "address": "200 S. Michigan Avenue, Suite 1400, Chicago, IL 60604",
+      "hours": "Mon-Fri 8:30 AM - 5:30 PM",
+      "phone": "(312) 555-0200",
+      "agents": ["Maria Santos - Senior Agent", "Robert Kim - Auto & Umbrella Specialist"],
+      "specialties": ["Auto insurance", "Condo insurance", "Renters insurance", "Umbrella policies"],
+      "languages": ["English", "Spanish"],
+      "coordinates": {"lat": 41.8781, "lng": -87.6298}
+    }
+  },
+  {
+    "id": "agent-dallas-north",
+    "category": "agent",
+    "title": "ShieldGuard North Dallas Agency",
+    "content": "ShieldGuard agency in North Dallas serving the Dallas-Fort Worth metroplex. Full-service agency specializing in homeowners insurance (including coverage for Texas-specific risks like hail and windstorm), auto insurance, and commercial auto for local businesses. The office is located in the Preston Hollow shopping area with free parking. Saturday appointments available for customers who cannot visit during the week.",
+    "keywords": ["Dallas", "North Dallas", "DFW", "Texas", "Fort Worth"],
+    "tags": ["agent", "office"],
+    "metadata": {
+      "city": "Dallas",
+      "address": "8350 N. Central Expressway, Suite 220, Dallas, TX 75206",
+      "hours": "Mon-Fri 9:00 AM - 5:30 PM, Sat 10:00 AM - 2:00 PM (by appointment)",
+      "phone": "(214) 555-8350",
+      "agents": ["James Whitfield - Agency Owner", "Lisa Tran - Homeowners Specialist"],
+      "specialties": ["Homeowners insurance", "Hail/windstorm coverage", "Commercial auto"],
+      "coordinates": {"lat": 32.8632, "lng": -96.7703}
+    }
+  },
+  {
+    "id": "agent-atlanta-midtown",
+    "category": "agent",
+    "title": "ShieldGuard Atlanta Midtown Agency",
+    "content": "ShieldGuard agency in Midtown Atlanta, Georgia, serving the Atlanta metro area. Specializes in auto insurance, renters insurance for the large renter population in Midtown, and life insurance planning for young professionals and families. The office is a 5-minute walk from the Midtown MARTA station. The agency frequently partners with local employers to provide group informational sessions on insurance literacy. Free validated parking in the building garage.",
+    "keywords": ["Atlanta", "Midtown Atlanta", "Georgia", "metro Atlanta", "MARTA"],
+    "tags": ["agent", "office"],
+    "metadata": {
+      "city": "Atlanta",
+      "address": "1100 Peachtree Street NE, Suite 450, Atlanta, GA 30309",
+      "hours": "Mon-Fri 8:30 AM - 5:30 PM",
+      "phone": "(404) 555-1100",
+      "agents": ["Sandra Collins - Life Insurance Specialist", "Andre Williams - Auto & Renters Agent"],
+      "specialties": ["Life insurance", "Renters insurance", "Auto insurance", "Young professionals"],
+      "coordinates": {"lat": 33.7872, "lng": -84.3832}
+    }
+  },
+  {
+    "id": "agent-phoenix-scottsdale",
+    "category": "agent",
+    "title": "ShieldGuard Scottsdale Agency",
+    "content": "ShieldGuard agency in Scottsdale, Arizona, serving the greater Phoenix metropolitan area. Specializes in homeowners insurance for desert climates (including monsoon and dust storm coverage), auto insurance, and motorcycle insurance for the year-round riding community. The office is located in the Scottsdale Airpark business district with free lot parking. Extended hours on Wednesdays until 7 PM for after-work appointments.",
+    "keywords": ["Scottsdale", "Phoenix", "Arizona", "desert", "AZ"],
+    "tags": ["agent", "office"],
+    "metadata": {
+      "city": "Scottsdale",
+      "address": "7702 E. Doubletree Ranch Road, Suite 110, Scottsdale, AZ 85258",
+      "hours": "Mon-Tue, Thu-Fri 9:00 AM - 5:00 PM, Wed 9:00 AM - 7:00 PM",
+      "phone": "(480) 555-7702",
+      "agents": ["Patricia Alvarez - Agency Owner", "Connor Walsh - Motorcycle & Auto Specialist"],
+      "specialties": ["Homeowners insurance", "Desert climate coverage", "Motorcycle insurance"],
+      "coordinates": {"lat": 33.5540, "lng": -111.8984}
+    }
+  },
+  {
+    "id": "agent-seattle-bellevue",
+    "category": "agent",
+    "title": "ShieldGuard Bellevue Agency",
+    "content": "ShieldGuard agency in downtown Bellevue, Washington, serving the Seattle-Bellevue-Tacoma metro area. Specializes in homeowners insurance (including earthquake endorsements for the Pacific Northwest), auto insurance, umbrella policies for high-net-worth individuals, and commercial insurance for tech companies and small businesses. Located in the Bellevue Place office tower with visitor parking validation. The office serves a large tech industry client base and offers evening consultations by appointment.",
+    "keywords": ["Bellevue", "Seattle", "Washington", "Pacific Northwest", "Eastside"],
+    "tags": ["agent", "office"],
+    "metadata": {
+      "city": "Bellevue",
+      "address": "10500 NE 8th Street, Suite 1850, Bellevue, WA 98004",
+      "hours": "Mon-Fri 8:30 AM - 5:30 PM, evenings by appointment",
+      "phone": "(425) 555-1050",
+      "agents": ["Michael Reeves, CPCU - Commercial Lines Manager", "Jennifer Park - Personal Lines Agent"],
+      "specialties": ["Earthquake endorsements", "Umbrella policies", "Commercial insurance", "Tech company coverage"],
+      "coordinates": {"lat": 47.6175, "lng": -122.2007}
+    }
+  }
+]
