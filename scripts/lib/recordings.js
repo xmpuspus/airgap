@@ -122,7 +122,9 @@ function validateRecording(recording, measured) {
   const probe = measured.probe ?? {};
   if (!Number.isInteger(probe.width) || !Number.isInteger(probe.height))
     fail('recording_dimensions_invalid');
-  if (recording.kind !== 'joint' && probe.width !== 360) fail('recording_width_invalid');
+  if (['platform', 'industry'].includes(recording.kind) && probe.width !== 360) {
+    fail('recording_width_invalid');
+  }
   if (probe.width !== recording.width || probe.height !== recording.height)
     fail('recording_dimensions_mismatch');
   if (![10, 12].some(fps => closeEnough(probe.fps, fps, 0.15)))

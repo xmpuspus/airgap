@@ -169,4 +169,28 @@ describe('recording manifest validation', () => {
       }),
     ).not.toThrow();
   });
+
+  test('accepts the wider combined README recording', () => {
+    expect(() =>
+      validateRecording(
+        record({
+          id: 'readme',
+          kind: 'readme',
+          output: 'demo/airgap-readme-side-by-side.gif',
+          source: `tmp/recordings/${SHA}/readme-side-by-side.mp4`,
+          contactSheet: `tmp/recordings/${SHA}/readme-side-by-side-contact.png`,
+          platform: 'joint',
+          os: 'Android 15 and iOS 26.4',
+          device: 'Android Emulator and iPhone 17 Pro',
+          width: 572,
+          height: 622,
+        }),
+        {
+          actualBytes: 1024,
+          header: Buffer.from('GIF89a'),
+          probe: {width: 572, height: 622, fps: 10, durationSeconds: 24},
+        },
+      ),
+    ).not.toThrow();
+  });
 });
