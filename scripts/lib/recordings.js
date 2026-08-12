@@ -1,5 +1,6 @@
 const path = require('node:path');
 const {Buffer} = require('node:buffer');
+const fs = require('node:fs');
 
 const MIB = 1024 * 1024;
 
@@ -77,6 +78,15 @@ function readmeLayoutFilter({panelWidth, panelHeight, gap}) {
     `[1:v]scale=${panelWidth}:-2:flags=lanczos,pad=${panelWidth}:${panelHeight}:0:(oh-ih)/2:color=0x071727[b]`,
     `[a][b]xstack=inputs=2:layout=0_0|${secondPanelX}_0:fill=0x071727[v]`,
   ].join(';');
+}
+
+function replaceKnowledgeData(source, target) {
+  for (const name of fs.readdirSync(target)) {
+    if (name.endsWith('.json')) fs.rmSync(path.join(target, name));
+  }
+  for (const name of fs.readdirSync(source)) {
+    if (name.endsWith('.json')) fs.copyFileSync(path.join(source, name), path.join(target, name));
+  }
 }
 
 function closeEnough(actual, expected, tolerance) {
@@ -164,6 +174,7 @@ module.exports = {
   gifPaletteFilter,
   maestroRecordingPath,
   readmeLayoutFilter,
+  replaceKnowledgeData,
   sizeLimitFor,
   validateManifest,
   validateRecording,

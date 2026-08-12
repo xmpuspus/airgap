@@ -1,6 +1,7 @@
 const path = require('node:path');
 const {Buffer} = require('node:buffer');
 const fs = require('node:fs');
+const os = require('node:os');
 
 const {
   README_GIF_OPTIONS,
@@ -10,6 +11,7 @@ const {
   maestroRecordingPath,
   readmeLayoutFilter,
   sizeLimitFor,
+  replaceKnowledgeData,
   validateManifest,
   validateRecording,
 } = require('../../scripts/lib/recordings.js');
@@ -82,6 +84,26 @@ describe('recording manifest validation', () => {
       colors: 40,
       ditherScale: 5,
     });
+  });
+
+  test('replaces knowledge JSON without deleting module code', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'airgap-recording-'));
+    const source = path.join(root, 'source');
+    const target = path.join(root, 'target');
+    fs.mkdirSync(source);
+    fs.mkdirSync(target);
+    fs.writeFileSync(path.join(source, 'industry.json'), '[]');
+    fs.writeFileSync(path.join(target, 'default.json'), '[]');
+    fs.writeFileSync(path.join(target, 'index.ts'), 'export const ready = true;');
+
+    try {
+      replaceKnowledgeData(source, target);
+
+      expect(fs.readdirSync(target).sort()).toEqual(['index.ts', 'industry.json']);
+      expect(fs.readFileSync(path.join(target, 'index.ts'), 'utf8')).toContain('ready');
+    } finally {
+      fs.rmSync(root, {recursive: true, force: true});
+    }
   });
 
   test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(

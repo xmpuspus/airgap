@@ -3,7 +3,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import recordingHelpers from './lib/recordings.js';
 import {currentCommit, evidenceDirectory, run} from './recording-utils.mjs';
+
+const {replaceKnowledgeData} = recordingHelpers;
 
 const INDUSTRIES = [
   ['airline', 'airline'],
@@ -60,7 +63,7 @@ function main() {
       const configSource = path.join(example, 'airgap.config.json');
       const config = JSON.parse(fs.readFileSync(configSource, 'utf8'));
       fs.copyFileSync(configSource, configPath);
-      replaceDirectory(path.join(example, 'knowledge'), knowledgePath);
+      replaceKnowledgeData(path.join(example, 'knowledge'), knowledgePath);
       run('node', ['scripts/generate-manifest.js'], {cwd: root});
       run(
         'node',
