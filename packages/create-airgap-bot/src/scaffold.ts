@@ -36,9 +36,15 @@ async function copyDir(src: string, dest: string): Promise<void> {
       entry.name === '.git' ||
       entry.name === 'dist' ||
       entry.name === 'build' ||
+      entry.name === 'coverage' ||
       entry.name === '.gradle' ||
+      entry.name === '.cxx' ||
+      entry.name === '.kotlin' ||
       entry.name === 'Pods' ||
-      entry.name === '.claude'
+      entry.name === '.claude' ||
+      entry.name === '.worktrees' ||
+      entry.name === 'tmp' ||
+      entry.name === '.DS_Store'
     ) {
       continue;
     }
@@ -55,6 +61,28 @@ async function copyDir(src: string, dest: string): Promise<void> {
   }
 }
 
+function toCamelCase(value: string): string {
+  return value.replace(/[-_](.)/g, (_, character: string) => character.toUpperCase());
+}
+
+async function writeKnowledgeManifest(knowledgeDir: string): Promise<void> {
+  const files = (await fsp.readdir(knowledgeDir)).filter(name => name.endsWith('.json')).sort();
+  const names = files.map(name => toCamelCase(path.basename(name, '.json')));
+  const imports = files.map((name, index) => `import ${names[index]} from './${name}';`).join('\n');
+  const exports = names.map(name => `  ${name},`).join('\n');
+  const content = `/**
+ * Knowledge Base Manifest (auto-generated)
+ * Run: node scripts/generate-manifest.js
+ */
+${imports}
+
+export const knowledgeFiles = {
+${exports}
+};
+`;
+  await fsp.writeFile(path.join(knowledgeDir, 'manifest.ts'), content);
+}
+
 async function applyTemplate(targetDir: string, template: Template): Promise<void> {
   // Replace the default airgap.config.json with the chosen template's config.
   const cfgSrc = path.join(targetDir, 'examples', template, 'airgap.config.json');
@@ -64,14 +92,17 @@ async function applyTemplate(targetDir: string, template: Template): Promise<voi
   }
   await fsp.copyFile(cfgSrc, cfgDest);
 
-  // Replace src/knowledge/ with the template's knowledge/.
+  // Replace compiled knowledge data while preserving its TypeScript module.
   const knSrc = path.join(targetDir, 'examples', template, 'knowledge');
   const knDest = path.join(targetDir, 'src', 'knowledge');
   if (!fs.existsSync(knSrc)) {
     throw new Error(`Template knowledge dir missing: ${knSrc}`);
   }
-  await fsp.rm(knDest, {recursive: true, force: true});
+  for (const name of await fsp.readdir(knDest)) {
+    if (name.endsWith('.json')) await fsp.rm(path.join(knDest, name));
+  }
   await copyDir(knSrc, knDest);
+  await writeKnowledgeManifest(knDest);
 }
 
 export async function scaffold(opts: ScaffoldOptions): Promise<void> {

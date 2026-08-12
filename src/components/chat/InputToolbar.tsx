@@ -1,7 +1,16 @@
 import React, {useCallback, useState} from 'react';
-import {View, Text, TextInput, Pressable, StyleSheet, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  StyleSheet,
+  Platform,
+  useWindowDimensions,
+} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {COLORS, SPACING, RADIUS, TYPOGRAPHY} from '../../constants/theme';
+import {getInputToolbarLayout} from '../../utils/responsiveLayout';
 
 interface InputToolbarProps {
   onSend: (text: string) => void;
@@ -11,6 +20,8 @@ export function InputToolbar({onSend}: InputToolbarProps) {
   const [text, setText] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const insets = useSafeAreaInsets();
+  const {fontScale} = useWindowDimensions();
+  const stacked = getInputToolbarLayout(fontScale) === 'stack';
   const canSend = text.trim().length > 0;
 
   const handleSend = useCallback(() => {
@@ -21,9 +32,14 @@ export function InputToolbar({onSend}: InputToolbarProps) {
   }, [onSend, text]);
 
   return (
-    <View style={[styles.container, {paddingBottom: Math.max(insets.bottom, SPACING.sm)}]}>
+    <View
+      style={[
+        styles.container,
+        stacked && styles.containerStacked,
+        {paddingBottom: Math.max(insets.bottom, SPACING.sm)},
+      ]}>
       <TextInput
-        style={[styles.input, isFocused && styles.inputFocused]}
+        style={[styles.input, stacked && styles.inputStacked, isFocused && styles.inputFocused]}
         value={text}
         onChangeText={setText}
         onFocus={() => setIsFocused(true)}
@@ -35,7 +51,7 @@ export function InputToolbar({onSend}: InputToolbarProps) {
         accessibilityLabel="Support question"
       />
       <Pressable
-        style={[styles.send, !canSend && styles.sendDisabled]}
+        style={[styles.send, stacked && styles.sendStacked, !canSend && styles.sendDisabled]}
         onPress={handleSend}
         disabled={!canSend}
         accessibilityLabel="Send message"
@@ -58,6 +74,7 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: COLORS.border,
   },
+  containerStacked: {flexDirection: 'column', alignItems: 'stretch'},
   input: {
     flex: 1,
     minHeight: 48,
@@ -72,6 +89,7 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.body,
     color: '#0B1F33',
   },
+  inputStacked: {flex: 0, width: '100%'},
   inputFocused: {borderColor: '#0E7490', backgroundColor: '#FFFFFF'},
   send: {
     minWidth: 68,
@@ -82,6 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0E7490',
     paddingHorizontal: SPACING.md,
   },
+  sendStacked: {width: '100%'},
   sendDisabled: {backgroundColor: '#94A3B8'},
   sendText: {...TYPOGRAPHY.caption, color: '#FFFFFF', fontWeight: '800'},
 });

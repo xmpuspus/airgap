@@ -87,6 +87,12 @@ describe('recording manifest validation', () => {
     });
   });
 
+  test('excludes generated release evidence from type checks', () => {
+    const config = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'tsconfig.json'), 'utf8'));
+
+    expect(config.exclude).toContain('tmp');
+  });
+
   test('replaces knowledge JSON without deleting module code', () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'airgap-recording-'));
     const source = path.join(root, 'source');

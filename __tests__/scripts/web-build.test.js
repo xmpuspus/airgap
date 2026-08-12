@@ -113,6 +113,14 @@ describe('web/data/build.mjs', () => {
     expect(css).toMatch(/@media\s*\(max-width:\s*320px\)/);
   });
 
+  test('template cards can shrink to the mobile viewport', () => {
+    const css = fs.readFileSync(STYLES, 'utf8');
+
+    expect(css).toMatch(/\.template-grid\s*>\s*\*\s*{[^}]*min-width:\s*0/s);
+    expect(css).toMatch(/\.template-picker\s*>\s*\*\s*{[^}]*min-width:\s*0/s);
+    expect(css).toMatch(/\.template-picker\s+code\s*{[^}]*overflow-wrap:\s*anywhere/s);
+  });
+
   test('README local links resolve inside the repository', () => {
     const readme = fs.readFileSync(README, 'utf8');
     const targets = [...readme.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)]

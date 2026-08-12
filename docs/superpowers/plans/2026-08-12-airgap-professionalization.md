@@ -621,27 +621,27 @@ Run. `npm test -- --runInBand __tests__/scripts/validate-recordings.test.js`
 Use 10 or 12 frames per second, 360-pixel width, Lanczos scaling, palette
 generation, and exact start and end waits. Reset app data before each capture.
 
-- [ ] **Step 4. Record the final Android and iOS flows**
+- [x] **Step 4. Record the final Android and iOS flows**
 
 Show operating state, answer sources, action receipt, outbox, and privacy controls.
 Use no personal data, developer menu, red box, or staged result text.
 
-- [ ] **Step 5. Record all seven Android industry flows**
+- [x] **Step 5. Record all seven Android industry flows**
 
 Build each config, reset app data, follow one fixed quick-reply path, restore the
 default config, and check the worktree before continuing.
 
-- [ ] **Step 6. Build the new side-by-side README GIF**
+- [x] **Step 6. Build the new side-by-side README GIF**
 
 Use the new path `demo/airgap-readme-side-by-side.gif`. Do not read, change, or
 overwrite the untracked file in the main checkout.
 
-- [ ] **Step 7. Create and inspect contact sheets and complete loops**
+- [x] **Step 7. Create and inspect contact sheets and complete loops**
 
 Check both platform GIFs, the joint GIF, and seven industry GIFs. Record duration,
 dimensions, frame rate, byte size, commit, device, OS, mode, config, and date.
 
-- [ ] **Step 8. Run recording validation**
+- [x] **Step 8. Run recording validation**
 
 Run. `npm run recordings:validate`
 
@@ -657,7 +657,7 @@ and joint 8 MB.
 - Create `tmp/release/<commit>/mobile/`
 - Change release facts only when fresh checks change them.
 
-- [ ] **Step 1. Run every deterministic check from a clean dependency install**
+- [x] **Step 1. Run every deterministic check from a clean dependency install**
 
 Run. `npm ci`
 
@@ -681,18 +681,18 @@ Run. `npm run security:direct`
 
 Run. `npm run recordings:validate`
 
-- [ ] **Step 2. Build Android and iOS**
+- [x] **Step 2. Build Android and iOS**
 
 Run. `cd android && ./gradlew assembleDebug`
 
 Run. `xcodebuild -workspace ios/Airgap.xcworkspace -scheme Airgap -sdk iphonesimulator -configuration Debug -derivedDataPath tmp/DerivedData build`
 
-- [ ] **Step 3. Capture app and site screenshots**
+- [x] **Step 3. Capture app and site screenshots**
 
 Capture Android and iOS at default and large text. Capture the site at 1440,
 768, 390, and 320 CSS pixels. Store screenshots under the release evidence path.
 
-- [ ] **Step 4. Inspect the full diff and run secret checks**
+- [x] **Step 4. Inspect the full diff and run secret checks**
 
 Run. `git diff --check`
 
@@ -702,12 +702,12 @@ Run. `git diff --name-only`
 
 Run the repository security scan before staging or a commit.
 
-- [ ] **Step 5. Write the evidence report**
+- [x] **Step 5. Write the evidence report**
 
 Record each command, exit code, test count, artifact path, byte size, screenshot,
 recording result, open upstream advisory, and claim change.
 
-- [ ] **Step 6. Stop before publication**
+- [x] **Step 6. Stop before publication**
 
 Use the finishing-a-development-branch workflow. Ask Xavier to choose local
 merge, pull request, or branch preservation. Do not publish in this task.

@@ -458,7 +458,12 @@ h3 {
   font-weight: 750;
 }
 
+.template-picker > * {
+  min-width: 0;
+}
+
 .template-picker select {
+  width: 100%;
   min-height: 48px;
   padding: 10px 42px 10px 13px;
   border: 1px solid #9aabb9;
@@ -474,11 +479,19 @@ h3 {
   font-size: 13px;
 }
 
+.template-picker code {
+  overflow-wrap: anywhere;
+}
+
 .template-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.7fr) minmax(0, 1.1fr);
   gap: 20px;
   align-items: start;
+}
+
+.template-grid > * {
+  min-width: 0;
 }
 
 .data-card,
@@ -493,7 +506,7 @@ h3 {
 
 .brand-meta {
   display: grid;
-  grid-template-columns: minmax(100px, 38%) 1fr;
+  grid-template-columns: minmax(100px, 38%) minmax(0, 1fr);
   gap: 9px 15px;
   margin: 0 0 26px;
 }
@@ -504,9 +517,11 @@ h3 {
 }
 
 .brand-meta dd {
+  min-width: 0;
   margin: 0;
   font-size: 14px;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .swatch-list {

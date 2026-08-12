@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, useWindowDimensions} from 'react-native';
 import type {Mode} from '../../services/llmRouter';
 import {COLORS, SPACING, RADIUS, TYPOGRAPHY} from '../../constants/theme';
+import {getOperatingStateLayout} from '../../utils/responsiveLayout';
 
 type Tone = 'neutral' | 'ready' | 'warning';
 
@@ -47,12 +48,18 @@ export function getOperatingStateView(input: OperatingStateInput): {
 
 export function OperatingState(props: OperatingStateInput) {
   const view = getOperatingStateView(props);
+  const {fontScale} = useWindowDimensions();
+  const stacked = getOperatingStateLayout(fontScale) === 'stack';
   return (
-    <View style={styles.container} accessibilityRole="summary">
-      <View style={[styles.badge, styles[view.tone]]}>
+    <View
+      style={[styles.container, stacked && styles.containerStacked]}
+      accessibilityRole="summary">
+      <View style={[styles.badge, stacked && styles.badgeStacked, styles[view.tone]]}>
         <Text style={styles.badgeText}>{view.label.toUpperCase()}</Text>
       </View>
-      <Text style={styles.detail} numberOfLines={2}>
+      <Text
+        style={[styles.detail, stacked && styles.detailStacked]}
+        numberOfLines={stacked ? undefined : 2}>
         {view.detail}
       </Text>
     </View>
@@ -70,12 +77,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.border,
   },
+  containerStacked: {alignItems: 'flex-start', flexDirection: 'column'},
   badge: {
     borderRadius: RADIUS.xs,
     paddingHorizontal: SPACING.sm,
     paddingVertical: SPACING.xs,
     marginRight: SPACING.md,
   },
+  badgeStacked: {marginRight: 0, marginBottom: SPACING.xs},
   neutral: {backgroundColor: '#0B1F33'},
   ready: {backgroundColor: '#0E7490'},
   warning: {backgroundColor: '#C2410C'},
@@ -90,4 +99,5 @@ const styles = StyleSheet.create({
     color: COLORS.textSecondary,
     flex: 1,
   },
+  detailStacked: {flex: 0, width: '100%'},
 });

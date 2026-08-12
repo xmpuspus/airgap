@@ -1,77 +1,74 @@
 # create-airgap-bot
 
-Scaffold a config-driven, on-device customer support bot from one of the seven Airgap industry templates.
+Create a React Native customer support app from one of Airgap's seven industry templates. The package includes the app source, native projects, configuration schema, and knowledge files. Scaffolding does not fetch source code from GitHub.
 
-`create-airgap-bot` is a thin wrapper that fetches the [Airgap](https://github.com/xmpuspus/airgap) template, drops in the industry config and knowledge base of your choice, renames the React Native target to the bot name you pass, and leaves you with a buildable app.
+## Run the CLI with npx
 
-## Install
+You do not need a global install.
 
-The package is intended to be run via `npx`; no global install is required.
-
-```
+```sh
 npx create-airgap-bot <bot-name> --template <industry>
 ```
 
-Run with no arguments for an interactive prompt.
+Run the command without arguments to use the interactive prompts.
 
-## Usage
-
-```
+```sh
 npx create-airgap-bot acme-support --template telco
 cd acme-support
 npm install
-npm run android   # or npm run ios
+npm run android
 ```
 
-The scaffolder:
+Use `npm run ios` for iOS.
 
-1. Downloads the Airgap source tarball from the `main` branch.
-2. Copies the tree into `<bot-name>/`.
-3. Replaces `airgap.config.json` and `src/knowledge/` with the chosen template.
-4. Renames the React Native target across `package.json`, `app.json`, the Android Gradle module, the iOS workspace and `xcodeproj`, and the `Info.plist` display name.
-5. Writes a `.airgap-scaffold.json` marker recording the bot name, generated PascalCase target, and Android package id.
+The CLI does five operations.
 
-## Supported templates
+1. Copies the app source included in the npm package.
+2. Applies the industry configuration and knowledge files that you chose.
+3. Renames the React Native, Android, and iOS targets.
+4. Rebuilds the TypeScript knowledge manifest.
+5. Writes `.airgap-scaffold.json` with the derived app names.
 
-| Template | Slug | Audience |
-|----------|------|----------|
-| Airline | `airline` | Reservations, baggage, status |
-| Banking | `banking` | Retail accounts, cards, transfers |
-| Electric utility | `electric-utility` | Outages, billing, meters |
-| Healthcare | `healthcare` | Patient triage, appointments |
-| Insurance | `insurance` | Claims, policies, coverage |
-| Telco | `telco` | Plans, roaming, troubleshooting |
-| Water utility | `water-utility` | Outages, billing, conservation |
+## Seven templates are included
 
-The full schema lives at [`airgap.schema.json`](https://github.com/xmpuspus/airgap/blob/main/airgap.schema.json) in the main repo. After scaffolding, every customization is a single-file edit on `airgap.config.json`.
+| Template         | Slug               | Main use                             |
+| ---------------- | ------------------ | ------------------------------------ |
+| Airline          | `airline`          | Reservations, baggage, flight status |
+| Banking          | `banking`          | Retail accounts, cards, transfers    |
+| Electric utility | `electric-utility` | Outages, billing, meters             |
+| Healthcare       | `healthcare`       | Patient triage, appointments         |
+| Insurance        | `insurance`        | Claims, policies, coverage           |
+| Telco            | `telco`            | Plans, roaming, troubleshooting      |
+| Water utility    | `water-utility`    | Outages, billing, conservation       |
 
-## Options
+The configuration contract is in [`airgap.schema.json`](https://github.com/xmpuspus/airgap/blob/main/airgap.schema.json). Edit `airgap.config.json` in the new project to change its brand, model, remote services, quick replies, and operating mode.
 
-| Flag | Description |
-|------|-------------|
-| `--template <industry>`, `-t` | Pick an industry template up front. Otherwise the CLI prompts. |
-| `--help`, `-h` | Print usage. |
-| `--version`, `-v` | Print package version. |
+## CLI options control the first project
 
-A positional argument is treated as the bot name. The CLI prompts if it is missing or invalid.
+| Flag                          | Result                                        |
+| ----------------------------- | --------------------------------------------- |
+| `--template <industry>`, `-t` | Select an industry template before prompting. |
+| `--help`, `-h`                | Print command help.                           |
+| `--version`, `-v`             | Print the package version.                    |
 
-## Naming
+Pass the bot name as the first argument. Names use kebab case, start with a letter, and contain 2 to 50 lowercase letters, digits, or hyphens.
 
-The bot name must be kebab-case (lowercase letters, digits, hyphens; must start with a letter; 2 to 50 characters). The scaffolder derives:
+For `acme-support`, the CLI sets these values.
 
-- `package.json` `name`: the bot name as-is, e.g. `acme-support`.
-- React Native component name and iOS target: PascalCase, e.g. `AcmeSupport`.
-- Android `applicationId` and `namespace`: `com.<slug>`, where `<slug>` is the lowercase bot name with hyphens removed (e.g. `com.acmesupport`).
+| Target                           | Value             |
+| -------------------------------- | ----------------- |
+| npm package name                 | `acme-support`    |
+| React Native and iOS target name | `AcmeSupport`     |
+| Android application ID           | `com.acmesupport` |
 
-## Known limitations
+## Store releases need your signing identity
 
-- Native signing keys are not regenerated. The scaffolder ships the upstream debug keystore. Generate your own release keystore (`keytool -genkeypair`) and update `android/app/build.gradle` before publishing to a store.
-- iOS provisioning profiles, App Store Connect bundle ids, and team ids are unchanged. Open the new workspace in Xcode and assign your team and a bundle id you own before archiving.
-- Push notification entitlements, deep link schemes, and in-app purchase configurations are not migrated. Add them as needed.
-- The download requires network access. For air-gapped scaffolding, vendor the tarball locally and pass `sourceDir` via the programmatic API in `scaffold.ts`.
-- Knowledge base imports beyond the chosen template are out of scope. Use `npm run kb:import` from the scaffolded project.
+- Android includes its normal debug keystore for local development. Supply `AIRGAP_RELEASE_STORE_FILE`, `AIRGAP_RELEASE_KEY_ALIAS`, `AIRGAP_RELEASE_STORE_PASSWORD`, and `AIRGAP_RELEASE_KEY_PASSWORD` when you make a signed release.
+- In Xcode, assign your Apple team and an App Store bundle identifier before you archive the app.
+- Add any project-specific push notification, deep link, or payment entitlements.
+- The CLI applies one bundled knowledge set. Import more documents with `npm run kb:import` in the new project.
 
-## Programmatic use
+## Code can call the scaffolder directly
 
 ```ts
 import {scaffold} from 'create-airgap-bot/dist/scaffold';
@@ -79,23 +76,20 @@ import {scaffold} from 'create-airgap-bot/dist/scaffold';
 await scaffold({
   botName: 'acme-support',
   template: 'telco',
-  targetDir: '/abs/path/acme-support',
+  targetDir: '/absolute/path/acme-support',
 });
 ```
 
-## Development
+Tests and internal tools can pass `sourceDir` to copy a local Airgap checkout instead of the packaged template.
 
-```
-npm install
-npx tsc --noEmit
-npm test
+## Package checks run from the Airgap repository
+
+```sh
+npm ci
+npm run cli:pack:test
 ```
 
-The conflict-check helper verifies the package name on npm and a GitHub repo namespace before publish.
-
-```
-npm run conflict-check
-```
+The pack check builds the template, scaffolds projects from both package and local sources, and inspects the npm archive. Run `npm run conflict-check` before publication to check the package and repository names on their public services.
 
 ## License
 

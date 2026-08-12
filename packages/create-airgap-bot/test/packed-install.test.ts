@@ -23,6 +23,20 @@ describe('packaged template', () => {
         await fsp.readFile(path.join(targetDir, 'airgap.config.json'), 'utf8'),
       ) as {brand: {name: string}};
       expect(config.brand.name).toBe('AquaFlow Water');
+      await expect(
+        fsp.access(path.join(targetDir, 'src', 'knowledge', 'index.ts')),
+      ).resolves.toBeUndefined();
+      await expect(
+        fsp.access(path.join(targetDir, 'src', 'knowledge', 'plans.json')),
+      ).rejects.toThrow();
+      const manifest = await fsp.readFile(
+        path.join(targetDir, 'src', 'knowledge', 'manifest.ts'),
+        'utf8',
+      );
+      expect(manifest).toContain("import services from './services.json';");
+      expect(manifest).not.toContain("'./plans.json'");
+      await expect(fsp.access(path.join(targetDir, 'android', 'app', '.cxx'))).rejects.toThrow();
+      await expect(fsp.access(path.join(targetDir, 'android', 'app', 'build'))).rejects.toThrow();
     } finally {
       global.fetch = originalFetch;
       await fsp.rm(targetRoot, {recursive: true, force: true});

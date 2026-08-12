@@ -1,11 +1,26 @@
 import {cp, mkdir, readFile, rm, writeFile} from 'node:fs/promises';
-import {dirname, join, resolve} from 'node:path';
+import {dirname, join, relative, resolve, sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const packageRoot = resolve(scriptDir, '..');
 const repositoryRoot = resolve(scriptDir, '../../..');
 const templateRoot = join(packageRoot, 'template');
+const excludedSegments = new Set([
+  'node_modules',
+  'build',
+  'Pods',
+  '.gradle',
+  '.cxx',
+  '.kotlin',
+  'coverage',
+  'tmp',
+]);
+
+function shouldCopy(source) {
+  const segments = relative(repositoryRoot, source).split(sep);
+  return !segments.some(segment => excludedSegments.has(segment) || segment === '.DS_Store');
+}
 
 const directories = ['android', 'assets', 'examples', 'ios', 'scripts', 'src'];
 const files = [
@@ -32,11 +47,7 @@ await mkdir(templateRoot, {recursive: true});
 for (const directory of directories) {
   await cp(join(repositoryRoot, directory), join(templateRoot, directory), {
     recursive: true,
-    filter: source =>
-      !source.includes('/node_modules/') &&
-      !source.includes('/build/') &&
-      !source.includes('/Pods/') &&
-      !source.includes('/.gradle/'),
+    filter: shouldCopy,
   });
 }
 for (const file of files) {

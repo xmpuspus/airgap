@@ -38,11 +38,16 @@ describe('scaffold', () => {
     expect(fs.existsSync(path.join(targetDir, 'src'))).toBe(true);
     expect(fs.existsSync(path.join(targetDir, 'android'))).toBe(true);
     expect(fs.existsSync(path.join(targetDir, 'ios'))).toBe(true);
+    expect(fs.existsSync(path.join(targetDir, 'tmp'))).toBe(false);
+    expect(fs.existsSync(path.join(targetDir, 'coverage'))).toBe(false);
+    expect(fs.existsSync(path.join(targetDir, 'android', 'app', '.cxx'))).toBe(false);
+    expect(fs.existsSync(path.join(targetDir, 'android', 'app', 'build'))).toBe(false);
+    expect(fs.existsSync(path.join(targetDir, 'ios', 'Pods'))).toBe(false);
 
     // package.json name matches bot name (kebab-case).
-    const pkg = JSON.parse(
-      await fsp.readFile(path.join(targetDir, 'package.json'), 'utf8'),
-    ) as {name: string};
+    const pkg = JSON.parse(await fsp.readFile(path.join(targetDir, 'package.json'), 'utf8')) as {
+      name: string;
+    };
     expect(pkg.name).toBe(botName);
 
     // Android applicationId reflects the new name.
@@ -61,12 +66,11 @@ describe('scaffold', () => {
       await fsp.readFile(path.join(targetDir, 'airgap.config.json'), 'utf8'),
     );
     const templateCfg = JSON.parse(
-      await fsp.readFile(
-        path.join(REPO_ROOT, 'examples', 'telco', 'airgap.config.json'),
-        'utf8',
-      ),
+      await fsp.readFile(path.join(REPO_ROOT, 'examples', 'telco', 'airgap.config.json'), 'utf8'),
     );
     expect(scaffolded).toEqual(templateCfg);
+    expect(fs.existsSync(path.join(targetDir, 'src', 'knowledge', 'index.ts'))).toBe(true);
+    expect(fs.existsSync(path.join(targetDir, 'src', 'knowledge', 'plans.json'))).toBe(true);
 
     // Java/Kotlin sources moved to the new package directory.
     const newJavaDir = path.join(
@@ -93,18 +97,17 @@ describe('scaffold', () => {
     expect(fs.existsSync(oldJavaDir)).toBe(false);
 
     // app.json reflects PascalCase display name.
-    const appJson = JSON.parse(
-      await fsp.readFile(path.join(targetDir, 'app.json'), 'utf8'),
-    ) as {name: string; displayName: string};
+    const appJson = JSON.parse(await fsp.readFile(path.join(targetDir, 'app.json'), 'utf8')) as {
+      name: string;
+      displayName: string;
+    };
     expect(appJson.name).toBe(deriveNames(botName).pascalName);
     expect(appJson.displayName).toBe(deriveNames(botName).pascalName);
 
     // iOS directories renamed.
     expect(fs.existsSync(path.join(targetDir, 'ios', deriveNames(botName).pascalName))).toBe(true);
     expect(
-      fs.existsSync(
-        path.join(targetDir, 'ios', `${deriveNames(botName).pascalName}.xcodeproj`),
-      ),
+      fs.existsSync(path.join(targetDir, 'ios', `${deriveNames(botName).pascalName}.xcodeproj`)),
     ).toBe(true);
     expect(fs.existsSync(path.join(targetDir, 'ios', 'Airgap'))).toBe(false);
 

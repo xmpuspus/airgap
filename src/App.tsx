@@ -1,7 +1,7 @@
 // Airgap — https://github.com/xmpuspus/airgap
 // Copyright 2026 Xavier Puspus. MIT license.
 import React, {useEffect, useState} from 'react';
-import {TouchableOpacity, Text, View, Image, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, View, Image, StyleSheet, useWindowDimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -22,26 +22,39 @@ import SettingsScreen from './screens/SettingsScreen';
 import OutboxScreen from './screens/OutboxScreen';
 import {StalenessChip} from './components/common/StalenessChip';
 import {getSecureStore, initializeSecureStorage} from './services/secureStorage';
+import {getHeaderLayout} from './utils/responsiveLayout';
 
 const Stack = createNativeStackNavigator();
 
 function HeaderTitle() {
+  const {width, fontScale} = useWindowDimensions();
+  const compact = getHeaderLayout(width, fontScale) === 'compact';
+
   return (
-    <View style={headerStyles.titleRow}>
-      <View style={headerStyles.avatarRing}>
-        <Image
-          source={require('../assets/images/airgap-avatar.png')}
-          style={headerStyles.avatarImage}
-          resizeMode="cover"
-        />
-      </View>
-      <View>
-        <Text style={headerStyles.botName}>{brand.botName}</Text>
-        <View style={headerStyles.subRow}>
-          <Text style={headerStyles.brandLabel}>{brand.name}</Text>
-          <View style={headerStyles.subDivider} />
-          <StalenessChip />
+    <View style={[headerStyles.titleRow, compact && headerStyles.titleRowCompact]}>
+      {!compact && (
+        <View style={headerStyles.avatarRing}>
+          <Image
+            source={require('../assets/images/airgap-avatar.png')}
+            style={headerStyles.avatarImage}
+            resizeMode="cover"
+          />
         </View>
+      )}
+      <View style={headerStyles.titleCopy}>
+        <Text
+          style={headerStyles.botName}
+          numberOfLines={1}
+          maxFontSizeMultiplier={compact ? 1.4 : undefined}>
+          {brand.botName}
+        </Text>
+        {!compact && (
+          <View style={headerStyles.subRow}>
+            <Text style={headerStyles.brandLabel}>{brand.name}</Text>
+            <View style={headerStyles.subDivider} />
+            <StalenessChip />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -63,14 +76,22 @@ function SettingsButton({onPress}: {onPress: () => void}) {
 }
 
 function HeaderActions({onOutbox, onSettings}: {onOutbox: () => void; onSettings: () => void}) {
+  const {width, fontScale} = useWindowDimensions();
+  const compact = getHeaderLayout(width, fontScale) === 'compact';
+
   return (
-    <View style={headerStyles.actions}>
+    <View style={[headerStyles.actions, compact && headerStyles.actionsCompact]}>
       <TouchableOpacity
-        style={headerStyles.outboxButton}
+        style={[headerStyles.outboxButton, compact && headerStyles.outboxButtonCompact]}
         onPress={onOutbox}
         accessibilityLabel="Open Outbox"
         accessibilityRole="button">
-        <Text style={headerStyles.outboxText}>Outbox</Text>
+        <Text
+          style={headerStyles.outboxText}
+          numberOfLines={1}
+          maxFontSizeMultiplier={compact ? 1 : undefined}>
+          Outbox
+        </Text>
       </TouchableOpacity>
       <SettingsButton onPress={onSettings} />
     </View>
@@ -210,16 +231,20 @@ const startupStyles = StyleSheet.create({
 
 const headerStyles = StyleSheet.create({
   actions: {flexDirection: 'row', alignItems: 'center', gap: SPACING.xs},
+  actionsCompact: {gap: 0},
   outboxButton: {
     minHeight: 44,
     justifyContent: 'center',
     paddingHorizontal: SPACING.sm,
   },
+  outboxButtonCompact: {paddingHorizontal: SPACING.xs},
   outboxText: {...TYPOGRAPHY.caption, color: '#FFFFFF', fontWeight: '700'},
   titleRow: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  titleRowCompact: {flexShrink: 1},
+  titleCopy: {flexShrink: 1},
   avatarRing: {
     width: 32,
     height: 32,
