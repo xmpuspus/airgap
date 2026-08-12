@@ -89,6 +89,38 @@ function replaceKnowledgeData(source, target) {
   }
 }
 
+function selectIndustryQuickReply(config) {
+  const toolKeywords = (config.tools ?? []).flatMap(tool => tool.keywords ?? []);
+  const actionKeywords = (config.actions ?? [])
+    .filter(action => action.requiresOnline)
+    .flatMap(action => action.keywords ?? []);
+  const informationalPrefixes = [
+    'how do i',
+    'how to',
+    'how can i',
+    'can i',
+    'where do i',
+    'where can i',
+    'what is the',
+    'tell me how',
+    'steps to',
+    'way to',
+    'also check',
+    'also do',
+  ];
+  const reply = (config.quickReplies ?? []).find(candidate => {
+    const value = String(candidate.value ?? '').toLowerCase();
+    const callsTool = toolKeywords.some(keyword => value.includes(String(keyword).toLowerCase()));
+    const informational = informationalPrefixes.some(prefix => value.includes(prefix));
+    const callsLegacyAction =
+      !informational &&
+      actionKeywords.some(keyword => value.includes(String(keyword).toLowerCase()));
+    return !callsTool && !callsLegacyAction;
+  });
+  if (!reply?.title) fail('recording_local_reply_missing');
+  return reply.title;
+}
+
 function closeEnough(actual, expected, tolerance) {
   return Math.abs(actual - expected) <= tolerance;
 }
@@ -175,6 +207,7 @@ module.exports = {
   maestroRecordingPath,
   readmeLayoutFilter,
   replaceKnowledgeData,
+  selectIndustryQuickReply,
   sizeLimitFor,
   validateManifest,
   validateRecording,

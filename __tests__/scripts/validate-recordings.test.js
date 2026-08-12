@@ -12,6 +12,7 @@ const {
   readmeLayoutFilter,
   sizeLimitFor,
   replaceKnowledgeData,
+  selectIndustryQuickReply,
   validateManifest,
   validateRecording,
 } = require('../../scripts/lib/recordings.js');
@@ -104,6 +105,22 @@ describe('recording manifest validation', () => {
     } finally {
       fs.rmSync(root, {recursive: true, force: true});
     }
+  });
+
+  test.each([
+    ['airline', 'Baggage rules'],
+    ['banking', 'Find ATM'],
+    ['electric-utility', 'Power restoration'],
+    ['healthcare', 'Book appointment'],
+    ['insurance', 'File a claim'],
+    ['telco', 'Check plans'],
+    ['water-utility', 'Conservation tips'],
+  ])('selects a local-knowledge reply for %s', (industry, expectedTitle) => {
+    const config = JSON.parse(
+      fs.readFileSync(path.join(process.cwd(), 'examples', industry, 'airgap.config.json'), 'utf8'),
+    );
+
+    expect(selectIndustryQuickReply(config)).toBe(expectedTitle);
   });
 
   test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(

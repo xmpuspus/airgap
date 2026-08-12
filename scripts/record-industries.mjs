@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 import recordingHelpers from './lib/recordings.js';
 import {currentCommit, evidenceDirectory, run} from './recording-utils.mjs';
 
-const {replaceKnowledgeData} = recordingHelpers;
+const {replaceKnowledgeData, selectIndustryQuickReply} = recordingHelpers;
 
 const INDUSTRIES = [
   ['airline', 'airline'],
@@ -86,7 +86,7 @@ function main() {
           '--config',
           `examples/${industry}/airgap.config.json`,
           '--quick-reply',
-          config.quickReplies?.[0]?.title ?? 'Check plans',
+          selectIndustryQuickReply(config),
         ],
         {cwd: root},
       );
