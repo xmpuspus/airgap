@@ -3,9 +3,10 @@ import type {QueuedAction} from '../types/chat';
 import {config, actions, interpolate} from '../config/loader';
 import {getBackendConnector} from './backendConnector';
 import {logger} from './logger';
-import {createKeyedMMKV} from './secretStore';
+import {getSecureStore} from './secureStorage';
+import type {QueueRecord} from './actionQueueTypes';
 
-const storage = createKeyedMMKV('offline-queue');
+const queueStorage = () => getSecureStore('offline-queue');
 const QUEUE_KEY = 'queued_actions';
 
 function mockResponseFor(actionType: string): string {
@@ -14,49 +15,48 @@ function mockResponseFor(actionType: string): string {
   return interpolate(action.mockResponse, config);
 }
 
-async function executeQueuedAction(action: QueuedAction): Promise<string> {
+async function executeQueuedAction(action: QueueRecord): Promise<string> {
   const backend = getBackendConnector();
-  try {
-    switch (action.type) {
-      case 'balance_check': {
-        const r = await backend.checkBalance('current');
-        return `Balance: ${r.balance}. Data: ${r.data}. Active promo: ${r.promos}.`;
-      }
-      case 'plan_change': {
-        const r = await backend.changePlan('current', '');
-        return r.message;
-      }
-      case 'ticket_create': {
-        const r = await backend.createTicket(action.query);
-        return r.message;
-      }
-      case 'outage_check': {
-        const r = await backend.checkOutage();
-        return r.message;
-      }
-      case 'account_action':
-        return 'Account change requires in-store verification. Please visit any store with a valid ID.';
-      case 'tool_call': {
-        const r = await backend.executeAction(action.toolName ?? 'unknown', {
-          query: action.query,
-        });
-        return r.message;
-      }
-      default:
-        return mockResponseFor(action.type);
+  const options = {idempotencyKey: action.id};
+  switch (action.type) {
+    case 'balance_check': {
+      const r = await backend.checkBalance('current', options);
+      return `Balance: ${r.balance}. Data: ${r.data}. Active promo: ${r.promos}.`;
     }
-  } catch (err: any) {
-    logger.warn('offlineQueue', 'backend execution failed, returning fallback copy', {
-      type: action.type,
-      error: err?.message,
-    });
-    return mockResponseFor(action.type);
+    case 'plan_change': {
+      const r = await backend.changePlan('current', '', options);
+      return r.message;
+    }
+    case 'ticket_create': {
+      const r = await backend.createTicket(action.query, options);
+      return r.message;
+    }
+    case 'outage_check': {
+      const r = await backend.checkOutage(undefined, options);
+      return r.message;
+    }
+    case 'account_action':
+      return 'Account change requires in-store verification. Please visit any store with a valid ID.';
+    case 'tool_call': {
+      const r = await backend.executeAction(
+        action.toolName ?? 'unknown',
+        {
+          query: action.query,
+        },
+        options,
+      );
+      return r.message;
+    }
+    default:
+      return mockResponseFor(action.type);
   }
 }
 
 class OfflineQueueService {
+  private listeners = new Set<(records: QueueRecord[]) => void>();
+
   getQueue(): QueuedAction[] {
-    const raw = storage.getString(QUEUE_KEY);
+    const raw = queueStorage().getString(QUEUE_KEY);
     if (!raw) return [];
     try {
       return JSON.parse(raw);
@@ -66,7 +66,8 @@ class OfflineQueueService {
   }
 
   private saveQueue(queue: QueuedAction[]) {
-    storage.set(QUEUE_KEY, JSON.stringify(queue));
+    queueStorage().set(QUEUE_KEY, JSON.stringify(queue));
+    for (const listener of this.listeners) listener(queue.map(record => ({...record})));
   }
 
   enqueue(
@@ -93,18 +94,34 @@ class OfflineQueueService {
 
   async processQueue(): Promise<{action: QueuedAction; response: string}[]> {
     const queue = this.getQueue();
-    const pending = queue.filter(a => a.status === 'pending');
+    const maxRetries = (config as any).queue?.maxRetries ?? 3;
+    const pending = queue.filter(a => a.status === 'pending' && a.retryCount < maxRetries);
     const results: {action: QueuedAction; response: string}[] = [];
 
     for (const action of pending) {
       action.status = 'processing';
       this.saveQueue(queue);
 
-      const response = await executeQueuedAction(action);
-      action.status = 'completed';
-      this.saveQueue(queue);
-
-      results.push({action, response});
+      try {
+        const response = await executeQueuedAction(action);
+        action.status = 'completed';
+        action.completedAt = Date.now();
+        delete action.errorCode;
+        delete action.errorMessage;
+        this.saveQueue(queue);
+        results.push({action, response});
+      } catch (error) {
+        action.status = 'failed';
+        action.retryCount += 1;
+        action.errorCode = 'backend_error';
+        action.errorMessage = error instanceof Error ? error.message : String(error);
+        logger.warn('offlineQueue', 'backend execution failed', {
+          type: action.type,
+          retryCount: action.retryCount,
+        });
+        this.saveQueue(queue);
+        results.push({action, response: ''});
+      }
     }
 
     return results;
@@ -115,12 +132,35 @@ class OfflineQueueService {
     this.saveQueue(queue);
   }
 
+  retry(id: string): QueuedAction {
+    const queue = this.getQueue();
+    const action = queue.find(record => record.id === id);
+    if (!action) throw new Error('queue_record_not_found');
+    const maxRetries = (config as any).queue?.maxRetries ?? 3;
+    if (action.retryCount >= maxRetries) throw new Error('queue_retry_limit');
+    action.status = 'pending';
+    delete action.errorCode;
+    delete action.errorMessage;
+    this.saveQueue(queue);
+    return action;
+  }
+
+  remove(id: string): void {
+    this.saveQueue(this.getQueue().filter(record => record.id !== id));
+  }
+
+  subscribe(listener: (records: QueueRecord[]) => void): () => void {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+
   getQueueSize(): number {
     return this.getQueue().filter(a => a.status === 'pending').length;
   }
 
   clear() {
-    storage.remove(QUEUE_KEY);
+    queueStorage().remove(QUEUE_KEY);
+    for (const listener of this.listeners) listener([]);
   }
 }
 

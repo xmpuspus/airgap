@@ -15,9 +15,8 @@ import {useModelDownload} from '../hooks/useModelDownload';
 import {COLORS, SPACING, RADIUS, SHADOWS, TYPOGRAPHY} from '../constants/theme';
 import {brand, config, features, modelConfig, privacy} from '../config/loader';
 import {clearConversationHistory, getConversationHistory} from '../services/orchestrator';
-import {modelManager} from '../services/modelManager';
 import {t} from '../utils/i18n';
-import {createMMKV} from 'react-native-mmkv';
+import {deleteAllUserData} from '../services/dataDeletionService';
 import {DiagnosticsPanel} from '../components/settings/DiagnosticsPanel';
 import {LLMModeControl} from '../components/settings/LLMModeControl';
 import {SyncSectionCard} from '../components/settings/SyncSectionCard';
@@ -30,8 +29,7 @@ type RootStackParamList = {
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Settings'>;
 
-const APP_VERSION = '1.0.0';
-const appStorage = createMMKV({id: 'app-state'});
+const APP_VERSION = '0.2.0';
 
 function formatSize(mb: number): string {
   if (mb >= 1024) return `${(mb / 1024).toFixed(1)} GB`;
@@ -50,9 +48,7 @@ function SettingsRow({
   return (
     <View style={styles.row}>
       <Text style={styles.label}>{label}</Text>
-      <Text
-        style={[styles.value, valueColor ? {color: valueColor} : undefined]}
-        numberOfLines={1}>
+      <Text style={[styles.value, valueColor ? {color: valueColor} : undefined]} numberOfLines={1}>
         {value}
       </Text>
     </View>
@@ -97,11 +93,32 @@ export function SettingsScreen({navigation}: Props) {
     });
   }, [diagnosticsOverride]);
   const showDiagnostics = features.diagnosticsPanel || diagnosticsOverride;
+  const privacyFacts = [
+    {
+      label: 'Conversations',
+      value: 'Encrypted on this device',
+    },
+    {
+      label: 'Cloud answers',
+      value: config.llm?.cloud?.enabled ? 'Operator enabled' : 'Off',
+    },
+    {
+      label: 'Knowledge sync',
+      value: config.backend.type === 'rest' ? 'Signed downloads' : 'Built-in only',
+    },
+    {
+      label: 'Telemetry',
+      value: config.analytics?.enabled ? 'Hashed events on' : 'Off',
+    },
+  ];
 
   const handleDeleteModel = () => {
     Alert.alert(
       t('deleteModel', 'Delete AI Model'),
-      t('deleteModelConfirm', 'This will remove the offline AI assistant. You can re-download it later.'),
+      t(
+        'deleteModelConfirm',
+        'This will remove the offline AI assistant. You can re-download it later.',
+      ),
       [
         {text: t('cancel', 'Cancel'), style: 'cancel'},
         {
@@ -139,11 +156,20 @@ export function SettingsScreen({navigation}: Props) {
     try {
       const history = getConversationHistory();
       if (!history || history.length === 0) {
-        Alert.alert(t('exportChat', 'Export Chat'), t('noChatHistory', 'No conversation history to export.'));
+        Alert.alert(
+          t('exportChat', 'Export Chat'),
+          t('noChatHistory', 'No conversation history to export.'),
+        );
         return;
       }
-      const lines = history.map(turn => `${turn.role === 'user' ? 'You' : brand.botName}: ${turn.text}`);
-      const text = `${brand.botName} — Chat Export\n${new Date().toLocaleDateString()}\n${'='.repeat(40)}\n\n${lines.join('\n\n')}`;
+      const lines = history.map(
+        turn => `${turn.role === 'user' ? 'You' : brand.botName}: ${turn.text}`,
+      );
+      const text = `${
+        brand.botName
+      } — Chat Export\n${new Date().toLocaleDateString()}\n${'='.repeat(40)}\n\n${lines.join(
+        '\n\n',
+      )}`;
       await Share.share({message: text, title: `${brand.botName} Chat Export`});
     } catch {
       // Share cancelled
@@ -153,16 +179,28 @@ export function SettingsScreen({navigation}: Props) {
   const handleDeleteAllData = () => {
     Alert.alert(
       t('deleteAllData', 'Delete All Data'),
-      t('deleteAllDataConfirm', 'This will delete all conversations, model data, and reset the app. This cannot be undone.'),
+      t(
+        'deleteAllDataConfirm',
+        'This will delete all conversations, model data, and reset the app. This cannot be undone.',
+      ),
       [
         {text: t('cancel', 'Cancel'), style: 'cancel'},
         {
           text: t('deleteAll', 'Delete Everything'),
           style: 'destructive',
           onPress: async () => {
-            clearConversationHistory();
-            await modelManager.deleteModel();
-            appStorage.set('has_onboarded', false);
+            const results = await deleteAllUserData();
+            const failures = results.filter(result => !result.ok);
+            if (failures.length > 0) {
+              Alert.alert(
+                t('deleteIncomplete', 'Deletion Incomplete'),
+                t(
+                  'deleteIncompleteDetail',
+                  `Could not delete: ${failures.map(result => result.id).join(', ')}`,
+                ),
+              );
+              return;
+            }
             navigation.reset({index: 0, routes: [{name: 'Onboarding' as any}]});
           },
         },
@@ -194,7 +232,9 @@ export function SettingsScreen({navigation}: Props) {
         <View style={styles.card}>
           <SettingsRow
             label={t('status', 'Status')}
-            value={isDownloaded ? t('downloaded', 'Downloaded') : t('notDownloaded', 'Not downloaded')}
+            value={
+              isDownloaded ? t('downloaded', 'Downloaded') : t('notDownloaded', 'Not downloaded')
+            }
             valueColor={isDownloaded ? COLORS.success : COLORS.textSecondary}
           />
           <View style={styles.divider} />
@@ -257,7 +297,9 @@ export function SettingsScreen({navigation}: Props) {
                 activeOpacity={0.6}
                 accessibilityLabel={t('exportChat', 'Export conversation')}
                 accessibilityRole="button">
-                <Text style={styles.primaryActionText}>{t('exportChat', 'Export Conversation')}</Text>
+                <Text style={styles.primaryActionText}>
+                  {t('exportChat', 'Export Conversation')}
+                </Text>
                 <Chevron />
               </TouchableOpacity>
               <View style={styles.divider} />
@@ -279,6 +321,15 @@ export function SettingsScreen({navigation}: Props) {
         <View style={styles.section}>
           <SectionHeader title={t('privacy', 'Privacy')} />
           <View style={styles.card}>
+            {privacyFacts.map((fact, index) => (
+              <React.Fragment key={fact.label}>
+                <SettingsRow label={fact.label} value={fact.value} />
+                {(index < privacyFacts.length - 1 ||
+                  privacy.dataRetentionDays ||
+                  privacy.privacyPolicyUrl ||
+                  privacy.allowDeleteData) && <View style={styles.divider} />}
+              </React.Fragment>
+            ))}
             {privacy.dataRetentionDays && (
               <>
                 <SettingsRow
@@ -363,15 +414,17 @@ export function SettingsScreen({navigation}: Props) {
             activeOpacity={1}
             onPress={handleVersionTap}
             accessibilityLabel={t('appVersion', 'App Version')}
-            accessibilityHint={t('appVersion.tapHint', 'Tap seven times to enable diagnostics for this session')}>
+            accessibilityHint={t(
+              'appVersion.tapHint',
+              'Tap seven times to enable diagnostics for this session',
+            )}>
             <SettingsRow label={t('appVersion', 'App Version')} value={APP_VERSION} />
           </TouchableOpacity>
           <View style={styles.divider} />
           <View style={styles.aboutBlock}>
             <Text style={styles.aboutText}>
-              {brand.botName} is an AI-powered assistant for {brand.name}.
-              It runs entirely on your device — your conversations never leave
-              your phone.
+              {brand.botName} is an AI-powered assistant for {brand.name}. It runs entirely on your
+              device — your conversations never leave your phone.
             </Text>
           </View>
         </View>

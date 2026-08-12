@@ -23,8 +23,7 @@ jest.mock('react-native-mmkv', () => {
       set: (k: string, v: string | number | boolean) => store.set(k, v),
       getString: (k: string) => (store.has(k) ? String(store.get(k)) : undefined),
       getNumber: (k: string) => (store.has(k) ? Number(store.get(k)) : undefined),
-      getBoolean: (k: string) =>
-        store.has(k) ? Boolean(store.get(k)) : undefined,
+      getBoolean: (k: string) => (store.has(k) ? Boolean(store.get(k)) : undefined),
       remove: (k: string) => store.delete(k),
       contains: (k: string) => store.has(k),
       clearAll: () => store.clear(),
@@ -38,6 +37,7 @@ jest.mock('../../src/services/connectivityService', () => ({
     addListener: jest.fn(() => () => {}),
   },
 }));
+jest.mock('../../src/services/secureStorage', () => require('../helpers/rn-mocks').secureStorage());
 
 // uuid 9+ ships ESM-only. The orchestrator pulls it in via offlineQueue;
 // stub it so jest can require the chain without configuring babel for ESM.
@@ -161,18 +161,14 @@ describe('runBench', () => {
     }
 
     // p95 >= p50 for the firstTokenMs distribution
-    expect(result.summary.p95FirstTokenMs).toBeGreaterThanOrEqual(
-      result.summary.p50FirstTokenMs,
-    );
+    expect(result.summary.p95FirstTokenMs).toBeGreaterThanOrEqual(result.summary.p50FirstTokenMs);
   }, 30000);
 
   it('computes p50/p95 firstTokenMs correctly for a small query set', async () => {
     const queries = ['plans', 'balance', 'roaming'];
     const result = await runBench(queries);
 
-    const observed = [...result.runs.map(r => r.firstTokenMs)].sort(
-      (a, b) => a - b,
-    );
+    const observed = [...result.runs.map(r => r.firstTokenMs)].sort((a, b) => a - b);
 
     // p50 (median) on 3 sorted values is the middle value via linear
     // interpolation of nearest ranks (rank = 1 → value at index 1).

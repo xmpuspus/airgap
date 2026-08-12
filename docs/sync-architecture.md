@@ -1,130 +1,137 @@
-# Sync architecture
+# Signed knowledge sync rejects altered support content
 
-Airgap is offline-first but not offline-only. When the device is online, it
-syncs its knowledge base and LLM model from an operator-controlled BFF, so
-the content the bot answers from is never stale forever. This document
-describes how that pipeline works end to end.
+Airgap can update local support content through one operator-controlled server.
+The app keeps the compiled knowledge base and the last valid downloaded bundle
+when a network, authentication, file, hash, signature, key, or schema check
+fails.
 
-## Components
+## The app checks two authenticated responses
 
-```
-device                                       BFF
-------                                       ---
-syncService -- GET /api/v1/sync/kb -------->  manifest builder
-             <-- 200 {version, sha256, sig}
-             -- GET /api/v1/sync/kb/download->  bundle
-             <-- 200 application/json
-             -- atomic swap to bundle-current.json
-             -- rebuild MiniSearch index
-             -- update MMKV: kbVersion, lastSyncAt
-
-modelManager -- GET /api/v1/sync/model ----->  model manifest
-             <-- 200 {version, sha256, url, sizeBytes}
-             -- (optional) download + SHA verify + atomic swap
-
-telemetryService -- POST /api/v1/telemetry -->  audit log sink
-                 <-- 202 {accepted: N}
+```text
+Airgap app                                  Reference server
+----------                                  ----------------
+token provider -> short-lived token
+GET /api/v1/sync/kb ----------------------> bearer check
+                  <------------------------- signed manifest
+token provider -> fresh short-lived token
+GET manifest.url --------------------------> bearer check
+                  <------------------------- exact JSON bytes
+length, SHA-256, key ID, Ed25519, schema
+partial file -> current file
+current file -> MiniSearch index
 ```
 
-## Trigger points
+The app gets a fresh access token for each request. It sends a token only to the
+set server origin. The app rejects a manifest download URL on another
+origin.
 
-The sync scheduler runs in three situations:
+## The manifest finds the exact signed bytes
 
-1. On app launch — a one-shot attempt fires after the onboarding screen
-   resolves. Failure is logged and the existing bundle is kept.
-2. On reconnect — the connectivity service listener calls
-   `syncKnowledge()` immediately when `isInternetReachable` flips from
-   false to true.
-3. On a foreground timer — every 6 hours by default, configurable via
-   `startSyncScheduler({intervalHours: N})`.
+`GET /api/v1/sync/kb` returns the fields below.
 
-All three paths funnel through `syncKnowledge()`, which is idempotent and
-safe to call concurrently (the in-process lock is implicit — the scheduler
-never stacks calls).
+| Field               | Required value                                                     |
+| ------------------- | ------------------------------------------------------------------ |
+| `algorithm`         | `Ed25519`                                                          |
+| `signatureEncoding` | `base64`                                                           |
+| `byteLength`        | Exact download length                                              |
+| `sha256`            | Lowercase SHA-256 of the download bytes                            |
+| `version`           | Operator release ID                                                |
+| `keyId`             | First 16 hexadecimal characters of SHA-256 over the raw public key |
+| `url`               | HTTPS URL on the configured server origin                          |
+| `publishedAt`       | Valid ISO date and time                                            |
+| `signature`         | Base64 Ed25519 signature over the exact download bytes             |
 
-## Atomic swap and rollback
+The server signs the same bytes that the download route returns. JSON parsing or
+serialization must not happen between signing and download.
 
-`syncService` never writes to `bundle-current.json` directly. The flow is:
+## The app pins raw Ed25519 public keys
 
-1. Download to `bundle-<version>.json.partial`
-2. SHA256 check against the manifest
-3. ed25519 signature check (when a native verifier is installed)
-4. Rename `bundle-current.json` -> `bundle-previous.json`
-5. Rename `bundle-<version>.json.partial` -> `bundle-current.json`
-6. Update MMKV: `kbVersion`, `previousKbVersion`, `lastSyncAt`
-
-If any step after (1) fails, the partial file is deleted and the current
-bundle is restored. If the rebuilt MiniSearch index fails to load (for
-instance because a new KB schema breaks an existing field), the service
-calls `rollbackBundle()` which restores `bundle-previous.json` -> 
-`bundle-current.json` and flags `lastSyncError` in MMKV.
-
-## Staleness banding
-
-`getStalenessInfo()` returns a band based on the age of `lastSyncAt`:
-
-| Band | Age since last sync |
-|---|---|
-| `fresh` | < 24 hours |
-| `stale` | 24 hours – 7 days |
-| `very_stale` | >= 7 days |
-| `never` | No successful sync has ever happened on this install |
-
-`getDegradedModePrefix()` returns a non-null string for every band except
-`fresh`. The orchestrator prepends this string to every user-facing answer
-that is NOT a tool call or refusal, so price and policy answers
-automatically surface the caveat without the operator writing special
-prompts.
-
-## Signing keys
-
-The reference BFF generates an ed25519 keypair on first launch and logs
-the public key in base64 SPKI format. Copy that value into
-`airgap.config.json`:
+The reference server prints a key ID and a raw 32-byte public key in base64 on
+startup. Add the pair to the REST backend configuration shown below.
 
 ```json
 {
   "backend": {
-    "baseUrl": "https://your-bff.example.com",
-    "syncPublicKey": "MCowBQYDK2VwAyEA...=="
+    "type": "rest",
+    "baseUrl": "https://support-api.example.com",
+    "auth": {
+      "type": "provider",
+      "audience": "airgap-bff"
+    },
+    "sync": {
+      "publicKeys": {
+        "0123456789abcdef": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+      }
+    }
   }
 }
 ```
 
-The device pins this key and refuses bundles whose signature does not
-verify against it. Key rotation is a two-step process: publish new keys,
-fetch new bundles under both, then remove the old key.
+The sample value is not a usable key. Replace both strings with output from the
+server or the organization's signing service.
 
-The current Airgap build verifies sha256 and logs the presence of a
-pinned public key. ed25519 verification is a build-time hook — production
-deployments must supply a native module (e.g. `react-native-quick-crypto`)
-that implements `ed25519.verify(publicKey, bundle, signature)`. See
-`src/services/syncService.ts:verifyBundle` for the wiring point.
+The `publicKeys` map supports the controlled key-rotation steps below.
 
-## Telemetry
+1. Ship an app release that pins the old and new public keys.
+2. Sign new knowledge releases with the new private key.
+3. Test that supported app versions install the new release.
+4. Remove the old public key in a later app release.
 
-Every `processMessage` call produces a `TelemetryEvent`:
+Never send a signing private key to the app or store it in this repository.
 
-```ts
-{
-  timestamp: string,         // ISO
-  query: '#' + fnv1a hash,   // PII-safe fingerprint
-  kbVersion: string,
-  retrievedDocIds: string[], // public KB doc IDs
-  answerHash: '#' + fnv1a,   // PII-safe fingerprint
-  confidence: number,        // from the safety verdict
-  toolCalls: string[],       // tool names only, no args
-  refusalReason: string,     // if the safety layer fail-closed
-}
-```
+## Checks finish before the file swap
 
-The telemetry service buffers events locally in an MMKV store with a
-500-event cap. On reconnect (and every 10 minutes in the foreground) it
-flushes to `POST /api/v1/telemetry`. Events that fail to flush stay in
-the buffer and retry on the next cycle. The buffer never grows unbounded
-— the oldest events fall off when the cap is hit.
+The app uses the order below for a new knowledge version.
 
-Nothing user-identifiable is recorded: no raw query text, no answer text,
-no account numbers, no session tokens. The reference BFF appends events
-to `telemetry.jsonl` for inspection, but production should forward them
-to whatever log sink already exists (Cloud Logging, Splunk, etc.).
+1. Remove any old partial file for that version.
+2. Download exact bytes with a fresh access token.
+3. Write those bytes to a partial file.
+4. Check file length and SHA-256 against the manifest.
+5. Check the key ID and Ed25519 signature with TweetNaCl.
+6. Decode strict UTF-8 and check the bundle and document fields.
+7. Move the current file to the earlier-file slot.
+8. Move the checked partial file to the current-file slot.
+9. Rebuild the in-memory search index.
+10. Save the new version and sync time in encrypted local storage.
+
+If a check fails before step 7, the app deletes only the partial file. If the
+file swap or index rebuild fails, the app restores the earlier file. Compiled
+knowledge remains the last fallback.
+
+## Each bundle has valid support documents
+
+The download is a UTF-8 JSON object with a valid `generatedAt` value and a
+nonempty `files` object. Each filename ends in `.json`. Each value is a JSON
+string that parses to an array of support documents.
+
+Every support document has string values for `id`, `category`, `title`, and
+`content`, plus a string array named `keywords`. The verifier rejects an empty
+bundle or a document with missing needed fields.
+
+## Sync time controls the freshness state
+
+The app tries to sync after startup, after network reconnection, and every six
+hours while the scheduler runs. A successful same-version check updates the sync
+time without changing files.
+
+`getStalenessInfo()` reports the states below.
+
+| State        | Time since last successful sync         |
+| ------------ | --------------------------------------- |
+| `fresh`      | Less than 24 hours                      |
+| `stale`      | 24 hours through 7 days                 |
+| `very_stale` | 7 days or more                          |
+| `never`      | No successful sync on this installation |
+
+The chat flow adds a warning to policy and price answers when local knowledge is
+not fresh.
+
+## Authentication and signing control different risks
+
+Bearer authentication controls access to server routes. The signature, pinned
+key, hash, length, and schema checks control installation on the device. TLS and
+authentication do not replace signed-file checks.
+
+The reference server uses a shared development bearer token and in-process rate
+buckets. A production service needs its normal identity issuer, audience checks,
+shared rate limiting, managed signing keys, durable logs, and monitoring.

@@ -7,18 +7,17 @@
  * the in-memory MiniSearch index. On failure the previous bundle is kept
  * and the user sees a degraded-mode staleness banner.
  *
- * Signature verification uses the `tweetnacl`-equivalent primitives exposed
- * by the platform. For now we implement a best-effort verification using
- * `react-native-quick-crypto` if present, or fall back to sha256-only
- * integrity checks with a clear warning. Production deployments must pin
- * the real ed25519 check by supplying a native implementation.
+ * The service checks exact file bytes with TweetNaCl before it changes the
+ * installed knowledge files.
  */
 
 import RNFS from 'react-native-fs';
 import {config} from '../config/loader';
 import {logger} from './logger';
 import {connectivityService} from './connectivityService';
-import {createKeyedMMKV} from './secretStore';
+import {getSecureStore} from './secureStorage';
+import {getBackendConnector} from './backendConnector';
+import {encodeBase64Bytes, verifyBundle, type BundleManifest} from './bundleVerifier';
 import {
   replaceKnowledgeFromBundle,
   revertToCompiledKnowledge,
@@ -26,20 +25,14 @@ import {
   getLoadedBundleVersion,
 } from '../knowledge';
 
-const storage = createKeyedMMKV('kb-sync');
+const syncStorage = () => getSecureStore('kb-sync');
 
 const KEY_LAST_SYNC_AT = 'lastSyncAt';
 const KEY_KB_VERSION = 'kbVersion';
 const KEY_PREVIOUS_KB_VERSION = 'previousKbVersion';
 const KEY_LAST_SYNC_ERROR = 'lastSyncError';
 
-export interface KbManifest {
-  version: string;
-  sha256: string;
-  url: string;
-  publishedAt: string;
-  signature: string;
-}
+export type KbManifest = BundleManifest;
 
 export interface SyncResult {
   ok: boolean;
@@ -58,84 +51,47 @@ function getBackendBase(): string | null {
   return backend.baseUrl.replace(/\/+$/, '');
 }
 
-function getPinnedPublicKey(): string | null {
+function getPinnedPublicKeys(): Readonly<Record<string, string>> {
   const backend = (config as any).backend;
-  return backend?.syncPublicKey ?? null;
+  return backend?.sync?.publicKeys ?? {};
 }
 
 export async function fetchManifest(): Promise<KbManifest> {
-  const base = getBackendBase();
-  if (!base) throw new Error('backend.baseUrl not configured');
-  const res = await fetch(`${base}/api/v1/sync/kb`);
-  if (!res.ok) {
-    throw new Error(`manifest fetch failed: HTTP ${res.status}`);
-  }
-  const data = (await res.json()) as KbManifest;
-  if (!data.version || !data.sha256 || !data.url || !data.signature) {
+  if (!getBackendBase()) throw new Error('backend.baseUrl not configured');
+  const connector = getBackendConnector();
+  if (!connector.fetchKbManifest) throw new Error('backend_sync_not_supported');
+  const data = await connector.fetchKbManifest();
+  if (!data.version || !data.sha256 || !data.url || !data.signature || !data.keyId) {
     throw new Error('manifest missing required fields');
   }
   return data;
 }
 
-async function downloadBundle(
-  manifest: KbManifest,
-): Promise<{tmpPath: string; bytesDownloaded: number}> {
+async function downloadBundle(manifest: KbManifest): Promise<{
+  tmpPath: string;
+  bytes: Uint8Array;
+  actualSha256: string;
+  bytesDownloaded: number;
+}> {
   const kbDir = `${RNFS.DocumentDirectoryPath}/kb`;
   const exists = await RNFS.exists(kbDir);
   if (!exists) await RNFS.mkdir(kbDir);
 
   const tmpPath = `${kbDir}/bundle-${manifest.version.replace(/[^a-z0-9]/gi, '_')}.json.partial`;
-  const {promise} = RNFS.downloadFile({
-    fromUrl: manifest.url,
-    toFile: tmpPath,
-  });
-  const res = await promise;
-  if (res.statusCode !== 200 && res.statusCode !== 206) {
-    throw new Error(`bundle download failed: HTTP ${res.statusCode}`);
-  }
-  const stat = await RNFS.stat(tmpPath);
-  return {tmpPath, bytesDownloaded: Number(stat.size)};
-}
+  const oldPartial = await RNFS.exists(tmpPath).catch(() => false);
+  if (oldPartial) await RNFS.unlink(tmpPath);
 
-async function verifyBundle(
-  tmpPath: string,
-  manifest: KbManifest,
-): Promise<void> {
-  // Size + sha256 check.
+  const connector = getBackendConnector();
+  if (!connector.fetchKbBytes) throw new Error('backend_sync_not_supported');
+  const bytes = await connector.fetchKbBytes(manifest);
+  await RNFS.writeFile(tmpPath, encodeBase64Bytes(bytes), 'base64');
   const actualSha = await RNFS.hash(tmpPath, 'sha256');
-  if (actualSha !== manifest.sha256) {
-    throw new Error(
-      `sha256 mismatch: expected ${manifest.sha256}, got ${actualSha}`,
-    );
-  }
-
-  // Signature check. react-native-mmkv already ships a JS crypto polyfill via
-  // react-native-get-random-values. We do not bundle a native ed25519 verifier
-  // by default, so we log whether the public key is pinned and leave the
-  // actual verify as a platform hook that production apps must provide.
-  const pinnedKey = getPinnedPublicKey();
-  if (!pinnedKey) {
-    logger.warn(
-      'syncService',
-      'backend.syncPublicKey is not set — skipping signature verification. ' +
-        'Production deployments MUST pin the BFF public key.',
-    );
-    return;
-  }
-
-  if (!manifest.signature) {
-    throw new Error('manifest missing signature');
-  }
-  // TODO (production): plug in a native ed25519.verify(publicKey, bundle, signature)
-  // implementation. See docs/sync-architecture.md for the recommended native
-  // module wiring. The current build verifies sha256 only when the native
-  // verifier is not linked, which is safe against transport tampering under
-  // TLS but not against a compromised BFF.
-  logger.info(
-    'syncService',
-    'sha256 verified; ed25519 signature check is a build-time hook',
-    {publicKeyPrefix: pinnedKey.substring(0, 16)},
-  );
+  return {
+    tmpPath,
+    bytes,
+    actualSha256: actualSha,
+    bytesDownloaded: bytes.length,
+  };
 }
 
 async function swapBundle(tmpPath: string): Promise<void> {
@@ -146,6 +102,13 @@ async function swapBundle(tmpPath: string): Promise<void> {
     const backupExists = await RNFS.exists(backupPath);
     if (backupExists) await RNFS.unlink(backupPath);
     await RNFS.moveFile(finalPath, backupPath);
+    try {
+      await RNFS.moveFile(tmpPath, finalPath);
+    } catch (error) {
+      await RNFS.moveFile(backupPath, finalPath).catch(() => undefined);
+      throw error;
+    }
+    return;
   }
   await RNFS.moveFile(tmpPath, finalPath);
 }
@@ -176,7 +139,7 @@ export async function loadBundleIntoKnowledge(): Promise<
   if (!exists) {
     return {source: 'compiled'};
   }
-  const version = storage.getString(KEY_KB_VERSION) ?? null;
+  const version = syncStorage().getString(KEY_KB_VERSION) ?? null;
   try {
     await loadBundleFile(finalPath, version);
     logger.info('syncService', 'loaded downloaded KB bundle', {version});
@@ -190,7 +153,7 @@ export async function loadBundleIntoKnowledge(): Promise<
     const backupExists = await RNFS.exists(backupPath).catch(() => false);
     if (backupExists) {
       try {
-        const prev = storage.getString(KEY_PREVIOUS_KB_VERSION) ?? null;
+        const prev = syncStorage().getString(KEY_PREVIOUS_KB_VERSION) ?? null;
         await loadBundleFile(backupPath, prev);
         logger.warn('syncService', 'loaded previous bundle as fallback', {version: prev});
         return {source: 'bundle', version: prev};
@@ -230,19 +193,28 @@ export async function syncKnowledge(): Promise<SyncResult> {
     return {ok: false, action: 'noop', error: 'no_backend_configured'};
   }
 
-  const previousVersion = storage.getString(KEY_KB_VERSION) ?? undefined;
+  const previousVersion = syncStorage().getString(KEY_KB_VERSION) ?? undefined;
 
+  let tmpPath: string | null = null;
+  let swapped = false;
   try {
     const manifest = await fetchManifest();
     if (manifest.version === previousVersion) {
-      storage.set(KEY_LAST_SYNC_AT, Date.now());
-      storage.remove(KEY_LAST_SYNC_ERROR);
+      syncStorage().set(KEY_LAST_SYNC_AT, Date.now());
+      syncStorage().remove(KEY_LAST_SYNC_ERROR);
       return {ok: true, action: 'noop', version: manifest.version, previousVersion};
     }
 
-    const {tmpPath, bytesDownloaded} = await downloadBundle(manifest);
-    await verifyBundle(tmpPath, manifest);
+    const downloaded = await downloadBundle(manifest);
+    tmpPath = downloaded.tmpPath;
+    await verifyBundle({
+      bytes: downloaded.bytes,
+      actualSha256: downloaded.actualSha256,
+      manifest,
+      publicKeys: getPinnedPublicKeys(),
+    });
     await swapBundle(tmpPath);
+    swapped = true;
 
     // Atomic-swap succeeded on disk. Now rebuild the in-memory MiniSearch
     // index from the new bundle. If this fails (malformed bundle, empty
@@ -268,7 +240,7 @@ export async function syncKnowledge(): Promise<SyncResult> {
       } else {
         revertToCompiledKnowledge();
       }
-      storage.set(KEY_LAST_SYNC_ERROR, (rebuildErr as Error).message);
+      syncStorage().set(KEY_LAST_SYNC_ERROR, (rebuildErr as Error).message);
       notifySyncListeners({
         ok: false,
         action: 'rollback',
@@ -281,26 +253,43 @@ export async function syncKnowledge(): Promise<SyncResult> {
       };
     }
 
-    storage.set(KEY_LAST_SYNC_AT, Date.now());
-    if (previousVersion) storage.set(KEY_PREVIOUS_KB_VERSION, previousVersion);
-    storage.set(KEY_KB_VERSION, manifest.version);
-    storage.remove(KEY_LAST_SYNC_ERROR);
+    syncStorage().set(KEY_LAST_SYNC_AT, Date.now());
+    if (previousVersion) syncStorage().set(KEY_PREVIOUS_KB_VERSION, previousVersion);
+    syncStorage().set(KEY_KB_VERSION, manifest.version);
+    syncStorage().remove(KEY_LAST_SYNC_ERROR);
 
     logger.info('syncService', 'KB updated', {
       from: previousVersion,
       to: manifest.version,
-      bytesDownloaded,
+      bytesDownloaded: downloaded.bytesDownloaded,
     });
 
-    notifySyncListeners({ok: true, action: 'updated', version: manifest.version, previousVersion, bytesDownloaded});
-    return {ok: true, action: 'updated', version: manifest.version, previousVersion, bytesDownloaded};
+    notifySyncListeners({
+      ok: true,
+      action: 'updated',
+      version: manifest.version,
+      previousVersion,
+      bytesDownloaded: downloaded.bytesDownloaded,
+    });
+    return {
+      ok: true,
+      action: 'updated',
+      version: manifest.version,
+      previousVersion,
+      bytesDownloaded: downloaded.bytesDownloaded,
+    };
   } catch (err: any) {
-    logger.error('syncService', 'KB sync failed, attempting rollback', {
+    if (tmpPath) await RNFS.unlink(tmpPath).catch(() => undefined);
+    logger.error('syncService', 'KB sync failed', {
       error: err?.message,
     });
-    storage.set(KEY_LAST_SYNC_ERROR, err?.message ?? 'unknown');
-    const rolledBack = await rollbackBundle().catch(() => false);
-    notifySyncListeners({ok: false, action: rolledBack ? 'rollback' : 'error', error: err?.message});
+    syncStorage().set(KEY_LAST_SYNC_ERROR, err?.message ?? 'unknown');
+    const rolledBack = swapped ? await rollbackBundle().catch(() => false) : false;
+    notifySyncListeners({
+      ok: false,
+      action: rolledBack ? 'rollback' : 'error',
+      error: err?.message,
+    });
     return {
       ok: false,
       action: rolledBack ? 'rollback' : 'error',
@@ -309,7 +298,7 @@ export async function syncKnowledge(): Promise<SyncResult> {
   }
 }
 
-// ---- listeners ----
+// listeners
 type SyncListener = (result: SyncResult) => void;
 const listeners = new Set<SyncListener>();
 function notifySyncListeners(r: SyncResult) {
@@ -326,7 +315,7 @@ export function onSync(fn: SyncListener): () => void {
   return () => listeners.delete(fn);
 }
 
-// ---- scheduler ----
+// scheduler
 let scheduleTimer: ReturnType<typeof setInterval> | null = null;
 let reconnectUnsub: (() => void) | null = null;
 
@@ -372,7 +361,14 @@ export function stopSyncScheduler(): void {
   }
 }
 
-// ---- staleness ----
+export async function clearDownloadedKnowledge(): Promise<void> {
+  const kbDir = `${RNFS.DocumentDirectoryPath}/kb`;
+  const exists = await RNFS.exists(kbDir).catch(() => false);
+  if (exists) await RNFS.unlink(kbDir);
+  revertToCompiledKnowledge();
+}
+
+// staleness
 export function getStalenessInfo(): {
   band: StalenessBand;
   lastSyncAt: number | null;
@@ -380,9 +376,9 @@ export function getStalenessInfo(): {
   lastError: string | null;
   ageMs: number | null;
 } {
-  const lastSyncAt = storage.getNumber(KEY_LAST_SYNC_AT) ?? null;
-  const kbVersion = storage.getString(KEY_KB_VERSION) ?? null;
-  const lastError = storage.getString(KEY_LAST_SYNC_ERROR) ?? null;
+  const lastSyncAt = syncStorage().getNumber(KEY_LAST_SYNC_AT) ?? null;
+  const kbVersion = syncStorage().getString(KEY_KB_VERSION) ?? null;
+  const lastError = syncStorage().getString(KEY_LAST_SYNC_ERROR) ?? null;
   if (!lastSyncAt) {
     return {band: 'never', lastSyncAt, kbVersion, lastError, ageMs: null};
   }
@@ -417,7 +413,9 @@ export function getDegradedModePrefix(): string | null {
   const {band, kbVersion} = getStalenessInfo();
   if (band === 'fresh') return null;
   if (band === 'stale') {
-    return `(My info may be a day or two out of date${kbVersion ? ' (v' + kbVersion + ')' : ''}; for current rates please call the hotline.)\n\n`;
+    return `(My info may be a day or two out of date${
+      kbVersion ? ' (v' + kbVersion + ')' : ''
+    }; for current rates please call the hotline.)\n\n`;
   }
   if (band === 'very_stale') {
     return `(My info is more than a week old and may be stale. Please verify prices and policies by calling the hotline.)\n\n`;

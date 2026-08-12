@@ -1,6 +1,6 @@
 {
   "name": "create-airgap-bot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Scaffold a config-driven, on-device customer support bot from one of the Airgap industry templates.",
   "author": "Xavier Puspus (https://github.com/xmpuspus)",
   "license": "MIT",
@@ -31,6 +31,7 @@
   "main": "dist/cli.js",
   "files": [
     "dist",
+    "template",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
@@ -40,20 +41,20 @@
   },
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build",
+    "build-template": "node scripts/build-template.mjs",
+    "prepack": "npm run build-template && npm run build",
+    "prepublishOnly": "npm test",
     "conflict-check": "node dist/conflict-check.js",
     "test": "jest"
   },
   "dependencies": {
     "picocolors": "1.1.1",
-    "prompts": "2.4.2",
-    "tar": "7.4.3"
+    "prompts": "2.4.2"
   },
   "devDependencies": {
     "@types/jest": "29.5.14",
     "@types/node": "22.10.2",
     "@types/prompts": "2.4.9",
-    "@types/tar": "6.1.13",
     "jest": "29.7.0",
     "ts-jest": "29.2.5",
     "typescript": "5.9.3"

@@ -5,6 +5,7 @@ jest.mock('react-native-mmkv', () => require('./helpers/rn-mocks').rnMmkv());
 jest.mock('../src/services/connectivityService', () =>
   require('./helpers/rn-mocks').connectivity(),
 );
+jest.mock('../src/services/secureStorage', () => require('./helpers/rn-mocks').secureStorage());
 
 import {readFileSync, readdirSync} from 'fs';
 import {join} from 'path';
@@ -153,9 +154,7 @@ describe('llmRouter mode resolution', () => {
 
 describe('demo mode works across all 7 industry templates', () => {
   const examplesDir = join(__dirname, '..', 'examples');
-  const verticals = readdirSync(examplesDir).filter(
-    d => d !== 'README.md' && !d.startsWith('.'),
-  );
+  const verticals = readdirSync(examplesDir).filter(d => d !== 'README.md' && !d.startsWith('.'));
 
   it('discovers all 7 verticals', () => {
     expect(verticals.sort()).toEqual([
@@ -175,24 +174,21 @@ describe('demo mode works across all 7 industry templates', () => {
     expect(cfg.llm?.mode).toBe('demo');
   });
 
-  it.each(verticals)(
-    '%s KB has at least one doc the demo formatter can render',
-    vertical => {
-      const kbDir = join(examplesDir, vertical, 'knowledge');
-      const files = readdirSync(kbDir).filter(f => f.endsWith('.json'));
-      expect(files.length).toBeGreaterThan(0);
-      const docs: KBDocument[] = [];
-      for (const file of files) {
-        const arr = JSON.parse(readFileSync(join(kbDir, file), 'utf8'));
-        if (Array.isArray(arr)) docs.push(...(arr as KBDocument[]));
-      }
-      expect(docs.length).toBeGreaterThan(0);
-      const userMessage = buildUserMessage('hello', docs.slice(0, 3));
-      const block = extractReferenceBlock(userMessage);
-      expect(block).not.toBeNull();
-      const reply = formatReferenceAsReply(block as string);
-      expect(reply.length).toBeGreaterThan(0);
-      expect(reply).toContain('**');
-    },
-  );
+  it.each(verticals)('%s KB has at least one doc the demo formatter can render', vertical => {
+    const kbDir = join(examplesDir, vertical, 'knowledge');
+    const files = readdirSync(kbDir).filter(f => f.endsWith('.json'));
+    expect(files.length).toBeGreaterThan(0);
+    const docs: KBDocument[] = [];
+    for (const file of files) {
+      const arr = JSON.parse(readFileSync(join(kbDir, file), 'utf8'));
+      if (Array.isArray(arr)) docs.push(...(arr as KBDocument[]));
+    }
+    expect(docs.length).toBeGreaterThan(0);
+    const userMessage = buildUserMessage('hello', docs.slice(0, 3));
+    const block = extractReferenceBlock(userMessage);
+    expect(block).not.toBeNull();
+    const reply = formatReferenceAsReply(block as string);
+    expect(reply.length).toBeGreaterThan(0);
+    expect(reply).toContain('**');
+  });
 });

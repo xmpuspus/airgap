@@ -1,20 +1,14 @@
 import React, {useEffect, useRef} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  Animated,
-} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, Animated} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {DownloadProgress} from '../components/onboarding/DownloadProgress';
 import {useModelDownload} from '../hooks/useModelDownload';
 import {COLORS, SPACING, RADIUS, SHADOWS, TYPOGRAPHY, TIMING} from '../constants/theme';
-import {config, brand, onboarding, interpolate} from '../config/loader';
+import {config, brand, onboarding, interpolate, modelConfig} from '../config/loader';
 import {t} from '../utils/i18n';
+import {hasAccessTokenProvider} from '../services/authProvider';
+import {useReducedMotion} from '../hooks/useReducedMotion';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -27,25 +21,19 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Onboarding'> & {
 };
 
 const ONBOARDING_FEATURES = onboarding?.features ?? [];
-const ONBOARDING_TITLE = interpolate(
-  onboarding?.title ?? 'Welcome to {{botName}}',
-  config,
-);
-const ONBOARDING_SUBTITLE = interpolate(
-  onboarding?.subtitle ?? '{{tagline}}',
-  config,
-);
+const ONBOARDING_TITLE = interpolate(onboarding?.title ?? 'Welcome to {{botName}}', config);
+const ONBOARDING_SUBTITLE = interpolate(onboarding?.subtitle ?? '{{tagline}}', config);
 
 // "How this works" capability bullets — operator-overridable via
 // onboarding.extraFeatures. Defaults explain the three pillars of the
 // product so a cold reviewer understands sync + hybrid LLM + safety
 // before they even open the chat.
-const EXTRA_FEATURES: string[] =
-  (onboarding as unknown as {extraFeatures?: string[]})?.extraFeatures ?? [
-    'Runs on-device — your conversations stay on your phone',
-    'Syncs the knowledge base from the cloud when you are online',
-    'Falls back to a cloud model only if you opt in',
-  ];
+const EXTRA_FEATURES: string[] = (onboarding as unknown as {extraFeatures?: string[]})
+  ?.extraFeatures ?? [
+  'Encrypted conversations stay on this device',
+  'Syncs the knowledge base from the cloud when you are online',
+  'Cloud answers stay off until an operator sets up access',
+];
 
 const FEATURE_ICONS = [
   {shape: 'star', color: '#D97706'},
@@ -109,9 +97,29 @@ function FeatureGlyph({shape, color}: {shape: string; color: string}) {
 const glyphStyles = StyleSheet.create({
   container: {width: 16, height: 16, alignItems: 'center', justifyContent: 'center'},
   diamond: {width: 10, height: 10, borderRadius: 2, transform: [{rotate: '45deg'}]},
-  diamondH: {position: 'absolute', width: 6, height: 6, borderRadius: 1, transform: [{rotate: '45deg'}], opacity: 0.5},
-  boltTop: {width: 8, height: 4, borderTopLeftRadius: 2, borderTopRightRadius: 2, marginBottom: 1, transform: [{skewX: '-15deg'}]},
-  boltBottom: {width: 8, height: 4, borderBottomLeftRadius: 2, borderBottomRightRadius: 2, transform: [{skewX: '15deg'}]},
+  diamondH: {
+    position: 'absolute',
+    width: 6,
+    height: 6,
+    borderRadius: 1,
+    transform: [{rotate: '45deg'}],
+    opacity: 0.5,
+  },
+  boltTop: {
+    width: 8,
+    height: 4,
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2,
+    marginBottom: 1,
+    transform: [{skewX: '-15deg'}],
+  },
+  boltBottom: {
+    width: 8,
+    height: 4,
+    borderBottomLeftRadius: 2,
+    borderBottomRightRadius: 2,
+    transform: [{skewX: '15deg'}],
+  },
   pinHead: {width: 10, height: 10, borderRadius: 5, borderWidth: 2},
   pinNeedle: {width: 2, height: 4, borderRadius: 1, marginTop: -1},
   globeRing: {width: 12, height: 12, borderRadius: 6, borderWidth: 1.5},
@@ -124,8 +132,9 @@ const glyphStyles = StyleSheet.create({
 
 export function OnboardingScreen({navigation, onComplete}: Props) {
   const insets = useSafeAreaInsets();
-  const {progress, isDownloading, isDownloaded, modelSizeMB, startDownload} =
-    useModelDownload();
+  const {progress, isDownloading, isDownloaded, modelSizeMB, startDownload} = useModelDownload();
+  const reducedMotion = useReducedMotion();
+  const serviceReady = hasAccessTokenProvider() && config.llm?.cloud?.enabled === true;
 
   const logoScale = useRef(new Animated.Value(0)).current;
   const titleOpacity = useRef(new Animated.Value(0)).current;
@@ -136,6 +145,16 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
   const ctaSlide = useRef(new Animated.Value(12)).current;
 
   useEffect(() => {
+    if (reducedMotion) {
+      logoScale.setValue(1);
+      titleOpacity.setValue(1);
+      titleSlide.setValue(0);
+      contentOpacity.setValue(1);
+      contentSlide.setValue(0);
+      ctaOpacity.setValue(1);
+      ctaSlide.setValue(0);
+      return;
+    }
     Animated.stagger(120, [
       Animated.spring(logoScale, {
         toValue: 1,
@@ -179,7 +198,16 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
         }),
       ]),
     ]).start();
-  }, [logoScale, titleOpacity, titleSlide, contentOpacity, contentSlide, ctaOpacity, ctaSlide]);
+  }, [
+    reducedMotion,
+    logoScale,
+    titleOpacity,
+    titleSlide,
+    contentOpacity,
+    contentSlide,
+    ctaOpacity,
+    ctaSlide,
+  ]);
 
   const goToChat = () => {
     onComplete?.();
@@ -197,11 +225,7 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
       <View style={styles.bgGradientMid} />
 
       {/* Logo */}
-      <Animated.View
-        style={[
-          styles.brandSection,
-          {transform: [{scale: logoScale}]},
-        ]}>
+      <Animated.View style={[styles.brandSection, {transform: [{scale: logoScale}]}]}>
         <View style={styles.logoContainer}>
           <Image
             source={require('../../assets/images/airgap-shield.png')}
@@ -260,11 +284,7 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
           const icon = FEATURE_ICONS[index % FEATURE_ICONS.length];
           return (
             <View key={index} style={styles.featureRow}>
-              <View
-                style={[
-                  styles.featureIcon,
-                  {backgroundColor: icon.color + '10'},
-                ]}>
+              <View style={[styles.featureIcon, {backgroundColor: icon.color + '10'}]}>
                 <FeatureGlyph shape={icon.shape} color={icon.color} />
               </View>
               <Text style={styles.featureText}>{feature}</Text>
@@ -283,35 +303,75 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
             transform: [{translateY: ctaSlide}],
           },
         ]}>
-        <DownloadProgress
-          onSkip={goToChat}
-          onComplete={goToChat}
-          progress={progress}
-          isDownloading={isDownloading}
-          isDownloaded={isDownloaded}
-          modelSizeMB={modelSizeMB}
-          startDownload={startDownload}
-        />
-
-        {!isDownloading && (
+        <View style={styles.pathCard}>
+          <Text style={styles.pathEyebrow}>PATH 1</Text>
+          <Text style={styles.pathTitle}>Try Offline Demo</Text>
+          <Text style={styles.pathDetail}>
+            Uses built-in sample answers. It needs no network or model download.
+          </Text>
           <TouchableOpacity
-            style={[
-              styles.getStartedButton,
-              isDownloaded && styles.getStartedButtonReady,
-            ]}
+            style={styles.demoButton}
+            onPress={goToChat}
+            accessibilityLabel="Try Offline Demo"
+            accessibilityRole="button">
+            <Text style={styles.demoButtonText}>Try Offline Demo</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.pathCard}>
+          <Text style={styles.pathEyebrow}>PATH 2</Text>
+          <Text style={styles.pathTitle}>Install Local AI</Text>
+          <Text style={styles.pathDetail}>
+            Downloads {modelConfig.filename} ({formatModelSize(modelConfig.sizeBytes)}). Airgap
+            checks the exact byte length and SHA-256 before use.
+          </Text>
+          <DownloadProgress
+            onSkip={goToChat}
+            onComplete={goToChat}
+            progress={progress}
+            isDownloading={isDownloading}
+            isDownloaded={isDownloaded}
+            modelSizeMB={modelSizeMB}
+            startDownload={startDownload}
+          />
+        </View>
+
+        {serviceReady && (
+          <View style={styles.pathCard}>
+            <Text style={styles.pathEyebrow}>PATH 3</Text>
+            <Text style={styles.pathTitle}>Use Set-Up Service</Text>
+            <Text style={styles.pathDetail}>
+              Uses the operator's access-token source and cloud endpoint when online.
+            </Text>
+            <TouchableOpacity
+              style={styles.serviceButton}
+              onPress={goToChat}
+              accessibilityLabel="Use Set-Up Service"
+              accessibilityRole="button">
+              <Text style={styles.serviceButtonText}>Use Set-Up Service</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {!isDownloading && isDownloaded && (
+          <TouchableOpacity
+            style={[styles.getStartedButton, isDownloaded && styles.getStartedButtonReady]}
             onPress={goToChat}
             activeOpacity={0.8}
-            accessibilityLabel={isDownloaded ? t('startChatting', 'Start Chatting') : t('continueWithoutAI', 'Continue Without AI')}
+            accessibilityLabel={t('startChatting', 'Start Chatting')}
             accessibilityRole="button">
-            <Text style={styles.getStartedText}>
-              {isDownloaded ? t('startChatting', 'Start Chatting') : t('continueWithoutAI', 'Continue Without AI')}
-            </Text>
+            <Text style={styles.getStartedText}>{t('startChatting', 'Start Chatting')}</Text>
           </TouchableOpacity>
         )}
         <Text style={styles.poweredBy}>Powered by {brand.name}</Text>
       </Animated.View>
     </ScrollView>
   );
+}
+
+function formatModelSize(sizeBytes?: number): string {
+  if (!sizeBytes) return 'size not set';
+  return `${(sizeBytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
 }
 
 export default OnboardingScreen;
@@ -467,6 +527,48 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     paddingHorizontal: SPACING.xl,
   },
+  pathCard: {
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: RADIUS.md,
+    padding: SPACING.lg,
+    marginBottom: SPACING.md,
+  },
+  pathEyebrow: {
+    ...TYPOGRAPHY.micro,
+    color: '#0E7490',
+    fontWeight: '800',
+    letterSpacing: 0.8,
+  },
+  pathTitle: {
+    ...TYPOGRAPHY.title,
+    color: '#0B1F33',
+    marginTop: SPACING.xs,
+  },
+  pathDetail: {
+    ...TYPOGRAPHY.bodySmall,
+    color: COLORS.textSecondary,
+    marginTop: SPACING.xs,
+    marginBottom: SPACING.md,
+  },
+  demoButton: {
+    minHeight: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: RADIUS.sm,
+    backgroundColor: '#0E7490',
+  },
+  demoButtonText: {...TYPOGRAPHY.caption, color: '#FFFFFF', fontWeight: '800'},
+  serviceButton: {
+    minHeight: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: RADIUS.sm,
+    borderWidth: 1,
+    borderColor: '#0E7490',
+  },
+  serviceButtonText: {...TYPOGRAPHY.caption, color: '#0E7490', fontWeight: '800'},
   getStartedButton: {
     backgroundColor: COLORS.primary,
     borderRadius: RADIUS.lg,

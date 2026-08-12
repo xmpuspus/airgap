@@ -10,22 +10,14 @@ import {
   ConversationTurn,
 } from '../utils/promptBuilder';
 import {isFollowUp, expandQuery} from '../utils/followUpDetector';
-import {config, brand, prompts, quickReplies, actions, interpolate, privacy} from '../config/loader';
+import {config, brand, prompts, quickReplies, actions, interpolate} from '../config/loader';
 import {getBackendConnector} from './backendConnector';
 import {logger} from './logger';
 import type {QueuedAction} from '../types/chat';
-import {createMMKV} from 'react-native-mmkv';
 import type {QuickReply} from '../types/chat';
-import {
-  checkBlocklist,
-  validateAnswer,
-  refusalFor,
-} from './safetyLayer';
-import {
-  findToolForQuery,
-  executeTool,
-  formatToolResultForLLM,
-} from './tools';
+import {conversationStore} from './conversationStore';
+import {checkBlocklist, validateAnswer, refusalFor} from './safetyLayer';
+import {findToolForQuery, executeTool, formatToolResultForLLM} from './tools';
 import {getDegradedModePrefix, getStalenessInfo} from './syncService';
 import {recordTurn} from './telemetry';
 import {
@@ -36,11 +28,6 @@ import {
   recordLlmLatency,
   recordToolLatency,
 } from './metrics';
-
-const historyStorage = createMMKV({id: 'conversation-history'});
-const HISTORY_KEY = 'conversationHistory';
-const LAST_MSG_KEY = 'lastMessageTimestamp';
-const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 
 export interface OrchestratorResponse {
   text: string;
@@ -57,61 +44,42 @@ export interface OrchestratorResponse {
   };
 }
 
-// Conversation history — maintained across calls, persisted to MMKV
-let conversationHistory: ConversationTurn[] = loadHistory();
-
-// Data retention: auto-clear conversations older than configured days
-function enforceDataRetention(): void {
-  const days = privacy?.dataRetentionDays;
-  if (!days) return;
-  const lastTs = historyStorage.getNumber(LAST_MSG_KEY);
-  if (lastTs && Date.now() - lastTs > days * 24 * 60 * 60 * 1000) {
-    logger.info('orchestrator', `Data retention: clearing history older than ${days} days`);
-    conversationHistory = [];
-    historyStorage.remove(HISTORY_KEY);
-    historyStorage.remove(LAST_MSG_KEY);
-  }
-}
-enforceDataRetention();
+// Conversation history is loaded after secure storage opens.
+let conversationHistory: ConversationTurn[] = [];
+let historyLoaded = false;
 
 function loadHistory(): ConversationTurn[] {
   try {
-    const lastTs = historyStorage.getNumber(LAST_MSG_KEY);
-    if (lastTs && Date.now() - lastTs > SESSION_TIMEOUT_MS) {
-      logger.debug('orchestrator', 'Session timeout — clearing persisted history');
-      historyStorage.remove(HISTORY_KEY);
-      historyStorage.remove(LAST_MSG_KEY);
-      return [];
-    }
-    const raw = historyStorage.getString(HISTORY_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as ConversationTurn[];
-      logger.debug('orchestrator', `Restored ${parsed.length} history turns from MMKV`);
-      return parsed;
-    }
+    return conversationStore.load().turns;
   } catch {
     logger.warn('orchestrator', 'Failed to load conversation history from MMKV');
   }
   return [];
 }
 
+function ensureHistoryLoaded(): void {
+  if (historyLoaded) return;
+  conversationHistory = loadHistory();
+  historyLoaded = true;
+}
+
 function saveHistory() {
   try {
-    historyStorage.set(HISTORY_KEY, JSON.stringify(conversationHistory));
-    historyStorage.set(LAST_MSG_KEY, Date.now());
+    conversationStore.saveTurns(conversationHistory);
   } catch {
     logger.warn('orchestrator', 'Failed to save conversation history to MMKV');
   }
 }
 
 export function getConversationHistory(): ConversationTurn[] {
+  ensureHistoryLoaded();
   return conversationHistory;
 }
 
 export function clearConversationHistory(): void {
+  ensureHistoryLoaded();
   conversationHistory = [];
-  historyStorage.remove(HISTORY_KEY);
-  historyStorage.remove(LAST_MSG_KEY);
+  conversationStore.clear();
 }
 
 export interface ProcessMessageHooks {
@@ -124,10 +92,9 @@ export async function processMessage(
   userText: string,
   onTokenOrHooks?: ((token: string) => void) | ProcessMessageHooks,
 ): Promise<OrchestratorResponse> {
+  ensureHistoryLoaded();
   const hooks: ProcessMessageHooks =
-    typeof onTokenOrHooks === 'function'
-      ? {onToken: onTokenOrHooks}
-      : (onTokenOrHooks ?? {});
+    typeof onTokenOrHooks === 'function' ? {onToken: onTokenOrHooks} : onTokenOrHooks ?? {};
   const response = await processMessageInner(userText, hooks);
   return finalizeResponse(userText, response);
 }
@@ -158,8 +125,7 @@ async function processMessageInner(
 
   // 2. Handle greetings
   if (isGreeting(text) && conversationHistory.length === 0) {
-    const response =
-      `Hi there! I'm your ${brand.name} support assistant. How can I help you today?`;
+    const response = `Hi there! I'm your ${brand.name} support assistant. How can I help you today?`;
     addToHistory('user', text);
     addToHistory('bot', response);
     return {
@@ -184,8 +150,10 @@ async function processMessageInner(
 
     if (result.queuedActionId) {
       const actionLabel = tool.description;
-      const response = (interpolate(prompts.queued ?? '', config) || '')
-        .replace('{{actionLabel}}', actionLabel) || result.summary || '';
+      const response =
+        (interpolate(prompts.queued ?? '', config) || '').replace('{{actionLabel}}', actionLabel) ||
+        result.summary ||
+        '';
       addToHistory('user', text);
       addToHistory('bot', response);
       return {
@@ -237,11 +205,7 @@ async function processMessageInner(
           conversationHistory,
         );
         const llmStart = Date.now();
-        const {text: generated} = await routeGeneration(
-          systemPrompt,
-          userMessage,
-          onToken,
-        );
+        const {text: generated} = await routeGeneration(systemPrompt, userMessage, onToken);
         recordLlmLatency(Date.now() - llmStart);
 
         // Safety: validate the generated answer against the tool grounding.
@@ -286,7 +250,9 @@ async function processMessageInner(
           },
         };
       } catch (err) {
-        logger.warn('orchestrator', 'Tool+LLM synthesis failed, returning raw summary', {err: String(err)});
+        logger.warn('orchestrator', 'Tool+LLM synthesis failed, returning raw summary', {
+          err: String(err),
+        });
       }
     }
 
@@ -311,7 +277,10 @@ async function processMessageInner(
     if (!isOnline && actionType) {
       const action = offlineQueue.enqueue(actionType as QueuedAction['type'], text, '');
       const actionLabel = actions.find(a => a.id === actionType)?.label ?? actionType;
-      const response = interpolate(prompts.queued ?? '', config).replace('{{actionLabel}}', actionLabel);
+      const response = interpolate(prompts.queued ?? '', config).replace(
+        '{{actionLabel}}',
+        actionLabel,
+      );
       addToHistory('user', text);
       addToHistory('bot', response);
       return {text: response, source: 'queue', queuedActionId: action.id};
@@ -373,30 +342,17 @@ async function processMessageInner(
 
   // If follow-up search returns nothing, try the original query
   const finalResults =
-    searchResults.length === 0 && followUp
-      ? searchKB(text, {topK: 3})
-      : searchResults;
+    searchResults.length === 0 && followUp ? searchKB(text, {topK: 3}) : searchResults;
 
   // 7. If a local LLM, cloud LLM, or demo formatter is available, route
   // the generation. Demo mode bypasses the model load and produces a
   // deterministic streamed reply built from finalResults.
-  if (
-    (localAvailable() || cloudAvailable() || getMode() === 'demo') &&
-    finalResults.length > 0
-  ) {
+  if ((localAvailable() || cloudAvailable() || getMode() === 'demo') && finalResults.length > 0) {
     try {
       const systemPrompt = getSystemPrompt();
-      const userMessage = buildUserMessage(
-        text,
-        finalResults,
-        conversationHistory,
-      );
+      const userMessage = buildUserMessage(text, finalResults, conversationHistory);
       const llmStart = Date.now();
-      const {text: response} = await routeGeneration(
-        systemPrompt,
-        userMessage,
-        onToken,
-      );
+      const {text: response} = await routeGeneration(systemPrompt, userMessage, onToken);
       recordLlmLatency(Date.now() - llmStart);
 
       // Safety: validate the generated answer against the retrieved KB
@@ -428,7 +384,9 @@ async function processMessageInner(
         },
       };
     } catch (err) {
-      logger.warn('orchestrator', 'LLM generation failed, falling back to search', {err: String(err)});
+      logger.warn('orchestrator', 'LLM generation failed, falling back to search', {
+        err: String(err),
+      });
     }
   }
 
@@ -461,6 +419,7 @@ async function processMessageInner(
 }
 
 function addToHistory(role: 'user' | 'bot', text: string) {
+  ensureHistoryLoaded();
   conversationHistory.push({role, text});
   // Keep only last 6 turns (3 exchanges) to stay within context budget
   if (conversationHistory.length > 6) {
@@ -477,10 +436,7 @@ function addToHistory(role: 'user' | 'bot', text: string) {
  *   - Record telemetry for the turn (PII-safe)
  * Returns a new response object with the possibly-augmented text.
  */
-function finalizeResponse(
-  userText: string,
-  response: OrchestratorResponse,
-): OrchestratorResponse {
+function finalizeResponse(userText: string, response: OrchestratorResponse): OrchestratorResponse {
   let text = response.text;
   if (response.source !== 'tool' && response.source !== 'refusal' && response.source !== 'queue') {
     const prefix = getDegradedModePrefix();
@@ -512,20 +468,70 @@ function finalizeResponse(
 
 // Known abbreviations/acronyms that are legitimate queries, not greetings
 const NOT_GREETINGS = new Set([
-  'sim', 'apn', 'bgc', 'lte', 'mms', 'dns', 'otg', 'qr',
-  'vpn', 'nfc', 'pin', 'puk', 'otp', 'faq', 'sos', 'usb',
-  'rom', 'ram', 'app', 'web', 'net', 'log', 'pay', 'buy',
-  'php', 'gb', 'mb', 'kb', 'mbps', 'ghz', 'mhz', 'bpi',
-  'bdo', 'atm', 'eip', 'esim', 'iot', 'sms', 'gps',
+  'sim',
+  'apn',
+  'bgc',
+  'lte',
+  'mms',
+  'dns',
+  'otg',
+  'qr',
+  'vpn',
+  'nfc',
+  'pin',
+  'puk',
+  'otp',
+  'faq',
+  'sos',
+  'usb',
+  'rom',
+  'ram',
+  'app',
+  'web',
+  'net',
+  'log',
+  'pay',
+  'buy',
+  'php',
+  'gb',
+  'mb',
+  'kb',
+  'mbps',
+  'ghz',
+  'mhz',
+  'bpi',
+  'bdo',
+  'atm',
+  'eip',
+  'esim',
+  'iot',
+  'sms',
+  'gps',
 ]);
 
 function isGreeting(text: string): boolean {
   const greetings = [
-    'hi', 'hello', 'hey', 'good morning', 'good afternoon',
-    'good evening', 'howdy', 'yo', 'sup', 'hola', 'kamusta', 'musta',
-    'bye', 'goodbye', 'thanks', 'thank you',
+    'hi',
+    'hello',
+    'hey',
+    'good morning',
+    'good afternoon',
+    'good evening',
+    'howdy',
+    'yo',
+    'sup',
+    'hola',
+    'kamusta',
+    'musta',
+    'bye',
+    'goodbye',
+    'thanks',
+    'thank you',
   ];
-  const lower = text.toLowerCase().replace(/[!.,?]/g, '').trim();
+  const lower = text
+    .toLowerCase()
+    .replace(/[!.,?]/g, '')
+    .trim();
   // Short alphabetic strings could be greetings, but exclude known acronyms
   if (lower.length <= 3 && /^[a-z]+$/.test(lower)) {
     return !NOT_GREETINGS.has(lower);

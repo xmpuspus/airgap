@@ -17,8 +17,7 @@ import {MessageBubble} from '../components/chat/MessageBubble';
 import {TypingIndicator} from '../components/chat/TypingIndicator';
 import {QuickReplies} from '../components/chat/QuickReplies';
 import {InputToolbar} from '../components/chat/InputToolbar';
-import {StatusBanner} from '../components/common/StatusBanner';
-import {DemoBanner} from '../components/chat/DemoBanner';
+import {OperatingState} from '../components/common/OperatingState';
 import {SourceDrawer} from '../components/chat/SourceDrawer';
 import {SourceDrawerProvider} from '../hooks/useSourceDrawer';
 import {EmptyState} from '../components/chat/EmptyState';
@@ -32,6 +31,7 @@ import {logger} from '../services/logger';
 import {COLORS, SPACING, RADIUS, SHADOWS, TYPOGRAPHY, TIMING} from '../constants/theme';
 import type {BubblePosition} from '../constants/theme';
 import type {BotMessage, QuickReply} from '../types/chat';
+import {useReducedMotion} from '../hooks/useReducedMotion';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -93,13 +93,10 @@ function computeGrouping(messages: BotMessage[]): GroupedMessage[] {
 
     const isBot = senderId === 'bot';
     // Show avatar on the visually bottom message of a bot group (newest = index closest to 0)
-    const showAvatar =
-      isBot &&
-      (bubblePosition === 'first' || bubblePosition === 'standalone');
+    const showAvatar = isBot && (bubblePosition === 'first' || bubblePosition === 'standalone');
 
     // Show timestamp on the visually bottom message of each group
-    const showTimestamp =
-      bubblePosition === 'first' || bubblePosition === 'standalone';
+    const showTimestamp = bubblePosition === 'first' || bubblePosition === 'standalone';
 
     return {
       ...msg,
@@ -153,6 +150,7 @@ export function ChatScreen(_props: Props) {
   const flatListRef = useRef<FlatList>(null);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [runningTool, setRunningTool] = useState<string | null>(null);
+  const reducedMotion = useReducedMotion();
   const scrollButtonOpacity = useRef(new Animated.Value(0)).current;
   const scrollButtonScale = useRef(new Animated.Value(0.8)).current;
 
@@ -175,6 +173,11 @@ export function ChatScreen(_props: Props) {
   }, []);
 
   useEffect(() => {
+    if (reducedMotion) {
+      scrollButtonOpacity.setValue(showScrollButton ? 1 : 0);
+      scrollButtonScale.setValue(1);
+      return;
+    }
     Animated.parallel([
       Animated.timing(scrollButtonOpacity, {
         toValue: showScrollButton ? 1 : 0,
@@ -187,7 +190,7 @@ export function ChatScreen(_props: Props) {
         useNativeDriver: true,
       }),
     ]).start();
-  }, [showScrollButton, scrollButtonOpacity, scrollButtonScale]);
+  }, [reducedMotion, showScrollButton, scrollButtonOpacity, scrollButtonScale]);
 
   const getResponse = useCallback(
     async (text: string) => {
@@ -225,12 +228,7 @@ export function ChatScreen(_props: Props) {
         setRunningTool(null);
       }
     },
-    [
-      setTyping,
-      addStreamingBotMessage,
-      updateStreamingMessage,
-      finalizeStreamingMessage,
-    ],
+    [setTyping, addStreamingBotMessage, updateStreamingMessage, finalizeStreamingMessage],
   );
 
   const handleSend = useCallback(
@@ -268,25 +266,21 @@ export function ChatScreen(_props: Props) {
 
   const handleRefresh = useCallback(() => {
     setIsRefreshing(true);
-    Alert.alert(
-      'Clear conversation?',
-      'This will remove all messages and start fresh.',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-          onPress: () => setIsRefreshing(false),
+    Alert.alert('Clear conversation?', 'This will remove all messages and start fresh.', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+        onPress: () => setIsRefreshing(false),
+      },
+      {
+        text: 'Clear',
+        style: 'destructive',
+        onPress: () => {
+          clearConversationHistory();
+          setIsRefreshing(false);
         },
-        {
-          text: 'Clear',
-          style: 'destructive',
-          onPress: () => {
-            clearConversationHistory();
-            setIsRefreshing(false);
-          },
-        },
-      ],
-    );
+      },
+    ]);
   }, []);
 
   const latestBotMessage = useMemo(() => {
@@ -295,45 +289,43 @@ export function ChatScreen(_props: Props) {
 
   const suggestedReplies = (latestBotMessage as BotMessage)?.suggestedReplies;
 
-  const hasUserMessage = useMemo(
-    () => messages.some(m => m.user._id === 'user'),
-    [messages],
-  );
+  const hasUserMessage = useMemo(() => messages.some(m => m.user._id === 'user'), [messages]);
 
   const chatItems = useMemo(() => buildChatItems(messages), [messages]);
 
-  const renderItem = useCallback(
-    ({item}: {item: ChatItem}) => {
-      if (isSeparator(item)) {
-        return (
-          <View style={styles.separatorRow}>
-            <View style={styles.separatorLine} />
-            <View style={styles.separatorPill}>
-              <Text style={styles.separatorText}>{item.date}</Text>
-            </View>
-            <View style={styles.separatorLine} />
-          </View>
-        );
-      }
+  const renderItem = useCallback(({item}: {item: ChatItem}) => {
+    if (isSeparator(item)) {
       return (
-        <MessageBubble
-          message={item}
-          position={item.bubblePosition}
-          showAvatar={item.showAvatar}
-          showTimestamp={item.showTimestamp}
-        />
+        <View style={styles.separatorRow}>
+          <View style={styles.separatorLine} />
+          <View style={styles.separatorPill}>
+            <Text style={styles.separatorText}>{item.date}</Text>
+          </View>
+          <View style={styles.separatorLine} />
+        </View>
       );
-    },
-    [],
-  );
+    }
+    return (
+      <MessageBubble
+        message={item}
+        position={item.bubblePosition}
+        showAvatar={item.showAvatar}
+        showTimestamp={item.showTimestamp}
+      />
+    );
+  }, []);
 
   return (
     <KeyboardAvoidingView
       style={styles.screen}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
-      {getMode() === 'demo' && <DemoBanner />}
-      <StatusBanner isOnline={isOnline} />
+      <OperatingState
+        mode={getMode()}
+        isOnline={isOnline}
+        localReady={llmService.isLoaded()}
+        cloudReady={getMode() === 'prefer-online' && isOnline}
+      />
       <FlatList
         ref={flatListRef}
         data={chatItems}
@@ -367,17 +359,12 @@ export function ChatScreen(_props: Props) {
               </View>
             )}
             {!isTyping && suggestedReplies && suggestedReplies.length > 0 && (
-              <QuickReplies
-                replies={suggestedReplies}
-                onPress={handleQuickReply}
-              />
+              <QuickReplies replies={suggestedReplies} onPress={handleQuickReply} />
             )}
           </View>
         }
         ListFooterComponent={
-          !hasUserMessage ? (
-            <EmptyState onQuickReply={handleQuickReply} />
-          ) : null
+          !hasUserMessage ? <EmptyState onQuickReply={handleQuickReply} /> : null
         }
       />
 

@@ -23,34 +23,45 @@ export interface ActionResponse {
   message: string;
 }
 
+export interface RemoteModelManifest {
+  version?: string;
+  filename?: string;
+  url?: string;
+  sha256?: string;
+  sizeBytes?: number;
+  publishedAt?: string;
+}
+
+export interface BackendRequestOptions {
+  idempotencyKey?: string;
+}
+
 export interface BackendConnector {
-  checkBalance(accountId: string): Promise<BalanceResponse>;
-  changePlan(accountId: string, planId: string): Promise<PlanChangeResponse>;
-  createTicket(description: string): Promise<TicketResponse>;
-  checkOutage(location?: string): Promise<OutageResponse>;
-  executeAction(actionType: string, params: Record<string, unknown>): Promise<ActionResponse>;
+  checkBalance(accountId: string, options?: BackendRequestOptions): Promise<BalanceResponse>;
+  changePlan(
+    accountId: string,
+    planId: string,
+    options?: BackendRequestOptions,
+  ): Promise<PlanChangeResponse>;
+  createTicket(description: string, options?: BackendRequestOptions): Promise<TicketResponse>;
+  checkOutage(location?: string, options?: BackendRequestOptions): Promise<OutageResponse>;
+  executeAction(
+    actionType: string,
+    params: Record<string, unknown>,
+    options?: BackendRequestOptions,
+  ): Promise<ActionResponse>;
 
   /** Optional: KB sync manifest. Reference BFF endpoint GET /api/v1/sync/kb */
   fetchKbManifest?(): Promise<KbManifest>;
-  /** Optional: download a signed KB bundle referenced by a manifest */
-  fetchKbBundle?(manifest: KbManifest): Promise<KbBundle>;
+  /** Optional: download the exact signed bytes referenced by a manifest. */
+  fetchKbBytes?(manifest: KbManifest): Promise<Uint8Array>;
+  /** Optional: read the current local-model release metadata. */
+  fetchModelManifest?(): Promise<RemoteModelManifest>;
   /** Optional: audit telemetry POST /api/v1/telemetry */
   postTelemetry?(events: TelemetryEvent[]): Promise<void>;
 }
 
-export interface KbManifest {
-  version: string;
-  sha256: string;
-  url: string;
-  publishedAt: string;
-  signature: string;
-}
-
-export interface KbBundle {
-  manifest: KbManifest;
-  /** Raw JSON bundle contents keyed by filename */
-  files: Record<string, string>;
-}
+export type KbManifest = BundleManifest;
 
 export interface TelemetryEvent {
   timestamp: string;
@@ -64,7 +75,10 @@ export interface TelemetryEvent {
 }
 
 export class MockBackendConnector implements BackendConnector {
-  async checkBalance(_accountId: string): Promise<BalanceResponse> {
+  async checkBalance(
+    _accountId: string,
+    _options?: BackendRequestOptions,
+  ): Promise<BalanceResponse> {
     return {
       balance: 'PHP 127.50',
       data: '3.2GB (expires Apr 15)',
@@ -72,33 +86,44 @@ export class MockBackendConnector implements BackendConnector {
     };
   }
 
-  async changePlan(_accountId: string, _planId: string): Promise<PlanChangeResponse> {
+  async changePlan(
+    _accountId: string,
+    _planId: string,
+    _options?: BackendRequestOptions,
+  ): Promise<PlanChangeResponse> {
     return {
       message:
-        'To change your plan, please specify which plan you\'d like to switch to. ' +
+        "To change your plan, please specify which plan you'd like to switch to. " +
         'You can say something like "Switch to Plan 999" and I\'ll process it.',
       effectiveDate: '',
     };
   }
 
-  async createTicket(_description: string): Promise<TicketResponse> {
+  async createTicket(
+    _description: string,
+    _options?: BackendRequestOptions,
+  ): Promise<TicketResponse> {
     return {
       ticketId: '',
       message:
-        'I can help create a support ticket. Could you describe the issue you\'re experiencing?',
+        "I can help create a support ticket. Could you describe the issue you're experiencing?",
     };
   }
 
-  async checkOutage(_location?: string): Promise<OutageResponse> {
+  async checkOutage(_location?: string, _options?: BackendRequestOptions): Promise<OutageResponse> {
     return {
       hasOutage: false,
       message:
         'No service outages are currently reported in your area. ' +
-        'If you\'re still experiencing issues, I can help troubleshoot.',
+        "If you're still experiencing issues, I can help troubleshoot.",
     };
   }
 
-  async executeAction(actionType: string, _params: Record<string, unknown>): Promise<ActionResponse> {
+  async executeAction(
+    actionType: string,
+    _params: Record<string, unknown>,
+    _options?: BackendRequestOptions,
+  ): Promise<ActionResponse> {
     return {
       message: `Action "${actionType}" acknowledged. Let me look into that for you.`,
     };
@@ -112,22 +137,37 @@ export class MockBackendConnector implements BackendConnector {
  */
 export class RestBackendConnector implements BackendConnector {
   private baseUrl: string;
-  private defaultHeaders: Record<string, string>;
+  private audience: string;
+  private timeoutMs: number;
 
-  constructor(baseUrl: string, headers: Record<string, string> = {}) {
+  constructor(baseUrl: string, options: {audience?: string; timeoutMs?: number} = {}) {
     this.baseUrl = baseUrl.replace(/\/+$/, '');
-    this.defaultHeaders = {'Content-Type': 'application/json', ...headers};
+    this.audience = options.audience ?? 'airgap-bff';
+    this.timeoutMs = options.timeoutMs ?? 15_000;
   }
 
-  private async request<T>(
-    path: string,
-    init: RequestInit = {},
-  ): Promise<T> {
+  private async authorizedFetch(url: string, init: RequestInit = {}): Promise<Response> {
+    const token = await getAccessToken(this.audience);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), this.timeoutMs);
+    try {
+      return await fetch(url, {
+        ...init,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          ...(init.headers ?? {}),
+        },
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  private async request<T>(path: string, init: RequestInit = {}): Promise<T> {
     const url = `${this.baseUrl}${path}`;
-    const res = await fetch(url, {
-      ...init,
-      headers: {...this.defaultHeaders, ...(init.headers ?? {})},
-    });
+    const res = await this.authorizedFetch(url, init);
     if (!res.ok) {
       throw new Error(`${init.method ?? 'GET'} ${path} -> HTTP ${res.status}`);
     }
@@ -138,57 +178,81 @@ export class RestBackendConnector implements BackendConnector {
     return (await res.json()) as T;
   }
 
-  async checkBalance(accountId: string): Promise<BalanceResponse> {
+  async checkBalance(accountId: string, options?: BackendRequestOptions): Promise<BalanceResponse> {
     return this.request<BalanceResponse>(
       `/api/v1/accounts/${encodeURIComponent(accountId)}/balance`,
+      this.requestOptions(options),
     );
   }
 
   async changePlan(
     accountId: string,
     planId: string,
+    options?: BackendRequestOptions,
   ): Promise<PlanChangeResponse> {
     return this.request<PlanChangeResponse>(
       `/api/v1/accounts/${encodeURIComponent(accountId)}/plan`,
-      {method: 'POST', body: JSON.stringify({planId})},
+      {
+        method: 'POST',
+        body: JSON.stringify({planId}),
+        ...this.requestOptions(options),
+      },
     );
   }
 
-  async createTicket(description: string): Promise<TicketResponse> {
+  async createTicket(
+    description: string,
+    options?: BackendRequestOptions,
+  ): Promise<TicketResponse> {
     return this.request<TicketResponse>(`/api/v1/tickets`, {
       method: 'POST',
       body: JSON.stringify({description}),
+      ...this.requestOptions(options),
     });
   }
 
-  async checkOutage(location?: string): Promise<OutageResponse> {
+  async checkOutage(location?: string, options?: BackendRequestOptions): Promise<OutageResponse> {
     const path = location
       ? `/api/v1/outages?location=${encodeURIComponent(location)}`
       : `/api/v1/outages`;
-    return this.request<OutageResponse>(path);
+    return this.request<OutageResponse>(path, this.requestOptions(options));
   }
 
   async executeAction(
     actionType: string,
     params: Record<string, unknown>,
+    options?: BackendRequestOptions,
   ): Promise<ActionResponse> {
-    return this.request<ActionResponse>(
-      `/api/v1/actions/${encodeURIComponent(actionType)}`,
-      {method: 'POST', body: JSON.stringify(params)},
-    );
+    return this.request<ActionResponse>(`/api/v1/actions/${encodeURIComponent(actionType)}`, {
+      method: 'POST',
+      body: JSON.stringify(params),
+      ...this.requestOptions(options),
+    });
+  }
+
+  private requestOptions(options?: BackendRequestOptions): RequestInit {
+    return options?.idempotencyKey ? {headers: {'Idempotency-Key': options.idempotencyKey}} : {};
   }
 
   async fetchKbManifest(): Promise<KbManifest> {
     return this.request<KbManifest>(`/api/v1/sync/kb`);
   }
 
-  async fetchKbBundle(manifest: KbManifest): Promise<KbBundle> {
-    const res = await fetch(`${this.baseUrl}/api/v1/sync/kb/download`, {
-      headers: this.defaultHeaders,
-    });
-    if (!res.ok) throw new Error(`kb download HTTP ${res.status}`);
-    const body = await res.json();
-    return {manifest, files: body.files ?? {}};
+  async fetchKbBytes(manifest: KbManifest): Promise<Uint8Array> {
+    const configuredOrigin = new URL(this.baseUrl).origin;
+    const downloadUrl = new URL(manifest.url);
+    if (downloadUrl.origin !== configuredOrigin) {
+      throw new Error('bundle_url_origin_invalid');
+    }
+    const response = await this.authorizedFetch(downloadUrl.toString());
+    if (!response.ok) {
+      throw new Error(`GET bundle -> HTTP ${response.status}`);
+    }
+    return new Uint8Array(await response.arrayBuffer());
+  }
+
+  async fetchModelManifest(): Promise<RemoteModelManifest> {
+    return this.request<RemoteModelManifest>('/api/v1/sync/model');
   }
 
   async postTelemetry(events: TelemetryEvent[]): Promise<void> {
@@ -207,11 +271,9 @@ function buildConnectorFromConfig(): BackendConnector {
     const {config} = require('../config/loader') as typeof import('../config/loader');
     const backend = (config as any).backend;
     if (backend?.type === 'rest' && backend?.baseUrl) {
-      const headers: Record<string, string> = {};
-      if (backend.auth?.type === 'bearer' && backend.auth?.tokenUrl) {
-        headers.Authorization = `Bearer ${backend.auth.tokenUrl}`;
-      }
-      return new RestBackendConnector(backend.baseUrl, headers);
+      return new RestBackendConnector(backend.baseUrl, {
+        audience: backend.auth?.audience,
+      });
     }
   } catch {
     // fall through to mock
@@ -228,3 +290,5 @@ export function getBackendConnector(): BackendConnector {
 export function setBackendConnector(newConnector: BackendConnector): void {
   connector = newConnector;
 }
+import {getAccessToken} from './authProvider';
+import type {BundleManifest} from './bundleVerifier';

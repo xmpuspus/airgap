@@ -1,4 +1,5 @@
 src
+scripts
 test
 tsconfig.json
 jest.config.js

@@ -29,9 +29,7 @@ function isValidUrl(val: unknown): boolean {
   return typeof val === 'string' && URL_PATTERN.test(val);
 }
 
-export function validateConfig(
-  cfg: AirgapConfig,
-): {valid: boolean; errors: string[]} {
+export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: string[]} {
   const errors: string[] = [];
 
   // brand
@@ -62,7 +60,9 @@ export function validateConfig(
   }
   if (!ALLOWED_PROVIDERS.includes(cfg.model?.provider)) {
     errors.push(
-      `model.provider must be one of [${ALLOWED_PROVIDERS.join(', ')}], got "${cfg.model?.provider}"`,
+      `model.provider must be one of [${ALLOWED_PROVIDERS.join(', ')}], got "${
+        cfg.model?.provider
+      }"`,
     );
   }
 
@@ -110,7 +110,9 @@ export function validateConfig(
       }
     }
     if (cfg.privacy.privacyPolicyUrl !== undefined && !isValidUrl(cfg.privacy.privacyPolicyUrl)) {
-      errors.push(`privacy.privacyPolicyUrl must be a valid URL, got "${cfg.privacy.privacyPolicyUrl}"`);
+      errors.push(
+        `privacy.privacyPolicyUrl must be a valid URL, got "${cfg.privacy.privacyPolicyUrl}"`,
+      );
     }
   }
 
@@ -120,6 +122,45 @@ export function validateConfig(
     if (!validTypes.includes(cfg.auth.type)) {
       errors.push(`auth.type must be one of [${validTypes.join(', ')}], got "${cfg.auth.type}"`);
     }
+  }
+
+  // backend and cloud network paths
+  if (cfg.backend?.type === 'rest') {
+    if (!/^https:\/\/.+/.test(cfg.backend.baseUrl ?? '')) {
+      errors.push('backend.baseUrl must be an HTTPS URL for a REST backend');
+    }
+    if (cfg.backend.auth?.type !== 'provider') {
+      errors.push('backend.auth.type must be "provider" for a REST backend');
+    }
+    const publicKeys = cfg.backend.sync?.publicKeys;
+    if (!publicKeys || Object.keys(publicKeys).length === 0) {
+      errors.push('backend.sync.publicKeys must contain at least one pinned key');
+    } else {
+      for (const [keyId, publicKey] of Object.entries(publicKeys)) {
+        if (!/^[a-f0-9]{16}$/.test(keyId) || !/^[A-Za-z0-9+/]{43}=$/.test(publicKey)) {
+          errors.push(`backend.sync.publicKeys.${keyId} must be a raw Ed25519 key in base64`);
+        }
+      }
+    }
+  }
+  if (!['mock', 'rest'].includes(cfg.backend?.type)) {
+    errors.push('backend.type must be one of [mock, rest]');
+  }
+  if (
+    cfg.queue?.maxRetries !== undefined &&
+    (!Number.isInteger(cfg.queue.maxRetries) ||
+      cfg.queue.maxRetries < 1 ||
+      cfg.queue.maxRetries > 10)
+  ) {
+    errors.push('queue.maxRetries must be an integer from 1 through 10');
+  }
+
+  const cloud = cfg.llm?.cloud;
+  if (cloud?.endpoint && !/^https:\/\/.+/.test(cloud.endpoint)) {
+    errors.push('llm.cloud.endpoint must be an HTTPS URL');
+  }
+  if (cloud?.enabled && !cloud.endpoint && !(cfg.backend.type === 'rest' && cfg.backend.baseUrl)) {
+    errors.push('llm.cloud needs an endpoint or backend.baseUrl');
   }
 
   // i18n.strings

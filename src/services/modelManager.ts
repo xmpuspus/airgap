@@ -1,26 +1,24 @@
 import RNFS from 'react-native-fs';
 import {modelConfig, config} from '../config/loader';
 import {logger} from './logger';
-import {createKeyedMMKV} from './secretStore';
+import {getSecureStore} from './secureStorage';
 import {connectivityService} from './connectivityService';
+import {getBackendConnector, type RemoteModelManifest} from './backendConnector';
 
-const storage = createKeyedMMKV('model-manager');
+const modelStorage = () => getSecureStore('model-manager');
 const KEY_DOWNLOADED = 'model_downloaded';
 const KEY_LAST_UPDATE_CHECK = 'last_model_update_check';
 const KEY_REMOTE_SHA = 'remote_model_sha256';
 
-interface RemoteModelManifest {
-  version?: string;
-  filename?: string;
-  url?: string;
-  sha256?: string;
-  sizeBytes?: number;
-  publishedAt?: string;
-}
-
 export interface ModelUpdateResult {
   checked: boolean;
-  reason?: 'no_backend' | 'offline' | 'not_wifi' | 'not_yet_due' | 'already_current' | 'fetch_failed';
+  reason?:
+    | 'no_backend'
+    | 'offline'
+    | 'not_wifi'
+    | 'not_yet_due'
+    | 'already_current'
+    | 'fetch_failed';
   manifest?: RemoteModelManifest;
   hasUpdate?: boolean;
 }
@@ -47,10 +45,17 @@ class ModelManager {
   async isModelDownloaded(): Promise<boolean> {
     const exists = await RNFS.exists(this.getModelPath());
     if (!exists) {
-      storage.set(KEY_DOWNLOADED, false);
+      modelStorage().set(KEY_DOWNLOADED, false);
       return false;
     }
-    return true;
+    try {
+      await this.verifyChecksum(this.getModelPath());
+      modelStorage().set(KEY_DOWNLOADED, true);
+      return true;
+    } catch {
+      modelStorage().set(KEY_DOWNLOADED, false);
+      return false;
+    }
   }
 
   private async verifyChecksum(filePath: string): Promise<boolean> {
@@ -84,9 +89,7 @@ class ModelManager {
         actual,
       });
       await RNFS.unlink(filePath);
-      throw new Error(
-        `Model checksum mismatch: expected ${expected}, got ${actual}`,
-      );
+      throw new Error(`Model checksum mismatch: expected ${expected}, got ${actual}`);
     }
 
     logger.info('ModelManager', 'Checksum verified');
@@ -104,72 +107,43 @@ class ModelManager {
 
     const alreadyExists = await RNFS.exists(destPath);
     if (alreadyExists) {
-      storage.set(KEY_DOWNLOADED, true);
-      onProgress(1);
-      return;
+      if (await this.isModelDownloaded()) {
+        onProgress(1);
+        return;
+      }
     }
 
-    // Check for partial download to support resume
-    let resumeOffset = 0;
+    // A partial file has no trusted server resume contract. Restart it.
     const partialExists = await RNFS.exists(partialPath);
-    if (partialExists) {
-      const stat = await RNFS.stat(partialPath);
-      resumeOffset = Number(stat.size);
-      logger.info('ModelManager', 'Resuming download', {
-        bytesAlreadyDownloaded: resumeOffset,
-      });
-    }
+    if (partialExists) await RNFS.unlink(partialPath);
 
     const headers: Record<string, string> = {};
-    if (resumeOffset > 0) {
-      headers.Range = `bytes=${resumeOffset}-`;
-    }
 
     const {jobId, promise} = RNFS.downloadFile({
       fromUrl: modelConfig.url,
       toFile: partialPath,
       headers,
       progressDivider: 2,
-      begin: () => {
-        if (resumeOffset > 0) {
-          // Report approximate progress from resumed position. Prefer the
-          // exact sizeBytes when available (authoritative for integrity),
-          // otherwise fall back to sizeMB * 1024 * 1024 for display only.
-          const approxTotal =
-            modelConfig.sizeBytes ??
-            (modelConfig.sizeMB ?? 2445) * 1024 * 1024;
-          onProgress(resumeOffset / approxTotal);
-        } else {
-          onProgress(0);
-        }
-      },
+      begin: () => onProgress(0),
       progress: res => {
-        const totalBytes = res.contentLength + resumeOffset;
-        const writtenBytes = res.bytesWritten + resumeOffset;
-        const fraction = writtenBytes / totalBytes;
-        onProgress(fraction);
+        const fraction = res.contentLength > 0 ? res.bytesWritten / res.contentLength : 0;
+        const clamped = Math.max(0, Math.min(1, fraction));
+        onProgress(clamped);
       },
     });
 
     this.downloadJobId = jobId;
 
-    const result = await promise;
+    let result;
+    try {
+      result = await promise;
+    } finally {
+      this.downloadJobId = null;
+    }
 
-    this.downloadJobId = null;
-
-    // Accept 200 (full) and 206 (partial/resumed)
-    if (result.statusCode !== 200 && result.statusCode !== 206) {
-      const partialStillExists = await RNFS.exists(partialPath);
-      if (partialStillExists) {
-        // Keep partial file for future resume attempts
-        logger.warn('ModelManager', 'Download failed, keeping partial file for resume', {
-          statusCode: result.statusCode,
-          partialBytes: resumeOffset,
-        });
-      }
-      throw new Error(
-        `Model download failed with status ${result.statusCode}`,
-      );
+    if (result.statusCode !== 200) {
+      await RNFS.unlink(partialPath).catch(() => undefined);
+      throw new Error(`Model download failed with status ${result.statusCode}`);
     }
 
     // Verify checksum before promoting partial to final
@@ -179,7 +153,7 @@ class ModelManager {
     await RNFS.moveFile(partialPath, destPath);
     logger.info('ModelManager', 'Model download complete', {path: destPath});
 
-    storage.set(KEY_DOWNLOADED, true);
+    modelStorage().set(KEY_DOWNLOADED, true);
     onProgress(1);
   }
 
@@ -197,7 +171,7 @@ class ModelManager {
       await RNFS.unlink(partialPath);
     }
 
-    storage.set(KEY_DOWNLOADED, false);
+    modelStorage().set(KEY_DOWNLOADED, false);
     logger.info('ModelManager', 'Model deleted');
   }
 
@@ -243,7 +217,7 @@ class ModelManager {
         return {checked: false, reason: 'not_wifi'};
       }
       // Throttle: don't poll more than once per 6 hours unless forced.
-      const last = storage.getNumber(KEY_LAST_UPDATE_CHECK) ?? 0;
+      const last = modelStorage().getNumber(KEY_LAST_UPDATE_CHECK) ?? 0;
       const SIX_HOURS = 6 * 60 * 60 * 1000;
       if (last && Date.now() - last < SIX_HOURS) {
         return {checked: false, reason: 'not_yet_due'};
@@ -251,17 +225,17 @@ class ModelManager {
     }
 
     try {
-      const res = await fetch(`${baseUrl}/api/v1/sync/model`);
-      if (!res.ok) {
+      const connector = getBackendConnector();
+      if (!connector.fetchModelManifest) {
         return {checked: false, reason: 'fetch_failed'};
       }
-      const manifest = (await res.json()) as RemoteModelManifest;
-      storage.set(KEY_LAST_UPDATE_CHECK, Date.now());
+      const manifest = await connector.fetchModelManifest();
+      modelStorage().set(KEY_LAST_UPDATE_CHECK, Date.now());
 
       const localSha = modelConfig.sha256;
       const remoteSha = manifest.sha256;
       const hasUpdate = !!remoteSha && !!localSha && remoteSha !== localSha;
-      if (remoteSha) storage.set(KEY_REMOTE_SHA, remoteSha);
+      if (remoteSha) modelStorage().set(KEY_REMOTE_SHA, remoteSha);
 
       logger.info('ModelManager', 'Model update check complete', {
         localSha: localSha?.substring(0, 12),
@@ -303,20 +277,30 @@ class ModelManager {
     const previousPath = `${finalPath}.previous.gguf`;
 
     try {
+      const oldUpdateExists = await RNFS.exists(updatePath);
+      if (oldUpdateExists) await RNFS.unlink(updatePath);
       const {promise} = RNFS.downloadFile({
         fromUrl: manifest.url,
         toFile: updatePath,
         progressDivider: 5,
         progress: res => {
           if (onProgress && res.contentLength > 0) {
-            onProgress(res.bytesWritten / res.contentLength);
+            onProgress(Math.max(0, Math.min(1, res.bytesWritten / res.contentLength)));
           }
         },
       });
       const result = await promise;
-      if (result.statusCode !== 200 && result.statusCode !== 206) {
+      if (result.statusCode !== 200) {
         await RNFS.unlink(updatePath).catch(() => undefined);
         return {ok: false, error: `HTTP ${result.statusCode}`};
+      }
+
+      if (manifest.sizeBytes) {
+        const stat = await RNFS.stat(updatePath);
+        if (Number(stat.size) !== manifest.sizeBytes) {
+          await RNFS.unlink(updatePath).catch(() => undefined);
+          return {ok: false, error: 'model_size_invalid'};
+        }
       }
 
       // Verify SHA before swap.

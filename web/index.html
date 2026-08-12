@@ -1,84 +1,252 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Airgap, the offline-first AI support framework</title>
-    <meta name="description" content="An MIT-licensed React Native framework for shipping offline-first customer support apps. One config file. Seven industry templates. Real recordings, no fake mockups." />
+    <title>Airgap | Offline-first mobile support</title>
+    <meta
+      name="description"
+      content="Airgap is an MIT-licensed React Native starter kit for offline-first mobile customer support, with local knowledge, visible answer sources, signed updates, and seven industry templates." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="masthead">
-      <div class="container">
-        <h1 class="brand">Airgap</h1>
-        <p class="lede">
-          Offline-first customer support, configured by one JSON file. Seven industry templates ship in this repo.
-          Pick one below to see the brand, theme, knowledge base stats, and the actual recorded chat for that vertical.
-        </p>
-        <div class="links">
-          <a class="link" href="https://github.com/xmpuspus/airgap" target="_blank" rel="noopener">View on GitHub</a>
-          <a class="link" href="https://github.com/xmpuspus/airgap/blob/main/README.md" target="_blank" rel="noopener">README</a>
-        </div>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="wordmark" href="#top" aria-label="Airgap home">
+          <span class="wordmark-mark" aria-hidden="true">A</span>
+          <span>Airgap</span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="#how-it-works">How it works</a>
+          <a href="#templates">Templates</a>
+          <a href="#boundaries">Boundaries</a>
+          <a href="https://github.com/xmpuspus/airgap">GitHub</a>
+        </nav>
       </div>
     </header>
 
-    <main class="container">
-      <section class="picker" aria-label="Industry switcher">
-        <label for="vertical" class="picker-label">Industry template</label>
-        <select id="vertical" aria-label="Choose an industry"></select>
-        <p class="picker-hint">Switching the dropdown swaps everything below: branding, theme, KB stats, recorded chat. The framework code is identical for every vertical.</p>
-      </section>
-
-      <section class="grid" aria-live="polite">
-        <article class="card brand-card">
-          <h2 class="card-title">Brand</h2>
-          <dl class="brand-meta">
-            <dt>Company</dt>
-            <dd id="brand-name"></dd>
-            <dt>Bot</dt>
-            <dd id="bot-name"></dd>
-            <dt>Tagline</dt>
-            <dd id="brand-tagline"></dd>
-            <dt>Region</dt>
-            <dd id="brand-region"></dd>
-            <dt>KB documents</dt>
-            <dd id="kb-count"></dd>
-            <dt>Tools wired</dt>
-            <dd id="tool-count"></dd>
-          </dl>
-        </article>
-
-        <article class="card theme-card">
-          <h2 class="card-title">Theme</h2>
-          <ul class="swatch-list" id="swatches"></ul>
-          <p class="card-hint">Operators set these in <code>theme</code> on <code>airgap.config.json</code>. The mobile app reads them at startup.</p>
-        </article>
-
-        <article class="card config-card">
-          <h2 class="card-title">Condensed config</h2>
-          <pre><code id="config-snippet"></code></pre>
-          <p class="card-hint">Full schema: <code>airgap.schema.json</code>. This is the brand and theme slice plus the LLM mode.</p>
-        </article>
-
-        <article class="card phone-card">
-          <h2 class="card-title">Recorded chat</h2>
-          <div class="phone" aria-live="polite">
-            <div class="phone-bezel">
-              <div class="phone-notch" aria-hidden="true"></div>
-              <img id="phone-gif" alt="" />
+    <main id="main-content">
+      <section class="hero" id="top">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">React Native starter kit</p>
+            <h1>Customer support that keeps working when the network does not.</h1>
+            <p class="lede">
+              Airgap combines local knowledge retrieval, visible answer sources, on-device
+              generation, and a durable action outbox. Start in demo mode with no model download or
+              network request.
+            </p>
+            <div class="state-list" aria-label="Supported operating states">
+              <span>Demo</span>
+              <span>Local</span>
+              <span>Cloud</span>
+              <span>Offline</span>
+            </div>
+            <div class="install-card">
+              <p>Build a telco support app from the checked source package</p>
+              <code>npx create-airgap-bot support-app --template telco</code>
+            </div>
+            <div class="hero-actions">
+              <a
+                class="button primary"
+                href="https://github.com/xmpuspus/airgap#install-from-source"
+                >Install from source</a
+              >
+              <a
+                class="button secondary"
+                href="https://github.com/xmpuspus/airgap/blob/main/ROADMAP.md"
+                >Read the roadmap</a
+              >
             </div>
           </div>
-          <p class="card-hint">This GIF is a real recording from the Android emulator running the framework with the selected industry's config. Not a CSS mockup.</p>
-        </article>
+
+          <div class="product-preview" aria-label="Airgap recorded app and answer source example">
+            <div class="phone-shell">
+              <img
+                src="assets/gifs/airgap-demo.gif"
+                alt="Airgap running a customer support conversation on Android" />
+            </div>
+            <aside class="answer-provenance">
+              <p class="provenance-label">Answer source</p>
+              <strong>Local knowledge</strong>
+              <dl>
+                <div>
+                  <dt>Knowledge version</dt>
+                  <dd>telco-2026.08</dd>
+                </div>
+                <div>
+                  <dt>Documents</dt>
+                  <dd>Plans, billing</dd>
+                </div>
+                <div>
+                  <dt>Network</dt>
+                  <dd>Not used</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+        </div>
       </section>
 
-      <section class="footer-strip">
-        <p>
-          Want to ship your own? <code>npx create-airgap-bot &lt;name&gt; --template &lt;industry&gt;</code>
-          (coming once the scaffolder package lands). For now, fork the repo, copy <code>examples/&lt;industry&gt;/</code> over the defaults, and run <code>npx react-native run-android</code>.
-        </p>
+      <section class="trust-bar" aria-label="Project facts">
+        <div class="container trust-grid">
+          <p><strong>MIT</strong><span>licensed</span></p>
+          <p><strong>7</strong><span>industry templates</span></p>
+          <p><strong>Android + iOS</strong><span>React Native targets</span></p>
+          <p><strong>Ed25519</strong><span>Signed knowledge updates</span></p>
+        </div>
+      </section>
+
+      <section class="section" id="how-it-works">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">How it works</p>
+            <h2>One support path, with each boundary visible.</h2>
+            <p>
+              The app retrieves local documents before it generates an answer. Network actions and
+              content updates use separate authenticated paths.
+            </p>
+          </div>
+          <ol class="system-flow">
+            <li>
+              <span>01</span>
+              <h3>Retrieve</h3>
+              <p>MiniSearch selects relevant local documents from the active template.</p>
+            </li>
+            <li>
+              <span>02</span>
+              <h3>Respond</h3>
+              <p>Demo, local, or cloud generation uses the same grounded context.</p>
+            </li>
+            <li>
+              <span>03</span>
+              <h3>Explain</h3>
+              <p>The conversation shows its source, knowledge version, and evidence.</p>
+            </li>
+            <li>
+              <span>04</span>
+              <h3>Recover</h3>
+              <p>Network actions wait in an encrypted outbox with Retry and Remove controls.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section-muted" id="templates">
+        <div class="container">
+          <div class="section-heading split-heading">
+            <div>
+              <p class="eyebrow">Included templates</p>
+              <h2>Change the domain, not the runtime.</h2>
+            </div>
+            <p>
+              Each template includes its own brand, support prompts, tools, safety rules, and local
+              knowledge documents.
+            </p>
+          </div>
+
+          <div class="template-picker">
+            <label for="vertical">Choose a template</label>
+            <select id="vertical" aria-describedby="template-help"></select>
+            <p id="template-help">The details and recorded Android flow update below.</p>
+            <p id="template-status" class="sr-only" aria-live="polite"></p>
+          </div>
+
+          <div class="template-grid">
+            <article class="data-card">
+              <p class="card-label">Template facts</p>
+              <dl class="brand-meta">
+                <dt>Company</dt>
+                <dd id="brand-name"></dd>
+                <dt>Assistant</dt>
+                <dd id="bot-name"></dd>
+                <dt>Purpose</dt>
+                <dd id="brand-tagline"></dd>
+                <dt>Region</dt>
+                <dd id="brand-region"></dd>
+                <dt>Documents</dt>
+                <dd id="kb-count"></dd>
+                <dt>Tools</dt>
+                <dd id="tool-count"></dd>
+              </dl>
+              <ul class="swatch-list" id="swatches" aria-label="Template colors"></ul>
+            </article>
+
+            <article class="recording-card">
+              <p class="card-label">Recorded Android flow</p>
+              <div class="recording-frame">
+                <img id="phone-gif" alt="" />
+              </div>
+              <p>Captured from the mobile app with the selected template configuration.</p>
+            </article>
+
+            <article class="config-card">
+              <p class="card-label">Configuration excerpt</p>
+              <pre><code id="config-snippet"></code></pre>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="boundaries">
+        <div class="container boundary-grid">
+          <div class="section-heading">
+            <p class="eyebrow">Production boundary</p>
+            <h2>Useful defaults without hidden infrastructure claims.</h2>
+            <p>
+              Airgap supplies the mobile client and a reference Node server. An operator still owns
+              identity, authorization, model hosting, monitoring, and the systems that perform
+              account changes.
+            </p>
+          </div>
+          <div class="boundary-cards">
+            <article>
+              <h3>Checked in the repository</h3>
+              <ul>
+                <li>Platform-protected keys for encrypted app stores</li>
+                <li>Exact hash and Ed25519 checks before knowledge swaps</li>
+                <li>Fresh access tokens for authenticated requests</li>
+                <li>Bounded request bodies and reference rate limits</li>
+              </ul>
+            </article>
+            <article>
+              <h3>Required from an operator</h3>
+              <ul>
+                <li>An access-token provider and authorization policy</li>
+                <li>Private signing keys and a trusted model source</li>
+                <li>A production backend for real account actions</li>
+                <li>Device, accessibility, security, and domain validation</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container cta-inner">
+          <div>
+            <p class="eyebrow">Start with the offline demo</p>
+            <h2>Inspect the code, run the tests, then connect your systems.</h2>
+          </div>
+          <a class="button light" href="https://github.com/xmpuspus/airgap">Open the repository</a>
+        </div>
       </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>
+          Airgap is maintained by <a href="https://github.com/xmpuspus">Xavier Puspus</a> under the
+          MIT License.
+        </p>
+        <nav aria-label="Project links">
+          <a href="https://github.com/xmpuspus/airgap/issues">Issues</a>
+          <a href="https://github.com/xmpuspus/airgap/blob/main/SUPPORT.md">Support</a>
+          <a href="https://github.com/xmpuspus/airgap/security/advisories/new">Security</a>
+        </nav>
+      </div>
+    </footer>
 
     <script src="app.js"></script>
   </body>

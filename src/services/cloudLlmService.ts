@@ -27,6 +27,7 @@
 import {config} from '../config/loader';
 import {logger} from './logger';
 import {connectivityService} from './connectivityService';
+import {getAccessToken} from './authProvider';
 
 interface CloudGenerateResponse {
   text: string;
@@ -67,16 +68,13 @@ function cacheSet(key: string, text: string): void {
   }
 }
 
-class CloudLLMService {
+export class CloudLLMService {
   private generating = false;
 
   isAvailable(): boolean {
     const llm = (config as any).llm;
     const backend = (config as any).backend;
-    return !!(
-      llm?.cloud?.enabled &&
-      (llm?.cloud?.endpoint || backend?.baseUrl)
-    );
+    return !!(llm?.cloud?.enabled && (llm?.cloud?.endpoint || backend?.baseUrl));
   }
 
   private getEndpoint(): string | null {
@@ -121,16 +119,27 @@ class CloudLLMService {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
       };
-      if (llm.cloud?.bearerToken) {
-        headers.Authorization = `Bearer ${llm.cloud.bearerToken}`;
-      }
+      const token = await getAccessToken(llm.cloud?.audience ?? 'airgap-cloud');
+      headers.Authorization = `Bearer ${token}`;
       const body = JSON.stringify({
         system: systemPrompt,
         user: userMessage,
         maxTokens: llm.cloud?.maxTokens ?? 512,
         temperature: llm.cloud?.temperature ?? 0.3,
       });
-      const res = await fetch(endpoint, {method: 'POST', headers, body});
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30_000);
+      let res: Response;
+      try {
+        res = await fetch(endpoint, {
+          method: 'POST',
+          headers,
+          body,
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeout);
+      }
       if (!res.ok) {
         throw new Error(`cloud LLM HTTP ${res.status}`);
       }

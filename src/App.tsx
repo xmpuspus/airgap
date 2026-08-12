@@ -19,10 +19,10 @@ import {ErrorBoundary} from './components/common/ErrorBoundary';
 import ChatScreen from './screens/ChatScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import OutboxScreen from './screens/OutboxScreen';
 import {StalenessChip} from './components/common/StalenessChip';
-import {createMMKV} from 'react-native-mmkv';
+import {getSecureStore, initializeSecureStorage} from './services/secureStorage';
 
-const storage = createMMKV({id: 'app-state'});
 const Stack = createNativeStackNavigator();
 
 function HeaderTitle() {
@@ -62,100 +62,160 @@ function SettingsButton({onPress}: {onPress: () => void}) {
   );
 }
 
+function HeaderActions({onOutbox, onSettings}: {onOutbox: () => void; onSettings: () => void}) {
+  return (
+    <View style={headerStyles.actions}>
+      <TouchableOpacity
+        style={headerStyles.outboxButton}
+        onPress={onOutbox}
+        accessibilityLabel="Open Outbox"
+        accessibilityRole="button">
+        <Text style={headerStyles.outboxText}>Outbox</Text>
+      </TouchableOpacity>
+      <SettingsButton onPress={onSettings} />
+    </View>
+  );
+}
+
 export default function App() {
   const [hasOnboarded, setHasOnboarded] = useState<boolean | null>(null);
+  const [startupError, setStartupError] = useState<string | null>(null);
 
   useEffect(() => {
-    const onboarded = storage.getBoolean('has_onboarded') ?? false;
-    setHasOnboarded(onboarded);
-    // Boot-time KB bootstrap: if a previously-downloaded bundle is on disk,
-    // rebuild the MiniSearch index from it BEFORE the scheduler kicks off
-    // a new sync. On any failure we fall back to the compiled-in KB so the
-    // app is always usable.
-    loadBundleIntoKnowledge()
-      .catch(() => undefined)
-      .finally(() => {
-        // Sync + telemetry are no-ops when backend.type is 'mock' — the
-        // individual services gate their own side effects on baseUrl presence.
+    let active = true;
+
+    async function startApplication() {
+      try {
+        await initializeSecureStorage();
+        if (!active) return;
+
+        const onboarded = getSecureStore('app-state').getBoolean('has_onboarded') ?? false;
+        setHasOnboarded(onboarded);
+
+        await loadBundleIntoKnowledge().catch(() => undefined);
+        if (!active) return;
+
         startSyncScheduler();
         startTelemetryFlusher();
-        // Wi-Fi-gated background poll for model updates. Throttled to once
-        // per 6 hours and silent on cellular — never burns mobile data.
-        modelManager
-          .checkForUpdate()
-          .catch(() => undefined);
-      });
+        modelManager.checkForUpdate().catch(() => undefined);
+      } catch {
+        if (active) {
+          setStartupError('Secure storage is unavailable. Unlock the device and restart Airgap.');
+        }
+      }
+    }
+
+    startApplication();
     return () => {
+      active = false;
       stopSyncScheduler();
       connectivityService.destroy();
     };
   }, []);
 
   const completeOnboarding = () => {
-    storage.set('has_onboarded', true);
+    getSecureStore('app-state').set('has_onboarded', true);
     setHasOnboarded(true);
   };
+
+  if (startupError) {
+    return (
+      <SafeAreaProvider>
+        <View style={startupStyles.screen} accessibilityRole="alert">
+          <Text style={startupStyles.title}>Airgap could not start</Text>
+          <Text style={startupStyles.message}>{startupError}</Text>
+        </View>
+      </SafeAreaProvider>
+    );
+  }
 
   if (hasOnboarded === null) return null;
 
   return (
     <ErrorBoundary>
       <ThemeProvider>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName={hasOnboarded ? 'Chat' : 'Onboarding'}
-            screenOptions={{
-              headerStyle: {backgroundColor: COLORS.primary},
-              headerTintColor: COLORS.textInverse,
-              headerTitleStyle: {fontWeight: '600'},
-              headerShadowVisible: false,
-            }}>
-            <Stack.Screen
-              name="Onboarding"
-              options={{headerShown: false}}>
-              {(props: any) => (
-                <OnboardingScreen
-                  {...props}
-                  onComplete={completeOnboarding}
-                />
-              )}
-            </Stack.Screen>
-            <Stack.Screen
-              name="Chat"
-              component={ChatScreen as any}
-              options={({navigation}: any) => ({
-                /* eslint-disable react/no-unstable-nested-components --
-                 * React Navigation's headerTitle/headerRight options expect
-                 * factory functions that return JSX. The factory is called
-                 * by the navigator, not by our render loop, so the
-                 * "unstable component" concern does not apply. */
-                headerTitle: () => <HeaderTitle />,
-                headerRight: () => (
-                  <SettingsButton
-                    onPress={() => navigation.navigate('Settings')}
-                  />
-                ),
-                /* eslint-enable react/no-unstable-nested-components */
-              })}
-            />
-            <Stack.Screen
-              name="Settings"
-              component={SettingsScreen as any}
-              options={{
-                title: 'Settings',
-                headerBackTitle: 'Back',
-              }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName={hasOnboarded ? 'Chat' : 'Onboarding'}
+              screenOptions={{
+                headerStyle: {backgroundColor: '#0B1F33'},
+                headerTintColor: COLORS.textInverse,
+                headerTitleStyle: {fontWeight: '600'},
+                headerShadowVisible: false,
+              }}>
+              <Stack.Screen name="Onboarding" options={{headerShown: false}}>
+                {(props: any) => <OnboardingScreen {...props} onComplete={completeOnboarding} />}
+              </Stack.Screen>
+              <Stack.Screen
+                name="Chat"
+                component={ChatScreen as any}
+                options={({navigation}: any) => ({
+                  /* eslint-disable react/no-unstable-nested-components --
+                   * React Navigation's headerTitle/headerRight options expect
+                   * factory functions that return JSX. The factory is called
+                   * by the navigator, not by our render loop, so the
+                   * "unstable component" concern does not apply. */
+                  headerTitle: () => <HeaderTitle />,
+                  headerRight: () => (
+                    <HeaderActions
+                      onOutbox={() => navigation.navigate('Outbox')}
+                      onSettings={() => navigation.navigate('Settings')}
+                    />
+                  ),
+                  /* eslint-enable react/no-unstable-nested-components */
+                })}
+              />
+              <Stack.Screen
+                name="Outbox"
+                component={OutboxScreen as any}
+                options={{title: 'Outbox', headerBackTitle: 'Back'}}
+              />
+              <Stack.Screen
+                name="Settings"
+                component={SettingsScreen as any}
+                options={{
+                  title: 'Settings',
+                  headerBackTitle: 'Back',
+                }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
 }
 
+const startupStyles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: SPACING.xl,
+    backgroundColor: COLORS.background,
+  },
+  title: {
+    ...TYPOGRAPHY.heading,
+    color: COLORS.text,
+    marginBottom: SPACING.sm,
+    textAlign: 'center',
+  },
+  message: {
+    ...TYPOGRAPHY.body,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+  },
+});
+
 const headerStyles = StyleSheet.create({
+  actions: {flexDirection: 'row', alignItems: 'center', gap: SPACING.xs},
+  outboxButton: {
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: SPACING.sm,
+  },
+  outboxText: {...TYPOGRAPHY.caption, color: '#FFFFFF', fontWeight: '700'},
   titleRow: {
     flexDirection: 'row',
     alignItems: 'center',

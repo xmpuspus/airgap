@@ -40,11 +40,7 @@
     "maxTokens": 256,
     "temperature": 0.3,
     "topP": 0.9,
-    "stopTokens": [
-      "<end_of_turn>",
-      "<eos>",
-      "</s>"
-    ],
+    "stopTokens": ["<end_of_turn>", "<eos>", "</s>"],
     "gpuLayers": 99,
     "threads": 4
   },
@@ -159,11 +155,7 @@
     {
       "id": "outage_check",
       "label": "Check outage status",
-      "keywords": [
-        "outage status",
-        "service outage",
-        "outage in my area"
-      ],
+      "keywords": ["outage status", "service outage", "outage in my area"],
       "requiresOnline": true,
       "category": "network",
       "mockResponse": "No service outages are currently reported in your area. If you're still experiencing issues, I can help troubleshoot."
@@ -184,12 +176,7 @@
     }
   ],
   "backend": {
-    "type": "mock",
-    "baseUrl": "",
-    "auth": {
-      "type": "none"
-    },
-    "endpoints": {}
+    "type": "mock"
   },
   "support": [
     {
@@ -241,12 +228,7 @@
     {
       "name": "checkBalance",
       "description": "Look up the caller's balance, data remaining, and active promo",
-      "keywords": [
-        "my balance",
-        "my bill amount",
-        "my data usage",
-        "check my usage"
-      ],
+      "keywords": ["my balance", "my bill amount", "my data usage", "check my usage"],
       "offlineQueueEligible": true,
       "stateChanging": false,
       "vertical": "telco",
@@ -255,11 +237,7 @@
     {
       "name": "reportOutage",
       "description": "Check for a service outage in the caller's area",
-      "keywords": [
-        "outage status",
-        "service outage",
-        "outage in my area"
-      ],
+      "keywords": ["outage status", "service outage", "outage in my area"],
       "offlineQueueEligible": true,
       "stateChanging": false,
       "vertical": "telco",
@@ -268,11 +246,7 @@
     {
       "name": "createTicket",
       "description": "Open a support ticket",
-      "keywords": [
-        "create a ticket",
-        "file a complaint",
-        "support ticket"
-      ],
+      "keywords": ["create a ticket", "file a complaint", "support ticket"],
       "offlineQueueEligible": true,
       "stateChanging": true,
       "vertical": "telco",
@@ -281,12 +255,7 @@
     {
       "name": "activateAddon",
       "description": "Activate a data or voice add-on on the caller's plan",
-      "keywords": [
-        "activate addon",
-        "activate add-on",
-        "change my plan",
-        "upgrade my plan"
-      ],
+      "keywords": ["activate addon", "activate add-on", "change my plan", "upgrade my plan"],
       "offlineQueueEligible": true,
       "stateChanging": true,
       "vertical": "telco",
@@ -295,11 +264,7 @@
     {
       "name": "scheduleCallback",
       "description": "Schedule a callback from support",
-      "keywords": [
-        "call me back",
-        "schedule callback",
-        "request a callback"
-      ],
+      "keywords": ["call me back", "schedule callback", "request a callback"],
       "offlineQueueEligible": true,
       "stateChanging": true,
       "vertical": "telco",

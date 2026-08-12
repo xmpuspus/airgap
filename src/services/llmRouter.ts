@@ -9,7 +9,7 @@ import {cloudLlmService} from './cloudLlmService';
 import {demoLlmService} from './demoLlmService';
 import {connectivityService} from './connectivityService';
 import {logger} from './logger';
-import {createMMKV} from 'react-native-mmkv';
+import {getSecureStore} from './secureStorage';
 
 export type Mode = 'offline-only' | 'prefer-online' | 'prefer-offline' | 'demo';
 export type UserMode = Exclude<Mode, 'demo'>;
@@ -29,7 +29,7 @@ function isUserMode(value: unknown): value is UserMode {
   return isMode(value) && value !== 'demo';
 }
 
-const userPrefs = createMMKV({id: 'user-prefs'});
+const userPreferences = () => getSecureStore('user-prefs');
 const USER_LLM_MODE_KEY = 'user-llm-mode';
 
 // Pure resolver. Exposed so tests can pump synthetic `llm` blocks through
@@ -47,17 +47,17 @@ export function getConfigMode(): Mode {
 export function getMode(): Mode {
   const configMode = getConfigMode();
   if (configMode === 'demo') return 'demo';
-  const override = userPrefs.getString(USER_LLM_MODE_KEY);
+  const override = userPreferences().getString(USER_LLM_MODE_KEY);
   return isUserMode(override) ? override : configMode;
 }
 
 export function setUserMode(mode: UserMode | null): void {
   if (mode === null) {
-    userPrefs.remove(USER_LLM_MODE_KEY);
+    userPreferences().remove(USER_LLM_MODE_KEY);
     return;
   }
   if (isUserMode(mode)) {
-    userPrefs.set(USER_LLM_MODE_KEY, mode);
+    userPreferences().set(USER_LLM_MODE_KEY, mode);
   }
 }
 

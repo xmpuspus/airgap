@@ -37,7 +37,7 @@ export interface LlmSection {
   cloud?: {
     enabled?: boolean;
     endpoint?: string;
-    bearerToken?: string;
+    audience?: string;
     maxTokens?: number;
     temperature?: number;
   };
@@ -55,6 +55,7 @@ export interface AirgapConfig {
   quickReplies: QuickReplyItem[];
   actions: ActionItem[];
   backend: BackendSection;
+  queue?: QueueSection;
   support: SupportChannel[];
   locale: LocaleSection;
   privacy?: PrivacySection;
@@ -171,15 +172,19 @@ export interface ActionItem {
 }
 
 export interface BackendSection {
-  type: 'mock' | 'rest' | 'graphql';
+  type: 'mock' | 'rest';
   baseUrl?: string;
   auth?: {
-    type: 'none' | 'bearer' | 'oauth2';
-    tokenUrl?: string;
-    clientId?: string;
-    scope?: string;
+    type: 'none' | 'provider';
+    audience?: string;
   };
-  endpoints?: Record<string, {url: string; method: string}>;
+  sync?: {
+    publicKeys: Record<string, string>;
+  };
+}
+
+export interface QueueSection {
+  maxRetries?: number;
 }
 
 export interface SupportChannel {
@@ -270,6 +275,10 @@ function applyDefaults(raw: any): AirgapConfig {
       enabled: false,
       ...raw.analytics,
     },
+    queue: {
+      maxRetries: 3,
+      ...raw.queue,
+    },
     auth: {
       enabled: false,
       type: 'pin',
@@ -280,18 +289,11 @@ function applyDefaults(raw: any): AirgapConfig {
 
 // === Template interpolation ===
 
-export function interpolate(
-  template: string,
-  config: AirgapConfig,
-): string {
-  const featureList = config.onboarding?.features
-    ?.map(f => `- ${f}`)
-    .join('\n') ?? '';
+export function interpolate(template: string, config: AirgapConfig): string {
+  const featureList = config.onboarding?.features?.map(f => `- ${f}`).join('\n') ?? '';
 
   const sizeMB = config.model.sizeMB ?? 2445;
-  const modelSize = sizeMB >= 1024
-    ? `~${(sizeMB / 1024).toFixed(1)} GB`
-    : `~${sizeMB} MB`;
+  const modelSize = sizeMB >= 1024 ? `~${(sizeMB / 1024).toFixed(1)} GB` : `~${sizeMB} MB`;
 
   const vars: Record<string, string> = {
     botName: config.brand.botName,

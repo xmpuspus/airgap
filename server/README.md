@@ -1,84 +1,92 @@
-# Airgap Reference BFF
+# The Airgap reference server protects sync routes
 
-A tiny reference implementation of the Airgap sync + telemetry backend. Use
-this to prove out the sync pipeline during development, then replace with
-your own production implementation (FastAPI, Spring, Rails, whatever you
-already run) while keeping the same endpoints.
+This Node server gives the Airgap mobile app its network boundary.
+It serves knowledge and model metadata, returns signed knowledge bytes, and
+accepts bounded telemetry batches. Use it for local evaluation and as a small
+contract reference for a production service.
 
-## Responsibilities
+## Four routes need a bearer token
 
-The device talks to a single backend for four concerns:
+| Method | Route                      | Purpose                            |
+| ------ | -------------------------- | ---------------------------------- |
+| `GET`  | `/healthz`                 | Public process and knowledge check |
+| `GET`  | `/api/v1/sync/kb`          | Current knowledge manifest         |
+| `GET`  | `/api/v1/sync/kb/download` | Exact signed knowledge bytes       |
+| `GET`  | `/api/v1/sync/model`       | Current local-model metadata       |
+| `POST` | `/api/v1/telemetry`        | Bounded telemetry ingestion        |
 
-1. **`GET /api/v1/sync/kb`** — knowledge base manifest (current version,
-   download URL, sha256, ed25519 signature)
-2. **`GET /api/v1/sync/kb/download`** — signed KB bundle (zipped JSON)
-3. **`GET /api/v1/sync/model`** — LLM model manifest (version, sha256, size)
-4. **`POST /api/v1/telemetry`** — audit log ingestion (query hashes, doc
-   IDs, tool calls, confidence, refusal reasons)
+Every `/api/v1` request needs the bearer token set in
+`BFF_AUTH_TOKEN`. The health route stays public for container and load-balancer
+checks.
 
-The device never learns the signing private key. The signing key lives on
-the BFF (or on a separate signing service — the BFF should be able to fetch
-signatures, not forge them).
+## A local process uses an environment token
 
-## Dependencies
-
-Intentionally zero runtime dependencies beyond Node's standard library and
-the shipped Node crypto module. No Express, no Fastify. The server is a
-single `index.mjs` file that anyone can read in five minutes.
-
-## Running it
+Use a random token with at least 24 characters. Do not commit it.
 
 ```bash
-cd server
-node index.mjs --port 3000 --kb-root ../src/knowledge --keypair .keys/ed25519.json
+export BFF_AUTH_TOKEN="replace-with-a-random-development-token"
+node server/index.mjs \
+  --port 3000 \
+  --kb-root src/knowledge \
+  --keypair tmp/airgap-bff/ed25519.json \
+  --telemetry-log tmp/airgap-bff/telemetry.jsonl
 ```
 
-Options:
+The server prints the new public key on first start. Keep the private key
+file outside source control and restrict it to the service account that signs
+knowledge releases.
 
-| Flag | Purpose | Default |
-|---|---|---|
-| `--port <n>` | HTTP port | 3000 |
-| `--kb-root <path>` | Directory of KB JSON files to publish | `../src/knowledge` |
-| `--kb-version <v>` | Override auto-computed version string | ISO timestamp of last mtime |
-| `--keypair <path>` | Path to ed25519 keypair JSON | `./.keys/ed25519.json` |
-| `--model-manifest <path>` | Path to a JSON file with model metadata | `./model.json` |
-| `--telemetry-log <path>` | Append telemetry events here | `./telemetry.jsonl` |
+### Configuration
 
-Generate a keypair before first run:
+| Setting                                | Purpose                                       | Default                |
+| -------------------------------------- | --------------------------------------------- | ---------------------- |
+| `BFF_AUTH_TOKEN`                       | Required bearer token, at least 24 characters | none                   |
+| `BFF_RATE_LIMIT`                       | Authorized requests allowed per client window | `60`                   |
+| `BFF_RATE_WINDOW_MS`                   | Fixed rate window in milliseconds             | `60000`                |
+| `PORT` or `--port`                     | HTTP port                                     | `3000`                 |
+| `KB_ROOT` or `--kb-root`               | Directory containing knowledge JSON           | `../src/knowledge`     |
+| `KB_VERSION` or `--kb-version`         | Published knowledge version override          | latest file time       |
+| `KEYPAIR` or `--keypair`               | Ed25519 keypair JSON path                     | `./.keys/ed25519.json` |
+| `MODEL_MANIFEST` or `--model-manifest` | Model metadata JSON path                      | `./model.json`         |
+| `TELEMETRY_LOG` or `--telemetry-log`   | Telemetry JSONL path                          | `./telemetry.jsonl`    |
+
+## Curl can read the signed manifest
 
 ```bash
-node scripts/keygen.mjs > .keys/ed25519.json
+curl \
+  -H "Authorization: Bearer $BFF_AUTH_TOKEN" \
+  http://127.0.0.1:3000/api/v1/sync/kb
 ```
 
-Then copy the `publicKey` field into every airgap.config.json that should
-talk to this BFF as `backend.syncPublicKey`.
+Authorized responses include `RateLimit-Limit`, `RateLimit-Remaining`, and
+`RateLimit-Reset`. A client over the limit receives `429` and `Retry-After`.
+The server accepts request bodies up to 256 KB. It rejects requests with an
+`Origin` header because this service is not a browser API.
 
-## Security model
+## Production needs external identity and storage services
 
-- Every KB bundle is ed25519 signed by the BFF. The device has the public
-  key pinned in its config and refuses bundles with invalid signatures.
-- The device does NOT trust the `url` field in the manifest for validation:
-  it verifies the sha256 of the downloaded file against the manifest sha256.
-- Telemetry is append-only. The reference BFF writes JSONL, production
-  would forward to a real log sink (Cloud Logging, Splunk, etc).
-- CORS is locked down — the device does not use browser clients, so the
-  server rejects all `Origin` headers.
-- The endpoints are intentionally stateless. Horizontal scaling is a
-  load-balancer-and-signature-key-rotation problem, not a code problem.
+This reference server is not a production identity system or durable telemetry
+service. Its bearer token is a single shared development credential. Its rate
+buckets live in one process, and its telemetry sink is a local JSONL file.
 
-## Docker
+A production deployment should replace these parts with the services below.
+
+- the organization's access-token issuer and audience checks.
+- a shared rate limiter at the gateway or service layer.
+- managed signing keys or a separate signing service.
+- durable logs with retention and access controls.
+- TLS termination, monitoring, backup, and key-rotation procedures.
+
+The mobile app pins the signing public key. It never receives the signing
+private key. Authentication controls who may request a bundle. Signature and
+hash checks control whether the app may install it.
+
+## A container runs the same process
 
 ```bash
-docker build -t airgap-bff .
-docker run -p 3000:3000 -v $(pwd)/.keys:/app/.keys airgap-bff
+docker build -t airgap-bff server
+docker run --rm -p 3000:3000 \
+  -e BFF_AUTH_TOKEN="$BFF_AUTH_TOKEN" \
+  -v "$PWD/tmp/airgap-bff:/app/.keys" \
+  airgap-bff
 ```
-
-## What this BFF is NOT
-
-- Not a production service. It does not persist anything but telemetry
-  JSONL. It does not authenticate callers. Use behind an IAP or add your
-  own auth layer in front.
-- Not an LLM proxy. The hybrid cloud-LLM path in Phase 6 is a separate
-  concern that lives in a different endpoint.
-- Not a subscription manager. Billing, entitlements, and rate-limiting
-  live in your existing infra.

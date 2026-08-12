@@ -1,6 +1,4 @@
-// app.js — vanilla controller for the Airgap showcase. No framework, no
-// build step. Reads web/data/manifest.json plus per-vertical JSON, swaps
-// the DOM on dropdown change.
+// Reads the generated template records and updates the field guide.
 
 (function () {
   'use strict';
@@ -16,6 +14,7 @@
     swatches: document.getElementById('swatches'),
     configSnippet: document.getElementById('config-snippet'),
     phoneGif: document.getElementById('phone-gif'),
+    templateStatus: document.getElementById('template-status'),
   };
 
   function fetchJSON(url) {
@@ -51,10 +50,7 @@
   }
 
   function applyVertical(data) {
-    document.documentElement.style.setProperty(
-      '--brand-primary',
-      data.theme.primary || '#22d3ee',
-    );
+    document.documentElement.style.setProperty('--brand-primary', data.theme.primary || '#22d3ee');
 
     setText(els.brandName, data.label);
     setText(els.botName, data.botName);
@@ -85,8 +81,16 @@
     els.configSnippet.textContent = JSON.stringify(data.config, null, 2);
 
     els.phoneGif.src = data.gif + '?v=' + Date.now();
-    els.phoneGif.alt =
-      data.label + ' demo recorded from the Android emulator';
+    els.phoneGif.alt = data.label + ' support flow recorded from the Android emulator';
+    setText(
+      els.templateStatus,
+      data.label +
+        ' selected. ' +
+        data.knowledge.totalDocs +
+        ' knowledge documents and ' +
+        (data.config.toolCount || 0) +
+        ' configured tools.',
+    );
   }
 
   function populatePicker(manifest) {
@@ -107,8 +111,7 @@
     fetchJSON('data/manifest.json')
       .then(function (manifest) {
         populatePicker(manifest);
-        var initial =
-          (manifest.verticals[0] && manifest.verticals[0].vertical) || 'telco';
+        var initial = (manifest.verticals[0] && manifest.verticals[0].vertical) || 'telco';
         els.select.value = initial;
         els.select.addEventListener('change', function () {
           loadVertical(els.select.value);
@@ -116,10 +119,10 @@
         return loadVertical(initial);
       })
       .catch(function (err) {
-        console.error('[airgap-showcase] init failed', err);
+        console.error('[airgap-site] init failed', err);
         var msg = document.createElement('p');
         msg.textContent =
-          'Showcase data failed to load. Run node web/data/build.mjs from the repo root.';
+          'Project data failed to load. Run npm run web:build from the repository root.';
         msg.style.color = 'crimson';
         document.body.insertBefore(msg, document.body.firstChild);
       });

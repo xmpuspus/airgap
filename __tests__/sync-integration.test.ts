@@ -52,17 +52,11 @@ jest.mock('react-native-mmkv', () => require('./helpers/rn-mocks').rnMmkv());
 jest.mock('../src/services/connectivityService', () =>
   require('./helpers/rn-mocks').connectivity(),
 );
+jest.mock('../src/services/secureStorage', () => require('./helpers/rn-mocks').secureStorage());
 
-import {
-  loadBundleIntoKnowledge,
-  getKbSource,
-} from '../src/services/syncService';
+import {loadBundleIntoKnowledge, getKbSource} from '../src/services/syncService';
 import {searchKB} from '../src/services/searchService';
-import {
-  getKnowledgeSource,
-  getAllDocuments,
-  revertToCompiledKnowledge,
-} from '../src/knowledge';
+import {getKnowledgeSource, getAllDocuments, revertToCompiledKnowledge} from '../src/knowledge';
 
 function makeBundle(docs: Array<{id: string; title: string; keywords: string[]}>): string {
   const fullDocs = docs.map(d => ({
@@ -96,7 +90,7 @@ describe('sync integration: bundle → memory → search', () => {
   });
 
   test('loadBundleIntoKnowledge rebuilds index from a valid bundle on disk', async () => {
-    mockFsState.current =makeBundle([
+    mockFsState.current = makeBundle([
       {id: 'integ-test-1', title: 'Integration Test Doc', keywords: ['zebraphrase']},
       {id: 'integ-test-2', title: 'Second Doc', keywords: ['unicornphrase']},
     ]);
@@ -116,7 +110,7 @@ describe('sync integration: bundle → memory → search', () => {
   });
 
   test('malformed bundle rolls back and reverts to compiled-in KB', async () => {
-    mockFsState.current ='not-valid-json{{{';
+    mockFsState.current = 'not-valid-json{{{';
     const result = await loadBundleIntoKnowledge();
     expect(result.source).toBe('compiled');
     expect(getKnowledgeSource()).toBe('compiled');
@@ -127,19 +121,19 @@ describe('sync integration: bundle → memory → search', () => {
   });
 
   test('bundle with empty files falls back to compiled-in KB', async () => {
-    mockFsState.current =JSON.stringify({files: {}, generatedAt: 'now'});
+    mockFsState.current = JSON.stringify({files: {}, generatedAt: 'now'});
     const result = await loadBundleIntoKnowledge();
     expect(result.source).toBe('compiled');
   });
 
   test('bundle with no files key fails cleanly', async () => {
-    mockFsState.current =JSON.stringify({generatedAt: 'now'});
+    mockFsState.current = JSON.stringify({generatedAt: 'now'});
     const result = await loadBundleIntoKnowledge();
     expect(result.source).toBe('compiled');
   });
 
   test('getKbSource reports bundle + version after successful load', async () => {
-    mockFsState.current =makeBundle([
+    mockFsState.current = makeBundle([
       {id: 'integ-test-99', title: 'Version Check', keywords: ['tagaloguniq']},
     ]);
     await loadBundleIntoKnowledge();
@@ -148,8 +142,8 @@ describe('sync integration: bundle → memory → search', () => {
   });
 
   test('malformed current bundle recovers from previous bundle if available', async () => {
-    mockFsState.current ='broken';
-    mockFsState.previous =makeBundle([
+    mockFsState.current = 'broken';
+    mockFsState.previous = makeBundle([
       {id: 'prev-1', title: 'Previous Doc', keywords: ['prevuniq']},
     ]);
     const result = await loadBundleIntoKnowledge();

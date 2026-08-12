@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-// build.mjs — assemble web/data/<vertical>.json for the static showcase.
+// Assemble web/data/<vertical>.json for the static project site.
 //
 // Inputs:
 //   examples/<vertical>/airgap.config.json
 //   examples/<vertical>/knowledge/*.json
-//   demo/industry-<vertical>.gif (referenced by path; not copied here —
+//   demo/industry-<vertical>.gif (referenced by path; not copied here,
 //     deploy workflow places them into web/assets/gifs/ at deploy time)
 //
-// Output: web/data/<vertical>.json — a small JSON object the client app.js
+// Output: web/data/<vertical>.json, a small JSON object the client app.js
 // reads to render the brand block, theme swatches, condensed config
 // snippet, and KB stats per vertical.
 //
@@ -78,7 +78,7 @@ function summarizeKnowledge(kbDir) {
 }
 
 function condenseConfig(cfg) {
-  // Produces a small, human-readable JSON snippet for the showcase.
+  // Produces a small, human-readable JSON snippet for the project site.
   // Skips long fields like full prompts and KB content.
   return {
     brand: cfg.brand,
@@ -97,9 +97,7 @@ function condenseConfig(cfg) {
 function buildVertical(root, vertical) {
   const cfgPath = path.join(root, 'examples', vertical, 'airgap.config.json');
   const cfg = readJson(cfgPath);
-  const knowledge = summarizeKnowledge(
-    path.join(root, 'examples', vertical, 'knowledge'),
-  );
+  const knowledge = summarizeKnowledge(path.join(root, 'examples', vertical, 'knowledge'));
   const slug = GIF_SLUGS[vertical] ?? vertical;
   return {
     vertical,
@@ -136,6 +134,10 @@ function copyGifs(root) {
     fs.copyFileSync(src, dest);
     copied += 1;
   }
+  const primary = path.join(srcDir, 'airgap-demo.gif');
+  if (fs.existsSync(primary)) {
+    fs.copyFileSync(primary, path.join(destDir, 'airgap-demo.gif'));
+  }
   return copied;
 }
 
@@ -145,13 +147,11 @@ function main() {
   const outDir = path.join(root, 'web', 'data');
   fs.mkdirSync(outDir, {recursive: true});
 
-  const manifest = {generated: new Date().toISOString(), verticals: []};
+  const packageJson = readJson(path.join(root, 'package.json'));
+  const manifest = {release: packageJson.version, verticals: []};
   for (const vertical of KNOWN_VERTICALS) {
     const data = buildVertical(root, vertical);
-    fs.writeFileSync(
-      path.join(outDir, `${vertical}.json`),
-      JSON.stringify(data, null, 2) + '\n',
-    );
+    fs.writeFileSync(path.join(outDir, `${vertical}.json`), JSON.stringify(data, null, 2) + '\n');
     manifest.verticals.push({
       vertical,
       label: data.label,
@@ -160,10 +160,7 @@ function main() {
       kbDocs: data.knowledge.totalDocs,
     });
   }
-  fs.writeFileSync(
-    path.join(outDir, 'manifest.json'),
-    JSON.stringify(manifest, null, 2) + '\n',
-  );
+  fs.writeFileSync(path.join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
   const copiedGifs = copyGifs(root);
   // eslint-disable-next-line no-console
   console.log(

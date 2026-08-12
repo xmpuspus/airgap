@@ -41,7 +41,9 @@ describe('validateConfig', () => {
   });
 
   test('invalid hex color in theme.primary', () => {
-    const cfg = makeValidConfig({theme: {primary: 'red', secondary: '#FF6B00', background: '#F5F7FA'}});
+    const cfg = makeValidConfig({
+      theme: {primary: 'red', secondary: '#FF6B00', background: '#F5F7FA'},
+    });
     const result = validateConfig(cfg);
     expect(result.valid).toBe(false);
     expect(result.errors.some(e => e.includes('theme.primary'))).toBe(true);
@@ -79,7 +81,12 @@ describe('validateConfig', () => {
   test('valid darkMode values accepted', () => {
     for (const dm of [true, false, 'auto']) {
       const cfg = makeValidConfig({
-        theme: {primary: '#0047AB', secondary: '#FF6B00', background: '#F5F7FA', darkMode: dm as any},
+        theme: {
+          primary: '#0047AB',
+          secondary: '#FF6B00',
+          background: '#F5F7FA',
+          darkMode: dm as any,
+        },
       });
       const result = validateConfig(cfg);
       expect(result.errors.filter(e => e.includes('darkMode'))).toHaveLength(0);
@@ -88,7 +95,12 @@ describe('validateConfig', () => {
 
   test('invalid darkMode value', () => {
     const cfg = makeValidConfig({
-      theme: {primary: '#0047AB', secondary: '#FF6B00', background: '#F5F7FA', darkMode: 'maybe' as any},
+      theme: {
+        primary: '#0047AB',
+        secondary: '#FF6B00',
+        background: '#F5F7FA',
+        darkMode: 'maybe' as any,
+      },
     });
     const result = validateConfig(cfg);
     expect(result.errors.some(e => e.includes('darkMode'))).toBe(true);
@@ -123,7 +135,9 @@ describe('validateConfig', () => {
   test('invalid darkTheme color', () => {
     const cfg = makeValidConfig({
       theme: {
-        primary: '#0047AB', secondary: '#FF6B00', background: '#F5F7FA',
+        primary: '#0047AB',
+        secondary: '#FF6B00',
+        background: '#F5F7FA',
         darkTheme: {background: 'not-hex'},
       },
     });
@@ -135,5 +149,63 @@ describe('validateConfig', () => {
     const cfg = makeValidConfig({i18n: {strings: {send: 123 as any}}});
     const result = validateConfig(cfg);
     expect(result.errors.some(e => e.includes('i18n.strings.send'))).toBe(true);
+  });
+
+  test('REST backend needs provider authentication', () => {
+    const cfg = makeValidConfig({
+      backend: {
+        type: 'rest',
+        baseUrl: 'https://bff.example',
+        auth: {type: 'none'} as any,
+      },
+    });
+
+    expect(validateConfig(cfg).errors).toContain(
+      'backend.auth.type must be "provider" for a REST backend',
+    );
+  });
+
+  test('REST backend needs an HTTPS base URL', () => {
+    const cfg = makeValidConfig({
+      backend: {
+        type: 'rest',
+        baseUrl: 'http://bff.example',
+        auth: {type: 'provider'} as any,
+      },
+    });
+
+    expect(validateConfig(cfg).errors).toContain(
+      'backend.baseUrl must be an HTTPS URL for a REST backend',
+    );
+  });
+
+  test('REST knowledge sync needs a pinned public key', () => {
+    const cfg = makeValidConfig({
+      backend: {
+        type: 'rest',
+        baseUrl: 'https://bff.example',
+        auth: {type: 'provider', audience: 'airgap-bff'},
+      },
+    });
+
+    expect(validateConfig(cfg).errors).toContain(
+      'backend.sync.publicKeys must contain at least one pinned key',
+    );
+  });
+
+  test('cloud mode needs an endpoint or REST backend URL', () => {
+    const cfg = makeValidConfig({
+      llm: {mode: 'prefer-online', cloud: {enabled: true}},
+    });
+
+    expect(validateConfig(cfg).errors).toContain('llm.cloud needs an endpoint or backend.baseUrl');
+  });
+
+  test('queue retries stay within the supported range', () => {
+    const cfg = makeValidConfig({queue: {maxRetries: 0}});
+
+    expect(validateConfig(cfg).errors).toContain(
+      'queue.maxRetries must be an integer from 1 through 10',
+    );
   });
 });

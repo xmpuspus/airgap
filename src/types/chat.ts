@@ -37,26 +37,4 @@ export interface ChatState {
   isOnline: boolean;
 }
 
-export interface QueuedAction {
-  id: string;
-  /**
-   * Action identifier. The first five are the original telco-only action
-   * types; the sixth is a catch-all for tool calls queued by the new tool
-   * router so verticals can register arbitrary tool names without extending
-   * this union every time.
-   */
-  type:
-    | 'balance_check'
-    | 'plan_change'
-    | 'ticket_create'
-    | 'outage_check'
-    | 'account_action'
-    | 'tool_call';
-  /** Name of the tool that was queued (populated when type === 'tool_call') */
-  toolName?: string;
-  query: string;
-  createdAt: number;
-  status: 'pending' | 'processing' | 'completed' | 'failed';
-  retryCount: number;
-  chatMessageId: string;
-}
+export type {QueueRecord as QueuedAction} from '../services/actionQueueTypes';

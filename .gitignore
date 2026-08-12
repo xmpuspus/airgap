@@ -95,13 +95,15 @@ __tests__/llm-journey-results.json
 server/.keys/
 server/telemetry.jsonl
 
-# Secrets and credentials — never commit these
+# Secrets and credentials - never commit these
 .env
 .env.*
 !.env.example
 *.pem
+*.key
 *.p12
 *.pfx
 *credentials*.json
+*secret*
 .aws/
 .gcp/

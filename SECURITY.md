@@ -1,119 +1,97 @@
 # Security policy
 
+## Report a vulnerability privately
+
+Use [GitHub private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new).
+Do not open a public issue with exploit details, credentials, private data, or an
+unfixed vulnerability.
+
+Include the affected commit or version, platform, configuration mode, steps to
+reproduce, expected impact, and any tested mitigation. Remove tokens, customer
+records, and proprietary knowledge documents from the report.
+
+The maintainer aims to acknowledge a complete report within three business days
+and give a first assessment within ten business days. Complex native or
+upstream dependency problems can take longer. The maintainer and reporter will
+agree on a disclosure date after a fix or practical mitigation exists.
+
 ## Supported versions
 
-| Version | Supported |
-|---|---|
-| `main` | Yes |
-| Tagged releases from the last 6 months | Yes, security fixes only |
-| Older tagged releases | No |
+Airgap is pre-1.0. The project supports the default branch and the latest tagged
+minor release. Older minor releases can receive a fix when the maintainer judges
+the backport to be safe, but the project does not promise that support.
 
-Airgap is pre-1.0. Expect breaking changes between minor versions, and
-security fixes on `main` only.
+| Version                      | Security support |
+| ---------------------------- | ---------------- |
+| `main`                       | Yes              |
+| Latest tagged minor release  | Yes              |
+| Older minor releases         | Best effort      |
+| Unmodified third-party forks | No               |
 
-## Reporting a vulnerability
+## Security design
 
-Do NOT open a public issue for a security problem. Instead, email the
-maintainer at the address listed in `CODEOWNERS`.
+### Local storage
 
-Include:
+Airgap creates a random 32-byte key for each user-data MMKV store. Android
+Keystore or iOS Keychain protects that key. The app opens secure storage before
+conversation, queue, sync, model, telemetry, or preference services can read
+data. Startup fails closed when the platform key store is unavailable.
 
-- Affected version (commit SHA or release tag)
-- Steps to reproduce
-- Impact assessment
-- A suggested fix if you have one
+The public GGUF model file and bundled knowledge JSON are not encrypted. The app
+checks a downloaded model against its expected byte length and SHA-256 before
+use. Operators must decide whether their knowledge content can live in the app
+bundle or file system.
 
-You can expect an acknowledgment within 72 hours. Coordinated disclosure
-is the default — we will work with you on a disclosure timeline that
-gives operators time to update.
+### Network access
 
-## Threat model (summary)
+App configuration does not accept a stored bearer token or OAuth client secret.
+An operator installs an asynchronous token provider. The REST, sync, model
+manifest, and cloud generation paths request a fresh token when they run.
 
-Airgap stores knowledge, runs an on-device LLM, and optionally syncs
-content + telemetry with a backend. The threat model reflects these
-three surfaces.
+The reference server checks its bearer value with a timing-safe digest compare,
+limits request bodies to 256 KB, and applies a fixed-window per-client rate
+limit. Its rate state lives in one Node process. Put a production deployment
+behind TLS, shared rate limiting, monitoring, and an authorization layer that
+understands each account action.
 
-### On-device storage
+### Knowledge updates
 
-Airgap uses MMKV with per-store encryption keys. Keys are derived via
-`src/services/secretStore.ts`. Production deployments must install a
-real provider (Keystore on Android, Keychain on iOS) via
-`installSecretStoreProvider()` at boot. The fallback path uses an
-install-derived key that is better than a hardcoded constant but weaker
-than OS-backed secure storage.
-
-What is encrypted:
-- Conversation history
-- Offline queue
-- KB sync state (last version, last sync time, errors)
-- Telemetry buffer
-- Model manager state
-
-What is NOT encrypted:
-- The GGUF model file itself (public content)
-- The bundled KB files (public content, but signed by the BFF)
-- The `airgap-bootstrap` MMKV store used only for the install UUID
-
-### Sync pipeline
-
-Every KB bundle downloaded from the BFF is:
-
-1. SHA256-verified against the manifest
-2. ed25519-signature-checked against a pinned public key (when a native
-   verifier is linked — see docs/sync-architecture.md for the build
-   hook)
-
-The device refuses bundles with mismatched hashes or invalid signatures,
-atomically rolls back to the previous bundle, and flags the error in
-MMKV. Production operators MUST pin `backend.syncPublicKey` and install
-a native ed25519 verifier before production use.
-
-### LLM pipeline
-
-The safety layer at `src/services/safetyLayer.ts` gates every LLM
-response. It rejects unsourced currency amounts and dates, runs a
-pre-flight blocklist check, and surfaces refusal templates per vertical.
-See `docs/safety-layer.md` for the full mitigations and known gaps.
+The server signs the exact bundle bytes with Ed25519. The mobile app checks the
+declared length, SHA-256, pinned key ID, signature, and document schema before an
+atomic swap. A failed check keeps the last valid bundle. Protect and rotate the
+private signing key outside this repository.
 
 ### Telemetry
 
-Events sent to the BFF use FNV-1a hashes for query and answer text, not
-the raw content. Retrieved doc IDs are public KB identifiers. Tool
-names are logged but tool arguments are not. See
-`docs/observability.md` for the event schema.
+Telemetry is off in the default configuration. When an operator enables it, the
+client sends event fields described in [`docs/observability.md`](docs/observability.md).
+Query and answer values use short non-cryptographic hashes for grouping. These
+hashes are not anonymization and can be vulnerable to guessing. Review the event
+schema and retention policy before enabling telemetry.
 
-### Known unmitigated threats
+## Risks that need operator controls
 
-- **Rooted or jailbroken devices** — a user with root access can read
-  MMKV stores regardless of encryption. Compliance-sensitive deployments
-  should pair Airgap with a root detection library and disable sensitive
-  tools on compromised devices.
-- **A compromised BFF** — the device trusts the BFF's manifest metadata
-  and signed bundles. An attacker with the BFF private key can push
-  arbitrary KB content. Mitigations are operational: rotate keys, audit
-  BFF infrastructure, pin TLS to a private CA if applicable.
-- **Model weights on first download** — before the device has the
-  shipped GGUF, it downloads from the configured `model.url`. The
-  integrity check (sha256 + sizeBytes) protects against tampered
-  downloads only if the operator pins a trusted URL and hash in config.
+- Root or jailbreak access can bypass application storage protections.
+- A stolen bundle-signing key can authorize malicious knowledge content.
+- A malicious model can produce unsafe or misleading text even when its file
+  hash matches configuration.
+- The safety layer and local retrieval do not set up medical, financial,
+  legal, or regulatory compliance.
+- A compromised backend can misuse valid action requests unless it enforces
+  user authorization and idempotency.
+- Mobile backups, logs, screenshots, keyboards, and accessibility services can
+  expose data outside Airgap's stores.
 
-## Dependency security
+## Dependency handling
 
-Airgap pins exact versions in `package.json` (no `^`, no `~`). CI runs
-`npm audit` on every commit. Critical/high CVEs block the merge.
+CI fails when a high or critical advisory applies directly to code in a direct
+dependency. CI reports high advisories inherited through React Native and
+Metro dependency chains. Dependabot, dependency review, CodeQL, and OpenSSF
+Scorecard add separate signals. See the current CI output before making a release
+decision.
 
-## Responsible use
+## Public security discussions
 
-Airgap ships with safety layers and refusal templates for medical,
-financial, and legal questions. Operators deploying for those verticals
-are responsible for:
-
-- Keeping refusal templates accurate for their jurisdiction
-- Running their own adversarial test fixtures under
-  `__tests__/golden/`
-- Monitoring telemetry for refusal spikes
-- Rotating BFF signing keys on a schedule
-
-If your deployment discovers a systemic failure mode (the safety layer
-misses a class of unsafe outputs, the tool router picks the wrong
-backend method, etc.), please report it as a security issue.
+Use a public issue for hardening ideas only when they do not show a working
+exploit or sensitive data. After coordinated disclosure, the project records the
+affected versions, fix, and credit in a GitHub security advisory and changelog.

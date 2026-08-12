@@ -25,10 +25,10 @@
 import {getBackendConnector, type TelemetryEvent} from './backendConnector';
 import {connectivityService} from './connectivityService';
 import {logger} from './logger';
-import {createKeyedMMKV} from './secretStore';
+import {getSecureStore} from './secureStorage';
 import {config} from '../config/loader';
 
-const storage = createKeyedMMKV('telemetry-buffer');
+const telemetryStorage = () => getSecureStore('telemetry-buffer');
 const BUFFER_KEY = 'pendingEvents';
 const MAX_BUFFER_SIZE = 500;
 
@@ -52,7 +52,7 @@ function hashQuery(input: string): string {
 }
 
 function loadBuffer(): TelemetryEvent[] {
-  const raw = storage.getString(BUFFER_KEY);
+  const raw = telemetryStorage().getString(BUFFER_KEY);
   if (!raw) return [];
   try {
     const parsed = JSON.parse(raw);
@@ -64,7 +64,7 @@ function loadBuffer(): TelemetryEvent[] {
 
 function saveBuffer(events: TelemetryEvent[]): void {
   const capped = events.slice(-MAX_BUFFER_SIZE);
-  storage.set(BUFFER_KEY, JSON.stringify(capped));
+  telemetryStorage().set(BUFFER_KEY, JSON.stringify(capped));
 }
 
 /**
@@ -166,5 +166,5 @@ export function getBufferSize(): number {
 }
 
 export function clearBuffer(): void {
-  storage.remove(BUFFER_KEY);
+  telemetryStorage().remove(BUFFER_KEY);
 }

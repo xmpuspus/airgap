@@ -1,0 +1,24 @@
+appId: ${APP_ID}
+name: Airgap industry template recording
+---
+- setAirplaneMode: disabled
+- launchApp:
+    clearState: true
+- scrollUntilVisible:
+    element: 'Try Offline Demo'
+    direction: DOWN
+    speed: 35
+    visibilityPercentage: 80
+- startRecording:
+    path: ${RECORDING_PATH}
+- takeScreenshot: ${SHOT_PREFIX}-onboarding
+- tapOn:
+    text: 'Try Offline Demo'
+    retryTapIfNoChange: true
+- assertVisible: 'DEMO'
+- tapOn: ${QUICK_REPLY}
+- extendedWaitUntil:
+    visible: 'Local knowledge'
+    timeout: 30000
+- takeScreenshot: ${SHOT_PREFIX}-answer-source
+- stopRecording

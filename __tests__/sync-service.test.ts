@@ -6,6 +6,7 @@ jest.mock('react-native-mmkv', () => require('./helpers/rn-mocks').rnMmkv());
 jest.mock('../src/services/connectivityService', () =>
   require('./helpers/rn-mocks').connectivity(),
 );
+jest.mock('../src/services/secureStorage', () => require('./helpers/rn-mocks').secureStorage());
 
 import {
   fetchManifest,

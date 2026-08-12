@@ -23,6 +23,12 @@ import type {BubblePosition} from '../../constants/theme';
 import {logger} from '../../services/logger';
 import type {BotMessage} from '../../types/chat';
 import {CitationChips} from './CitationChips';
+import {AnswerProvenance} from './AnswerProvenance';
+import {ActionReceipt} from './ActionReceipt';
+import {offlineQueue} from '../../services/offlineQueue';
+import type {QueueRecord} from '../../services/actionQueueTypes';
+import {getStalenessInfo} from '../../services/syncService';
+import {useReducedMotion} from '../../hooks/useReducedMotion';
 
 const AVATAR_SIZE = 32;
 
@@ -55,10 +61,12 @@ function formatTimestamp(date: Date): string {
 }
 
 function StreamingCursor() {
+  const reducedMotion = useReducedMotion();
   const opacity = useRef(new Animated.Value(1)).current;
   const scale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
+    if (reducedMotion) return;
     const blink = Animated.loop(
       Animated.sequence([
         Animated.parallel([
@@ -89,16 +97,9 @@ function StreamingCursor() {
     );
     blink.start();
     return () => blink.stop();
-  }, [opacity, scale]);
+  }, [opacity, reducedMotion, scale]);
 
-  return (
-    <Animated.View
-      style={[
-        styles.cursorBar,
-        {opacity, transform: [{scaleY: scale}]},
-      ]}
-    />
-  );
+  return <Animated.View style={[styles.cursorBar, {opacity, transform: [{scaleY: scale}]}]} />;
 }
 
 type FeedbackValue = 'up' | 'down' | null;
@@ -137,11 +138,10 @@ function FeedbackButtons({messageId}: {messageId: string | number}) {
         useNativeDriver: true,
       }),
     ]).start();
-    logger.info(
-      'feedback',
-      next ? `User gave thumbs ${next}` : 'User removed feedback',
-      {messageId, feedback: next},
-    );
+    logger.info('feedback', next ? `User gave thumbs ${next}` : 'User removed feedback', {
+      messageId,
+      feedback: next,
+    });
   };
 
   return (
@@ -150,10 +150,7 @@ function FeedbackButtons({messageId}: {messageId: string | number}) {
         <TouchableOpacity
           onPress={() => handleFeedback('up')}
           hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-          style={[
-            styles.feedbackButton,
-            feedback === 'up' && styles.feedbackButtonActive,
-          ]}
+          style={[styles.feedbackButton, feedback === 'up' && styles.feedbackButtonActive]}
           activeOpacity={0.6}
           accessibilityLabel="Helpful"
           accessibilityRole="button">
@@ -167,10 +164,7 @@ function FeedbackButtons({messageId}: {messageId: string | number}) {
         <TouchableOpacity
           onPress={() => handleFeedback('down')}
           hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-          style={[
-            styles.feedbackButton,
-            feedback === 'down' && styles.feedbackButtonActive,
-          ]}
+          style={[styles.feedbackButton, feedback === 'down' && styles.feedbackButtonActive]}
           activeOpacity={0.6}
           accessibilityLabel="Not helpful"
           accessibilityRole="button">
@@ -223,9 +217,7 @@ function FormattedText({text, isBot}: {text: string; isBot: boolean}) {
           return (
             <View key={i} style={styles.bulletRow}>
               <View style={[styles.bulletDot, !isBot && styles.bulletDotUser]} />
-              <Text style={[baseStyle, styles.bulletText]}>
-                {renderInline(content, baseStyle)}
-              </Text>
+              <Text style={[baseStyle, styles.bulletText]}>{renderInline(content, baseStyle)}</Text>
             </View>
           );
         }
@@ -258,12 +250,7 @@ function renderInline(text: string, baseStyle: any): React.ReactNode {
 function ShieldGlyph({color}: {color: string}) {
   return (
     <View style={styles.shieldContainer} accessible={false}>
-      <View
-        style={[
-          styles.shieldTop,
-          {borderBottomColor: color + '33'},
-        ]}
-      />
+      <View style={[styles.shieldTop, {borderBottomColor: color + '33'}]} />
       <View style={[styles.shieldBody, {backgroundColor: color + '22', borderColor: color}]}>
         <View style={[styles.shieldTick, {backgroundColor: color}]} />
       </View>
@@ -303,14 +290,19 @@ export function MessageBubble({
   showTimestamp = true,
 }: Props) {
   const isBot = message.user._id === 'bot';
+  const reducedMotion = useReducedMotion();
+  const [queueRecord, setQueueRecord] = useState<QueueRecord | null>(() =>
+    message.queuedActionId
+      ? offlineQueue.getQueue().find(record => record.id === message.queuedActionId) ?? null
+      : null,
+  );
   const source = message.source;
   const sourceLabel = source ? SOURCE_LABELS[source] : undefined;
   const isStreaming = message.isStreaming === true;
   const isRefusal = source === 'refusal';
   const isTool = source === 'tool';
   const showFeedback = isBot && !isStreaming && source !== 'system' && !isRefusal;
-  const showSource =
-    sourceLabel && sourceLabel.length > 0 && !isRefusal && !isTool;
+  const showSource = sourceLabel && sourceLabel.length > 0 && !isRefusal && !isTool;
   const isLastOrStandalone = position === 'last' || position === 'standalone';
   const showFooter =
     isLastOrStandalone && (showFeedback || showSource || (showTimestamp && !isStreaming));
@@ -327,6 +319,11 @@ export function MessageBubble({
   const flashAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    if (reducedMotion) {
+      fadeAnim.setValue(1);
+      slideAnim.setValue(0);
+      return;
+    }
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -339,7 +336,14 @@ export function MessageBubble({
         useNativeDriver: true,
       }),
     ]).start();
-  }, [fadeAnim, slideAnim]);
+  }, [fadeAnim, reducedMotion, slideAnim]);
+
+  useEffect(() => {
+    if (!message.queuedActionId) return;
+    return offlineQueue.subscribe(records => {
+      setQueueRecord(records.find(record => record.id === message.queuedActionId) ?? null);
+    });
+  }, [message.queuedActionId]);
 
   const handleLongPress = useCallback(() => {
     Clipboard.setString(message.text);
@@ -372,8 +376,8 @@ export function MessageBubble({
     position === 'first' || position === 'middle'
       ? GROUP_SPACING.grouped
       : position === 'last'
-        ? GROUP_SPACING.grouped
-        : GROUP_SPACING.ungrouped;
+      ? GROUP_SPACING.grouped
+      : GROUP_SPACING.ungrouped;
 
   return (
     <Animated.View
@@ -386,20 +390,13 @@ export function MessageBubble({
           marginBottom: verticalMargin,
         },
       ]}>
-      {isBot &&
-        (showAvatar && isLastOrStandalone ? (
-          <BotAvatar />
-        ) : (
-          <AvatarSpacer />
-        ))}
+      {isBot && (showAvatar && isLastOrStandalone ? <BotAvatar /> : <AvatarSpacer />)}
       <View style={isBot ? styles.botBubbleWrapper : styles.userBubbleWrapper}>
         {isTool && message.audit?.toolName && (
           <ToolPill toolName={message.audit.toolName} color={toolColor} />
         )}
 
-        <Pressable
-          onLongPress={handleLongPress}
-          accessibilityHint="Long press to copy message">
+        <Pressable onLongPress={handleLongPress} accessibilityHint="Long press to copy message">
           {isRefusal ? (
             <View
               style={[
@@ -413,27 +410,17 @@ export function MessageBubble({
               accessibilityLabel={`Disclaimer: ${message.text}`}>
               <ShieldGlyph color={refusalColor} />
               <View style={styles.refusalColumn}>
-                <Text
-                  style={[styles.refusalLabel, {color: refusalColor}]}>
-                  DISCLAIMER
-                </Text>
+                <Text style={[styles.refusalLabel, {color: refusalColor}]}>DISCLAIMER</Text>
                 <FormattedText text={message.text} isBot={true} />
               </View>
               <Animated.View
-                style={[
-                  styles.flashOverlay,
-                  {opacity: flashAnim, backgroundColor: '#FFFFFF'},
-                ]}
+                style={[styles.flashOverlay, {opacity: flashAnim, backgroundColor: '#FFFFFF'}]}
                 pointerEvents="none"
               />
             </View>
           ) : (
             <View
-              style={[
-                styles.bubble,
-                isBot ? styles.botBubble : styles.userBubble,
-                bubbleStyle,
-              ]}>
+              style={[styles.bubble, isBot ? styles.botBubble : styles.userBubble, bubbleStyle]}>
               <FormattedText text={message.text} isBot={isBot} />
               {isStreaming && <StreamingCursor />}
               <Animated.View
@@ -455,20 +442,32 @@ export function MessageBubble({
         </Pressable>
 
         {isBot && isLastOrStandalone && !isStreaming && !isRefusal && (
-          <CitationChips docIds={message.audit?.kbDocIds} />
+          <>
+            <AnswerProvenance
+              source={message.source}
+              kbVersion={getStalenessInfo().kbVersion}
+              docIds={message.audit?.kbDocIds}
+            />
+            <CitationChips docIds={message.audit?.kbDocIds} />
+          </>
+        )}
+
+        {queueRecord && (
+          <ActionReceipt
+            record={queueRecord}
+            onRetry={async id => {
+              offlineQueue.retry(id);
+              await offlineQueue.processQueue();
+            }}
+            onRemove={id => offlineQueue.remove(id)}
+          />
         )}
 
         {showFooter && (
-          <View
-            style={[
-              styles.footer,
-              isBot ? styles.footerLeft : styles.footerRight,
-            ]}>
+          <View style={[styles.footer, isBot ? styles.footerLeft : styles.footerRight]}>
             {showFeedback && <FeedbackButtons messageId={message._id} />}
             {showSource && source && <SourceBadge source={source} />}
-            {showTimestamp && !isStreaming && (
-              <Text style={styles.timestamp}>{timestamp}</Text>
-            )}
+            {showTimestamp && !isStreaming && <Text style={styles.timestamp}>{timestamp}</Text>}
           </View>
         )}
       </View>

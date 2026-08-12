@@ -50,4 +50,12 @@ function connectivity() {
   };
 }
 
-module.exports = {rnFs, rnMmkv, connectivity};
+function secureStorage() {
+  const store = rnMmkv().createMMKV();
+  return {
+    getSecureStore: () => store,
+    clearSecureStore: () => store.clearAll(),
+  };
+}
+
+module.exports = {rnFs, rnMmkv, connectivity, secureStorage};

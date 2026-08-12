@@ -1,0 +1,4 @@
+packages/create-airgap-bot/dist/
+packages/create-airgap-bot/template/
+coverage/
+tmp/

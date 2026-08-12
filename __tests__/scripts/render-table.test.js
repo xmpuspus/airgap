@@ -36,19 +36,18 @@ function runScript(dir) {
   return execFileSync(NODE, [SCRIPT, '--root', dir], {encoding: 'utf8'});
 }
 
-const READMES_FRAME = (
+const READMES_FRAME =
   'Top of file.\n' +
   '\n' +
   '## Benchmarks\n' +
   '\n' +
   'Some prose.\n' +
   '\n' +
-  '<!-- BENCH:START -->\n' +
+  '<!-- BENCH START -->\n' +
   'placeholder\n' +
-  '<!-- BENCH:END -->\n' +
+  '<!-- BENCH END -->\n' +
   '\n' +
-  'Footer.\n'
-);
+  'Footer.\n';
 
 describe('bench/render-table.mjs', () => {
   test('writes empty placeholder row when no results are present', () => {
@@ -56,8 +55,8 @@ describe('bench/render-table.mjs', () => {
     writeReadme(dir, READMES_FRAME);
     runScript(dir);
     const out = readReadme(dir);
-    expect(out).toContain('<!-- BENCH:START -->');
-    expect(out).toContain('<!-- BENCH:END -->');
+    expect(out).toContain('<!-- BENCH START -->');
+    expect(out).toContain('<!-- BENCH END -->');
     expect(out).toContain('No benchmark data yet');
     expect(out).toContain('run bench/run-node.sh to populate');
     // Footer must still be present (markers preserved, file not truncated)
@@ -163,8 +162,8 @@ describe('bench/render-table.mjs', () => {
     const out = readReadme(dir);
     expect(out.startsWith('Top of file.\n')).toBe(true);
     expect(out.endsWith('Footer.\n')).toBe(true);
-    expect((out.match(/<!-- BENCH:START -->/g) || []).length).toBe(1);
-    expect((out.match(/<!-- BENCH:END -->/g) || []).length).toBe(1);
+    expect((out.match(/<!-- BENCH START -->/g) || []).length).toBe(1);
+    expect((out.match(/<!-- BENCH END -->/g) || []).length).toBe(1);
   });
 
   test('exits non-zero when markers are missing', () => {

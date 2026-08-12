@@ -2,6 +2,7 @@ import {useState, useCallback, useEffect} from 'react';
 import {v4 as uuidv4} from 'uuid';
 import type {BotMessage, MessageAudit, MessageUser, QuickReply} from '../types/chat';
 import {config, brand, prompts, quickReplies, interpolate} from '../config/loader';
+import {conversationStore} from '../services/conversationStore';
 
 const BOT_USER: MessageUser = {_id: 'bot', name: brand.botName};
 const CURRENT_USER: MessageUser = {_id: 'user', name: 'You'};
@@ -18,6 +19,14 @@ export function useChat() {
   const [isTyping, setTyping] = useState(false);
 
   useEffect(() => {
+    const unsubscribe = conversationStore.subscribe(snapshot => {
+      setMessages(snapshot.messages);
+    });
+    const saved = conversationStore.load().messages;
+    if (saved.length > 0) {
+      setMessages(saved);
+      return unsubscribe;
+    }
     const welcomeMessage: BotMessage = {
       _id: uuidv4(),
       text: interpolate(prompts.welcome, config),
@@ -27,18 +36,31 @@ export function useChat() {
       suggestedReplies: quickReplies,
     };
     setMessages([welcomeMessage]);
+    conversationStore.saveMessages([welcomeMessage]);
+    return unsubscribe;
   }, []);
 
-  const addUserMessage = useCallback((text: string) => {
-    const userMsg: BotMessage = {
-      _id: uuidv4(),
-      text,
-      createdAt: new Date(),
-      user: CURRENT_USER,
-    };
-    setMessages(prev => [userMsg, ...prev]);
-    return userMsg;
+  const updateMessages = useCallback((update: (current: BotMessage[]) => BotMessage[]) => {
+    setMessages(current => {
+      const next = update(current);
+      conversationStore.saveMessages(next);
+      return next;
+    });
   }, []);
+
+  const addUserMessage = useCallback(
+    (text: string) => {
+      const userMsg: BotMessage = {
+        _id: uuidv4(),
+        text,
+        createdAt: new Date(),
+        user: CURRENT_USER,
+      };
+      updateMessages(prev => [userMsg, ...prev]);
+      return userMsg;
+    },
+    [updateMessages],
+  );
 
   const addBotMessage = useCallback(
     (text: string, options?: AddBotMessageOptions) => {
@@ -52,10 +74,10 @@ export function useChat() {
         queuedActionId: options?.queuedActionId,
         audit: options?.audit,
       };
-      setMessages(prev => [botMsg, ...prev]);
+      updateMessages(prev => [botMsg, ...prev]);
       return botMsg;
     },
-    [],
+    [updateMessages],
   );
 
   const addStreamingBotMessage = useCallback(() => {
@@ -67,22 +89,20 @@ export function useChat() {
       source: 'llm',
       isStreaming: true,
     };
-    setMessages(prev => [botMsg, ...prev]);
+    updateMessages(prev => [botMsg, ...prev]);
     return botMsg._id;
-  }, []);
+  }, [updateMessages]);
 
   const updateStreamingMessage = useCallback(
     (msgId: string, text: string) => {
-      setMessages(prev =>
-        prev.map(m => (m._id === msgId ? {...m, text} : m)),
-      );
+      updateMessages(prev => prev.map(m => (m._id === msgId ? {...m, text} : m)));
     },
-    [],
+    [updateMessages],
   );
 
   const finalizeStreamingMessage = useCallback(
     (msgId: string, text: string, options?: AddBotMessageOptions) => {
-      setMessages(prev =>
+      updateMessages(prev =>
         prev.map(m =>
           m._id === msgId
             ? {
@@ -98,7 +118,7 @@ export function useChat() {
         ),
       );
     },
-    [],
+    [updateMessages],
   );
 
   return {

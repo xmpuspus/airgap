@@ -1,0 +1,46 @@
+appId: ${APP_ID}
+name: Airgap Android release recording
+---
+- setAirplaneMode: disabled
+- launchApp:
+    clearState: true
+- scrollUntilVisible:
+    element: 'Try Offline Demo'
+    direction: DOWN
+    speed: 35
+    visibilityPercentage: 80
+- startRecording:
+    path: ${RECORDING_PATH}
+- takeScreenshot: ${SHOT_PREFIX}-onboarding
+- tapOn:
+    text: 'Try Offline Demo'
+    retryTapIfNoChange: true
+- assertVisible: 'DEMO'
+- takeScreenshot: ${SHOT_PREFIX}-chat
+- tapOn: 'Check plans'
+- extendedWaitUntil:
+    visible: 'Local knowledge'
+    timeout: 30000
+- takeScreenshot: ${SHOT_PREFIX}-answer-source
+- setAirplaneMode: enabled
+- tapOn: 'Support question'
+- inputText: 'Check my balance'
+- tapOn: 'Send message'
+- extendedWaitUntil:
+    visible: 'Pending'
+    timeout: 20000
+- takeScreenshot: ${SHOT_PREFIX}-action-receipt
+- tapOn: 'Open Outbox'
+- assertVisible: 'Outbox'
+- assertVisible: 'Pending'
+- takeScreenshot: ${SHOT_PREFIX}-outbox
+- back
+- tapOn: 'Open settings'
+- scrollUntilVisible:
+    element: 'Delete All My Data'
+    direction: DOWN
+    speed: 30
+    visibilityPercentage: 90
+- takeScreenshot: ${SHOT_PREFIX}-privacy
+- stopRecording
+- setAirplaneMode: disabled

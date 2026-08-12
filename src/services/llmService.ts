@@ -10,7 +10,7 @@ export interface LlmRunStats {
   tokenCount: number | null;
 }
 
-class LLMService {
+export class LLMService {
   private context: LlamaContext | null = null;
   private loading = false;
   private generating = false;
@@ -103,8 +103,9 @@ class LLMService {
 
     // Generation timeout — prevent infinite hangs on slow devices
     const timeoutMs = 15_000; // Safety limit — not configurable
+    let timeoutHandle: ReturnType<typeof setTimeout> | null = null;
     const timeoutPromise = new Promise<never>((_, reject) => {
-      setTimeout(() => {
+      timeoutHandle = setTimeout(() => {
         this.context?.stopCompletion();
         reject(new Error(`Generation timed out after ${timeoutMs / 1000}s`));
       }, timeoutMs);
@@ -155,6 +156,7 @@ class LLMService {
       logger.error('LLM', 'Generation failed', err);
       throw err;
     } finally {
+      if (timeoutHandle) clearTimeout(timeoutHandle);
       this.generating = false;
     }
   }

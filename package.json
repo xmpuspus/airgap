@@ -1,6 +1,7 @@
 {
   "name": "airgap",
-  "version": "0.0.1",
+  "version": "0.2.0",
+  "private": true,
   "author": "Xavier Puspus (https://github.com/xmpuspus)",
   "repository": "https://github.com/xmpuspus/airgap",
   "license": "MIT",
@@ -19,6 +20,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
+    "format:check": "node scripts/check-format.mjs",
     "start": "react-native start",
     "test": "jest",
     "setup": "bash scripts/setup.sh",
@@ -27,7 +29,13 @@
     "kb:import": "node scripts/kb-import.js",
     "kb:studio": "node scripts/kb-studio.js",
     "web:build": "node web/data/build.mjs",
-    "web:serve": "node web/data/build.mjs && python3 -m http.server -d web 8080"
+    "web:serve": "node web/data/build.mjs && python3 -m http.server -d web 8080",
+    "server:test": "node --test __tests__/server.test.mjs",
+    "signing:test": "node --test __tests__/android-signing.test.mjs",
+    "journeys": "node __tests__/run-journeys.mjs && node __tests__/run-multi-turn.mjs && node __tests__/run-industry-tests.mjs",
+    "cli:pack:test": "npm run build-template --workspace create-airgap-bot && npm test --workspace create-airgap-bot -- --runInBand && npm pack --workspace create-airgap-bot --dry-run",
+    "security:direct": "node scripts/check-direct-advisories.mjs",
+    "recordings:validate": "node scripts/validate-recordings.mjs"
   },
   "dependencies": {
     "@react-native-community/netinfo": "12.0.1",
@@ -40,19 +48,21 @@
     "react-native": "0.84.1",
     "react-native-fs": "2.20.0",
     "react-native-get-random-values": "^2.0.0",
+    "react-native-keychain": "10.0.0",
     "react-native-mmkv": "4.3.0",
     "react-native-nitro-modules": "^0.35.3",
     "react-native-safe-area-context": "5.7.0",
     "react-native-screens": "4.24.0",
-    "uuid": "13.0.0"
+    "tweetnacl": "1.0.3",
+    "uuid": "13.0.2"
   },
   "devDependencies": {
-    "@babel/core": "7.29.0",
+    "@babel/core": "7.29.7",
     "@babel/preset-env": "7.29.2",
     "@babel/runtime": "7.29.2",
-    "@react-native-community/cli": "20.1.0",
-    "@react-native-community/cli-platform-android": "20.1.0",
-    "@react-native-community/cli-platform-ios": "20.1.0",
+    "@react-native-community/cli": "20.2.0",
+    "@react-native-community/cli-platform-android": "20.2.0",
+    "@react-native-community/cli-platform-ios": "20.2.0",
     "@react-native/babel-preset": "0.84.1",
     "@react-native/eslint-config": "0.84.1",
     "@react-native/metro-config": "0.84.1",
@@ -73,5 +83,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "overrides": {
+    "tar": "7.5.22"
+  }
 }

@@ -1,0 +1,125 @@
+const path = require('node:path');
+const {Buffer} = require('node:buffer');
+
+const MIB = 1024 * 1024;
+
+const REQUIRED_OUTPUTS = Object.freeze([
+  'demo/airgap-demo.gif',
+  'demo/airgap-demo-ios.gif',
+  'demo/airgap-readme-side-by-side.gif',
+  'demo/industry-airline.gif',
+  'demo/industry-banking.gif',
+  'demo/industry-electric.gif',
+  'demo/industry-healthcare.gif',
+  'demo/industry-insurance.gif',
+  'demo/industry-telco.gif',
+  'demo/industry-water.gif',
+]);
+
+const SIZE_LIMITS = Object.freeze({
+  readme: 5 * MIB,
+  platform: 8 * MIB,
+  industry: 3 * MIB,
+  joint: 8 * MIB,
+});
+
+function fail(code, detail = '') {
+  throw new Error(detail ? `${code}:${detail}` : code);
+}
+
+function sizeLimitFor(kind) {
+  const limit = SIZE_LIMITS[kind];
+  if (!limit) fail('recording_kind_invalid', String(kind));
+  return limit;
+}
+
+function isCommit(value) {
+  return typeof value === 'string' && /^[a-f0-9]{40}$/.test(value);
+}
+
+function normalized(value) {
+  return typeof value === 'string' ? value.split(path.sep).join('/') : '';
+}
+
+function closeEnough(actual, expected, tolerance) {
+  return Math.abs(actual - expected) <= tolerance;
+}
+
+function validateRecording(recording, measured) {
+  if (!recording || typeof recording !== 'object') fail('recording_record_invalid');
+  if (!isCommit(recording.sourceCommit)) fail('recording_commit_missing');
+  if (!REQUIRED_OUTPUTS.includes(normalized(recording.output))) {
+    fail('recording_output_invalid', recording.output);
+  }
+  sizeLimitFor(recording.kind);
+
+  const evidencePrefix = `tmp/recordings/${recording.sourceCommit}/`;
+  if (!normalized(recording.source).startsWith(evidencePrefix)) {
+    fail('recording_source_path_invalid', recording.source);
+  }
+  if (!normalized(recording.contactSheet).startsWith(evidencePrefix)) {
+    fail('recording_contact_sheet_path_invalid', recording.contactSheet);
+  }
+  if (!normalized(recording.script).startsWith('scripts/')) fail('recording_script_invalid');
+  if (!['android', 'ios', 'joint'].includes(recording.platform)) fail('recording_platform_invalid');
+  if (typeof recording.os !== 'string' || !recording.os.trim()) fail('recording_os_missing');
+  if (typeof recording.device !== 'string' || !recording.device.trim())
+    fail('recording_device_missing');
+  if (typeof recording.mode !== 'string' || !recording.mode.trim()) fail('recording_mode_missing');
+  if (typeof recording.config !== 'string' || !recording.config.trim())
+    fail('recording_config_missing');
+  if (!Number.isFinite(Date.parse(recording.capturedAt))) fail('recording_date_invalid');
+  if (recording.loopReviewed !== true) fail('recording_loop_review_missing');
+
+  if (!measured) return recording;
+  const header = Buffer.isBuffer(measured.header)
+    ? measured.header.subarray(0, 6).toString('ascii')
+    : '';
+  if (header !== 'GIF87a' && header !== 'GIF89a') fail('recording_gif_header_invalid');
+  if (!Number.isInteger(measured.actualBytes) || measured.actualBytes <= 0)
+    fail('recording_size_invalid');
+  if (measured.actualBytes > sizeLimitFor(recording.kind)) fail('recording_size_limit');
+  if (measured.actualBytes !== recording.bytes) fail('recording_size_mismatch');
+
+  const probe = measured.probe ?? {};
+  if (!Number.isInteger(probe.width) || !Number.isInteger(probe.height))
+    fail('recording_dimensions_invalid');
+  if (recording.kind !== 'joint' && probe.width !== 360) fail('recording_width_invalid');
+  if (probe.width !== recording.width || probe.height !== recording.height)
+    fail('recording_dimensions_mismatch');
+  if (![10, 12].some(fps => closeEnough(probe.fps, fps, 0.15)))
+    fail('recording_frame_rate_invalid');
+  if (!closeEnough(probe.fps, recording.fps, 0.15)) fail('recording_frame_rate_mismatch');
+  if (
+    !Number.isFinite(probe.durationSeconds) ||
+    probe.durationSeconds < 2 ||
+    probe.durationSeconds > 180
+  ) {
+    fail('recording_duration_invalid');
+  }
+  if (!closeEnough(probe.durationSeconds, recording.durationSeconds, 0.25)) {
+    fail('recording_duration_mismatch');
+  }
+  return recording;
+}
+
+function validateManifest(manifest) {
+  if (!manifest || manifest.schemaVersion !== 1 || !Array.isArray(manifest.recordings)) {
+    fail('recording_manifest_invalid');
+  }
+  for (const recording of manifest.recordings) validateRecording(recording);
+  const outputs = manifest.recordings.map(recording => normalized(recording.output));
+  const duplicates = outputs.filter((output, index) => outputs.indexOf(output) !== index);
+  if (duplicates.length) fail('recording_output_duplicate', duplicates[0]);
+  const missing = REQUIRED_OUTPUTS.filter(output => !outputs.includes(output));
+  if (missing.length) fail('recording_output_missing', missing[0]);
+  return manifest;
+}
+
+module.exports = {
+  REQUIRED_OUTPUTS,
+  SIZE_LIMITS,
+  sizeLimitFor,
+  validateManifest,
+  validateRecording,
+};
