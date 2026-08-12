@@ -28,6 +28,7 @@ name: Airgap Android release recording
 - setAirplaneMode: enabled
 - tapOn: 'Support question'
 - inputText: 'Check my balance'
+- hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
     visible: 'Pending'

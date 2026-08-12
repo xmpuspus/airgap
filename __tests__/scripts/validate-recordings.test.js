@@ -58,6 +58,15 @@ describe('recording manifest validation', () => {
     },
   );
 
+  test('dismisses the Android keyboard before tapping the send button', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/demo-android.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toMatch(/inputText: 'Check my balance'\n- hideKeyboard\n- tapOn: 'Send message'/);
+  });
+
   test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(
     '%s waits for the current provenance label',
     flowName => {
