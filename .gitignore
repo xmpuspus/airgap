@@ -88,6 +88,8 @@ __tests__/llm-journey-results.json
 .planning/
 .claude/
 *.so
+/.worktrees/
+/tmp/
 
 # BFF runtime artifacts
 server/.keys/
