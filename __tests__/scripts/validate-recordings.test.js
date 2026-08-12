@@ -64,7 +64,8 @@ describe('recording manifest validation', () => {
       'utf8',
     );
 
-    expect(flow).toMatch(/inputText: 'Check my balance'\n- hideKeyboard\n- tapOn: 'Send message'/);
+    expect(flow).toMatch(/inputText: 'Create a ticket'\n- hideKeyboard\n- tapOn: 'Send message'/);
+    expect(flow).not.toContain("inputText: 'Check my balance'");
   });
 
   test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(

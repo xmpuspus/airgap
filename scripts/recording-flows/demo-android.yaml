@@ -27,7 +27,7 @@ name: Airgap Android release recording
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
 - setAirplaneMode: enabled
 - tapOn: 'Support question'
-- inputText: 'Check my balance'
+- inputText: 'Create a ticket'
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
