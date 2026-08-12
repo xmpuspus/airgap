@@ -12,8 +12,9 @@ test('installs FFmpeg before validating release recordings', () => {
   expect(validation).toBeGreaterThan(install);
 });
 
-test('declares the Ruby kconv compatibility gem', () => {
+test('declares the Ruby nkf compatibility gem that provides kconv', () => {
   const gemfile = fs.readFileSync(path.join(root, 'Gemfile'), 'utf8');
 
-  expect(gemfile).toMatch(/^gem 'kconv'$/m);
+  expect(gemfile).toMatch(/^gem 'nkf'$/m);
+  expect(gemfile).not.toMatch(/^gem 'kconv'$/m);
 });
