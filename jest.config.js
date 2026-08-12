@@ -1,13 +1,17 @@
 module.exports = {
   preset: 'react-native',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  modulePathIgnorePatterns: ['<rootDir>/packages/create-airgap-bot/template/'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/packages/create-airgap-bot/template/',
+    '<rootDir>/.worktrees/',
+  ],
   testPathIgnorePatterns: [
     '/node_modules/',
     '/android/',
     '/ios/',
     '__tests__/run-',
     '<rootDir>/.claude/',
+    '<rootDir>/.worktrees/',
     '__tests__/golden/',
   ],
   testMatch: [
