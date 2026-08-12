@@ -5,7 +5,9 @@ name: Airgap Android release recording
 - launchApp:
     clearState: true
 - scrollUntilVisible:
-    element: 'Try Offline Demo'
+    element:
+      text: 'Try Offline Demo'
+      index: 1
     direction: DOWN
     speed: 35
     visibilityPercentage: 80
@@ -14,6 +16,7 @@ name: Airgap Android release recording
 - takeScreenshot: ${SHOT_PREFIX}-onboarding
 - tapOn:
     text: 'Try Offline Demo'
+    index: 1
     retryTapIfNoChange: true
 - assertVisible: 'DEMO'
 - takeScreenshot: ${SHOT_PREFIX}-chat

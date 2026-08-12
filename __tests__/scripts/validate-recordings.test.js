@@ -1,5 +1,6 @@
 const path = require('node:path');
 const {Buffer} = require('node:buffer');
+const fs = require('node:fs');
 
 const {
   REQUIRED_OUTPUTS,
@@ -42,6 +43,16 @@ describe('recording manifest validation', () => {
 
     expect(path.isAbsolute(output)).toBe(true);
     expect(output).toMatch(/\/tmp\/recordings\/commit\/android$/);
+  });
+
+  test('selects the offline demo button instead of its duplicate heading', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/demo-android.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toMatch(/element:\n\s+text: 'Try Offline Demo'\n\s+index: 1/);
+    expect(flow).toMatch(/tapOn:\n\s+text: 'Try Offline Demo'\n\s+index: 1/);
   });
 
   test('rejects an asset that exceeds its limit', () => {
