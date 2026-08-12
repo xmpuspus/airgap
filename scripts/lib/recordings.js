@@ -45,6 +45,14 @@ function maestroRecordingPath(target) {
   return path.resolve(target).split(path.sep).join('/');
 }
 
+function gifFilter({fps, width, colors}) {
+  return [
+    `fps=${fps},scale=${width}:-2:flags=lanczos,split[s0][s1]`,
+    `[s0]palettegen=max_colors=${colors}:stats_mode=diff[p]`,
+    '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
+  ].join(';');
+}
+
 function closeEnough(actual, expected, tolerance) {
   return Math.abs(actual - expected) <= tolerance;
 }
@@ -123,6 +131,7 @@ function validateManifest(manifest) {
 module.exports = {
   REQUIRED_OUTPUTS,
   SIZE_LIMITS,
+  gifFilter,
   maestroRecordingPath,
   sizeLimitFor,
   validateManifest,

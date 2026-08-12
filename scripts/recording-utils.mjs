@@ -1,6 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
+import recordings from './lib/recordings.js';
+
+const {gifFilter} = recordings;
 
 export function run(command, args, options = {}) {
   const result = spawnSync(command, args, {
@@ -70,13 +73,7 @@ export function runMaestro({root, flow, device, values, outputDirectory}) {
 
 export function convertToGif({source, output, fps = 10, width = 360, colors = 96}) {
   fs.mkdirSync(path.dirname(output), {recursive: true});
-  const filter = [
-    `fps=${fps}`,
-    `scale=${width}:-2:flags=lanczos`,
-    'split[s0][s1]',
-    `[s0]palettegen=max_colors=${colors}:stats_mode=diff[p]`,
-    '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
-  ].join(';');
+  const filter = gifFilter({fps, width, colors});
   run('ffmpeg', ['-y', '-i', source, '-filter_complex', filter, '-loop', '0', output]);
 }
 

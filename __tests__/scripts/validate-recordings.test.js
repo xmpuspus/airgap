@@ -4,6 +4,7 @@ const fs = require('node:fs');
 
 const {
   REQUIRED_OUTPUTS,
+  gifFilter,
   maestroRecordingPath,
   sizeLimitFor,
   validateManifest,
@@ -43,6 +44,14 @@ describe('recording manifest validation', () => {
 
     expect(path.isAbsolute(output)).toBe(true);
     expect(output).toMatch(/\/tmp\/recordings\/commit\/android$/);
+  });
+
+  test('builds one FFmpeg preprocessing chain before palette generation', () => {
+    expect(gifFilter({fps: 10, width: 360, colors: 96})).toBe(
+      'fps=10,scale=360:-2:flags=lanczos,split[s0][s1];' +
+        '[s0]palettegen=max_colors=96:stats_mode=diff[p];' +
+        '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
+    );
   });
 
   test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(
