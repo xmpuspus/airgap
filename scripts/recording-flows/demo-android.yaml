@@ -22,7 +22,7 @@ name: Airgap Android release recording
 - takeScreenshot: ${SHOT_PREFIX}-chat
 - tapOn: 'Check plans'
 - extendedWaitUntil:
-    visible: 'Local knowledge'
+    visible: 'On-device model'
     timeout: 30000
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
 - setAirplaneMode: enabled

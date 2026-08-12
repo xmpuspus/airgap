@@ -45,15 +45,31 @@ describe('recording manifest validation', () => {
     expect(output).toMatch(/\/tmp\/recordings\/commit\/android$/);
   });
 
-  test('selects the offline demo button instead of its duplicate heading', () => {
-    const flow = fs.readFileSync(
-      path.join(process.cwd(), 'scripts/recording-flows/demo-android.yaml'),
-      'utf8',
-    );
+  test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(
+    '%s selects the offline demo button instead of its duplicate heading',
+    flowName => {
+      const flow = fs.readFileSync(
+        path.join(process.cwd(), 'scripts/recording-flows', flowName),
+        'utf8',
+      );
 
-    expect(flow).toMatch(/element:\n\s+text: 'Try Offline Demo'\n\s+index: 1/);
-    expect(flow).toMatch(/tapOn:\n\s+text: 'Try Offline Demo'\n\s+index: 1/);
-  });
+      expect(flow).toMatch(/element:\n\s+text: 'Try Offline Demo'\n\s+index: 1/);
+      expect(flow).toMatch(/tapOn:\n\s+text: 'Try Offline Demo'\n\s+index: 1/);
+    },
+  );
+
+  test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(
+    '%s waits for the current provenance label',
+    flowName => {
+      const flow = fs.readFileSync(
+        path.join(process.cwd(), 'scripts/recording-flows', flowName),
+        'utf8',
+      );
+
+      expect(flow).toContain("visible: 'On-device model'");
+      expect(flow).not.toContain("visible: 'Local knowledge'");
+    },
+  );
 
   test('rejects an asset that exceeds its limit', () => {
     expect(() =>
