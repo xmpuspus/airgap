@@ -259,6 +259,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Airgap/Airgap.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Airgap/Info.plist;
@@ -289,6 +290,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Airgap/Airgap.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = Airgap/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;

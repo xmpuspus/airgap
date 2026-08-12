@@ -31,7 +31,7 @@
     "web:build": "node web/data/build.mjs",
     "web:serve": "node web/data/build.mjs && python3 -m http.server -d web 8080",
     "server:test": "node --test __tests__/server.test.mjs",
-    "signing:test": "node --test __tests__/android-signing.test.mjs",
+    "signing:test": "node --test __tests__/android-signing.test.mjs __tests__/ios-keychain-entitlements.test.mjs",
     "journeys": "node __tests__/run-journeys.mjs && node __tests__/run-multi-turn.mjs && node __tests__/run-industry-tests.mjs",
     "cli:pack:test": "npm run build-template --workspace create-airgap-bot && npm test --workspace create-airgap-bot -- --runInBand && npm pack --workspace create-airgap-bot --dry-run",
     "security:direct": "node scripts/check-direct-advisories.mjs",
