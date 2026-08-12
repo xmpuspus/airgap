@@ -78,6 +78,16 @@ describe('recording manifest validation', () => {
     expect(flow).toMatch(/tapOn: 'Send message'\n- extendedWaitUntil:\n\s+visible: 'Queued'/);
   });
 
+  test('uses the native iOS Back control after inspecting Outbox', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/demo-ios.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toContain("- tapOn: 'Back'");
+    expect(flow).not.toMatch(/^\s*- back\s*$/m);
+  });
+
   test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(
     '%s waits for the current provenance label',
     flowName => {

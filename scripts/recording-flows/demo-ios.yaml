@@ -28,7 +28,7 @@ name: Airgap iOS release recording
 - tapOn: 'Open Outbox'
 - assertVisible: 'Outbox is clear'
 - takeScreenshot: ${SHOT_PREFIX}-outbox
-- back
+- tapOn: 'Back'
 - tapOn: 'Open settings'
 - scrollUntilVisible:
     element: 'Delete All My Data'
