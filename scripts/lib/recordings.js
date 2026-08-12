@@ -3,6 +3,15 @@ const {Buffer} = require('node:buffer');
 
 const MIB = 1024 * 1024;
 
+const README_GIF_OPTIONS = Object.freeze({
+  panelWidth: 280,
+  panelHeight: 622,
+  gap: 12,
+  fps: 10,
+  colors: 40,
+  ditherScale: 5,
+});
+
 const REQUIRED_OUTPUTS = Object.freeze([
   'demo/airgap-demo.gif',
   'demo/airgap-demo-ios.gif',
@@ -50,6 +59,23 @@ function gifFilter({fps, width, colors}) {
     `fps=${fps},scale=${width}:-2:flags=lanczos,split[s0][s1]`,
     `[s0]palettegen=max_colors=${colors}:stats_mode=diff[p]`,
     '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
+  ].join(';');
+}
+
+function gifPaletteFilter({fps, colors, ditherScale = 4}) {
+  return [
+    `fps=${fps},split[s0][s1]`,
+    `[s0]palettegen=max_colors=${colors}:stats_mode=diff[p]`,
+    `[s1][p]paletteuse=dither=bayer:bayer_scale=${ditherScale}:diff_mode=rectangle`,
+  ].join(';');
+}
+
+function readmeLayoutFilter({panelWidth, panelHeight, gap}) {
+  const secondPanelX = panelWidth + gap;
+  return [
+    `[0:v]scale=${panelWidth}:-2:flags=lanczos,pad=${panelWidth}:${panelHeight}:0:(oh-ih)/2:color=0x071727[a]`,
+    `[1:v]scale=${panelWidth}:-2:flags=lanczos,pad=${panelWidth}:${panelHeight}:0:(oh-ih)/2:color=0x071727[b]`,
+    `[a][b]xstack=inputs=2:layout=0_0|${secondPanelX}_0:fill=0x071727[v]`,
   ].join(';');
 }
 
@@ -129,10 +155,13 @@ function validateManifest(manifest) {
 }
 
 module.exports = {
+  README_GIF_OPTIONS,
   REQUIRED_OUTPUTS,
   SIZE_LIMITS,
   gifFilter,
+  gifPaletteFilter,
   maestroRecordingPath,
+  readmeLayoutFilter,
   sizeLimitFor,
   validateManifest,
   validateRecording,

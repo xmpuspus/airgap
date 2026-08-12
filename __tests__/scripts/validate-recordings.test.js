@@ -3,9 +3,12 @@ const {Buffer} = require('node:buffer');
 const fs = require('node:fs');
 
 const {
+  README_GIF_OPTIONS,
   REQUIRED_OUTPUTS,
   gifFilter,
+  gifPaletteFilter,
   maestroRecordingPath,
+  readmeLayoutFilter,
   sizeLimitFor,
   validateManifest,
   validateRecording,
@@ -52,6 +55,33 @@ describe('recording manifest validation', () => {
         '[s0]palettegen=max_colors=96:stats_mode=diff[p];' +
         '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
     );
+  });
+
+  test('builds one FFmpeg palette chain for the combined recording', () => {
+    expect(gifPaletteFilter({fps: 10, colors: 80, ditherScale: 5})).toBe(
+      'fps=10,split[s0][s1];' +
+        '[s0]palettegen=max_colors=80:stats_mode=diff[p];' +
+        '[s1][p]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle',
+    );
+  });
+
+  test('uses a compact two-panel README layout', () => {
+    expect(readmeLayoutFilter({panelWidth: 300, panelHeight: 668, gap: 12})).toBe(
+      '[0:v]scale=300:-2:flags=lanczos,pad=300:668:0:(oh-ih)/2:color=0x071727[a];' +
+        '[1:v]scale=300:-2:flags=lanczos,pad=300:668:0:(oh-ih)/2:color=0x071727[b];' +
+        '[a][b]xstack=inputs=2:layout=0_0|312_0:fill=0x071727[v]',
+    );
+  });
+
+  test('keeps the README GIF preset within its asset budget', () => {
+    expect(README_GIF_OPTIONS).toEqual({
+      panelWidth: 280,
+      panelHeight: 622,
+      gap: 12,
+      fps: 10,
+      colors: 40,
+      ditherScale: 5,
+    });
   });
 
   test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(

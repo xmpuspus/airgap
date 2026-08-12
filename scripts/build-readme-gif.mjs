@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import recordings from './lib/recordings.js';
 import {
   createContactSheet,
   currentCommit,
@@ -12,6 +13,8 @@ import {
   run,
   upsertRecording,
 } from './recording-utils.mjs';
+
+const {README_GIF_OPTIONS, gifPaletteFilter, readmeLayoutFilter} = recordings;
 
 function rootFromScript() {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -34,11 +37,7 @@ function main() {
   const output = path.join(root, 'demo', 'airgap-readme-side-by-side.gif');
   const contactSheet = path.join(evidence, 'readme-side-by-side-contact.png');
   const duration = Math.min(probeMedia(android).durationSeconds, probeMedia(ios).durationSeconds);
-  const layout = [
-    '[0:v]scale=360:-2:flags=lanczos,pad=360:800:0:(oh-ih)/2:color=0x071727[a]',
-    '[1:v]scale=360:-2:flags=lanczos,pad=360:800:0:(oh-ih)/2:color=0x071727[b]',
-    '[a][b]xstack=inputs=2:layout=0_0|372_0:fill=0x071727[v]',
-  ].join(';');
+  const layout = readmeLayoutFilter(README_GIF_OPTIONS);
   run('ffmpeg', [
     '-y',
     '-i',
@@ -58,12 +57,7 @@ function main() {
     'yuv420p',
     source,
   ]);
-  const palette = [
-    'fps=10',
-    'split[s0][s1]',
-    '[s0]palettegen=max_colors=80:stats_mode=diff[p]',
-    '[s1][p]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle',
-  ].join(';');
+  const palette = gifPaletteFilter(README_GIF_OPTIONS);
   run('ffmpeg', ['-y', '-i', source, '-filter_complex', palette, '-loop', '0', output]);
   createContactSheet({source, output: contactSheet});
   const probe = probeMedia(output);
