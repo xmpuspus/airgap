@@ -32,6 +32,7 @@ import {COLORS, SPACING, RADIUS, SHADOWS, TYPOGRAPHY, TIMING} from '../constants
 import type {BubblePosition} from '../constants/theme';
 import type {BotMessage, QuickReply} from '../types/chat';
 import {useReducedMotion} from '../hooks/useReducedMotion';
+import {shouldShowSuggestedReplies} from './chatState';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -358,8 +359,8 @@ export function ChatScreen(_props: Props) {
                 </Text>
               </View>
             )}
-            {!isTyping && suggestedReplies && suggestedReplies.length > 0 && (
-              <QuickReplies replies={suggestedReplies} onPress={handleQuickReply} />
+            {shouldShowSuggestedReplies({hasUserMessage, isTyping, suggestedReplies}) && (
+              <QuickReplies replies={suggestedReplies ?? []} onPress={handleQuickReply} />
             )}
           </View>
         }
