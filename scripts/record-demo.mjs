@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import recordings from './lib/recordings.js';
 import {
   assertCommit,
   convertToGif,
@@ -15,6 +16,8 @@ import {
   runMaestro,
   upsertRecording,
 } from './recording-utils.mjs';
+
+const {maestroRecordingPath} = recordings;
 
 function rootFromScript() {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -80,7 +83,7 @@ function main() {
   const flowName = args.flow ?? `demo-${platform}.yaml`;
   const flow = path.join(root, 'scripts', 'recording-flows', flowName);
   const shotPrefix = path.join(evidence, id).split(path.sep).join('/');
-  const recordingPath = path.relative(path.dirname(flow), sourceBase).split(path.sep).join('/');
+  const recordingPath = maestroRecordingPath(sourceBase);
   const appId =
     args['app-id'] ?? (platform === 'android' ? 'com.airgap' : 'org.reactjs.native.example.Airgap');
 

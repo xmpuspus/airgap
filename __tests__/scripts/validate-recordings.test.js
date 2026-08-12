@@ -3,6 +3,7 @@ const {Buffer} = require('node:buffer');
 
 const {
   REQUIRED_OUTPUTS,
+  maestroRecordingPath,
   sizeLimitFor,
   validateManifest,
   validateRecording,
@@ -36,6 +37,13 @@ function record(overrides = {}) {
 }
 
 describe('recording manifest validation', () => {
+  test('gives Maestro an absolute recording path', () => {
+    const output = maestroRecordingPath('tmp/recordings/commit/android');
+
+    expect(path.isAbsolute(output)).toBe(true);
+    expect(output).toMatch(/\/tmp\/recordings\/commit\/android$/);
+  });
+
   test('rejects an asset that exceeds its limit', () => {
     expect(() =>
       validateRecording(record(), {

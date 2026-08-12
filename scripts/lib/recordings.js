@@ -41,6 +41,10 @@ function normalized(value) {
   return typeof value === 'string' ? value.split(path.sep).join('/') : '';
 }
 
+function maestroRecordingPath(target) {
+  return path.resolve(target).split(path.sep).join('/');
+}
+
 function closeEnough(actual, expected, tolerance) {
   return Math.abs(actual - expected) <= tolerance;
 }
@@ -119,6 +123,7 @@ function validateManifest(manifest) {
 module.exports = {
   REQUIRED_OUTPUTS,
   SIZE_LIMITS,
+  maestroRecordingPath,
   sizeLimitFor,
   validateManifest,
   validateRecording,
