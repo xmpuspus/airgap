@@ -11,18 +11,21 @@ iOS Simulator and Android Emulator. A smaller set of facts, including device eli
 model installation, battery use, heat, and hardware-specific performance, still needs target
 hardware.
 
-So the validation system will produce three evidence classes.
+So the validation system will produce four provider evidence classes.
 
-1. `simulated-provider` proves application routing, user interface, native bridge events, error
+1. `deterministic-runtime` proves the real document formatter path without model output.
+2. `simulated-provider` proves application routing, user interface, native bridge events, error
    handling, cancellation, downloads, fallback, provenance, and audit records with controlled
    scenarios.
-2. `host-native-model` proves prompts and generation against a real platform model running on a
+3. `host-native-model` proves prompts and generation against a real platform model running on a
    compatible host. The first implementation runs Apple's Foundation Models framework on macOS.
-3. `target-device` proves the exact provider, model, operating-system build, and runtime behavior on
+4. `target-device` proves the exact provider, model, operating-system build, and runtime behavior on
    a physical device. The device may be locally attached or hosted by a remote device lab.
 
-Every report and recording must carry one of these values. Simulated and host-model results must
-never be described as physical iPhone or Android evidence.
+Every report and recording must carry one of these values. The recording manifest keeps its
+existing `evidenceClass` field for capture hardware and adds `providerEvidenceClass` for provider
+proof. Simulated and host-model results must never be described as physical iPhone or Android
+evidence.
 
 ## A hybrid harness gives the strongest evidence without buying phones
 
@@ -217,13 +220,15 @@ Every validation report uses one schema with these needed fields:
 
 The validator enforces the following rules.
 
+- `deterministic-runtime` must record the deterministic formatter and no model output.
 - `simulated-provider` must use a model identity beginning with `simulated/`.
 - `host-native-model` must name the host operating system and cannot claim an iPhone or Android
   device.
 - `target-device` must record a physical device model, OS build, and provider-reported model
   identity.
-- A public recording cannot claim target-device evidence unless its referenced report passes the
-  target-device rules.
+- A public recording cannot claim target-device provider evidence unless its capture
+  `evidenceClass` includes `physical-device` and its referenced report passes the target-device
+  rules.
 - Reports with unavailable models are valid environment observations but do not satisfy a release
   provider gate.
 
