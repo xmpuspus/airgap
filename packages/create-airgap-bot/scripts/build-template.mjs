@@ -1,11 +1,14 @@
+import {execFile} from 'node:child_process';
 import {cp, mkdir, readFile, rm, writeFile} from 'node:fs/promises';
 import {dirname, join, relative, resolve, sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {promisify} from 'node:util';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const packageRoot = resolve(scriptDir, '..');
 const repositoryRoot = resolve(scriptDir, '../../..');
 const templateRoot = join(packageRoot, 'template');
+const execFileAsync = promisify(execFile);
 const excludedSegments = new Set([
   'node_modules',
   'build',
@@ -16,11 +19,6 @@ const excludedSegments = new Set([
   'coverage',
   'tmp',
 ]);
-
-function shouldCopy(source) {
-  const segments = relative(repositoryRoot, source).split(sep);
-  return !segments.some(segment => excludedSegments.has(segment) || segment === '.DS_Store');
-}
 
 const directories = ['android', 'assets', 'examples', 'ios', 'scripts', 'src'];
 const files = [
@@ -41,6 +39,36 @@ const files = [
   'tsconfig.json',
 ];
 
+async function trackedSourcePaths() {
+  const {stdout} = await execFileAsync(
+    'git',
+    ['-C', repositoryRoot, 'ls-files', '-z', '--', ...directories, ...files],
+    {encoding: 'utf8', maxBuffer: 16 * 1024 * 1024},
+  );
+  const paths = new Set();
+  for (const file of stdout.split('\0').filter(Boolean)) {
+    const segments = file.split('/');
+    for (let length = 1; length <= segments.length; length++) {
+      paths.add(segments.slice(0, length).join('/'));
+    }
+  }
+  if (paths.size === 0) {
+    throw new Error('Cannot build the packaged template without version-controlled sources');
+  }
+  return paths;
+}
+
+const trackedPaths = await trackedSourcePaths();
+
+function shouldCopy(source) {
+  const pathFromRoot = relative(repositoryRoot, source).split(sep).join('/');
+  const segments = pathFromRoot.split('/');
+  return (
+    trackedPaths.has(pathFromRoot) &&
+    !segments.some(segment => excludedSegments.has(segment) || segment === '.DS_Store')
+  );
+}
+
 await rm(templateRoot, {recursive: true, force: true});
 await mkdir(templateRoot, {recursive: true});
 
@@ -51,6 +79,9 @@ for (const directory of directories) {
   });
 }
 for (const file of files) {
+  if (!trackedPaths.has(file)) {
+    throw new Error(`Template source is not version controlled: ${file}`);
+  }
   await cp(join(repositoryRoot, file), join(templateRoot, file));
 }
 

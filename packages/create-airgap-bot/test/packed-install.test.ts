@@ -1,9 +1,38 @@
+import {execFileSync} from 'node:child_process';
 import fsp from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import {scaffold} from '../src/scaffold';
 
 describe('packaged template', () => {
+  test('copies only version-controlled template sources', async () => {
+    const repositoryRoot = path.resolve(__dirname, '../../..');
+    const sentinel = path.join(repositoryRoot, 'scripts', '.airgap-untracked-template-sentinel');
+    const templateRoot = path.join(repositoryRoot, 'packages', 'create-airgap-bot', 'template');
+
+    await fsp.writeFile(sentinel, 'local-only fixture\n');
+    try {
+      execFileSync(
+        process.execPath,
+        [path.join(__dirname, '..', 'scripts', 'build-template.mjs')],
+        {
+          cwd: repositoryRoot,
+        },
+      );
+      await expect(
+        fsp.access(path.join(templateRoot, 'scripts', path.basename(sentinel))),
+      ).rejects.toThrow();
+      await expect(
+        fsp.access(path.join(templateRoot, 'android', 'local.properties')),
+      ).rejects.toThrow();
+      await expect(
+        fsp.access(path.join(templateRoot, 'ios', '.xcode.env.local')),
+      ).rejects.toThrow();
+    } finally {
+      await fsp.rm(sentinel, {force: true});
+    }
+  });
+
   test('scaffolds with network access disabled', async () => {
     const targetRoot = await fsp.mkdtemp(path.join(os.tmpdir(), 'airgap-packed-test-'));
     const targetDir = path.join(targetRoot, 'field-help');
