@@ -41,7 +41,7 @@ The repository includes the following parts.
 - Journey runners check 100 single-turn cases, 100 conversations, and 66 industry cases.
 - CI builds Android and iOS debug targets and checks direct dependency advisories.
 - Every kept GIF records the source commit, device, OS, provider, model identity, capture command,
-  duration, dimensions, byte size, evidence class, and loop review.
+  duration, dimensions, byte size, public playback speed, evidence class, and loop review.
 
 See [`README.md`](README.md) for the current evidence table and
 [`demo/recordings.json`](demo/recordings.json) for exact media facts.

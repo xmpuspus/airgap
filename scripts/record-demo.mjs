@@ -100,6 +100,13 @@ function main() {
     args.output ?? `demo/airgap-demo${platform === 'ios' ? '-ios' : ''}.gif`,
   );
   const contactSheet = path.join(evidence, `${id}-contact.png`);
+  const kind = args.kind ?? 'platform';
+  const playbackSpeed = Number(
+    args['playback-speed'] ?? (kind === 'industry' || platform === 'android' ? 4 : 1),
+  );
+  if (!Number.isFinite(playbackSpeed) || playbackSpeed < 1 || playbackSpeed > 8) {
+    throw new Error('recording_playback_speed_invalid');
+  }
   const flowName = args.flow ?? `demo-${platform}.yaml`;
   const flow = path.join(root, 'scripts', 'recording-flows', flowName);
   const shotPrefix = path.join(evidence, id).split(path.sep).join('/');
@@ -136,7 +143,14 @@ function main() {
   }
 
   if (!fs.existsSync(source)) throw new Error(`recording_source_missing:${source}`);
-  convertToGif({source, output, fps: 10, width: 360, colors: args.kind === 'industry' ? 80 : 96});
+  convertToGif({
+    source,
+    output,
+    fps: 10,
+    width: 360,
+    colors: kind === 'industry' ? 80 : 96,
+    playbackSpeed,
+  });
   createContactSheet({source, output: contactSheet});
   const probe = probeMedia(output);
   const facts = platform === 'android' ? androidFacts(args.device) : iosFacts(args.device);
@@ -145,7 +159,7 @@ function main() {
 
   upsertRecording(root, {
     id,
-    kind: args.kind ?? 'platform',
+    kind,
     output: relativeToRoot(root, output),
     source: relativeToRoot(root, source),
     contactSheet: relativeToRoot(root, contactSheet),
@@ -163,6 +177,8 @@ function main() {
     capturedAt,
     ...probe,
     bytes: fs.statSync(output).size,
+    playbackSpeed,
+    omittedSourceRangesSeconds: [],
     loopReviewed: false,
   });
   process.stdout.write(

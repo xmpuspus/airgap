@@ -93,6 +93,8 @@ function main() {
     capturedAt: new Date().toISOString(),
     ...probe,
     bytes: fs.statSync(output).size,
+    playbackSpeed: 1,
+    omittedSourceRangesSeconds: [],
     loopReviewed: false,
   });
   process.stdout.write(`Built ${relativeToRoot(root, output)}.\n`);

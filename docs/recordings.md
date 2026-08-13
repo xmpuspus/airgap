@@ -80,6 +80,29 @@ The industry runner copies each fixture's configuration and knowledge into a tem
 state, chooses a local-information quick reply, and restores tracked source files after capture.
 Never use real customer data, accounts, tokens, locations, or support systems in release media.
 
+After an interrupted batch, rerun one fixture without replacing successful captures.
+
+```bash
+node scripts/record-industries.mjs \
+  --device emulator-5554 \
+  --commit <40-character-commit> \
+  --industry water-utility
+```
+
+Android and industry GIFs play at four times the source-video speed so a public loop does not spend
+more than a minute showing streamed text. The manifest records `playbackSpeed`. Source MP4 files
+keep the original timing. Rebuild GIFs from those sources without operating the apps again.
+
+If a development-only notice appears in otherwise valid source footage, record its exact source
+timestamps in `omittedSourceRangesSeconds`. The public GIF can omit that interval, but the source MP4
+must stay unchanged. Do not omit product errors, delays, failed actions, or other app behavior.
+
+```bash
+npm run recordings:rebuild -- --commit <40-character-commit>
+```
+
+The rebuild resets `loopReviewed` to `false`. Inspect the new public loops before changing it back.
+
 ## Inspect every output
 
 Each run writes raw video, screenshots, and a first-middle-final contact sheet under
@@ -90,8 +113,9 @@ Check each GIF as follows.
 1. Inspect the first, middle, and final frames.
 2. Play the full loop and check pacing, touch results, scrolling, text wrapping, and the loop seam.
 3. Check that the visible provider and source match `providerId` and `modelIdentity`.
-4. Check that no notification, account value, machine path, or private data appears.
-5. Set `loopReviewed` to `true` only after the full check.
+4. Check the recorded playback speed against the unchanged source video.
+5. Check that no notification, account value, machine path, or private data appears.
+6. Set `loopReviewed` to `true` only after the full check.
 
 The README GIF must stay under 5 MiB. Platform GIFs must stay under 8 MiB. Industry GIFs must stay
 under 3 MiB. The validator checks dimensions, frame rate, duration, file header, and exact byte

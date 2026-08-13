@@ -11,6 +11,7 @@ name: Airgap industry template recording
     direction: DOWN
     speed: 35
     visibilityPercentage: 80
+    timeout: 40000
 - startRecording:
     path: ${RECORDING_PATH}
 - takeScreenshot: ${SHOT_PREFIX}-onboarding

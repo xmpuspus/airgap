@@ -44,6 +44,8 @@ function record(overrides = {}) {
     fps: 10,
     durationSeconds: 24,
     bytes: 1024,
+    playbackSpeed: 1,
+    omittedSourceRangesSeconds: [],
     loopReviewed: true,
     ...overrides,
   };
@@ -58,11 +60,43 @@ describe('recording manifest validation', () => {
   });
 
   test('builds one FFmpeg preprocessing chain before palette generation', () => {
-    expect(gifFilter({fps: 10, width: 360, colors: 96})).toBe(
-      'fps=10,scale=360:-2:flags=lanczos,split[s0][s1];' +
+    expect(gifFilter({fps: 10, width: 360, colors: 96, playbackSpeed: 4})).toBe(
+      'setpts=PTS/4,fps=10,scale=360:-2:flags=lanczos,split[s0][s1];' +
         '[s0]palettegen=max_colors=96:stats_mode=diff[p];' +
         '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
     );
+  });
+
+  test('records an omitted development-overlay interval in the GIF filter', () => {
+    expect(
+      gifFilter({
+        fps: 10,
+        width: 360,
+        colors: 96,
+        playbackSpeed: 4,
+        omittedSourceRangesSeconds: [[107, 114]],
+      }),
+    ).toBe(
+      '[0:v]trim=end=107,setpts=PTS-STARTPTS[segment0];' +
+        '[0:v]trim=start=114,setpts=PTS-STARTPTS[segment1];' +
+        '[segment0][segment1]concat=n=2:v=1:a=0,' +
+        'setpts=PTS/4,fps=10,scale=360:-2:flags=lanczos,split[s0][s1];' +
+        '[s0]palettegen=max_colors=96:stats_mode=diff[p];' +
+        '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
+    );
+  });
+
+  test('rebuilds public GIFs from retained source videos', () => {
+    const script = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/rebuild-recording-gifs.mjs'),
+      'utf8',
+    );
+
+    expect(script).toContain("recording.kind === 'industry' || recording.platform === 'android'");
+    expect(script).toContain('convertToGif({');
+    expect(script).toContain('build-readme-gif.mjs');
+    expect(script).toMatch(/run\(\s*process\.execPath/);
+    expect(script).toContain('loopReviewed: false');
   });
 
   test('builds one FFmpeg palette chain for the combined recording', () => {
@@ -147,6 +181,26 @@ describe('recording manifest validation', () => {
     },
   );
 
+  test('gives a cold industry reload enough time to reach onboarding', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/industry-android.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toMatch(/element:\n\s+text: 'Try Offline Demo'\n\s+index: 1[\s\S]*timeout: 40000/);
+  });
+
+  test('can record one named industry after an interrupted batch', () => {
+    const script = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/record-industries.mjs'),
+      'utf8',
+    );
+
+    expect(script).toContain("const requestedIndustry = valueAfter('--industry');");
+    expect(script).toContain('throw new Error(`recording_industry_unknown:${requestedIndustry}`)');
+    expect(script).toContain('const industries = requestedIndustry');
+  });
+
   test('dismisses the Android keyboard before tapping the send button', () => {
     const flow = fs.readFileSync(
       path.join(process.cwd(), 'scripts/recording-flows/demo-android.yaml'),
@@ -156,6 +210,17 @@ describe('recording manifest validation', () => {
     expect(flow).toMatch(/inputText: 'Create a ticket'\n- hideKeyboard\n- tapOn: 'Send message'/);
     expect(flow).not.toContain("inputText: 'Check my balance'");
     expect(flow).toMatch(/tapOn: 'Send message'\n- extendedWaitUntil:\n\s+visible: 'Queued'/);
+  });
+
+  test('clears Android development notices after changing airplane mode', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/demo-android.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toMatch(
+      /setAirplaneMode: enabled\n- waitForAnimationToEnd\n- tapOn:\n\s+id: 'com\.airgap:id\/dismiss_button'\n\s+optional: true\n- tapOn:\n\s+point: '93%,92%'\n\s+optional: true\n- extendedWaitUntil:\n\s+notVisible: 'Open debugger to view warnings\\.'\n\s+timeout: 10000\n- tapOn: 'Support question'/,
+    );
   });
 
   test('stops the iOS GIF after the grounded answer', () => {
@@ -266,6 +331,31 @@ describe('recording manifest validation', () => {
     ['captureCommand', undefined, 'recording_capture_command_missing'],
   ])('requires %s evidence metadata', (field, value, expected) => {
     expect(() => validateRecording(record({[field]: value}))).toThrow(expected);
+  });
+
+  test('requires a bounded public playback speed', () => {
+    expect(() => validateRecording(record({playbackSpeed: 0}))).toThrow(
+      'recording_playback_speed_invalid',
+    );
+    expect(() => validateRecording(record({playbackSpeed: 9}))).toThrow(
+      'recording_playback_speed_invalid',
+    );
+  });
+
+  test('requires ordered non-overlapping omitted source ranges', () => {
+    expect(() => validateRecording(record({omittedSourceRangesSeconds: [[114, 107]]}))).toThrow(
+      'recording_omitted_range_invalid',
+    );
+    expect(() =>
+      validateRecording(
+        record({
+          omittedSourceRangesSeconds: [
+            [10, 20],
+            [19, 21],
+          ],
+        }),
+      ),
+    ).toThrow('recording_omitted_range_invalid');
   });
 
   test('rejects simulator or emulator footage labeled as a physical device', () => {

@@ -32,6 +32,16 @@ name: Airgap Android release recording
     timeout: 30000
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
 - setAirplaneMode: enabled
+- waitForAnimationToEnd
+- tapOn:
+    id: 'com.airgap:id/dismiss_button'
+    optional: true
+- tapOn:
+    point: '93%,92%'
+    optional: true
+- extendedWaitUntil:
+    notVisible: 'Open debugger to view warnings\.'
+    timeout: 10000
 - tapOn: 'Support question'
 - inputText: 'Create a ticket'
 - hideKeyboard

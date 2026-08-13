@@ -92,8 +92,8 @@ describe('web/data/build.mjs', () => {
   test('README gives one current CLI path and one freshly recorded primary flow', () => {
     const readme = fs.readFileSync(README, 'utf8');
     expect(readme).toContain('npx create-airgap-bot support-app --template telco');
-    expect(readme.match(/demo\/airgap-demo-ios\.gif/g) ?? []).toHaveLength(1);
-    expect(readme).not.toContain('demo/airgap-readme-side-by-side.gif');
+    expect(readme.match(/demo\/airgap-readme-side-by-side\.gif/g) ?? []).toHaveLength(1);
+    expect(readme).not.toContain('demo/airgap-demo-ios.gif');
     expect(readme.toLowerCase()).not.toContain('coming soon');
     expect(readme.toLowerCase()).not.toContain('coming once');
   });

@@ -24,11 +24,12 @@ The default demo makes no model request and needs no download. It lets a new
 contributor check retrieval, citations, privacy status, and the interface before
 choosing an inference provider or connecting a backend.
 
-![Airgap iOS simulator flow from provider readiness to a cited offline answer](demo/airgap-demo-ios.gif)
+![Airgap Android emulator and iOS simulator flows from provider readiness to cited offline answers](demo/airgap-readme-side-by-side.gif)
 
-This GIF is a real iPhone 17 Pro Simulator run of the deterministic `demo`
-provider. It is not physical-device proof of Apple Foundation Models. Exact
-capture metadata is in [`demo/recordings.json`](demo/recordings.json).
+This GIF combines real Android 15 emulator and iPhone 17 Pro Simulator runs from
+the same source commit. Both use the deterministic `demo` provider. The footage
+does not prove Apple Foundation Models or Android system AI on a physical device.
+Exact capture metadata is in [`demo/recordings.json`](demo/recordings.json).
 
 ## Get the first offline answer
 
@@ -237,18 +238,19 @@ shows exact answer provenance.
 
 ## Evidence labels state the checked behavior
 
-| Evidence                           | Target                  | Result                              | Unchecked behavior                            |
-| ---------------------------------- | ----------------------- | ----------------------------------- | --------------------------------------------- |
-| Fresh iOS demo GIF                 | iOS 26.4 simulator      | UI and answer checked               | Physical Apple model                          |
-| iOS native compile                 | Generic iOS Simulator   | Foundation Models bridge compiles   | Eligible physical-device runtime              |
-| Android debug compile              | Android app, min SDK 24 | ML Kit beta2 bridge compiles        | Supported AICore device runtime               |
-| Existing Android and industry GIFs | Android 15 emulator     | Demo journeys and templates checked | Android system AI or physical-device behavior |
+| Evidence                  | Target                                   | Result                                                   | Unchecked behavior                                 |
+| ------------------------- | ---------------------------------------- | -------------------------------------------------------- | -------------------------------------------------- |
+| Joint and iOS GIFs        | Android 15 emulator + iOS 26.4 simulator | Readiness, UI, and cited answers                         | Physical native providers                          |
+| Fresh Android GIF         | Android 15 emulator                      | Answer, queue, Outbox, and privacy checked               | Android system AI or physical-device behavior      |
+| Seven fresh industry GIFs | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked | Production data, actions, approvals, or compliance |
+| iOS native compile        | Generic iOS Simulator                    | Foundation Models bridge compiles                        | Eligible physical-device runtime                   |
+| Android debug compile     | Android app, min SDK 24                  | ML Kit beta2 bridge compiles                             | Supported AICore device runtime                    |
 
 Every kept GIF records source commit, provider ID, model identity, device,
 operating system, evidence class, capture command, dimensions, duration, byte
-size, and loop review. Label simulator and emulator footage by its actual target,
-never as a physical device. Run `npm run recordings:validate` to check all ten
-assets.
+size, public playback speed, and loop review. Label simulator and emulator footage
+by its actual target, never as a physical device. Run `npm run recordings:validate`
+to check all ten assets.
 
 ## Current limits
 
@@ -268,12 +270,19 @@ assets.
 
 ## Documentation
 
+- [`docs/README.md`](docs/README.md) routes operators, app developers, backend developers, and maintainers to the right guide
 - [`DEPLOYMENT.md`](DEPLOYMENT.md) covers native provider setup, signing, rollout, and rollback
 - [`CUSTOMIZATION.md`](CUSTOMIZATION.md) covers brand, knowledge, actions, and configuration fields
+- [`docs/enterprise-integration.md`](docs/enterprise-integration.md) covers identity, API, sync, and production boundaries
 - [`docs/hybrid-llm-design.md`](docs/hybrid-llm-design.md) explains provider routing and failure handling
 - [`docs/sync-architecture.md`](docs/sync-architecture.md) explains signed knowledge updates
 - [`docs/tool-calling.md`](docs/tool-calling.md) explains the deterministic action boundary
+- [`docs/safety-layer.md`](docs/safety-layer.md) explains safety checks and their limits
+- [`docs/observability.md`](docs/observability.md) lists diagnostics, telemetry fields, and privacy limits
+- [`docs/kb-studio.md`](docs/kb-studio.md) covers local knowledge authoring and validation
+- [`docs/recordings.md`](docs/recordings.md) gives the reproducible media evidence process
 - [`SECURITY.md`](SECURITY.md) lists supported versions and private vulnerability reporting
+- [`SUPPORT.md`](SUPPORT.md) explains how to report a reproducible problem
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) gives the development and test workflow
 - [`ROADMAP.md`](ROADMAP.md) lists release gates and planned work
 

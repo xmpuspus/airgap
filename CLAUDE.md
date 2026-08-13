@@ -37,6 +37,7 @@ npx tsc --noEmit
 npm test -- --runInBand
 npm run journeys
 npm run kb:validate
+npm run recordings:rebuild -- --commit <40-character-commit>
 npm run recordings:validate
 ```
 

@@ -36,6 +36,12 @@ function main() {
   const root = rootFromScript();
   const device = valueAfter('--device');
   if (!device) throw new Error('recording_device_required');
+  const requestedIndustry = valueAfter('--industry');
+  const requestedEntry = INDUSTRIES.find(([industry]) => industry === requestedIndustry);
+  if (requestedIndustry && !requestedEntry) {
+    throw new Error(`recording_industry_unknown:${requestedIndustry}`);
+  }
+  const industries = requestedIndustry ? [requestedEntry] : INDUSTRIES;
   const sourceCommit = valueAfter('--commit') ?? currentCommit(root);
   const evidence = evidenceDirectory(root, sourceCommit);
   const configPath = path.join(root, 'airgap.config.json');
@@ -58,7 +64,7 @@ function main() {
   });
 
   try {
-    for (const [industry, slug] of INDUSTRIES) {
+    for (const [industry, slug] of industries) {
       const example = path.join(root, 'examples', industry);
       const configSource = path.join(example, 'airgap.config.json');
       const config = JSON.parse(fs.readFileSync(configSource, 'utf8'));

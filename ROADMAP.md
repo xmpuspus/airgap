@@ -18,7 +18,7 @@ release evidence exists.
 - Fresh Android emulator and iOS simulator footage covers the deterministic offline path through a
   cited answer without implying physical-device model evidence.
 - Recording schema v2 keeps provider, model, device, OS, evidence class, capture
-  command, media facts, and loop review for all ten GIFs.
+  command, playback speed, media facts, and loop review for all ten GIFs.
 - Public docs use checked local links and separate current guidance from historical plans.
 - Android and iOS native bridges compile in debug builds.
 - Existing knowledge signing, encrypted storage, authenticated network access,

@@ -96,9 +96,27 @@ function maestroRecordingPath(target) {
   return path.resolve(target).split(path.sep).join('/');
 }
 
-function gifFilter({fps, width, colors}) {
+function gifFilter({fps, width, colors, playbackSpeed = 1, omittedSourceRangesSeconds = []}) {
+  const filters = [];
+  let input = '';
+  if (omittedSourceRangesSeconds.length > 0) {
+    const segments = [];
+    let start = 0;
+    for (const [rangeStart, rangeEnd] of omittedSourceRangesSeconds) {
+      const label = `segment${segments.length}`;
+      const trim = start === 0 ? `end=${rangeStart}` : `start=${start}:end=${rangeStart}`;
+      filters.push(`[0:v]trim=${trim},setpts=PTS-STARTPTS[${label}]`);
+      segments.push(`[${label}]`);
+      start = rangeEnd;
+    }
+    const label = `segment${segments.length}`;
+    filters.push(`[0:v]trim=start=${start},setpts=PTS-STARTPTS[${label}]`);
+    segments.push(`[${label}]`);
+    input = `${segments.join('')}concat=n=${segments.length}:v=1:a=0,`;
+  }
   return [
-    `fps=${fps},scale=${width}:-2:flags=lanczos,split[s0][s1]`,
+    ...filters,
+    `${input}setpts=PTS/${playbackSpeed},fps=${fps},scale=${width}:-2:flags=lanczos,split[s0][s1]`,
     `[s0]palettegen=max_colors=${colors}:stats_mode=diff[p]`,
     '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
   ].join(';');
@@ -194,6 +212,30 @@ function validateRecording(recording, measured) {
     fail('recording_capture_command_invalid');
   }
   validateEvidenceClass(recording);
+  if (
+    !Number.isFinite(recording.playbackSpeed) ||
+    recording.playbackSpeed < 1 ||
+    recording.playbackSpeed > 8
+  ) {
+    fail('recording_playback_speed_invalid');
+  }
+  if (!Array.isArray(recording.omittedSourceRangesSeconds)) {
+    fail('recording_omitted_range_invalid');
+  }
+  let previousEnd = -1;
+  for (const range of recording.omittedSourceRangesSeconds) {
+    if (
+      !Array.isArray(range) ||
+      range.length !== 2 ||
+      !range.every(Number.isFinite) ||
+      range[0] < 0 ||
+      range[1] <= range[0] ||
+      range[0] < previousEnd
+    ) {
+      fail('recording_omitted_range_invalid');
+    }
+    previousEnd = range[1];
+  }
   if (typeof recording.config !== 'string' || !recording.config.trim())
     fail('recording_config_missing');
   if (!Number.isFinite(Date.parse(recording.capturedAt))) fail('recording_date_invalid');

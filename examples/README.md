@@ -20,8 +20,8 @@ approved the sample content.
 | Water utility    | [`water-utility/`](water-utility/)       | 36        | [`industry-water.gif`](../demo/industry-water.gif)           |
 
 The recordings use the deterministic `demo` provider on an Android emulator. They record fixture
-loading and local answer behavior. They do not record physical-device AI or customer-system
-integration.
+loading and local answer behavior. Public GIF playback is four times faster than the kept source
+video. The recordings do not record physical-device AI or customer-system integration.
 
 ## Create an app from a template
 

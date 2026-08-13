@@ -73,9 +73,23 @@ export function runMaestro({root, flow, device, values, outputDirectory}) {
   run(findMaestro(), args, {cwd: root, env: maestroEnvironment()});
 }
 
-export function convertToGif({source, output, fps = 10, width = 360, colors = 96}) {
+export function convertToGif({
+  source,
+  output,
+  fps = 10,
+  width = 360,
+  colors = 96,
+  playbackSpeed = 1,
+  omittedSourceRangesSeconds = [],
+}) {
   fs.mkdirSync(path.dirname(output), {recursive: true});
-  const filter = gifFilter({fps, width, colors});
+  const filter = gifFilter({
+    fps,
+    width,
+    colors,
+    playbackSpeed,
+    omittedSourceRangesSeconds,
+  });
   run('ffmpeg', ['-y', '-i', source, '-filter_complex', filter, '-loop', '0', output]);
 }
 
