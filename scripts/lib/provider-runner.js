@@ -55,8 +55,7 @@ function escapeMaestroRegex(value) {
 
 function maestroValues({platform, appId, scenario}) {
   const capability = scenario.capabilities[platform];
-  const expectedResult =
-    scenario.generation.text ?? 'Sorry, something went wrong. Please try again or call 211';
+  const expectedResult = scenario.generation.text ?? "Here's what I found";
   return {
     APP_ID: appId,
     PROVIDER_NAME: platform === 'ios' ? 'Apple on-device model' : 'Android system AI',

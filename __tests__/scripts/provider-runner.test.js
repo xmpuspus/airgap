@@ -110,6 +110,24 @@ describe('provider scenario runner commands', () => {
       matcher.test('Your approved support document says service can continue offline 1.'),
     ).toBe(false);
   });
+
+  test('expects the local knowledge fallback after a provider generation failure', () => {
+    if (!runner.maestroValues) return;
+    expect(
+      runner.maestroValues({
+        platform: 'ios',
+        appId: 'org.reactjs.native.example.Airgap',
+        scenario: {
+          id: 'busy',
+          capabilities: {ios: {state: 'available'}},
+          generation: {error: 'busy'},
+        },
+      }),
+    ).toMatchObject({
+      EXPECTED_RESULT: "Here's what I found",
+      EXPECTED_RESULT_REGEX: ".*Here's what I found.*",
+    });
+  });
 });
 
 describe('target-device preflight', () => {
