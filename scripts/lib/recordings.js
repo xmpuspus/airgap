@@ -1,6 +1,7 @@
 const path = require('node:path');
 const {Buffer} = require('node:buffer');
 const fs = require('node:fs');
+const {PROVIDER_EVIDENCE_CLASSES} = require('./provider-validation.js');
 
 const MIB = 1024 * 1024;
 
@@ -89,6 +90,33 @@ function validateEvidenceClass(recording) {
   }
   if (classes.includes('simulator') && recording.platform === 'android') {
     fail('recording_evidence_class_invalid');
+  }
+}
+
+function validateProviderEvidenceClass(recording) {
+  if (!PROVIDER_EVIDENCE_CLASSES.includes(recording.providerEvidenceClass)) {
+    fail('recording_provider_evidence_class_invalid');
+  }
+  if (
+    recording.providerEvidenceClass === 'deterministic-runtime' &&
+    (recording.providerId !== 'demo' || recording.modelIdentity !== 'document-formatter-v1')
+  ) {
+    fail('recording_provider_evidence_deterministic_invalid');
+  }
+  if (
+    recording.providerEvidenceClass === 'simulated-provider' &&
+    !recording.modelIdentity.startsWith('simulated/')
+  ) {
+    fail('recording_provider_evidence_simulated_invalid');
+  }
+  const captureClasses = Array.isArray(recording.evidenceClass)
+    ? recording.evidenceClass
+    : [recording.evidenceClass];
+  if (
+    recording.providerEvidenceClass === 'target-device' &&
+    !captureClasses.includes('physical-device')
+  ) {
+    fail('recording_provider_evidence_target_invalid');
   }
 }
 
@@ -212,6 +240,7 @@ function validateRecording(recording, measured) {
     fail('recording_capture_command_invalid');
   }
   validateEvidenceClass(recording);
+  validateProviderEvidenceClass(recording);
   if (
     !Number.isFinite(recording.playbackSpeed) ||
     recording.playbackSpeed < 1 ||

@@ -35,6 +35,7 @@ function record(overrides = {}) {
     providerId: 'demo',
     modelIdentity: 'document-formatter-v1',
     evidenceClass: 'emulator',
+    providerEvidenceClass: 'deterministic-runtime',
     captureCommand:
       'node scripts/record-demo.mjs --platform android --device emulator-5554 --provider demo --model-identity document-formatter-v1 --evidence-class emulator',
     config: 'airgap.config.json',
@@ -329,8 +330,37 @@ describe('recording manifest validation', () => {
     ['providerId', undefined, 'recording_provider_missing'],
     ['modelIdentity', undefined, 'recording_model_identity_missing'],
     ['captureCommand', undefined, 'recording_capture_command_missing'],
+    ['providerEvidenceClass', undefined, 'recording_provider_evidence_class_invalid'],
   ])('requires %s evidence metadata', (field, value, expected) => {
     expect(() => validateRecording(record({[field]: value}))).toThrow(expected);
+  });
+
+  test('keeps capture hardware separate from provider proof', () => {
+    expect(() => validateRecording(record({providerEvidenceClass: 'unknown'}))).toThrow(
+      'recording_provider_evidence_class_invalid',
+    );
+    expect(() => validateRecording(record({providerEvidenceClass: 'target-device'}))).toThrow(
+      'recording_provider_evidence_target_invalid',
+    );
+    expect(() =>
+      validateRecording(
+        record({
+          providerEvidenceClass: 'simulated-provider',
+          modelIdentity: 'apple-system-model',
+        }),
+      ),
+    ).toThrow('recording_provider_evidence_simulated_invalid');
+  });
+
+  test('labels all current release recordings as the deterministic runtime', () => {
+    const manifest = JSON.parse(
+      fs.readFileSync(path.join(process.cwd(), 'demo', 'recordings.json'), 'utf8'),
+    );
+
+    expect(validateManifest(manifest).recordings).toHaveLength(10);
+    expect(new Set(manifest.recordings.map(item => item.providerEvidenceClass))).toEqual(
+      new Set(['deterministic-runtime']),
+    );
   });
 
   test('requires a bounded public playback speed', () => {

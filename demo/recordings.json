@@ -16,6 +16,7 @@
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "simulator",
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/record-demo.mjs --platform ios --device EE9E5BD3-D791-4E08-8775-1CCC688E3896 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --provider demo --model-identity document-formatter-v1 --evidence-class simulator",
       "config": "airgap.config.json",
       "capturedAt": "2026-08-13T03:02:44.825Z",
@@ -43,6 +44,7 @@
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "emulator",
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --provider demo --model-identity document-formatter-v1 --evidence-class emulator",
       "config": "airgap.config.json",
       "capturedAt": "2026-08-13T03:15:25.288Z",
@@ -53,7 +55,12 @@
       "bytes": 3230696,
       "loopReviewed": true,
       "playbackSpeed": 4,
-      "omittedSourceRangesSeconds": [[107, 114]]
+      "omittedSourceRangesSeconds": [
+        [
+          107,
+          114
+        ]
+      ]
     },
     {
       "id": "readme-side-by-side",
@@ -69,7 +76,11 @@
       "mode": "demo",
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
-      "evidenceClass": ["emulator", "simulator"],
+      "evidenceClass": [
+        "emulator",
+        "simulator"
+      ],
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/build-readme-gif.mjs --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47",
       "config": "airgap.config.json",
       "capturedAt": "2026-08-13T03:15:35.529Z",
@@ -97,6 +108,7 @@
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "emulator",
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --id industry-airline --flow industry-android.yaml --kind industry --output demo/industry-airline.gif --config examples/airline/airgap.config.json --quick-reply \"Baggage rules\" --provider demo --model-identity document-formatter-v1 --evidence-class emulator",
       "config": "examples/airline/airgap.config.json",
       "capturedAt": "2026-08-13T03:18:02.864Z",
@@ -124,6 +136,7 @@
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "emulator",
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --id industry-banking --flow industry-android.yaml --kind industry --output demo/industry-banking.gif --config examples/banking/airgap.config.json --quick-reply \"Find ATM\" --provider demo --model-identity document-formatter-v1 --evidence-class emulator",
       "config": "examples/banking/airgap.config.json",
       "capturedAt": "2026-08-13T03:20:18.589Z",
@@ -151,6 +164,7 @@
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "emulator",
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --id industry-electric --flow industry-android.yaml --kind industry --output demo/industry-electric.gif --config examples/electric-utility/airgap.config.json --quick-reply \"Power restoration\" --provider demo --model-identity document-formatter-v1 --evidence-class emulator",
       "config": "examples/electric-utility/airgap.config.json",
       "capturedAt": "2026-08-13T03:22:34.815Z",
@@ -178,6 +192,7 @@
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "emulator",
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --id industry-healthcare --flow industry-android.yaml --kind industry --output demo/industry-healthcare.gif --config examples/healthcare/airgap.config.json --quick-reply \"Book appointment\" --provider demo --model-identity document-formatter-v1 --evidence-class emulator",
       "config": "examples/healthcare/airgap.config.json",
       "capturedAt": "2026-08-13T03:24:24.651Z",
@@ -205,6 +220,7 @@
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "emulator",
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --id industry-insurance --flow industry-android.yaml --kind industry --output demo/industry-insurance.gif --config examples/insurance/airgap.config.json --quick-reply \"File a claim\" --provider demo --model-identity document-formatter-v1 --evidence-class emulator",
       "config": "examples/insurance/airgap.config.json",
       "capturedAt": "2026-08-13T03:26:46.095Z",
@@ -232,6 +248,7 @@
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "emulator",
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --id industry-telco --flow industry-android.yaml --kind industry --output demo/industry-telco.gif --config examples/telco/airgap.config.json --quick-reply \"Check plans\" --provider demo --model-identity document-formatter-v1 --evidence-class emulator",
       "config": "examples/telco/airgap.config.json",
       "capturedAt": "2026-08-13T03:28:50.674Z",
@@ -259,6 +276,7 @@
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "emulator",
+      "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --id industry-water --flow industry-android.yaml --kind industry --output demo/industry-water.gif --config examples/water-utility/airgap.config.json --quick-reply \"Conservation tips\" --provider demo --model-identity document-formatter-v1 --evidence-class emulator",
       "config": "examples/water-utility/airgap.config.json",
       "capturedAt": "2026-08-13T03:33:51.827Z",
