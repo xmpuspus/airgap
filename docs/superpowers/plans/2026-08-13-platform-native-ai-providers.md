@@ -309,7 +309,7 @@ Run: `xcodebuild -workspace ios/Airgap.xcworkspace -scheme Airgap -configuration
 
 Expected: both commands PASS; older simulator runtimes report `unsupported_os` instead of loading the framework.
 
-- [ ] **Step 5: Commit Apple support**
+- [x] **Step 5: Commit Apple support**
 
 ```bash
 git add src/services/inference/appleFoundationModelsProvider.ts ios/Airgap/AppleFoundationModelsModule.swift ios/Airgap/AppleFoundationModelsModule.m ios/Airgap.xcodeproj/project.pbxproj __tests__/apple-foundation-models-provider.test.ts
@@ -332,7 +332,7 @@ git commit -m "Add Apple on-device inference"
 - Consumes: `InferenceProvider` and normalized errors from Task 1.
 - Produces: `androidAicoreProvider`, native methods `getCapabilities`, `download`, `warmup`, `generate`, and `cancel`, plus `AirgapInferenceToken` and `AirgapInferenceDownload` events keyed by request ID.
 
-- [ ] **Step 1: Write failing Android adapter tests**
+- [x] **Step 1: Write failing Android adapter tests**
 
 ```ts
 test.each([
@@ -348,13 +348,13 @@ test.each([
 
 Add tests for API 24/25, streaming, download progress, cancellation, quota, foreground, context, and setup failures.
 
-- [ ] **Step 2: Run the Android tests and confirm the adapter is missing**
+- [x] **Step 2: Run the Android tests and confirm the adapter is missing**
 
 Run: `npm test -- --runInBand __tests__/android-aicore-provider.test.ts`
 
 Expected: FAIL because the provider module does not exist.
 
-- [ ] **Step 3: Implement the TypeScript and Kotlin bridge**
+- [x] **Step 3: Implement the TypeScript and Kotlin bridge**
 
 ```kotlin
 private val model by lazy { Generation.getClient() }
@@ -368,7 +368,7 @@ fun getCapabilities(promise: Promise) = scope.launch {
 
 Add `implementation("com.google.mlkit:genai-prompt:1.0.0-beta2")`. Collect download and generation flows on a coroutine scope. Emit incremental text. Cap the joint instructions and grounded prompt below 4,000 tokens with the API token count. Cancel jobs by request ID and normalize `GenAiException` outcomes. Register `AndroidAicorePackage()` in `MainApplication`.
 
-- [ ] **Step 4: Run Android tests and compile the debug app**
+- [x] **Step 4: Run Android tests and compile the debug app**
 
 Run: `npm test -- --runInBand __tests__/android-aicore-provider.test.ts`
 

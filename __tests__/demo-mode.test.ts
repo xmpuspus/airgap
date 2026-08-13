@@ -174,6 +174,10 @@ describe('llmRouter mode resolution', () => {
       'apple-foundation-models',
     );
   });
+
+  it('registers the Android system provider', () => {
+    expect(getInferenceProviders().map(provider => provider.id)).toContain('android-aicore');
+  });
 });
 
 describe('provider audit metadata', () => {
