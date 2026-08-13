@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import recordings from './lib/recordings.js';
@@ -39,8 +40,9 @@ export function evidenceDirectory(root, commit) {
 export function findMaestro() {
   const candidates = [
     process.env.MAESTRO_BIN,
-    '/Users/xavier/.maestro/bin/maestro',
+    path.join(os.homedir(), '.maestro', 'bin', 'maestro'),
     '/opt/homebrew/bin/maestro',
+    '/usr/local/bin/maestro',
   ].filter(Boolean);
   const executable = candidates.find(candidate => fs.existsSync(candidate));
   if (!executable) throw new Error('recording_maestro_missing');

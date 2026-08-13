@@ -571,7 +571,7 @@ Run. `npm run web:build`
 
 Run. `npm test -- --runInBand __tests__/scripts/web-build.test.js`
 
-Run. `python3 /Users/xavier/.claude/skills/deslop/references/deslop_lint.py --mode prose --file README.md`
+Run. `python3 "$HOME/.claude/skills/deslop/references/deslop_lint.py" --mode prose --file README.md`
 
 ## Task 8. Fresh recordings tie every GIF to the checked commit
 

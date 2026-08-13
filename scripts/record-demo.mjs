@@ -34,8 +34,13 @@ function parseArgs(argv) {
   return values;
 }
 
+function adbCommand() {
+  const sdkRoot = process.env.ANDROID_HOME ?? process.env.ANDROID_SDK_ROOT;
+  return sdkRoot ? path.join(sdkRoot, 'platform-tools', 'adb') : 'adb';
+}
+
 function androidFacts(device) {
-  const adb = '/Users/xavier/Library/Android/sdk/platform-tools/adb';
+  const adb = adbCommand();
   const release = run(adb, ['-s', device, 'shell', 'getprop', 'ro.build.version.release'], {
     capture: true,
   });

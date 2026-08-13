@@ -212,6 +212,17 @@ describe('recording manifest validation', () => {
     expect(script).toContain('[first][middle][final]hstack=inputs=3[v]');
   });
 
+  test('keeps maintainer-specific paths out of recording tools', () => {
+    const demoScript = fs.readFileSync(path.join(process.cwd(), 'scripts/record-demo.mjs'), 'utf8');
+    const utilityScript = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-utils.mjs'),
+      'utf8',
+    );
+
+    expect(demoScript).not.toContain('/Users/');
+    expect(utilityScript).not.toContain('/Users/');
+  });
+
   test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(
     '%s waits for the configured demo provider provenance',
     flowName => {
