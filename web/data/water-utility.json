@@ -47,7 +47,16 @@
       "region": "US"
     },
     "llm": {
-      "mode": "demo"
+      "mode": "demo",
+      "supportDomain": "water-utility",
+      "providers": [
+        {
+          "id": "demo",
+          "enabled": true,
+          "priority": 0,
+          "platform": "all"
+        }
+      ]
     },
     "quickReplies": [
       {

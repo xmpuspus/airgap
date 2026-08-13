@@ -49,7 +49,16 @@
       "region": "US"
     },
     "llm": {
-      "mode": "demo"
+      "mode": "demo",
+      "supportDomain": "banking",
+      "providers": [
+        {
+          "id": "demo",
+          "enabled": true,
+          "priority": 0,
+          "platform": "all"
+        }
+      ]
     },
     "quickReplies": [
       {

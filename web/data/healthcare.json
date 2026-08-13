@@ -48,7 +48,16 @@
       "region": "US"
     },
     "llm": {
-      "mode": "demo"
+      "mode": "demo",
+      "supportDomain": "healthcare",
+      "providers": [
+        {
+          "id": "demo",
+          "enabled": true,
+          "priority": 0,
+          "platform": "all"
+        }
+      ]
     },
     "quickReplies": [
       {
