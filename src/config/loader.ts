@@ -8,6 +8,12 @@
 
 import rawConfig from '../../airgap.config.json';
 import {validateAndLog} from './validate';
+import type {
+  InferenceMode,
+  InferencePlatform,
+  ProviderPolicy,
+  ProviderPolicyEntry,
+} from '../services/inference/types';
 
 // === Types matching the JSON Schema ===
 
@@ -34,12 +40,50 @@ export interface AuthSection {
 export interface LlmSection {
   mode?: 'offline-only' | 'prefer-online' | 'prefer-offline' | 'demo';
   cacheByKbVersion?: boolean;
+  supportDomain?: string;
+  providers?: LlmProviderConfig[];
   cloud?: {
     enabled?: boolean;
     endpoint?: string;
     audience?: string;
     maxTokens?: number;
     temperature?: number;
+  };
+}
+
+export type LlmProviderConfig = ProviderPolicyEntry;
+
+export function defaultProviderPolicy(
+  mode: InferenceMode,
+  platform: InferencePlatform,
+): ProviderPolicy {
+  const ids =
+    mode === 'demo'
+      ? (['demo'] as const)
+      : mode === 'offline-only'
+      ? (['llama-rn'] as const)
+      : mode === 'prefer-online'
+      ? (['cloud', 'llama-rn'] as const)
+      : (['llama-rn', 'cloud'] as const);
+  return {
+    mode,
+    platform,
+    providers: ids.map((id, priority) => ({id, enabled: true, priority})),
+  };
+}
+
+export function providerPolicyFromConfig(
+  llm: LlmSection | undefined,
+  platform: InferencePlatform,
+  locale?: string,
+): ProviderPolicy {
+  const mode = llm?.mode ?? 'prefer-offline';
+  const defaults = defaultProviderPolicy(mode, platform);
+  return {
+    ...defaults,
+    domain: llm?.supportDomain,
+    locale,
+    providers: llm?.providers ?? defaults.providers,
   };
 }
 

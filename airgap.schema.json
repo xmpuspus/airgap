@@ -693,6 +693,72 @@
           "default": true,
           "description": "Key the cloud response cache by (query, kbVersion) so a KB update invalidates stale cloud answers"
         },
+        "supportDomain": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Support domain used by provider allowlists and blocklists"
+        },
+        "providers": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Ordered generation providers controlled by operator policy",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "enabled", "priority"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "enum": ["apple-foundation-models", "android-aicore", "llama-rn", "cloud", "demo"]
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "priority": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "platform": {
+                "type": "string",
+                "enum": ["ios", "android", "all"]
+              },
+              "allowedDomains": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "blockedDomains": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "minimumOsVersion": {
+                "type": "string",
+                "minLength": 1
+              },
+              "locales": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "allowModelDownload": {
+                "type": "boolean"
+              },
+              "allowCloudFallback": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
         "cloud": {
           "type": "object",
           "additionalProperties": false,

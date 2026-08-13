@@ -215,12 +215,7 @@
     {
       "name": "reportOutage",
       "description": "Report a power outage at the caller's address",
-      "keywords": [
-        "power outage",
-        "no power",
-        "report outage",
-        "electricity out"
-      ],
+      "keywords": ["power outage", "no power", "report outage", "electricity out"],
       "offlineQueueEligible": true,
       "stateChanging": true,
       "vertical": "electric",
@@ -229,12 +224,7 @@
     {
       "name": "checkBillStatus",
       "description": "Look up the current electricity bill status",
-      "keywords": [
-        "my bill",
-        "bill amount",
-        "what do I owe",
-        "bill status"
-      ],
+      "keywords": ["my bill", "bill amount", "what do I owe", "bill status"],
       "offlineQueueEligible": true,
       "stateChanging": false,
       "vertical": "electric",
@@ -243,12 +233,7 @@
     {
       "name": "scheduleMeterRead",
       "description": "Schedule a technician to read the caller's meter",
-      "keywords": [
-        "meter read",
-        "read my meter",
-        "schedule meter",
-        "meter reading"
-      ],
+      "keywords": ["meter read", "read my meter", "schedule meter", "meter reading"],
       "offlineQueueEligible": true,
       "stateChanging": true,
       "vertical": "electric",
@@ -256,6 +241,15 @@
     }
   ],
   "llm": {
-    "mode": "demo"
+    "mode": "demo",
+    "supportDomain": "electric-utility",
+    "providers": [
+      {
+        "id": "demo",
+        "enabled": true,
+        "priority": 0,
+        "platform": "all"
+      }
+    ]
   }
 }

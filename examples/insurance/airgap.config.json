@@ -199,11 +199,7 @@
     {
       "name": "checkPolicyStatus",
       "description": "Look up the status of a policy",
-      "keywords": [
-        "my policy status",
-        "is my policy",
-        "policy active"
-      ],
+      "keywords": ["my policy status", "is my policy", "policy active"],
       "offlineQueueEligible": true,
       "stateChanging": false,
       "vertical": "insurance",
@@ -212,12 +208,7 @@
     {
       "name": "fileClaim",
       "description": "Open a new insurance claim",
-      "keywords": [
-        "file a claim",
-        "file claim",
-        "new claim",
-        "start a claim"
-      ],
+      "keywords": ["file a claim", "file claim", "new claim", "start a claim"],
       "offlineQueueEligible": true,
       "stateChanging": true,
       "vertical": "insurance",
@@ -225,6 +216,15 @@
     }
   ],
   "llm": {
-    "mode": "demo"
+    "mode": "demo",
+    "supportDomain": "insurance",
+    "providers": [
+      {
+        "id": "demo",
+        "enabled": true,
+        "priority": 0,
+        "platform": "all"
+      }
+    ]
   }
 }

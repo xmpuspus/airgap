@@ -64,12 +64,7 @@
     {
       "id": "flight_status",
       "label": "Check flight status",
-      "keywords": [
-        "my flight",
-        "flight status",
-        "is my flight on time",
-        "flight delayed"
-      ],
+      "keywords": ["my flight", "flight status", "is my flight on time", "flight delayed"],
       "requiresOnline": true,
       "category": "flights",
       "mockResponse": "Flight SP-512 Manila to Singapore: On time. Departure 14:30, Gate B12. Boarding begins at 13:50."
@@ -91,12 +86,7 @@
     {
       "id": "lost_baggage",
       "label": "Report lost baggage",
-      "keywords": [
-        "lost luggage",
-        "missing baggage",
-        "bag not arrived",
-        "luggage claim"
-      ],
+      "keywords": ["lost luggage", "missing baggage", "bag not arrived", "luggage claim"],
       "requiresOnline": true,
       "category": "support",
       "mockResponse": "Please report lost baggage at the SkyPeak service desk in the arrivals hall, or call 1-888-SKYPEAK with your baggage tag number."
@@ -191,12 +181,7 @@
     {
       "name": "lookupFlightStatus",
       "description": "Look up flight status by flight number",
-      "keywords": [
-        "flight status",
-        "is my flight",
-        "flight delayed",
-        "flight number"
-      ],
+      "keywords": ["flight status", "is my flight", "flight delayed", "flight number"],
       "offlineQueueEligible": true,
       "stateChanging": false,
       "vertical": "airline",
@@ -205,11 +190,7 @@
     {
       "name": "requestCallback",
       "description": "Request a callback from a booking agent",
-      "keywords": [
-        "call me back",
-        "callback",
-        "speak to an agent"
-      ],
+      "keywords": ["call me back", "callback", "speak to an agent"],
       "offlineQueueEligible": true,
       "stateChanging": true,
       "vertical": "airline",
@@ -217,6 +198,15 @@
     }
   ],
   "llm": {
-    "mode": "demo"
+    "mode": "demo",
+    "supportDomain": "airline",
+    "providers": [
+      {
+        "id": "demo",
+        "enabled": true,
+        "priority": 0,
+        "platform": "all"
+      }
+    ]
   }
 }

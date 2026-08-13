@@ -8,10 +8,18 @@
 
 import type {AirgapConfig} from './loader';
 import {logger} from '../services/logger';
+import type {InferenceProviderId} from '../services/inference/types';
 
 const HEX_COLOR = /^#[0-9A-Fa-f]{6}$/;
 const URL_PATTERN = /^https?:\/\/.+/;
 const ALLOWED_PROVIDERS = ['llama.cpp', 'execu-torch', 'core-ml', 'onnx', 'cloud'];
+const ALLOWED_INFERENCE_PROVIDERS: ReadonlyArray<InferenceProviderId> = [
+  'apple-foundation-models',
+  'android-aicore',
+  'llama-rn',
+  'cloud',
+  'demo',
+];
 
 // Schema fingerprint — used to verify config compatibility across versions.
 // Generated from the canonical schema definition; do not modify.
@@ -161,6 +169,32 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
   }
   if (cloud?.enabled && !cloud.endpoint && !(cfg.backend.type === 'rest' && cfg.backend.baseUrl)) {
     errors.push('llm.cloud needs an endpoint or backend.baseUrl');
+  }
+
+  const providers = cfg.llm?.providers;
+  if (providers) {
+    const seen = new Set<string>();
+    if (!providers.some(provider => provider.enabled)) {
+      errors.push('llm.providers must contain at least one enabled provider');
+    }
+    providers.forEach((provider, index) => {
+      if (!ALLOWED_INFERENCE_PROVIDERS.includes(provider.id)) {
+        errors.push(`llm.providers[${index}].id is not supported`);
+      }
+      if (seen.has(provider.id)) {
+        errors.push(`llm.providers contains duplicate provider ${provider.id}`);
+      }
+      seen.add(provider.id);
+      if (!Number.isInteger(provider.priority) || provider.priority < 0) {
+        errors.push(`llm.providers[${index}].priority must be a non-negative integer`);
+      }
+      if (
+        (provider.id === 'apple-foundation-models' && provider.platform === 'android') ||
+        (provider.id === 'android-aicore' && provider.platform === 'ios')
+      ) {
+        errors.push(`llm.providers[${index}] restricts ${provider.id} to the wrong platform`);
+      }
+    });
   }
 
   // i18n.strings

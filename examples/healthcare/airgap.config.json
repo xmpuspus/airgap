@@ -92,13 +92,7 @@
     {
       "id": "test_results",
       "label": "Check test results",
-      "keywords": [
-        "test results",
-        "lab results",
-        "blood test",
-        "blood work",
-        "my results"
-      ],
+      "keywords": ["test results", "lab results", "blood test", "blood work", "my results"],
       "requiresOnline": true,
       "category": "records",
       "mockResponse": "Test results are available through the CareFirst patient portal once reviewed by your physician. Most results are posted within 3-5 business days. For urgent results, please call your provider's office directly."
@@ -106,15 +100,7 @@
     {
       "id": "billing_inquiry",
       "label": "Billing question",
-      "keywords": [
-        "billing",
-        "bill",
-        "payment",
-        "owe",
-        "invoice",
-        "statement",
-        "charges"
-      ],
+      "keywords": ["billing", "bill", "payment", "owe", "invoice", "statement", "charges"],
       "requiresOnline": true,
       "category": "billing",
       "mockResponse": "For billing inquiries, please call our billing department at 1-800-CARE ext. 2 or log into the patient portal to view statements. Payment plans are available for balances over $200."
@@ -196,12 +182,7 @@
     {
       "name": "lookupMedication",
       "description": "Look up generic information about a medication from the approved KB",
-      "keywords": [
-        "what is",
-        "information about",
-        "side effects of",
-        "generic name of"
-      ],
+      "keywords": ["what is", "information about", "side effects of", "generic name of"],
       "offlineQueueEligible": true,
       "stateChanging": false,
       "vertical": "healthcare",
@@ -209,6 +190,15 @@
     }
   ],
   "llm": {
-    "mode": "demo"
+    "mode": "demo",
+    "supportDomain": "healthcare",
+    "providers": [
+      {
+        "id": "demo",
+        "enabled": true,
+        "priority": 0,
+        "platform": "all"
+      }
+    ]
   }
 }

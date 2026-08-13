@@ -208,12 +208,7 @@
     {
       "name": "lookupBalance",
       "description": "Look up the caller's checking, savings, or card balance",
-      "keywords": [
-        "my balance",
-        "my account balance",
-        "my checking balance",
-        "my savings balance"
-      ],
+      "keywords": ["my balance", "my account balance", "my checking balance", "my savings balance"],
       "offlineQueueEligible": true,
       "stateChanging": false,
       "vertical": "banking",
@@ -249,6 +244,15 @@
     }
   ],
   "llm": {
-    "mode": "demo"
+    "mode": "demo",
+    "supportDomain": "banking",
+    "providers": [
+      {
+        "id": "demo",
+        "enabled": true,
+        "priority": 0,
+        "platform": "all"
+      }
+    ]
   }
 }

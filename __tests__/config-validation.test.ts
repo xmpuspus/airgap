@@ -1,5 +1,6 @@
 import {validateConfig} from '../src/config/validate';
-import type {AirgapConfig} from '../src/config/loader';
+import {defaultProviderPolicy} from '../src/config/loader';
+import type {AirgapConfig, LlmProviderConfig} from '../src/config/loader';
 
 function makeValidConfig(overrides: Partial<AirgapConfig> = {}): AirgapConfig {
   return {
@@ -207,5 +208,69 @@ describe('validateConfig', () => {
     expect(validateConfig(cfg).errors).toContain(
       'queue.maxRetries must be an integer from 1 through 10',
     );
+  });
+
+  test('keeps legacy configurations on their current provider chain', () => {
+    expect(defaultProviderPolicy('prefer-offline', 'ios').providers.map(item => item.id)).toEqual([
+      'llama-rn',
+      'cloud',
+    ]);
+    expect(
+      defaultProviderPolicy('prefer-online', 'android').providers.map(item => item.id),
+    ).toEqual(['cloud', 'llama-rn']);
+    expect(defaultProviderPolicy('demo', 'ios').providers.map(item => item.id)).toEqual(['demo']);
+  });
+
+  test('rejects duplicate inference providers', () => {
+    const provider: LlmProviderConfig = {
+      id: 'apple-foundation-models',
+      enabled: true,
+      priority: 0,
+      platform: 'ios',
+    };
+    const result = validateConfig(
+      makeValidConfig({llm: {mode: 'prefer-offline', providers: [provider, provider]}}),
+    );
+
+    expect(result.errors).toContain(
+      'llm.providers contains duplicate provider apple-foundation-models',
+    );
+  });
+
+  test('rejects unknown inference provider IDs', () => {
+    const result = validateConfig(
+      makeValidConfig({
+        llm: {
+          providers: [
+            {id: 'unknown-provider', enabled: true, priority: 0} as unknown as LlmProviderConfig,
+          ],
+        },
+      }),
+    );
+
+    expect(result.errors).toContain('llm.providers[0].id is not supported');
+  });
+
+  test('rejects a provider list without an enabled path', () => {
+    const result = validateConfig(
+      makeValidConfig({
+        llm: {providers: [{id: 'llama-rn', enabled: false, priority: 0}]},
+      }),
+    );
+
+    expect(result.errors).toContain('llm.providers must contain at least one enabled provider');
+  });
+
+  test.each([
+    ['apple-foundation-models', 'android'],
+    ['android-aicore', 'ios'],
+  ] as const)('rejects %s when explicitly restricted to %s', (id, platform) => {
+    const result = validateConfig(
+      makeValidConfig({
+        llm: {providers: [{id, enabled: true, priority: 0, platform}]},
+      }),
+    );
+
+    expect(result.errors).toContain(`llm.providers[0] restricts ${id} to the wrong platform`);
   });
 });

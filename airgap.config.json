@@ -225,6 +225,50 @@
   "llm": {
     "mode": "demo",
     "cacheByKbVersion": true,
+    "supportDomain": "telco",
+    "providers": [
+      {
+        "id": "apple-foundation-models",
+        "enabled": true,
+        "priority": 0,
+        "platform": "ios",
+        "minimumOsVersion": "26.0",
+        "locales": ["en", "en-US"],
+        "allowModelDownload": false,
+        "allowCloudFallback": false
+      },
+      {
+        "id": "android-aicore",
+        "enabled": true,
+        "priority": 0,
+        "platform": "android",
+        "minimumOsVersion": "26",
+        "locales": ["en", "en-US"],
+        "allowModelDownload": true,
+        "allowCloudFallback": false
+      },
+      {
+        "id": "llama-rn",
+        "enabled": true,
+        "priority": 10,
+        "platform": "all",
+        "allowModelDownload": true,
+        "allowCloudFallback": false
+      },
+      {
+        "id": "cloud",
+        "enabled": false,
+        "priority": 20,
+        "platform": "all",
+        "allowCloudFallback": true
+      },
+      {
+        "id": "demo",
+        "enabled": true,
+        "priority": 30,
+        "platform": "all"
+      }
+    ],
     "cloud": {
       "enabled": false,
       "maxTokens": 512,

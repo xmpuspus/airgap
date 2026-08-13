@@ -218,12 +218,7 @@
     {
       "name": "reportOutage",
       "description": "Report a water outage or low pressure at the caller's address",
-      "keywords": [
-        "no water",
-        "water outage",
-        "report outage",
-        "low pressure"
-      ],
+      "keywords": ["no water", "water outage", "report outage", "low pressure"],
       "offlineQueueEligible": true,
       "stateChanging": true,
       "vertical": "water",
@@ -232,12 +227,7 @@
     {
       "name": "checkBillStatus",
       "description": "Look up the current water bill status",
-      "keywords": [
-        "my bill",
-        "bill amount",
-        "what do I owe",
-        "bill status"
-      ],
+      "keywords": ["my bill", "bill amount", "what do I owe", "bill status"],
       "offlineQueueEligible": true,
       "stateChanging": false,
       "vertical": "water",
@@ -246,12 +236,7 @@
     {
       "name": "scheduleMeterRead",
       "description": "Schedule a technician to read the caller's meter",
-      "keywords": [
-        "meter read",
-        "read my meter",
-        "schedule meter",
-        "meter reading"
-      ],
+      "keywords": ["meter read", "read my meter", "schedule meter", "meter reading"],
       "offlineQueueEligible": true,
       "stateChanging": true,
       "vertical": "water",
@@ -259,6 +244,8 @@
     }
   ],
   "llm": {
-    "mode": "demo"
+    "mode": "demo",
+    "supportDomain": "water-utility",
+    "providers": [{"id": "demo", "enabled": true, "priority": 0, "platform": "all"}]
   }
 }

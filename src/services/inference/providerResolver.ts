@@ -115,7 +115,7 @@ export async function generateWithProviders(
     }
 
     const cancel = () => {
-      void provider.cancel(request.requestId);
+      provider.cancel(request.requestId).catch(() => undefined);
     };
     request.signal?.addEventListener('abort', cancel, {once: true});
     activeProviders.add(provider);

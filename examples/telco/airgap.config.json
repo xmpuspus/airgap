@@ -272,6 +272,8 @@
     }
   ],
   "llm": {
-    "mode": "demo"
+    "mode": "demo",
+    "supportDomain": "telco",
+    "providers": [{"id": "demo", "enabled": true, "priority": 0, "platform": "all"}]
   }
 }
