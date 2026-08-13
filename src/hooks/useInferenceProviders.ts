@@ -82,6 +82,11 @@ export function useInferenceProviders() {
   }, [refresh]);
 
   const downloadSystemAi = useCallback(async () => {
+    const policyEntry = config.llm?.providers?.find(entry => entry.id === 'android-aicore');
+    if (policyEntry?.allowModelDownload !== true) {
+      setError('System AI downloads are disabled by the operator configuration.');
+      return;
+    }
     const provider = getInferenceProviders().find(canDownloadAndroid);
     if (!provider) {
       setError('Android system AI is not available in this build.');

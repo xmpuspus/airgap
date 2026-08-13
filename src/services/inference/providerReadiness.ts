@@ -4,6 +4,7 @@ import type {
   InferenceProvider,
   ProviderPolicyEntry,
 } from './types';
+import {meetsMinimumOsVersion} from './providerResolver';
 
 function unavailableCapabilities(
   entry: ProviderPolicyEntry,
@@ -36,7 +37,14 @@ export async function readConfiguredProviderCapabilities(
       const provider = providersById.get(entry.id);
       if (!provider) return unavailableCapabilities(entry, platform);
       try {
-        return await provider.getCapabilities();
+        const capabilities = await provider.getCapabilities();
+        if (!meetsMinimumOsVersion(capabilities.osVersion, entry.minimumOsVersion)) {
+          return {...capabilities, state: 'unavailable', reason: 'unsupported_os'};
+        }
+        if (capabilities.state === 'downloadable' && entry.allowModelDownload === false) {
+          return {...capabilities, state: 'unavailable', reason: 'provider_disabled'};
+        }
+        return capabilities;
       } catch {
         return unavailableCapabilities(entry, platform);
       }

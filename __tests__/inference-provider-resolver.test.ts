@@ -24,6 +24,7 @@ function fakeProvider(
     locality?: InferenceCapabilities['locality'];
     failure?: ProviderFailureReason;
     text?: string;
+    osVersion?: string;
   } = {},
 ): InferenceProvider {
   const locality = options.locality ?? (id === 'cloud' ? 'cloud' : 'local');
@@ -36,6 +37,7 @@ function fakeProvider(
       supportsStreaming: true,
       supportsCancellation: true,
       modelIdentity: `${id}-model`,
+      osVersion: options.osVersion,
     })),
     generate: jest.fn(async () => {
       if (options.failure) {
@@ -144,6 +146,43 @@ describe('inference provider resolver', () => {
             priority: 0,
             blockedDomains: ['telco'],
           },
+          {id: 'llama-rn', enabled: true, priority: 1},
+        ],
+      }),
+    );
+
+    expect(selected.map(provider => provider.id)).toEqual(['llama-rn']);
+  });
+
+  test('skips a provider below the operator minimum OS version', async () => {
+    const apple = fakeProvider('apple-foundation-models', {osVersion: '25.5'});
+    const downloaded = fakeProvider('llama-rn');
+    const currentPolicy = policy('prefer-offline', ['apple-foundation-models', 'llama-rn'], {
+      providers: [
+        {
+          id: 'apple-foundation-models',
+          enabled: true,
+          priority: 0,
+          minimumOsVersion: '26.0',
+        },
+        {id: 'llama-rn', enabled: true, priority: 1},
+      ],
+    });
+
+    await expect(
+      generateWithProviders(request, [apple, downloaded], currentPolicy),
+    ).resolves.toMatchObject({providerId: 'llama-rn'});
+    expect(apple.generate).not.toHaveBeenCalled();
+  });
+
+  test('does not select cloud when cloud fallback is disabled', () => {
+    const cloud = fakeProvider('cloud');
+    const downloaded = fakeProvider('llama-rn');
+    const selected = resolveProviderChain(
+      [cloud, downloaded],
+      policy('prefer-online', ['cloud', 'llama-rn'], {
+        providers: [
+          {id: 'cloud', enabled: true, priority: 0, allowCloudFallback: false},
           {id: 'llama-rn', enabled: true, priority: 1},
         ],
       }),

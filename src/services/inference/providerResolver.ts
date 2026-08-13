@@ -59,8 +59,32 @@ function entryAllows(entry: ProviderPolicyEntry, policy: ProviderPolicy): boolea
   }
   if (entry.locales && !includesCaseInsensitive(entry.locales, policy.locale)) return false;
   if (policy.mode === 'offline-only' && entry.id === 'cloud') return false;
+  if (entry.id === 'cloud' && entry.allowCloudFallback === false) return false;
   if (policy.mode === 'demo' && entry.id !== 'demo') return false;
   if (policy.mode !== 'demo' && entry.id === 'demo') return false;
+  return true;
+}
+
+function versionParts(version: string | undefined): number[] | undefined {
+  if (!version) return undefined;
+  const parts = version.match(/\d+/g)?.map(Number);
+  return parts?.length ? parts : undefined;
+}
+
+export function meetsMinimumOsVersion(
+  osVersion: string | undefined,
+  minimumOsVersion: string | undefined,
+): boolean {
+  if (!minimumOsVersion) return true;
+  const actual = versionParts(osVersion);
+  const minimum = versionParts(minimumOsVersion);
+  if (!actual || !minimum) return false;
+  const length = Math.max(actual.length, minimum.length);
+  for (let index = 0; index < length; index += 1) {
+    const actualPart = actual[index] ?? 0;
+    const minimumPart = minimum[index] ?? 0;
+    if (actualPart !== minimumPart) return actualPart > minimumPart;
+  }
   return true;
 }
 
@@ -99,6 +123,17 @@ export async function generateWithProviders(
 
   for (const provider of resolveProviderChain(providers, policy)) {
     const capabilities = await provider.getCapabilities();
+    const entry = policy.providers.find(candidate => candidate.id === provider.id);
+    if (!meetsMinimumOsVersion(capabilities.osVersion, entry?.minimumOsVersion)) {
+      failures.push(
+        new InferenceProviderError(
+          'unsupported_os',
+          `${provider.id} is below the configured operating-system minimum`,
+          provider.id,
+        ),
+      );
+      continue;
+    }
     if (capabilities.state !== 'available') {
       failures.push(
         new InferenceProviderError(

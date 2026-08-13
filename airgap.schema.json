@@ -4,7 +4,15 @@
   "title": "ACME Telecom Configuration",
   "description": "Formal spec for offline-first enterprise chatbot. Edit this file to configure your bot — no code changes needed.",
   "type": "object",
-  "required": ["specVersion", "brand", "theme", "model", "knowledge", "prompts", "actions"],
+  "required": [
+    "specVersion",
+    "brand",
+    "theme",
+    "model",
+    "knowledge",
+    "prompts",
+    "actions"
+  ],
   "additionalProperties": false,
   "properties": {
     "$schema": {
@@ -17,7 +25,11 @@
     },
     "brand": {
       "type": "object",
-      "required": ["name", "botName", "hotline"],
+      "required": [
+        "name",
+        "botName",
+        "hotline"
+      ],
       "additionalProperties": false,
       "properties": {
         "name": {
@@ -52,7 +64,11 @@
     },
     "theme": {
       "type": "object",
-      "required": ["primary", "secondary", "background"],
+      "required": [
+        "primary",
+        "secondary",
+        "background"
+      ],
       "description": "Color theme. All values are hex color strings.",
       "additionalProperties": false,
       "properties": {
@@ -219,12 +235,22 @@
     },
     "model": {
       "type": "object",
-      "required": ["provider", "url", "filename"],
+      "required": [
+        "provider",
+        "url",
+        "filename"
+      ],
       "additionalProperties": false,
       "properties": {
         "provider": {
           "type": "string",
-          "enum": ["llama.cpp", "execu-torch", "core-ml", "onnx", "cloud"],
+          "enum": [
+            "llama.cpp",
+            "execu-torch",
+            "core-ml",
+            "onnx",
+            "cloud"
+          ],
           "description": "LLM inference engine"
         },
         "url": {
@@ -297,7 +323,9 @@
     },
     "knowledge": {
       "type": "object",
-      "required": ["directory"],
+      "required": [
+        "directory"
+      ],
       "additionalProperties": false,
       "properties": {
         "directory": {
@@ -306,7 +334,9 @@
         },
         "schema": {
           "type": "string",
-          "enum": ["kbdoc-v1"],
+          "enum": [
+            "kbdoc-v1"
+          ],
           "default": "kbdoc-v1",
           "description": "KB document schema version"
         },
@@ -347,7 +377,11 @@
     },
     "prompts": {
       "type": "object",
-      "required": ["system", "welcome", "fallback"],
+      "required": [
+        "system",
+        "welcome",
+        "fallback"
+      ],
       "additionalProperties": false,
       "description": "Template strings. Variables: {{botName}}, {{brandName}}, {{hotline}}, {{hotlineLabel}}, {{currency}}, {{featureList}}, {{actionLabel}}, {{modelSizeMB}}",
       "properties": {
@@ -447,7 +481,10 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["title", "value"],
+        "required": [
+          "title",
+          "value"
+        ],
         "additionalProperties": false,
         "properties": {
           "title": {
@@ -466,7 +503,12 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "label", "keywords", "requiresOnline"],
+        "required": [
+          "id",
+          "label",
+          "keywords",
+          "requiresOnline"
+        ],
         "additionalProperties": false,
         "properties": {
           "id": {
@@ -503,12 +545,17 @@
     },
     "backend": {
       "type": "object",
-      "required": ["type"],
+      "required": [
+        "type"
+      ],
       "additionalProperties": false,
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["mock", "rest"],
+          "enum": [
+            "mock",
+            "rest"
+          ],
           "description": "'mock' uses local sample responses. 'rest' calls the reference backend."
         },
         "baseUrl": {
@@ -522,7 +569,10 @@
           "properties": {
             "type": {
               "type": "string",
-              "enum": ["none", "provider"]
+              "enum": [
+                "none",
+                "provider"
+              ]
             },
             "audience": {
               "type": "string",
@@ -532,7 +582,9 @@
         },
         "sync": {
           "type": "object",
-          "required": ["publicKeys"],
+          "required": [
+            "publicKeys"
+          ],
           "additionalProperties": false,
           "properties": {
             "publicKeys": {
@@ -568,12 +620,22 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["type", "value", "label"],
+        "required": [
+          "type",
+          "value",
+          "label"
+        ],
         "additionalProperties": false,
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["phone", "email", "chat", "social", "website"]
+            "enum": [
+              "phone",
+              "email",
+              "chat",
+              "social",
+              "website"
+            ]
           },
           "value": {
             "type": "string"
@@ -671,7 +733,11 @@
         },
         "type": {
           "type": "string",
-          "enum": ["pin", "biometric", "both"],
+          "enum": [
+            "pin",
+            "biometric",
+            "both"
+          ],
           "default": "pin",
           "description": "Authentication method"
         }
@@ -684,7 +750,12 @@
       "properties": {
         "mode": {
           "type": "string",
-          "enum": ["offline-only", "prefer-online", "prefer-offline", "demo"],
+          "enum": [
+            "offline-only",
+            "prefer-online",
+            "prefer-offline",
+            "demo"
+          ],
           "default": "prefer-offline",
           "description": "offline-only = always on-device; prefer-online = cloud first, fall back to on-device; prefer-offline = on-device first, escalate to cloud on failure; demo = no model download, format top-K KB hits as a streamed reply (deterministic, all-industry, intended for emulator/simulator recordings and quick local trials)"
         },
@@ -705,11 +776,21 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "enabled", "priority"],
+            "required": [
+              "id",
+              "enabled",
+              "priority"
+            ],
             "properties": {
               "id": {
                 "type": "string",
-                "enum": ["apple-foundation-models", "android-aicore", "llama-rn", "cloud", "demo"]
+                "enum": [
+                  "apple-foundation-models",
+                  "android-aicore",
+                  "llama-rn",
+                  "cloud",
+                  "demo"
+                ]
               },
               "enabled": {
                 "type": "boolean"
@@ -720,7 +801,11 @@
               },
               "platform": {
                 "type": "string",
-                "enum": ["ios", "android", "all"]
+                "enum": [
+                  "ios",
+                  "android",
+                  "all"
+                ]
               },
               "allowedDomains": {
                 "type": "array",
@@ -740,7 +825,8 @@
               },
               "minimumOsVersion": {
                 "type": "string",
-                "minLength": 1
+                "minLength": 1,
+                "description": "Minimum device OS or Android API version permitted for this provider"
               },
               "locales": {
                 "type": "array",
@@ -751,10 +837,12 @@
                 "uniqueItems": true
               },
               "allowModelDownload": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Whether the app may start this provider's model download"
               },
               "allowCloudFallback": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "For the cloud provider, whether policy permits it to appear in a fallback chain"
               }
             }
           }
@@ -849,7 +937,11 @@
       "description": "Tool definitions for deterministic backend invocation. Tools are selected by keyword match against the user query, then executed against the backend connector, then fed back into the LLM as grounded context. See docs/tool-calling.md.",
       "items": {
         "type": "object",
-        "required": ["name", "description", "keywords"],
+        "required": [
+          "name",
+          "description",
+          "keywords"
+        ],
         "additionalProperties": false,
         "properties": {
           "name": {

@@ -66,3 +66,57 @@ test('turns a capability-check failure into a usable unavailable state', async (
     }),
   ]);
 });
+
+test('shows operator-blocked downloads as unavailable', async () => {
+  const android = provider('android-aicore', {
+    state: 'downloadable',
+    reason: 'download_required',
+    osVersion: '36',
+  });
+
+  await expect(
+    readConfiguredProviderCapabilities(
+      'android',
+      [android],
+      [
+        {
+          id: 'android-aicore',
+          enabled: true,
+          priority: 0,
+          allowModelDownload: false,
+        },
+      ],
+    ),
+  ).resolves.toEqual([
+    expect.objectContaining({
+      providerId: 'android-aicore',
+      state: 'unavailable',
+      reason: 'provider_disabled',
+    }),
+  ]);
+});
+
+test('shows a provider below the configured OS floor as unavailable', async () => {
+  const apple = provider('apple-foundation-models', {osVersion: '25.5'});
+
+  await expect(
+    readConfiguredProviderCapabilities(
+      'ios',
+      [apple],
+      [
+        {
+          id: 'apple-foundation-models',
+          enabled: true,
+          priority: 0,
+          minimumOsVersion: '26.0',
+        },
+      ],
+    ),
+  ).resolves.toEqual([
+    expect.objectContaining({
+      providerId: 'apple-foundation-models',
+      state: 'unavailable',
+      reason: 'unsupported_os',
+    }),
+  ]);
+});
