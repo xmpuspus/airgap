@@ -154,6 +154,26 @@ describe('inference provider resolver', () => {
     expect(selected.map(provider => provider.id)).toEqual(['llama-rn']);
   });
 
+  test('language-only locale allows a configured regional variant', () => {
+    const apple = fakeProvider('apple-foundation-models');
+    const selected = resolveProviderChain(
+      [apple],
+      policy('prefer-offline', ['apple-foundation-models'], {
+        locale: 'en-PH',
+        providers: [
+          {
+            id: 'apple-foundation-models',
+            enabled: true,
+            priority: 0,
+            locales: ['en'],
+          },
+        ],
+      }),
+    );
+
+    expect(selected.map(provider => provider.id)).toEqual(['apple-foundation-models']);
+  });
+
   test('skips a provider below the operator minimum OS version', async () => {
     const apple = fakeProvider('apple-foundation-models', {osVersion: '25.5'});
     const downloaded = fakeProvider('llama-rn');

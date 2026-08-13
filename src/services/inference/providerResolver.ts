@@ -44,6 +44,17 @@ function includesCaseInsensitive(values: string[] | undefined, value: string | u
   return values.some(item => item.toLowerCase() === normalized);
 }
 
+function localeAllowed(locales: string[] | undefined, locale: string | undefined): boolean {
+  if (!locales || locales.length === 0) return true;
+  if (!locale) return false;
+  const normalized = locale.toLowerCase();
+  const language = normalized.split('-')[0];
+  return locales.some(item => {
+    const allowed = item.toLowerCase();
+    return allowed === normalized || (!allowed.includes('-') && allowed === language);
+  });
+}
+
 function entryAllows(entry: ProviderPolicyEntry, policy: ProviderPolicy): boolean {
   if (!entry.enabled) return false;
   if (entry.platform && entry.platform !== 'all' && entry.platform !== policy.platform)
@@ -57,7 +68,7 @@ function entryAllows(entry: ProviderPolicyEntry, policy: ProviderPolicy): boolea
   ) {
     return false;
   }
-  if (entry.locales && !includesCaseInsensitive(entry.locales, policy.locale)) return false;
+  if (!localeAllowed(entry.locales, policy.locale)) return false;
   if (policy.mode === 'offline-only' && entry.id === 'cloud') return false;
   if (entry.id === 'cloud' && entry.allowCloudFallback === false) return false;
   if (policy.mode === 'demo' && entry.id !== 'demo') return false;
