@@ -37,6 +37,20 @@ function main() {
   const output = path.join(root, 'demo', 'airgap-readme-side-by-side.gif');
   const contactSheet = path.join(evidence, 'readme-side-by-side-contact.png');
   const duration = Math.min(probeMedia(android).durationSeconds, probeMedia(ios).durationSeconds);
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'demo', 'recordings.json'), 'utf8'));
+  const platformRecords = ['android', 'ios'].map(id =>
+    manifest.recordings.find(recording => recording.id === id),
+  );
+  if (platformRecords.some(recording => !recording)) {
+    throw new Error('recording_platform_metadata_missing');
+  }
+  const evidenceClass = [
+    ...new Set(platformRecords.flatMap(recording => recording.evidenceClass)),
+  ].sort();
+  const providerIds = [...new Set(platformRecords.map(recording => recording.providerId))];
+  const modelIdentities = [
+    ...new Set(platformRecords.map(recording => recording.modelIdentity)),
+  ];
   const layout = readmeLayoutFilter(README_GIF_OPTIONS);
   run('ffmpeg', [
     '-y',
@@ -73,6 +87,10 @@ function main() {
     os: 'Android and iOS',
     device: 'Android Emulator and iPhone 17 Pro Simulator',
     mode: 'demo',
+    providerId: providerIds.join(' + '),
+    modelIdentity: modelIdentities.join(' + '),
+    evidenceClass,
+    captureCommand: `node scripts/build-readme-gif.mjs --commit ${sourceCommit}`,
     config: 'airgap.config.json',
     capturedAt: new Date().toISOString(),
     ...probe,

@@ -472,7 +472,7 @@ git commit -m "Explain on-device provider readiness"
 - Produces: recording manifest schema version 2 with needed `providerId`, `modelIdentity`, `evidenceClass`, and `captureCommand` fields.
 - `evidenceClass` is one of `emulator`, `simulator`, or `physical-device`; joint recordings combine the two actual classes in a sorted array.
 
-- [ ] **Step 1: Add failing metadata and truthfulness tests**
+- [x] **Step 1: Add failing metadata and truthfulness tests**
 
 ```js
 expect(() => validateRecording(record({providerId: undefined}))).toThrow(
@@ -485,23 +485,23 @@ expect(() =>
 
 Add failures for a missing model identity, missing capture command, and schema version 1.
 
-- [ ] **Step 2: Run recording tests and confirm the manifest accepts incomplete evidence**
+- [x] **Step 2: Run recording tests and confirm the manifest accepts incomplete evidence**
 
 Run: `npm test -- --runInBand __tests__/scripts/validate-recordings.test.js`
 
 Expected: FAIL because schema version 2 and provider evidence fields are not enforced.
 
-- [ ] **Step 3: Implement evidence metadata and update existing records**
+- [x] **Step 3: Implement evidence metadata and update existing records**
 
 Set current demo recordings to `providerId: "demo"`, `modelIdentity: "document-formatter-v1"`, and the accurate simulator/emulator class. Make `record-demo.mjs` accept `--provider`, `--model-identity`, and `--evidence-class`; derive the default class from the target facts and save the full repository-relative capture command.
 
-- [ ] **Step 4: Validate the kept recording pipeline**
+- [x] **Step 4: Validate the kept recording pipeline**
 
 Run: `npm test -- --runInBand __tests__/scripts/validate-recordings.test.js && npm run recordings:validate`
 
 Expected: PASS.
 
-- [ ] **Step 5: Detect connected capture targets and rerecord what the checks prove**
+- [x] **Step 5: Detect connected capture targets and rerecord what the checks prove**
 
 Run: `adb devices -l`
 
@@ -511,13 +511,13 @@ Run: `xcrun xctrace list devices`
 
 If working simulator/emulator targets exist, record fresh demo GIFs from the checked application commit and rebuild the README GIF. If eligible physical devices exist and the native providers pass their checks, record those providers with `evidenceClass: physical-device`. If no eligible physical device exists, mark the native-provider release status as not checked. Do not relabel simulator footage.
 
-- [ ] **Step 6: Inspect generated GIF loops and validate exact media facts**
+- [x] **Step 6: Inspect generated GIF loops and validate exact media facts**
 
 Run: `npm run recordings:validate`
 
 Render contact sheets under `tmp/recordings/<commit>/`, inspect the first, middle, and final frames, set `loopReviewed: true` only after review, and rerun validation.
 
-- [ ] **Step 7: Commit kept recording evidence**
+- [x] **Step 7: Commit kept recording evidence**
 
 ```bash
 git add scripts/lib/recordings.js scripts/record-demo.mjs scripts/record-industries.mjs scripts/build-readme-gif.mjs scripts/recording-flows/demo-android.yaml scripts/recording-flows/demo-ios.yaml demo/recordings.json __tests__/scripts/validate-recordings.test.js

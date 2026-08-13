@@ -87,6 +87,12 @@ function main() {
           `examples/${industry}/airgap.config.json`,
           '--quick-reply',
           selectIndustryQuickReply(config),
+          '--provider',
+          'demo',
+          '--model-identity',
+          'document-formatter-v1',
+          '--evidence-class',
+          'emulator',
         ],
         {cwd: root},
       );

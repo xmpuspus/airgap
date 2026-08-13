@@ -33,6 +33,8 @@ const SIZE_LIMITS = Object.freeze({
   joint: 8 * MIB,
 });
 
+const EVIDENCE_CLASSES = Object.freeze(['emulator', 'physical-device', 'simulator']);
+
 function fail(code, detail = '') {
   throw new Error(detail ? `${code}:${detail}` : code);
 }
@@ -49,6 +51,45 @@ function isCommit(value) {
 
 function normalized(value) {
   return typeof value === 'string' ? value.split(path.sep).join('/') : '';
+}
+
+function nonEmptyString(value) {
+  return typeof value === 'string' && Boolean(value.trim());
+}
+
+function validateEvidenceClass(recording) {
+  const classes = Array.isArray(recording.evidenceClass)
+    ? recording.evidenceClass
+    : [recording.evidenceClass];
+  if (
+    classes.length === 0 ||
+    classes.some(value => !EVIDENCE_CLASSES.includes(value)) ||
+    new Set(classes).size !== classes.length ||
+    classes.join(',') !== [...classes].sort().join(',')
+  ) {
+    fail('recording_evidence_class_invalid');
+  }
+  if (recording.platform === 'joint') {
+    if (!Array.isArray(recording.evidenceClass) || classes.length < 2) {
+      fail('recording_evidence_class_invalid');
+    }
+  } else if (Array.isArray(recording.evidenceClass) || classes.length !== 1) {
+    fail('recording_evidence_class_invalid');
+  }
+
+  const device = String(recording.device ?? '').toLowerCase();
+  if (
+    classes.includes('physical-device') &&
+    /(emulator|simulator|sdk_gphone|generic_x86|virtual device)/.test(device)
+  ) {
+    fail('recording_evidence_class_invalid');
+  }
+  if (classes.includes('emulator') && recording.platform === 'ios') {
+    fail('recording_evidence_class_invalid');
+  }
+  if (classes.includes('simulator') && recording.platform === 'android') {
+    fail('recording_evidence_class_invalid');
+  }
 }
 
 function maestroRecordingPath(target) {
@@ -146,6 +187,13 @@ function validateRecording(recording, measured) {
   if (typeof recording.device !== 'string' || !recording.device.trim())
     fail('recording_device_missing');
   if (typeof recording.mode !== 'string' || !recording.mode.trim()) fail('recording_mode_missing');
+  if (!nonEmptyString(recording.providerId)) fail('recording_provider_missing');
+  if (!nonEmptyString(recording.modelIdentity)) fail('recording_model_identity_missing');
+  if (!nonEmptyString(recording.captureCommand)) fail('recording_capture_command_missing');
+  if (path.isAbsolute(recording.captureCommand) || recording.captureCommand.includes('/Users/')) {
+    fail('recording_capture_command_invalid');
+  }
+  validateEvidenceClass(recording);
   if (typeof recording.config !== 'string' || !recording.config.trim())
     fail('recording_config_missing');
   if (!Number.isFinite(Date.parse(recording.capturedAt))) fail('recording_date_invalid');
@@ -186,7 +234,7 @@ function validateRecording(recording, measured) {
 }
 
 function validateManifest(manifest) {
-  if (!manifest || manifest.schemaVersion !== 1 || !Array.isArray(manifest.recordings)) {
+  if (!manifest || manifest.schemaVersion !== 2 || !Array.isArray(manifest.recordings)) {
     fail('recording_manifest_invalid');
   }
   for (const recording of manifest.recordings) validateRecording(recording);
@@ -200,6 +248,7 @@ function validateManifest(manifest) {
 
 module.exports = {
   README_GIF_OPTIONS,
+  EVIDENCE_CLASSES,
   REQUIRED_OUTPUTS,
   SIZE_LIMITS,
   gifFilter,

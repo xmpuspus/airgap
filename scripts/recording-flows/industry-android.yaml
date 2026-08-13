@@ -21,7 +21,7 @@ name: Airgap industry template recording
 - assertVisible: 'DEMO'
 - tapOn: ${QUICK_REPLY}
 - extendedWaitUntil:
-    visible: 'On-device model'
+    visible: 'Document answer'
     timeout: 30000
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
 - stopRecording

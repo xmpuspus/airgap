@@ -62,6 +62,21 @@ function iosFacts(device) {
   throw new Error(`recording_ios_device_unknown:${device}`);
 }
 
+function inferredEvidenceClass(platform, facts) {
+  if (platform === 'ios') return 'simulator';
+  return /(emulator|sdk_gphone|generic_x86|virtual device)/i.test(facts.device)
+    ? 'emulator'
+    : 'physical-device';
+}
+
+function shellArgument(value) {
+  return /^[A-Za-z0-9_./:=+-]+$/.test(value) ? value : JSON.stringify(value);
+}
+
+function captureCommand(argv) {
+  return ['node', 'scripts/record-demo.mjs', ...argv].map(shellArgument).join(' ');
+}
+
 function main() {
   const root = rootFromScript();
   const args = parseArgs(process.argv.slice(2));
@@ -100,11 +115,27 @@ function main() {
     },
   });
 
+  const evidenceFlowName = args['evidence-flow'] ?? `demo-${platform}-evidence.yaml`;
+  const evidenceFlow = path.join(root, 'scripts', 'recording-flows', evidenceFlowName);
+  if (fs.existsSync(evidenceFlow)) {
+    runMaestro({
+      root,
+      flow: evidenceFlow,
+      device: args.device,
+      outputDirectory: path.join(evidence, `${id}-evidence-maestro`),
+      values: {
+        APP_ID: appId,
+        SHOT_PREFIX: shotPrefix,
+      },
+    });
+  }
+
   if (!fs.existsSync(source)) throw new Error(`recording_source_missing:${source}`);
   convertToGif({source, output, fps: 10, width: 360, colors: args.kind === 'industry' ? 80 : 96});
   createContactSheet({source, output: contactSheet});
   const probe = probeMedia(output);
   const facts = platform === 'android' ? androidFacts(args.device) : iosFacts(args.device);
+  const evidenceClass = args['evidence-class'] ?? inferredEvidenceClass(platform, facts);
   const capturedAt = new Date().toISOString();
 
   upsertRecording(root, {
@@ -119,6 +150,10 @@ function main() {
     os: facts.os,
     device: facts.device,
     mode: 'demo',
+    providerId: args.provider ?? 'demo',
+    modelIdentity: args['model-identity'] ?? 'document-formatter-v1',
+    evidenceClass,
+    captureCommand: captureCommand(process.argv.slice(2)),
     config: args.config ?? 'airgap.config.json',
     capturedAt,
     ...probe,

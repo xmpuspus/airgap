@@ -79,13 +79,24 @@ export function convertToGif({source, output, fps = 10, width = 360, colors = 96
 
 export function createContactSheet({source, output}) {
   fs.mkdirSync(path.dirname(output), {recursive: true});
+  const duration = probeMedia(source).durationSeconds;
+  const middle = Math.max(duration / 2, 0);
+  const final = Math.max(duration - 0.2, 0);
   run('ffmpeg', [
     '-y',
     '-i',
     source,
-    '-vf',
-    'fps=1/4,scale=220:-2:flags=lanczos,tile=4x3:padding=8:margin=8:color=white',
+    '-filter_complex',
+    '[0:v]split=3[firstSource][middleSource][finalSource];' +
+      '[firstSource]trim=start=0,setpts=PTS-STARTPTS,scale=220:-2:flags=lanczos[first];' +
+      `[middleSource]trim=start=${middle},setpts=PTS-STARTPTS,scale=220:-2:flags=lanczos[middle];` +
+      `[finalSource]trim=start=${final},setpts=PTS-STARTPTS,scale=220:-2:flags=lanczos[final];` +
+      '[first][middle][final]hstack=inputs=3[v]',
+    '-map',
+    '[v]',
     '-frames:v',
+    '1',
+    '-update',
     '1',
     output,
   ]);
@@ -130,7 +141,8 @@ export function upsertRecording(root, recording) {
   const manifestPath = path.join(root, 'demo', 'recordings.json');
   const manifest = fs.existsSync(manifestPath)
     ? JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
-    : {schemaVersion: 1, recordings: []};
+    : {schemaVersion: 2, recordings: []};
+  manifest.schemaVersion = 2;
   manifest.recordings = manifest.recordings.filter(item => item.output !== recording.output);
   manifest.recordings.push(recording);
   manifest.recordings.sort((left, right) => left.output.localeCompare(right.output));

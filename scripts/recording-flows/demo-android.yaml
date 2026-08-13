@@ -5,14 +5,20 @@ name: Airgap Android release recording
 - launchApp:
     clearState: true
 - scrollUntilVisible:
+    element: 'AI FOR THIS DEVICE'
+    direction: DOWN
+    speed: 30
+    visibilityPercentage: 80
+- startRecording:
+    path: ${RECORDING_PATH}
+- takeScreenshot: ${SHOT_PREFIX}-provider-readiness
+- scrollUntilVisible:
     element:
       text: 'Try Offline Demo'
       index: 1
     direction: DOWN
     speed: 35
     visibilityPercentage: 80
-- startRecording:
-    path: ${RECORDING_PATH}
 - takeScreenshot: ${SHOT_PREFIX}-onboarding
 - tapOn:
     text: 'Try Offline Demo'
@@ -22,7 +28,7 @@ name: Airgap Android release recording
 - takeScreenshot: ${SHOT_PREFIX}-chat
 - tapOn: 'Check plans'
 - extendedWaitUntil:
-    visible: 'On-device model'
+    visible: 'Document answer'
     timeout: 30000
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
 - setAirplaneMode: enabled
@@ -34,12 +40,19 @@ name: Airgap Android release recording
     visible: 'Queued'
     timeout: 20000
 - takeScreenshot: ${SHOT_PREFIX}-action-receipt
-- tapOn: 'Open Outbox'
-- assertVisible: 'Outbox'
+- tapOn:
+    point: '80%,10%'
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: 'Outbox'
+    timeout: 10000
 - assertVisible: 'Pending'
 - takeScreenshot: ${SHOT_PREFIX}-outbox
 - back
-- tapOn: 'Open settings'
+- tapOn:
+    text: 'Open settings'
+    retryTapIfNoChange: true
+- takeScreenshot: ${SHOT_PREFIX}-provider-settings
 - scrollUntilVisible:
     element: 'Delete All My Data'
     direction: DOWN

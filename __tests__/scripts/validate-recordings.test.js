@@ -32,6 +32,11 @@ function record(overrides = {}) {
     os: 'Android 16 API 36',
     device: 'airgap_test',
     mode: 'demo',
+    providerId: 'demo',
+    modelIdentity: 'document-formatter-v1',
+    evidenceClass: 'emulator',
+    captureCommand:
+      'node scripts/record-demo.mjs --platform android --device emulator-5554 --provider demo --model-identity document-formatter-v1 --evidence-class emulator',
     config: 'airgap.config.json',
     capturedAt: '2026-08-12T12:00:00.000Z',
     width: 360,
@@ -153,25 +158,70 @@ describe('recording manifest validation', () => {
     expect(flow).toMatch(/tapOn: 'Send message'\n- extendedWaitUntil:\n\s+visible: 'Queued'/);
   });
 
-  test('uses the native iOS Back control after inspecting Outbox', () => {
+  test('stops the iOS GIF after the grounded answer', () => {
     const flow = fs.readFileSync(
       path.join(process.cwd(), 'scripts/recording-flows/demo-ios.yaml'),
       'utf8',
     );
 
-    expect(flow).toContain("- tapOn: 'Back'");
-    expect(flow).not.toMatch(/^\s*- back\s*$/m);
+    expect(flow).toMatch(
+      /takeScreenshot: \$\{SHOT_PREFIX\}-answer-source[\s\S]*takeScreenshot: \$\{SHOT_PREFIX\}-answer-provenance\n- waitForAnimationToEnd\n- stopRecording\s*$/,
+    );
   });
 
-  test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(
-    '%s waits for the current provenance label',
+  test.each(['demo-android.yaml'])(
+    '%s retries header navigation taps when the screen does not change',
     flowName => {
       const flow = fs.readFileSync(
         path.join(process.cwd(), 'scripts/recording-flows', flowName),
         'utf8',
       );
 
-      expect(flow).toContain("visible: 'On-device model'");
+      expect(flow).toMatch(/point: '80%,10%'\n\s+retryTapIfNoChange: true/);
+      expect(flow).toMatch(/text: 'Open settings'\n\s+retryTapIfNoChange: true/);
+      expect(flow).toMatch(/extendedWaitUntil:\n\s+visible: 'Outbox(?: is clear)?'/);
+    },
+  );
+
+  test('captures iOS Settings in a separate evidence flow', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/demo-ios-evidence.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toMatch(/point: '93%,10%'\n\s+retryTapIfNoChange: true/);
+    expect(flow).toMatch(/extendedWaitUntil:\n\s+visible: 'Settings'/);
+    expect(flow).toContain('takeScreenshot: ${SHOT_PREFIX}-provider-settings');
+    expect(flow).toContain('takeScreenshot: ${SHOT_PREFIX}-privacy');
+  });
+
+  test('runs a platform evidence flow when one exists', () => {
+    const script = fs.readFileSync(path.join(process.cwd(), 'scripts/record-demo.mjs'), 'utf8');
+
+    expect(script).toContain('`demo-${platform}-evidence.yaml`');
+    expect(script).toContain('fs.existsSync(evidenceFlow)');
+  });
+
+  test('builds contact sheets from exact first, middle, and final frames', () => {
+    const script = fs.readFileSync(path.join(process.cwd(), 'scripts/recording-utils.mjs'), 'utf8');
+
+    expect(script).toContain('const middle = Math.max(duration / 2, 0)');
+    expect(script).toContain('const final = Math.max(duration - 0.2, 0)');
+    expect(script).toContain('[0:v]split=3[firstSource][middleSource][finalSource]');
+    expect(script).toContain('setpts=PTS-STARTPTS');
+    expect(script).toContain('[first][middle][final]hstack=inputs=3[v]');
+  });
+
+  test.each(['demo-android.yaml', 'demo-ios.yaml', 'industry-android.yaml'])(
+    '%s waits for the configured demo provider provenance',
+    flowName => {
+      const flow = fs.readFileSync(
+        path.join(process.cwd(), 'scripts/recording-flows', flowName),
+        'utf8',
+      );
+
+      expect(flow).toContain("visible: 'Document answer'");
+      expect(flow).not.toContain("visible: 'On-device model'");
       expect(flow).not.toContain("visible: 'Local knowledge'");
     },
   );
@@ -188,15 +238,40 @@ describe('recording manifest validation', () => {
 
   test('needs a checked commit for every GIF', () => {
     expect(() =>
-      validateManifest({schemaVersion: 1, recordings: [record({sourceCommit: ''})]}),
+      validateManifest({schemaVersion: 2, recordings: [record({sourceCommit: ''})]}),
     ).toThrow('recording_commit_missing');
   });
 
   test('requires every release recording path', () => {
-    expect(() => validateManifest({schemaVersion: 1, recordings: [record()]})).toThrow(
+    expect(() => validateManifest({schemaVersion: 2, recordings: [record()]})).toThrow(
       'recording_output_missing',
     );
     expect(REQUIRED_OUTPUTS).toHaveLength(10);
+  });
+
+  test.each([
+    ['providerId', undefined, 'recording_provider_missing'],
+    ['modelIdentity', undefined, 'recording_model_identity_missing'],
+    ['captureCommand', undefined, 'recording_capture_command_missing'],
+  ])('requires %s evidence metadata', (field, value, expected) => {
+    expect(() => validateRecording(record({[field]: value}))).toThrow(expected);
+  });
+
+  test('rejects simulator or emulator footage labeled as a physical device', () => {
+    expect(() =>
+      validateRecording(
+        record({
+          device: 'Android Emulator',
+          evidenceClass: 'physical-device',
+        }),
+      ),
+    ).toThrow('recording_evidence_class_invalid');
+  });
+
+  test('rejects the old recording manifest schema', () => {
+    expect(() => validateManifest({schemaVersion: 1, recordings: []})).toThrow(
+      'recording_manifest_invalid',
+    );
   });
 
   test('requires source evidence under the commit recording directory', () => {
@@ -227,6 +302,7 @@ describe('recording manifest validation', () => {
           platform: 'joint',
           os: 'Android 15 and iOS 26.4',
           device: 'Android Emulator and iPhone 17 Pro',
+          evidenceClass: ['emulator', 'simulator'],
           width: 572,
           height: 622,
         }),

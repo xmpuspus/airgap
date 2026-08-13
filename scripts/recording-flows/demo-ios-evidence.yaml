@@ -1,0 +1,17 @@
+appId: ${APP_ID}
+name: Airgap iOS release evidence
+---
+- launchApp
+- tapOn:
+    point: '93%,10%'
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: 'Settings'
+    timeout: 10000
+- takeScreenshot: ${SHOT_PREFIX}-provider-settings
+- scrollUntilVisible:
+    element: 'Delete All My Data'
+    direction: DOWN
+    speed: 30
+    visibilityPercentage: 90
+- takeScreenshot: ${SHOT_PREFIX}-privacy

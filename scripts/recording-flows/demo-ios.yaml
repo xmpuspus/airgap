@@ -5,14 +5,20 @@ name: Airgap iOS release recording
     clearState: true
     clearKeychain: true
 - scrollUntilVisible:
+    element: 'AI FOR THIS DEVICE'
+    direction: DOWN
+    speed: 30
+    visibilityPercentage: 80
+- startRecording:
+    path: ${RECORDING_PATH}
+- takeScreenshot: ${SHOT_PREFIX}-provider-readiness
+- scrollUntilVisible:
     element:
       text: 'Try Offline Demo'
       index: 1
     direction: DOWN
     speed: 35
     visibilityPercentage: 80
-- startRecording:
-    path: ${RECORDING_PATH}
 - takeScreenshot: ${SHOT_PREFIX}-onboarding
 - tapOn:
     text: 'Try Offline Demo'
@@ -22,18 +28,12 @@ name: Airgap iOS release recording
 - takeScreenshot: ${SHOT_PREFIX}-chat
 - tapOn: 'Check plans'
 - extendedWaitUntil:
-    visible: 'On-device model'
+    visible: 'Document answer'
     timeout: 30000
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
-- tapOn: 'Open Outbox'
-- assertVisible: 'Outbox is clear'
-- takeScreenshot: ${SHOT_PREFIX}-outbox
-- tapOn: 'Back'
-- tapOn: 'Open settings'
-- scrollUntilVisible:
-    element: 'Delete All My Data'
-    direction: DOWN
-    speed: 30
-    visibilityPercentage: 90
-- takeScreenshot: ${SHOT_PREFIX}-privacy
+- swipe:
+    direction: UP
+    duration: 400
+- takeScreenshot: ${SHOT_PREFIX}-answer-provenance
+- waitForAnimationToEnd
 - stopRecording
