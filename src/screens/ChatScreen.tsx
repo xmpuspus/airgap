@@ -33,6 +33,8 @@ import type {BubblePosition} from '../constants/theme';
 import type {BotMessage, QuickReply} from '../types/chat';
 import {useReducedMotion} from '../hooks/useReducedMotion';
 import {shouldShowSuggestedReplies} from './chatState';
+import {useInferenceProviders} from '../hooks/useInferenceProviders';
+import {isSystemProvider, providerDisplayName} from '../services/inference/providerPresentation';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -152,6 +154,10 @@ export function ChatScreen(_props: Props) {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [runningTool, setRunningTool] = useState<string | null>(null);
   const reducedMotion = useReducedMotion();
+  const providerReadiness = useInferenceProviders();
+  const readySystemProvider = providerReadiness.providers.find(
+    provider => isSystemProvider(provider.providerId) && provider.state === 'available',
+  );
   const scrollButtonOpacity = useRef(new Animated.Value(0)).current;
   const scrollButtonScale = useRef(new Animated.Value(0.8)).current;
 
@@ -326,6 +332,9 @@ export function ChatScreen(_props: Props) {
         isOnline={isOnline}
         localReady={llmService.isLoaded()}
         cloudReady={getMode() === 'prefer-online' && isOnline}
+        systemProviderName={
+          readySystemProvider ? providerDisplayName(readySystemProvider.providerId) : undefined
+        }
       />
       <FlatList
         ref={flatListRef}

@@ -20,6 +20,8 @@ import {deleteAllUserData} from '../services/dataDeletionService';
 import {DiagnosticsPanel} from '../components/settings/DiagnosticsPanel';
 import {LLMModeControl} from '../components/settings/LLMModeControl';
 import {SyncSectionCard} from '../components/settings/SyncSectionCard';
+import {ProviderStatusCard} from '../components/settings/ProviderStatusCard';
+import {useInferenceProviders} from '../hooks/useInferenceProviders';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -76,6 +78,7 @@ function Chevron() {
 export function SettingsScreen({navigation}: Props) {
   const insets = useSafeAreaInsets();
   const {isDownloaded, modelSizeMB, deleteModel} = useModelDownload();
+  const providerReadiness = useInferenceProviders();
 
   // 7-tap easter egg on the app version row enables the Diagnostics panel
   // for the current session only. Not persisted — closing and reopening
@@ -226,6 +229,17 @@ export function SettingsScreen({navigation}: Props) {
     <ScrollView
       style={styles.screen}
       contentContainerStyle={{paddingBottom: insets.bottom + SPACING['3xl']}}>
+      <View style={styles.section}>
+        <SectionHeader title={t('answerProviders', 'Answer Providers')} />
+        <ProviderStatusCard
+          providers={providerReadiness.providers}
+          loading={providerReadiness.loading}
+          error={providerReadiness.error}
+          onRefresh={providerReadiness.refresh}
+          onDownloadSystemAi={providerReadiness.downloadSystemAi}
+        />
+      </View>
+
       {/* AI Model */}
       <View style={styles.section}>
         <SectionHeader title={t('aiModel', 'AI Model')} />

@@ -9,6 +9,8 @@ import {config, brand, onboarding, interpolate, modelConfig} from '../config/loa
 import {t} from '../utils/i18n';
 import {hasAccessTokenProvider} from '../services/authProvider';
 import {useReducedMotion} from '../hooks/useReducedMotion';
+import {useInferenceProviders} from '../hooks/useInferenceProviders';
+import {ProviderSetupCard} from '../components/onboarding/ProviderSetupCard';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -134,6 +136,7 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
   const insets = useSafeAreaInsets();
   const {progress, isDownloading, isDownloaded, modelSizeMB, startDownload} = useModelDownload();
   const reducedMotion = useReducedMotion();
+  const providerReadiness = useInferenceProviders();
   const serviceReady = hasAccessTokenProvider() && config.llm?.cloud?.enabled === true;
 
   const logoScale = useRef(new Animated.Value(0)).current;
@@ -268,6 +271,20 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
             'Knowledge base is currently English-only. Operator translations welcome.',
           )}
         </Text>
+      </Animated.View>
+
+      <Animated.View
+        style={{
+          opacity: contentOpacity,
+          transform: [{translateY: contentSlide}],
+        }}>
+        <ProviderSetupCard
+          providers={providerReadiness.providers.filter(provider => provider.state !== 'disabled')}
+          loading={providerReadiness.loading}
+          downloadProgress={providerReadiness.downloadProgress}
+          onDownloadSystemAi={providerReadiness.downloadSystemAi}
+          onContinue={goToChat}
+        />
       </Animated.View>
 
       {/* Feature list */}

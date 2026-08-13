@@ -376,7 +376,7 @@ Run: `JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew app:assembleDebug` from `
 
 Expected: both commands PASS; unsupported emulators report an unavailable state without crashing.
 
-- [ ] **Step 5: Commit Android support**
+- [x] **Step 5: Commit Android support**
 
 ```bash
 git add src/services/inference/androidAicoreProvider.ts android/app/src/main/java/com/airgap/inference/AndroidAicoreModule.kt android/app/src/main/java/com/airgap/inference/AndroidAicorePackage.kt android/app/src/main/java/com/airgap/MainApplication.kt android/app/build.gradle __tests__/android-aicore-provider.test.ts
@@ -401,7 +401,7 @@ git commit -m "Add Android system inference"
 - Consumes: current capabilities and download actions from Tasks 3 through 5.
 - Produces: `useInferenceProviders()`, `getProviderSetupView()`, and `getProviderStatusView()`.
 
-- [ ] **Step 1: Write failing state-to-copy and accessibility tests**
+- [x] **Step 1: Write failing state-to-copy and accessibility tests**
 
 ```ts
 expect(getProviderSetupView({state: 'available', providerId: 'apple-foundation-models'})).toEqual(
@@ -415,13 +415,13 @@ expect(getProviderSetupView({state: 'downloadable', providerId: 'android-aicore'
 
 Cover all four onboarding states and provider reason text. Render cards and assert named buttons, roles, hints, progress values, and no raw runtime jargon in primary copy.
 
-- [ ] **Step 2: Run the component tests and confirm the components are missing**
+- [x] **Step 2: Run the component tests and confirm the components are missing**
 
 Run: `npm test -- --runInBand __tests__/components/provider-setup-card.test.tsx __tests__/components/provider-status-card.test.tsx`
 
 Expected: FAIL because the provider UI does not exist.
 
-- [ ] **Step 3: Implement the readiness hook and cards**
+- [x] **Step 3: Implement the readiness hook and cards**
 
 Use the existing navy, cyan, status colors, type scale, radius, and spacing tokens. Make the signature element a compact ordered provider rail: each row has one numbered position, plain provider name, readiness text, and a single status mark. Keep technical identity and policy reasons in Settings; onboarding only explains the next action.
 
@@ -434,17 +434,17 @@ AI for this device
 
 Respect safe-area, dynamic type, screen readers, reduced motion, 44-point touch targets, and current dark-mode tokens.
 
-- [ ] **Step 4: Run component and screen tests**
+- [x] **Step 4: Run component and screen tests**
 
 Run: `npm test -- --runInBand __tests__/components __tests__/screens`
 
 Expected: PASS.
 
-- [ ] **Step 5: Capture and inspect onboarding and settings screenshots**
+- [x] **Step 5: Capture and inspect onboarding and settings screenshots**
 
 Run the app on available iOS Simulator and Android Emulator targets. Capture both screens under `tmp/ui-review/<commit>/`. Inspect clipping, contrast, hierarchy, duplicate copy, and provider state. Fix visual defects and rerun Step 4.
 
-- [ ] **Step 6: Commit the provider interface**
+- [x] **Step 6: Commit the provider interface**
 
 ```bash
 git add src/hooks/useInferenceProviders.ts src/components/onboarding/ProviderSetupCard.tsx src/components/settings/ProviderStatusCard.tsx src/screens/OnboardingScreen.tsx src/screens/SettingsScreen.tsx src/components/common/OperatingState.tsx __tests__/components/provider-setup-card.test.tsx __tests__/components/provider-status-card.test.tsx

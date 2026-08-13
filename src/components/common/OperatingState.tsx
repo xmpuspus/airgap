@@ -11,10 +11,11 @@ export interface OperatingStateInput {
   isOnline: boolean;
   localReady?: boolean;
   cloudReady?: boolean;
+  systemProviderName?: string;
 }
 
 export function getOperatingStateView(input: OperatingStateInput): {
-  label: 'Demo' | 'Local' | 'Cloud' | 'Offline';
+  label: 'Demo' | 'On device' | 'Local' | 'Cloud' | 'Offline';
   detail: string;
   tone: Tone;
 } {
@@ -23,6 +24,13 @@ export function getOperatingStateView(input: OperatingStateInput): {
       label: 'Demo',
       detail: 'Built-in sample answers. No network or model download.',
       tone: 'neutral',
+    };
+  }
+  if (input.systemProviderName) {
+    return {
+      label: 'On device',
+      detail: `${input.systemProviderName} is ready. Answers stay on this device.`,
+      tone: 'ready',
     };
   }
   if (!input.isOnline && !input.localReady) {
