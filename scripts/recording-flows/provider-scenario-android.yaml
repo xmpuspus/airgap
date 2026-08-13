@@ -1,0 +1,28 @@
+appId: ${APP_ID}
+name: Airgap Android provider scenario
+---
+- extendedWaitUntil:
+    visible: 'AI FOR THIS DEVICE'
+    timeout: 30000
+- scrollUntilVisible:
+    element: ${PROVIDER_NAME}
+    direction: DOWN
+    speed: 30
+    visibilityPercentage: 80
+- assertVisible: ${PROVIDER_STATE}
+- takeScreenshot: ${SHOT_PREFIX}-readiness
+- runFlow:
+    when:
+      visible: 'Continue'
+    commands:
+      - tapOn:
+          text: 'Continue'
+          retryTapIfNoChange: true
+      - extendedWaitUntil:
+          visible: 'ON DEVICE'
+          timeout: 20000
+      - tapOn: 'Check plans'
+      - extendedWaitUntil:
+          visible: ${EXPECTED_RESULT}
+          timeout: 30000
+      - takeScreenshot: ${SHOT_PREFIX}-generation
