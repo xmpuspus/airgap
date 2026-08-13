@@ -70,7 +70,9 @@ npm run recordings:validate
 
 Run `cd android && ./gradlew assembleDebug` after native Android, dependency, or
 build configuration changes. Run the CI iOS Simulator build command after the
-equivalent iOS changes.
+equivalent iOS changes. When a change touches signing, Keychain, or entitlements,
+run a normally signed Debug build on a booted simulator, reinstall the app, and
+check that it passes startup. An unsigned compile cannot check Keychain access.
 
 For README or interface recordings, follow [`docs/recordings.md`](docs/recordings.md).
 Record from a committed application state, inspect the contact sheet and full loop, and update

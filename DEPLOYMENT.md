@@ -298,7 +298,8 @@ stops when only some are present.
 1. Open `ios/Airgap.xcworkspace` in Xcode 26 or newer.
 2. Choose the organization team in Signing and Capabilities.
 3. Replace the sample bundle identifier.
-4. Check Keychain entitlements, privacy declarations, and deployment target.
+4. Keep private Keychain access enabled and check both
+   `Airgap.entitlements` and `AirgapSimulator.entitlements` after changing signing settings.
 5. Choose a generic iOS device and then choose Product, Archive.
 6. Upload through Organizer to TestFlight before App Store review.
 

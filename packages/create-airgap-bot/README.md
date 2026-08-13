@@ -70,6 +70,7 @@ For `acme-support`, the CLI sets these values.
 
 - Android includes its normal debug keystore for local development. Supply `AIRGAP_RELEASE_STORE_FILE`, `AIRGAP_RELEASE_KEY_ALIAS`, `AIRGAP_RELEASE_STORE_PASSWORD`, and `AIRGAP_RELEASE_KEY_PASSWORD` when you make a signed release.
 - In Xcode, assign your Apple team and an App Store bundle identifier before you archive the app.
+- Keep the bundled private Keychain access and its device and simulator entitlement files when changing the Xcode target.
 - Add any project-specific push notification, deep link, or payment entitlements.
 - The CLI applies one bundled knowledge set. Import more documents with `npm run kb:import` in the new project.
 

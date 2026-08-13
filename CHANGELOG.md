@@ -11,6 +11,8 @@ minor releases.
 - Apple Foundation Models and Android ML Kit Prompt API adapters behind one provider policy.
 - Provider readiness, fallback reasons, model identity, and answer provenance in onboarding,
   settings, and chat.
+- Private Keychain access groups for device and simulator builds so fresh iOS installs can open
+  encrypted application storage.
 - A local documentation-link check that runs in CI.
 - Recording metadata for provider, model, evidence class, capture command, and reviewed loops.
 

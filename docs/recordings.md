@@ -15,6 +15,11 @@ state.
 Set `ANDROID_HOME` or `ANDROID_SDK_ROOT` so the recording script can find `adb`. Set `JAVA_HOME` to
 a JDK 17 installation before running Maestro.
 
+Build and install iOS recordings with normal simulator signing. The project chooses
+`AirgapSimulator.entitlements` for simulator targets so the fresh install can open its private
+Keychain group. A `CODE_SIGNING_ALLOWED=NO` build checks compilation but does not test startup or
+secure storage access.
+
 ## Commit code before capture
 
 Commit interface, provider, flow, and fixture changes before recording. The source commit in

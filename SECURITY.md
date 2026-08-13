@@ -37,6 +37,11 @@ Keystore or iOS Keychain protects that key. The app opens secure storage before
 conversation, queue, sync, model, telemetry, or preference services can read
 data. Startup fails closed when the platform key store is unavailable.
 
+iOS device builds use the application identifier prefix in `Airgap.entitlements`.
+Simulator builds use the locally supplied team identifier prefix in
+`AirgapSimulator.entitlements`. Keep both files private to the app target. Adding
+another app to the access group would allow that app to request the same stored key.
+
 The public GGUF model file and bundled knowledge JSON are not encrypted. The app
 checks a downloaded model against its expected byte length and SHA-256 before
 use. Operators must decide whether their knowledge content can live in the app

@@ -28,6 +28,12 @@ describe('packaged template', () => {
       await expect(
         fsp.access(path.join(templateRoot, 'ios', '.xcode.env.local')),
       ).rejects.toThrow();
+      await expect(
+        fsp.access(path.join(templateRoot, 'ios', 'Airgap', 'Airgap.entitlements')),
+      ).resolves.toBeUndefined();
+      await expect(
+        fsp.access(path.join(templateRoot, 'ios', 'Airgap', 'AirgapSimulator.entitlements')),
+      ).resolves.toBeUndefined();
     } finally {
       await fsp.rm(sentinel, {force: true});
     }
