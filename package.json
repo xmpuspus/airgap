@@ -21,6 +21,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "format:check": "node scripts/check-format.mjs",
+    "docs:check": "node scripts/check-docs.mjs",
     "start": "react-native start",
     "test": "jest",
     "setup": "bash scripts/setup.sh",

@@ -1,348 +1,249 @@
-# Customization Guide
+# Customize an Airgap app
 
-Everything is driven by `airgap.config.json`. No code changes needed for most customizations.
+Most product changes start in `airgap.config.json` and the active knowledge directory. Native
+application names, signing identities, icons, and platform permissions still need Android or
+iOS project changes. The exact machine-readable contract is in
+[`airgap.schema.json`](airgap.schema.json).
 
-## Config Reference
+## Start from a checked template
 
-### brand (required)
+The package command copies a complete application and applies one of the seven included fixtures.
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| name | Yes | Company name (e.g., "Metro Bank") |
-| botName | Yes | Bot display name (e.g., "MetroBot") |
-| hotline | Yes | Support phone number for fallback |
-| tagline | No | Short description for onboarding |
-| hotlineLabel | No | Note about hotline (e.g., "free from mobile") |
-| website | No | Company website domain |
-| logo | No | Path to logo image asset |
+```bash
+npx create-airgap-bot field-help --template water-utility
+cd field-help
+npm install
+npm run android
+```
 
-### theme
+To work from this repository instead, copy a fixture and rebuild the knowledge manifest.
 
-| Field | Required | Default | Description |
-|-------|----------|---------|-------------|
-| primary | Yes | — | Main brand color (hex) |
-| secondary | Yes | — | Accent color (hex) |
-| background | Yes | — | Screen background |
-| surface | No | #FFFFFF | Card/elevated surface |
-| text | No | #1A1A2E | Primary text |
-| textSecondary | No | #6B7280 | Secondary/muted text |
-| textInverse | No | #FFFFFF | Text on colored backgrounds |
-| botBubble | No | #E8EEF6 | Bot message background |
-| botBubbleText | No | #1A1A2E | Bot message text |
-| userBubble | No | = primary | User message background |
-| userBubbleText | No | #FFFFFF | User message text |
-| success | No | #10B981 | Success state |
-| warning | No | #F59E0B | Warning state |
-| error | No | #EF4444 | Error/destructive |
-| font | No | System | Custom font family name |
-| darkMode | No | false | `false`, `true`, or `"auto"` |
-| darkTheme | No | auto-generated | Custom dark palette overrides |
+```bash
+cp examples/banking/airgap.config.json airgap.config.json
+cp examples/banking/knowledge/*.json src/knowledge/
+node scripts/generate-manifest.js
+npm run kb:validate
+```
 
-**Dark Mode:**
-- `false` — light theme only
-- `true` — dark theme only
-- `"auto"` — follows device system preference
+All example brands, prices, locations, policies, and account responses are fictional. Replace and
+review them before any pilot.
 
-If `darkTheme` is omitted, a dark palette is auto-generated from the light theme colors.
+## Brand and interface
 
-**Custom Fonts:**
-Set `font` to your custom font family name. The font files must be linked in the native project (see React Native font linking docs).
+The `brand` object controls the displayed company name, assistant name, support number, website,
+tagline, and logo path. The `theme` object controls light and optional dark palettes.
 
-### model
+Set these values.
 
-| Field | Required | Default | Description |
-|-------|----------|---------|-------------|
-| provider | Yes | — | `llama.cpp`, `execu-torch`, `core-ml`, `onnx`, `cloud` |
-| url | Yes | — | Download URL for model file |
-| filename | Yes | — | Local filename for downloaded model |
-| sha256 | No | — | Checksum for integrity (empty = skip) |
-| sizeMB | No | 500 | Expected size in MB (shown during download) |
-| contextSize | No | 4096 | Context window size |
-| maxTokens | No | 256 | Max generation tokens |
-| temperature | No | 0.3 | LLM temperature (0-2) |
-| topP | No | 0.9 | Top-p sampling (0-1) |
-| stopTokens | No | model-specific | Stop sequences |
-| gpuLayers | No | 99 | GPU offload layers (0 = CPU only) |
-| threads | No | 4 | CPU threads (1-16) |
+- `brand.name`, `brand.botName`, and `brand.hotline`
+- `theme.primary`, `theme.secondary`, and `theme.background`
 
-### knowledge
+Colors use six-digit hex values such as `#0E7490`. Link a custom `theme.font` in both
+native projects. `theme.darkMode` accepts `false`, `true`, or `"auto"`.
 
-| Field | Required | Default | Description |
-|-------|----------|---------|-------------|
-| directory | Yes | — | Path to KB JSON files |
-| schema | No | kbdoc-v1 | Document schema version |
-| search.topK | No | 3 | Number of search results |
-| search.fuzzy | No | 0.2 | Typo tolerance (0-1) |
-| search.boostTitle | No | 3 | Title match weight |
-| search.boostKeywords | No | 2 | Keyword match weight |
-| search.boostContent | No | 1 | Content match weight |
+The `onboarding` object controls the title, subtitle, ability list, and downloaded-model copy.
+The `quickReplies` array sets the suggested questions shown in chat.
 
-### prompts
+## Answer providers
 
-Template variables: `{{botName}}`, `{{brandName}}`, `{{hotline}}`, `{{hotlineLabel}}`, `{{currency}}`, `{{featureList}}`, `{{modelSize}}`
+Two configuration sections have different jobs.
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| system | Yes | LLM system prompt. Keep short for small models. |
-| welcome | Yes | First message shown to user |
-| fallback | Yes | Shown when no results and no LLM |
-| queued | No | Shown when action is queued offline |
-| noModel | No | Appended to results when LLM not downloaded |
+- `model` describes the optional GGUF file used by the downloaded `llama.rn` provider. The current
+  downloaded-model engine is `llama.cpp`.
+- `llm` controls operating mode, provider order, platform rules, and cloud endpoint settings.
 
-**System Prompt Tips:**
-- Keep under 200 tokens for small models
-- Include industry-specific guardrails ("Never provide financial advice")
-- Reference the knowledge base grounding: "Answer ONLY using the CONTEXT"
-- Specify currency and formatting preferences
+Airgap recognizes five provider IDs.
 
-### features
+| ID                        | Purpose                                      |
+| ------------------------- | -------------------------------------------- |
+| `apple-foundation-models` | Apple on-device model on an eligible device  |
+| `android-aicore`          | Android ML Kit Prompt API on a listed device |
+| `llama-rn`                | App-downloaded GGUF model                    |
+| `cloud`                   | Operator service with fresh authentication   |
+| `demo`                    | Deterministic local document formatter       |
 
-All boolean, all optional. Defaults shown.
-
-| Field | Default | Description |
-|-------|---------|-------------|
-| offlineQueue | true | Queue online actions when offline |
-| streamingTokens | true | Show LLM tokens as they generate |
-| userFeedback | true | Thumbs up/down on bot messages |
-| conversationPersistence | true | Save chat across restarts |
-| sessionTimeoutMinutes | 30 | Clear history after inactivity |
-| modelDownloadOnboarding | true | Show model download on first launch |
-
-### privacy
-
-| Field | Default | Description |
-|-------|---------|-------------|
-| dataRetentionDays | 30 | Auto-delete conversations after N days |
-| allowExport | true | Show "Export conversation" in settings |
-| allowDeleteData | true | Show "Delete all my data" in settings |
-| privacyPolicyUrl | — | Link to privacy policy |
-
-### i18n
-
-Override any UI string by key:
+This configuration keeps the app offline and uses document answers if the system model is not
+available.
 
 ```json
-"i18n": {
-  "strings": {
-    "send": "Enviar",
-    "settings": "Configuracion",
-    "clearChat": "Borrar conversacion",
-    "deleteModel": "Eliminar modelo",
-    "getHelp": "Obtener ayuda",
-    "about": "Acerca de",
-    "aiModel": "Modelo AI",
-    "status": "Estado",
-    "downloaded": "Descargado",
-    "notDownloaded": "No descargado",
-    "chat": "Chat",
-    "privacy": "Privacidad",
-    "exportChat": "Exportar conversacion",
-    "deleteAllData": "Eliminar todos mis datos",
-    "privacyPolicy": "Politica de privacidad",
-    "appVersion": "Version de la app",
-    "cancel": "Cancelar",
-    "delete": "Eliminar",
-    "clear": "Borrar"
+{
+  "llm": {
+    "mode": "offline-only",
+    "supportDomain": "banking",
+    "providers": [
+      {
+        "id": "apple-foundation-models",
+        "enabled": true,
+        "priority": 0,
+        "platform": "ios",
+        "minimumOsVersion": "26.0",
+        "locales": ["en", "en-US"],
+        "allowModelDownload": false,
+        "allowCloudFallback": false
+      },
+      {
+        "id": "llama-rn",
+        "enabled": true,
+        "priority": 10,
+        "platform": "all",
+        "allowModelDownload": true,
+        "allowCloudFallback": false
+      },
+      {
+        "id": "demo",
+        "enabled": true,
+        "priority": 30,
+        "platform": "all"
+      }
+    ]
   }
 }
 ```
 
-### analytics
+Lower priority numbers run first. `demo` mode uses only `demo`. `offline-only` always removes
+cloud. `prefer-offline` and `prefer-online` follow the listed order after policy filtering.
 
-| Field | Default | Description |
-|-------|---------|-------------|
-| enabled | false | Enable analytics event hooks |
+For each provider, check `enabled`, `platform`, domain lists, locale lists, OS floor, download
+permission, and cloud permission. The app refreshes provider status before each request.
 
-When enabled, the app emits events via the logger service. Integrate your analytics SDK by subscribing to logger events.
+See [`DEPLOYMENT.md`](DEPLOYMENT.md) for native provider requirements, rollout, and rollback.
 
-### auth
+## Downloaded model
 
-| Field | Default | Description |
-|-------|---------|-------------|
-| enabled | false | Require auth before chat |
-| type | pin | `pin`, `biometric`, or `both` |
-
-### actions
-
-Online-required actions triggered by keyword matching:
+The `model` object needs a URL, filename, exact byte count, and SHA-256 digest for a production
+download. The app checks the byte count and digest before loading the file.
 
 ```json
 {
-  "id": "balance_check",
-  "label": "Check account balance",
-  "keywords": ["my balance", "my bill amount"],
-  "requiresOnline": true,
-  "category": "account",
-  "mockResponse": "Your balance is {{currency}} 127.50"
+  "model": {
+    "provider": "llama.cpp",
+    "url": "https://models.example.com/support-model.gguf",
+    "filename": "support-model.gguf",
+    "sha256": "64-lowercase-hex-characters",
+    "sizeBytes": 123456789,
+    "contextSize": 4096,
+    "maxTokens": 256,
+    "temperature": 0.3,
+    "topP": 0.9
+  }
 }
 ```
 
-### quickReplies
+Do not publish an empty digest or a moving model URL. Measure memory, latency, heat, and answer
+quality on every supported device class.
 
-Quick reply buttons shown after welcome and fallback:
+## Knowledge documents
 
-```json
-[
-  {"title": "Check plans", "value": "What plans do you have?"},
-  {"title": "Find a store", "value": "Where is the nearest store?"}
-]
-```
-
-## Knowledge Base Authoring
-
-### Document Schema (kbdoc-v1)
+Every `kbdoc-v1` record needs `id`, `category`, `title`, `content`, `keywords`, and `tags`.
 
 ```json
 {
   "id": "faq-001",
   "category": "faq",
-  "title": "How to check my balance",
-  "content": "You can check your balance by dialing *123# or through the app...",
-  "keywords": ["balance", "check balance", "remaining credits"],
-  "tags": ["account", "self-service"],
+  "title": "Replace a lost card",
+  "content": "Call the support number immediately. A verified agent can block the card.",
+  "keywords": ["lost card", "stolen card", "block card"],
+  "tags": ["cards", "security"],
   "metadata": {}
 }
 ```
 
-**Required fields:** id, category, title, content, keywords, tags
+Use plain customer language in titles and keywords. Put dates, prices, eligibility rules, and
+emergency instructions in the content because the answer checker compares answer amounts and
+dates with retrieved documents.
 
-**Category** is now a free-form string — use whatever categories make sense for your industry.
-
-**Keywords** are the highest-weighted search terms. Include synonyms and common phrasings.
-
-**Metadata** is optional and category-specific (e.g., price, address, hours).
-
-### Import from CSV
+Import and check content with these commands.
 
 ```bash
-node scripts/kb-import.js data.csv
-```
-
-CSV format: `id,category,title,content,keywords,tags`
-- Keywords and tags are semicolon-separated within the cell
-- Content can contain newlines (wrap in quotes)
-
-### Validate
-
-```bash
+npm run kb:import -- path/to/knowledge.csv
 npm run kb:validate
+npm run kb:studio
 ```
 
-Checks: required fields, no duplicate IDs, non-empty content. Reports category distribution and total size.
+The CSV columns are `id,category,title,content,keywords,tags`. Keywords and tags use semicolons
+inside one cell. See [`docs/kb-studio.md`](docs/kb-studio.md).
 
-## Industry Templates
+## Prompts and safety
 
-Ready-to-use configs in `examples/`:
+`prompts.system` tells a model how to phrase retrieved facts. It must not grant authority to choose
+tools, approve account changes, or invent missing company information. `prompts.welcome`,
+`prompts.fallback`, `prompts.queued`, and `prompts.noModel` control customer-facing fallback copy.
 
-| Industry | Bot Name | KB Entries | Categories |
-|----------|----------|------------|------------|
-| Telco | Alice | 107 | plans, promos, troubleshooting, stores, roaming, payments, faq |
-| Airline | SkyBot | 36 | faq, services, troubleshooting, routes, lounges |
-| Banking | PrimaAssist | 42 | faq, products, atm-locations, security, troubleshooting, fees |
-| Insurance | ShieldBot | 38 | faq, products, troubleshooting, agents |
-| Healthcare | CareBot | 36 | faq, services, locations, insurance, troubleshooting |
-| Electric Utility | PowerBot | 38 | faq, services, troubleshooting, locations, payments |
-| Water Utility | AquaBot | 38 | faq, services, troubleshooting, payments |
+The `safety` section has a literal topic blocklist, per-reason refusal copy, and checks for
+unsourced amounts and dates. These checks are narrow. They do not show factual accuracy or legal
+compliance. Add domain review and adversarial fixtures for every intended audience.
 
-To use a template:
-```bash
-cp examples/banking/airgap.config.json airgap.config.json
-cp examples/banking/knowledge/* src/knowledge/
-node scripts/generate-manifest.js
-```
+See [`docs/safety-layer.md`](docs/safety-layer.md) for exact behavior and limits.
 
-## Defining a New Tool
+## Actions, tools, and the backend
 
-The tool router lets the orchestrator call deterministic backend actions
-when a user query matches a configured keyword set. Tool calls bypass the
-LLM grounding pipeline and feed structured results back as context, so
-prices, balances, and ticket IDs are always exact.
-
-Define tools under the top-level `tools` array in `airgap.config.json`:
+The `actions` array defines customer intents that need a network and their fallback copy. The `tools` array
+maps approved keywords to a known backend method. A model never emits the tool name.
 
 ```json
-"tools": [
-  {
-    "name": "checkBalance",
-    "description": "Check the user's prepaid load balance and active promo",
-    "vertical": "telco",
-    "keywords": ["my balance", "load balance", "current load"],
-    "stateChanging": false,
-    "offlineQueueEligible": false,
-    "backendMethod": "checkBalance",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "msisdn": {"type": "string", "description": "Mobile number"}
-      }
-    }
-  }
-]
-```
-
-Field reference:
-
-| Field                  | Required | Description |
-|------------------------|----------|-------------|
-| `name`                 | yes      | Unique tool identifier — by convention matches the backend method name |
-| `description`          | yes      | Human-readable label shown in the dev panel and tool pill |
-| `vertical`             | no       | Vertical tag — used by docs and the dev panel |
-| `keywords`             | yes      | Whole-word, case-insensitive trigger phrases. First match wins |
-| `stateChanging`        | no       | When `true` and offline, the tool is queued via the offline queue |
-| `offlineQueueEligible` | no       | Defaults to `true` for state-changing tools. Set to `false` to fail closed offline |
-| `backendMethod`        | no       | Backend connector method to invoke. Defaults to `name` |
-| `refusalReason`        | no       | Refusal template to use when execution fails (e.g. `not_medical_advice`) |
-| `parameters`           | no       | JSON schema documenting the arguments — passed to a future function-calling LLM unchanged |
-
-### Wiring the backend
-
-Each tool maps to a method on `BackendConnector`. The default
-`RestBackendConnector` resolves `backendMethod` against
-`backend.endpoints[backendMethod]`:
-
-```json
-"backend": {
-  "type": "rest",
-  "baseUrl": "https://api.example.com",
-  "auth": {"type": "bearer", "token": "REPLACE_ME"},
-  "endpoints": {
-    "checkBalance": "/v1/customer/balance"
-  }
+{
+  "name": "createTicket",
+  "description": "Create a support ticket",
+  "keywords": ["create ticket", "open a case"],
+  "stateChanging": true,
+  "offlineQueueEligible": true,
+  "backendMethod": "createTicket",
+  "vertical": "telco"
 }
 ```
 
-For more complex flows, implement a custom connector under
-`src/services/backendConnector.ts` and register it via
-`registerBackendConnector()`.
+When a state-changing tool is eligible and the device is offline, Airgap stores it in the
+encrypted outbox. A production backend must authenticate the user, authorize the exact action,
+honor the idempotency key, and return a stable result. The reference connector does not replace
+those controls.
 
-### Testing the tool
+Set `backend.type` to `rest`, use an HTTPS `baseUrl`, set `auth.type` to `provider`, and pin at least
+one knowledge-signing public key. Install the access-token provider in application startup code.
+Never place a bearer token or client secret in JSON.
 
-1. Add the tool definition to `airgap.config.json`
-2. `npm test` — `__tests__/tool-router.test.ts` will fail if any keyword
-   doesn't resolve back to the tool
-3. Add a golden case under `__tests__/golden/<vertical>.json` with
-   `expectTool: "<your tool name>"` so future audits catch keyword drift
-4. Enable the Diagnostics panel in Settings (7-tap on App Version) and
-   send a query that should trigger the tool. The Tool pill above the
-   answer bubble names the tool that fired.
+See [`docs/enterprise-integration.md`](docs/enterprise-integration.md),
+[`docs/tool-calling.md`](docs/tool-calling.md), and
+[`docs/sync-architecture.md`](docs/sync-architecture.md).
 
-## White-Label Checklist
+## Privacy, telemetry, and language
 
-Files that reference the brand:
+The `privacy` section controls retention, export, deletion, and the privacy-policy link. The
+`analytics` switch enables event hooks, but a production telemetry sink still needs an explicit
+integration and retention policy. Airgap does not send raw questions or answers by default.
 
-| File | What to Change |
-|------|---------------|
-| `airgap.config.json` | All brand, theme, prompts, actions |
-| `app.json` | name, displayName |
-| `android/app/build.gradle` | applicationId |
-| `android/settings.gradle` | rootProject.name |
-| `android/app/src/main/res/values/strings.xml` | app_name |
-| `android/app/src/main/res/mipmap-*/` | App icons (all densities) |
-| `ios/Podfile` | target name |
-| `ios/*/Info.plist` | CFBundleDisplayName, CFBundleIdentifier |
-| `ios/*/Images.xcassets/AppIcon.appiconset/` | App icons |
-| `assets/images/airgap-avatar.png` | Bot avatar |
-| `assets/images/airgap-logo.png` | Brand logo |
-| `src/knowledge/*.json` | Knowledge base content |
+The `locale` object controls language, region, currency, date format, and number format. The
+`i18n.strings` map overrides named interface strings. A translated interface does not mean that
+language reviewers approved the knowledge documents or model.
 
-The `scripts/setup.sh` wizard handles most of these automatically.
+## Native identity and assets
+
+The scaffolder renames the common React Native, Android, and iOS identifiers. Review these paths
+before signing a store build.
+
+| Path                                             | Purpose                         |
+| ------------------------------------------------ | ------------------------------- |
+| `app.json`                                       | React Native name               |
+| `android/app/build.gradle`                       | Android application ID          |
+| `android/app/src/main/res/values/strings.xml`    | Android display name            |
+| `android/app/src/main/res/mipmap-*`              | Android icons                   |
+| `ios/Airgap.xcodeproj/project.pbxproj`           | iOS product and bundle settings |
+| `ios/Airgap/Info.plist`                          | iOS display and privacy values  |
+| `ios/Airgap/Images.xcassets/AppIcon.appiconset/` | iOS icons                       |
+| `assets/images/`                                 | In-app logo and assistant image |
+
+Set your own signing team, bundle identifiers, privacy disclosures, and store metadata. Do not
+reuse the sample identity for a customer build.
+
+## Check a customization
+
+```bash
+npm run docs:check
+npm run kb:validate
+npm run journeys
+npm run lint
+npx tsc --noEmit
+npm test -- --runInBand
+```
+
+Run both native debug builds after configuration fields, native files, dependencies, or platform
+providers change. Record the changed journey when interface copy or example content changes.

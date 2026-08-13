@@ -6,10 +6,21 @@ minor releases.
 
 ## [Unreleased]
 
+### Added
+
+- Apple Foundation Models and Android ML Kit Prompt API adapters behind one provider policy.
+- Provider readiness, fallback reasons, model identity, and answer provenance in onboarding,
+  settings, and chat.
+- A local documentation-link check that runs in CI.
+- Recording metadata for provider, model, evidence class, capture command, and reviewed loops.
+
 ### Changed
 
-- Prepared version 0.2.0 across the mobile apps, root workspace, and
-  `create-airgap-bot` package.
+- Kept demo-mode provider status on the deterministic document-answer path.
+- Limited the downloaded-model engine field to the built `llama.cpp` runtime.
+- Updated public setup, customization, examples, integration, recording, and contributor guidance
+  to match the provider-based runtime.
+- Prepared version 0.2.0 across the mobile apps, root workspace, and `create-airgap-bot` package.
 
 ## [0.2.0] release candidate
 

@@ -15,9 +15,11 @@ release evidence exists.
 - Settings shows exact provider order, readiness, OS, model identity, and policy
   status.
 - Answer cards and audit records keep provider and model identity.
-- Fresh iOS simulator footage covers provider setup through a cited demo answer.
+- Fresh Android emulator and iOS simulator footage covers the deterministic offline path through a
+  cited answer without implying physical-device model evidence.
 - Recording schema v2 keeps provider, model, device, OS, evidence class, capture
   command, media facts, and loop review for all ten GIFs.
+- Public docs use checked local links and separate current guidance from historical plans.
 - Android and iOS native bridges compile in debug builds.
 - Existing knowledge signing, encrypted storage, authenticated network access,
   deterministic actions, and encrypted outbox behavior stay in the same app.

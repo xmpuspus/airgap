@@ -1,23 +1,13 @@
-# Safety layer
+# Airgap checks model text against approved documents
 
-Every query goes through a topic blocklist before search. Every LLM answer
-goes through a grounding check before display. This document describes
-both paths, the failure modes they protect against, and how to configure
-them per vertical.
+Airgap checks every question against a literal topic blocklist before search. It checks each model
+answer against the retrieved documents before display. These rules catch a small set of known
+errors. They do not show that an answer is correct, safe, or compliant.
 
-## Why this exists
+## The topic blocklist runs before search
 
-Gemma 4 E2B scores 24.5 on τ2-bench (Retail). Left to its own, it will
-happily invent a price, make up a policy expiration, or confidently
-diagnose a user's rash. None of those are acceptable in a production
-support product. The safety layer is the fail-closed backstop that makes
-the other 95% of correct answers trustworthy.
-
-## Pre-flight: topic blocklist
-
-`checkBlocklist(query)` runs before search, before tool routing, and
-before any LLM call. It walks `config.safety.topicBlocklist` and returns
-a `RefusalReason` on the first whole-word match.
+`checkBlocklist(query)` reads `config.safety.topicBlocklist` before search, tool routing, or a model
+call. It returns the first whole-word match without regard to letter case.
 
 ```json
 {
@@ -32,75 +22,43 @@ a `RefusalReason` on the first whole-word match.
 }
 ```
 
-Syntax:
+A plain phrase uses the `blocked_topic` reason. A value such as
+`not_medical_advice:diagnose` uses the text before the first separator as the refusal reason. Known
+reasons include `blocked_topic`, `not_medical_advice`, `not_financial_advice`,
+`not_legal_advice`, `low_confidence`, `ungrounded_answer`, and `state_changing_offline`.
 
-- `"phrase"` — blocks with default reason `blocked_topic`
-- `"reason:phrase"` — blocks with the named reason, which picks a
-  specific refusal template. Known reasons are `blocked_topic`,
-  `not_medical_advice`, `not_financial_advice`, `not_legal_advice`,
-  `low_confidence`, `ungrounded_answer`, `state_changing_offline`.
+Whole-word matching means `sue` blocks `can I sue you` but does not block `suede case`. The safety
+tests cover these boundaries.
 
-Matching is whole-word and case-insensitive. The pattern compiles once
-per check, so blocklists with hundreds of entries are still cheap (O(n)
-in blocklist size, which is fine for small lists).
+## Grounding checks run after a provider replies
 
-The test `__tests__/safety-layer.test.ts` asserts these edge cases:
+`validateAnswer(text, retrievedDocs)` runs two checks before an answer reaches chat.
 
-- `"sue"` blocks `"can I sue you"` but not `"suede case"`
-- `"political"` does not block `"apolitical"` (word boundary)
-- `"diagnose"` blocks `"diagnose me with a rash"`
+First, an empty retrieval returns `low_confidence`. The current `confidenceThreshold` value appears
+in the audit record but does not reject a non-empty retrieval. Do not treat that setting as a
+quality threshold.
 
-## Post-flight: confidence + grounding
+Second, `checkGrounding(answer, retrievedDocs)` looks for unsourced currency amounts and dates.
+Each currency-tagged number and each recognized date in the answer must appear in the retrieved
+text. The amount check handles currency symbols and common currency codes. The date check handles
+ISO dates, slash-form dates, and English month-and-day forms.
 
-After the LLM (or tool router) produces an answer, `validateAnswer(text,
-retrievedDocs)` gates whether that answer reaches the user.
+Set `safety.groundingRules.forbidUnsourcedAmounts` or
+`safety.groundingRules.forbidUnsourcedDates` to `false` only after a domain review. These regular
+expressions do not catch unsupported names, procedures, eligibility rules, or ordinary numbers.
 
-Two checks run in order:
+When a check fails, the orchestrator replaces the answer with the matching refusal text. The logger
+records the rejection reason and leaves out the raw rejected answer by default.
 
-### Confidence check
+## Refusal text follows a fixed order
 
-If `retrievedDocs.length === 0`, the verdict is `low_confidence` and the
-safety layer returns the refusal template for that reason (by default:
-"I don't have reliable information on that. Please call {{hotline}}…").
+Airgap looks for refusal text in this order.
 
-The config exposes `safety.confidenceThreshold`, a numeric floor that
-future releases will use to gate answers even when docs are retrieved.
-Today the threshold only affects the confidence score reported in the
-audit block; any non-empty retrieval passes.
+1. The operator value in `config.safety.refusalTemplates[reason]`
+2. The locale value in `config.i18n.strings["refusal." + reason]`
+3. The built-in English text in `safetyLayer.ts`
 
-### Grounding check
-
-`checkGrounding(answer, retrievedDocs)` runs two regex passes:
-
-- **Unsourced currency amounts** — any currency-tagged number in the
-  answer must also appear in the retrieved corpus. So `"The plan is PHP
-  299/month"` is allowed if the KB mentions `299`, but `"Pay $9999 now"`
-  is rejected if `9999` is not in the retrieved docs.
-- **Unsourced dates** — any `YYYY-MM-DD`, `MM/DD/YYYY`, or `Month DD`
-  date in the answer must also appear in the corpus.
-
-Both checks can be disabled per-config via
-`safety.groundingRules.forbidUnsourcedAmounts` and
-`forbidUnsourcedDates`. Tests cover the positive and negative cases in
-`__tests__/safety-layer.test.ts`.
-
-When either check fails, the verdict is `ungrounded_answer` and the
-orchestrator swaps the answer for the configured refusal template. The
-actual LLM output is logged as a `warn` so operators can see what was
-rejected without losing the original text.
-
-## Per-vertical refusal templates
-
-Refusal copy is resolved in this order:
-
-1. `config.safety.refusalTemplates[reason]` — operator override
-2. `config.i18n.strings["refusal." + reason]` — locale-specific
-3. Built-in English fallback in `safetyLayer.ts`
-
-Every template is passed through the same `interpolate()` helper as the
-rest of the config, so `{{brandName}}` and `{{hotline}}` work.
-
-Example from the healthcare vertical config:
+The `interpolate()` helper replaces `{{brandName}}` and `{{hotline}}` in all three sources.
 
 ```json
 {
@@ -112,27 +70,20 @@ Example from the healthcare vertical config:
 }
 ```
 
-## Adversarial fixtures
+## Adversarial fixtures keep literal rules in sync
 
-`__tests__/golden/adversarial.json` ships 10 seeded attack prompts per
-vertical (70 total). Each case has an expected outcome: `refusal`, `tool`,
-`fallback`, or `ungrounded_answer`. The
-`__tests__/adversarial-coverage.test.ts` suite asserts that every
-"refusal" case in a vertical ties to a real blocklist phrase in that
-vertical's config file. Adding a new refusal expectation without adding
-a matching blocklist phrase fails the test — adversarial expectations
-and live policy cannot drift.
+`__tests__/golden/adversarial.json` has 10 prompts for each of the seven industry fixtures.
+Each of the 70 cases expects `refusal`, `tool`, `fallback`, or `ungrounded_answer`.
+`__tests__/adversarial-coverage.test.ts` checks that every expected refusal maps to a real phrase in
+that fixture's blocklist.
 
-## What the safety layer does NOT do
+These cases cover known strings. They are regression tests and do not measure broad model safety.
 
-- It does not do semantic hallucination detection. A fluent but wrong
-  answer that does not mention dollar amounts or dates will pass.
-- It does not protect against prompt injection in the KB content itself.
-  KB authors are trusted; the sync signature check guards the bundle in
-  transit.
-- It does not protect against a compromised backend. If the `executeTool`
-  backend returns wrong data, the safety layer only verifies that the
-  LLM paraphrased it faithfully — it does not verify the data itself.
+## Operators own the remaining risks
 
-These are known gaps, not bugs. Mitigations are operational (monitor
-telemetry for refusal spikes, audit KB updates, rotate BFF signing keys).
+The current layer does not detect every false statement, inspect knowledge text for prompt
+injection, or check whether a backend returned correct account data. A signed bundle protects
+published bytes from later changes. It does not approve the author or the content.
+
+Before customer use, add reviewed content, domain tests, monitored refusals, signed release
+records, backend authorization, escalation paths, incident handling, and provider rollback.

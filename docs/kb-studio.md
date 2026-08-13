@@ -6,25 +6,23 @@ knowledge base, then chains into the journey runner so they can see
 their answers behave end-to-end.
 
 It uses the same parser and validator that `kb-validate` and `kb-import`
-use, so anything that flies through the studio also flies through the
-existing CI checks.
+use, so the existing CI checks use the same rules as the studio.
 
-## When to use it
+## KB Studio jobs
 
-Reach for this when:
+Use the studio for these jobs.
 
 - You want to add or refresh KB content without writing JSON by hand.
-- You are onboarding a non-engineer to the KB authoring loop.
-- You want a fast feedback loop: "did this query land on the right
-  doc?" without booting the mobile app.
+- You teach a non-engineer the KB authoring loop.
+- You want to check whether a query finds the right document without booting the mobile app.
 
-If you only need to validate an existing KB directory, run
+If you only need to check an existing KB directory, run
 `npm run kb:validate` instead. If you have a clean CSV and want a
 non-interactive import, use `npm run kb:import path/to/file.csv`.
 
 ## CSV format
 
-The studio expects a CSV with these columns (case-insensitive header):
+The studio expects the following case-insensitive CSV header.
 
 ```
 id,category,title,content,keywords,tags
@@ -80,23 +78,19 @@ directly.
 
 ## Reset
 
-If you overwrote a vertical's KB and want to roll back, the recordings
-in git let you:
+Make a copy before overwriting a fixture. If you need the checked-in version and have no other
+changes in that directory, inspect the diff and restore only the named path.
 
 ```
-git checkout -- examples/<industry>/knowledge
+git diff -- examples/<industry>/knowledge
+git restore --source=HEAD -- examples/<industry>/knowledge
 ```
 
 ## Programmatic use
 
 The shared parser, validator, and exporter live at `scripts/lib/kb.js`.
-Other tooling can import them directly:
+Other tooling can import them directly.
 
 ```js
-const {
-  csvToDocs,
-  validateDocs,
-  splitByCategory,
-  exportToDir,
-} = require('./scripts/lib/kb');
+const {csvToDocs, validateDocs, splitByCategory, exportToDir} = require('./scripts/lib/kb');
 ```

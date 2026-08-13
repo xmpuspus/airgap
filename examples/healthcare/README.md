@@ -1,38 +1,37 @@
-# CareFirst Medical — Airgap Template
+# CareFirst Medical fixture
 
-Offline-first patient services chatbot for a healthcare provider.
+CareFirst Medical and CareBot are fictional. This template tests offline administrative answers
+for appointments, departments, locations, insurance, billing, and patient-portal problems.
 
-## Quick Start
+## Run the fixture
 
-1. Copy this directory into your Airgap project
-2. Point your app config to `airgap.config.json`
-3. The model (Gemma 4 E2B Q3_K_S, ~2.4 GB) downloads on first launch
+```bash
+npx create-airgap-bot carefirst-help --template healthcare
+cd carefirst-help
+npm install
+npm run android
+```
 
-## What's Included
+The app starts in deterministic `demo` mode. It does not access a patient record, make a diagnosis,
+or download a model.
 
-- `airgap.config.json` — Bot configuration, branding, prompts, and actions
-- `knowledge/faq.json` — 26 entries covering appointments, portal, billing, privacy, and more
-- `knowledge/services.json` — 8 departments: primary care, urgent care, pediatrics, OB/GYN, dental, vision, mental health, pharmacy
-- `knowledge/locations.json` — 6 clinic locations with hours, specialties, and contact info
-- `knowledge/insurance.json` — 6 entries covering accepted plans, Medicare, Medicaid, copays, and prior authorization
-- `knowledge/troubleshooting.json` — 4 entries for common patient issues
+## Included data and actions
 
-## Actions (require online)
+- 50 local documents across FAQ, services, locations, insurance, and troubleshooting
+- 5 online action definitions for appointments, refills, test results, billing, and referrals
+- 2 deterministic tools for appointment requests and medication lookup
+- 10 blocked-topic fixtures and medical-advice refusal copy
 
-| Action | Description |
-|--------|-------------|
-| `appointment_booking` | Schedule an appointment |
-| `prescription_refill` | Request a prescription refill |
-| `test_results` | Check lab/test results |
-| `billing_inquiry` | Ask about bills and payments |
-| `referral_request` | Request a specialist referral |
+[View the checked emulator recording](../../demo/industry-healthcare.gif).
 
-## Safety
+## Operator work before a pilot
 
-The system prompt includes a mandatory medical advice disclaimer. CareBot will never provide diagnoses or treatment recommendations and always directs patients to consult a healthcare professional.
+- Limit the product to reviewed administrative support unless clinical governance approves more.
+- Replace every provider, service, location, insurance, billing, and emergency instruction.
+- Put patient data and actions behind healthcare identity, consent, authorization, and audit rules.
+- Add emergency escalation that works without a model and does not delay urgent care.
+- Complete privacy, accessibility, retention, medical-device, and local healthcare review.
 
-## Customization
-
-- Edit `airgap.config.json` to change branding, colors, and prompts
-- Add or modify JSON files in `knowledge/` to update the knowledge base
-- All KB entries follow the `kbdoc-v1` schema
+Google's ML Kit GenAI terms prohibit clinical practice and medical advice and prohibit clients
+directed to people under 18. Do not enable the Android system provider for a conflicting audience
+or use. The sample does not claim HIPAA or other compliance.

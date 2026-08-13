@@ -1,35 +1,36 @@
-# SkyPeak Airlines — Airgap Template
+# SkyPeak Airlines fixture
 
-Offline-first customer support chatbot for a full-service airline.
+SkyPeak Airlines and SkyBot are fictional. This template tests offline answers for baggage,
+check-in, routes, services, lounges, loyalty, and common booking problems.
 
-## Quick Start
+## Run the fixture
 
-1. Copy this directory into your Airgap project
-2. Point your app config to `airgap.config.json`
-3. The model (Gemma 4 E2B Q3_K_S, ~2.4 GB) downloads on first launch
+```bash
+npx create-airgap-bot skypeak-help --template airline
+cd skypeak-help
+npm install
+npm run android
+```
 
-## What's Included
+The app starts in deterministic `demo` mode. It does not download a model or contact an airline.
 
-- `airgap.config.json` — Bot configuration, branding, prompts, and actions
-- `knowledge/faq.json` — 27 entries covering baggage, check-in, cancellations, loyalty, and more
-- `knowledge/services.json` — 8 entries for cabin classes, loyalty tiers, lounge access, and insurance
-- `knowledge/troubleshooting.json` — 5 entries for common app and booking issues
-- `knowledge/routes.json` — 8 popular routes with flight times and fares
-- `knowledge/lounges.json` — 6 airport lounge locations with amenities
+## Included data and actions
 
-## Actions (require online)
+- 54 local documents across FAQ, services, troubleshooting, routes, and lounges
+- 6 online action definitions for flight status, booking changes, lost baggage, upgrades, refunds,
+  and complaints
+- 2 deterministic tools for flight-status lookup and callback requests
+- 8 blocked-topic fixtures and airline-specific refusal copy
 
-| Action | Description |
-|--------|-------------|
-| `flight_status` | Check real-time flight status |
-| `booking_change` | Modify an existing booking |
-| `lost_baggage` | Report lost or delayed baggage |
-| `upgrade_request` | Request a cabin upgrade |
-| `refund_request` | Submit a refund request |
-| `complaint` | File a service complaint |
+[View the checked emulator recording](../../demo/industry-airline.gif).
 
-## Customization
+## Operator work before a pilot
 
-- Edit `airgap.config.json` to change branding, colors, and prompts
-- Add or modify JSON files in `knowledge/` to update the knowledge base
-- All KB entries follow the `kbdoc-v1` schema
+- Replace every route, fare, policy, airport service, and lounge record.
+- Connect live flight status, booking, refund, and baggage systems behind authenticated APIs.
+- Add account and booking authorization for every customer-specific action.
+- Add disruption, accessibility, dangerous-goods, child-travel, and escalation procedures.
+- Test offline behavior when a schedule or disruption notice becomes stale.
+
+The sample can explain fictional policy. It cannot read a live flight, change a booking, or
+approve a refund without an operator integration.

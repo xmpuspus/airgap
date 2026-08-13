@@ -12,6 +12,12 @@ test('installs FFmpeg before validating release recordings', () => {
   expect(validation).toBeGreaterThan(install);
 });
 
+test('checks local documentation links in CI', () => {
+  const workflow = fs.readFileSync(path.join(root, '.github', 'workflows', 'ci.yml'), 'utf8');
+
+  expect(workflow).toContain('npm run docs:check');
+});
+
 test('declares the Ruby nkf compatibility gem that provides kconv', () => {
   const gemfile = fs.readFileSync(path.join(root, 'Gemfile'), 'utf8');
 

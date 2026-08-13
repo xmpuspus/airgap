@@ -1,30 +1,35 @@
-# Water Utility Template
+# AquaFlow Water fixture
 
-Pre-built Airgap configuration for a water utility company (AquaFlow Water).
+AquaFlow Water and AquaBot are fictional. This template tests offline answers for water quality,
+leaks, billing, meters, conservation, drought rules, service status, and payment options.
 
-## What's Included
+## Run the fixture
 
-- `airgap.config.json` — Full bot configuration with blue/teal theme, 5 actions, water safety prompts
-- `knowledge/faq.json` — 21 FAQ entries covering water quality, billing, meters, pressure, conservation, drought, lead, sewer, and more
-- `knowledge/services.json` — 6 service entries: Residential (tiered rates), Commercial, Irrigation, Fire Line, Conservation Rebates, Low-Income Assistance
-- `knowledge/troubleshooting.json` — 4 troubleshooting guides: no water, low pressure, discolored water, high bill / leak detection
-- `knowledge/payments.json` — 5 payment methods: online, AutoPay, phone, mail, in-person
+```bash
+npx create-airgap-bot aquaflow-help --template water-utility
+cd aquaflow-help
+npm install
+npm run android
+```
 
-## Quick Start
+The app starts in deterministic `demo` mode. It does not report a real leak or download a model.
 
-1. Copy this directory to the project root:
-   ```bash
-   cp -r examples/water-utility/airgap.config.json ./airgap.config.json
-   cp -r examples/water-utility/knowledge/ ./knowledge/
-   ```
-2. Edit `airgap.config.json` to replace brand name, hotline, and theme colors with your own
-3. Update knowledge base JSON files with your actual rates, service areas, and policies
-4. Build the app
+## Included data and actions
 
-## Customization Notes
+- 36 local documents across FAQ, services, troubleshooting, and payments
+- 5 online action definitions for balances, leaks, service requests, quality tests, and connections
+- 3 deterministic tools for outage reports, bill status, and meter-read scheduling
+- 6 blocked-topic fixtures and water-safety refusal copy
 
-- **Boil water advisories**: The system prompt includes instructions to always stress boiling water for 1 minute during advisories. Keep this safety guidance.
-- **Tiered rates**: Residential water uses a 3-tier conservation rate structure. Replace with your actual tariff.
-- **Sewer charges**: The FAQ explains sewer charges as 90% of water usage. Adjust to match your municipality's formula.
-- **Drought stages**: The FAQ includes a 4-stage drought restriction framework. Customize stages and penalties to match your local regulations.
-- **Actions**: The `leak_report` action is critical for water utilities. Connect it to your work order management system when switching from `mock` to `rest` backend.
+[View the checked emulator recording](../../demo/industry-water.gif).
+
+## Operator work before a pilot
+
+- Replace every rate, service rule, water-quality instruction, payment method, and drought stage.
+- Put leak, service, and meter routes behind account, location, priority, and duplicate checks.
+- Keep boil-water and emergency copy available without a model and review it with water operations.
+- Add stale-data rules for advisories, outages, restrictions, and restoration estimates.
+- Review public-health, accessibility, privacy, retention, and local utility rules.
+
+The sample does not issue a public-health advisory, dispatch a crew, calculate a real bill, or show
+regulatory compliance.

@@ -1,4 +1,7 @@
-import {readConfiguredProviderCapabilities} from '../src/services/inference/providerReadiness';
+import {
+  readConfiguredProviderCapabilities,
+  selectProviderEntriesForMode,
+} from '../src/services/inference/providerReadiness';
 import type {
   InferenceCapabilities,
   InferenceProvider,
@@ -119,4 +122,17 @@ test('shows a provider below the configured OS floor as unavailable', async () =
       reason: 'unsupported_os',
     }),
   ]);
+});
+
+test('shows only document answers when demo mode owns the active provider chain', () => {
+  const entries: ProviderPolicyEntry[] = [
+    {id: 'apple-foundation-models', enabled: true, priority: 0, platform: 'ios'},
+    {id: 'llama-rn', enabled: true, priority: 10, platform: 'all'},
+    {id: 'demo', enabled: true, priority: 30, platform: 'all'},
+  ];
+
+  expect(selectProviderEntriesForMode('demo', entries)).toEqual([
+    {id: 'demo', enabled: true, priority: 30, platform: 'all'},
+  ]);
+  expect(selectProviderEntriesForMode('offline-only', entries)).toEqual(entries);
 });

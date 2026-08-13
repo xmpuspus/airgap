@@ -12,7 +12,7 @@ import type {InferenceProviderId} from '../services/inference/types';
 
 const HEX_COLOR = /^#[0-9A-Fa-f]{6}$/;
 const URL_PATTERN = /^https?:\/\/.+/;
-const ALLOWED_PROVIDERS = ['llama.cpp', 'execu-torch', 'core-ml', 'onnx', 'cloud'];
+const ALLOWED_PROVIDERS = ['llama.cpp'];
 const ALLOWED_INFERENCE_PROVIDERS: ReadonlyArray<InferenceProviderId> = [
   'apple-foundation-models',
   'android-aicore',

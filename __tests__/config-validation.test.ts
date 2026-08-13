@@ -58,6 +58,23 @@ describe('validateConfig', () => {
     expect(result.errors.some(e => e.includes('model.provider'))).toBe(true);
   });
 
+  test.each(['execu-torch', 'core-ml', 'onnx', 'cloud'])(
+    'rejects unimplemented downloaded-model provider %s',
+    provider => {
+      const cfg = makeValidConfig({
+        model: {
+          provider: provider as AirgapConfig['model']['provider'],
+          url: 'https://x.com/m.gguf',
+          filename: 'm.gguf',
+        },
+      });
+
+      expect(validateConfig(cfg).errors).toContain(
+        `model.provider must be one of [llama.cpp], got "${provider}"`,
+      );
+    },
+  );
+
   test('invalid model URL', () => {
     const cfg = makeValidConfig({
       model: {provider: 'llama.cpp', url: 'not-a-url', filename: 'm.gguf'},

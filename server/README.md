@@ -5,6 +5,10 @@ It serves knowledge and model metadata, returns signed knowledge bytes, and
 accepts bounded telemetry batches. Use it for local evaluation and as a small
 contract reference for a production service.
 
+It does not contain account lookup, ticket, plan, outage, generic action, or cloud-generation
+routes. [`docs/enterprise-integration.md`](../docs/enterprise-integration.md) defines the mobile
+contracts for those operator-owned endpoints.
+
 ## Four routes need a bearer token
 
 | Method | Route                      | Purpose                            |

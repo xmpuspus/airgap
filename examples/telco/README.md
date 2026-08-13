@@ -1,31 +1,34 @@
-# Telecom Template
+# ACME Telecom fixture
 
-Customer support bot for a mobile telecommunications company.
+ACME Telecom and Alice are fictional. This is the default template and tests offline answers for
+plans, promotions, roaming, SIM setup, stores, payments, and network troubleshooting.
 
-## What's Included
-
-- **105 KB entries** across 7 files
-- Plans: prepaid, postpaid, fiber broadband (15 plans with PHP pricing)
-- Promos: data bundles, combo packs, student offers
-- Troubleshooting: no signal, slow data, WiFi, APN settings, SIM registration
-- Stores: 10 service center locations
-- Roaming: 3 zones (ASEAN, Asia-Pacific, Rest of World) with packages
-- Payments: GCash, Maya, 7-Eleven, bank transfer, auto-debit, in-store
-
-## Actions (require online)
-
-| Action | Keywords | What it does |
-|--------|----------|-------------|
-| balance_check | "my balance", "my bill" | Check prepaid/postpaid balance |
-| plan_change | "change my plan", "upgrade plan" | Submit plan change request |
-| ticket_create | "create ticket", "file complaint" | Create support ticket |
-| outage_check | "outage status", "service outage" | Check network outage status |
-| account_action | "cancel my plan", "disconnect" | Account modifications |
-
-## Deploy
+## Run the fixture
 
 ```bash
-cp examples/telco/airgap.config.json airgap.config.json
-cp examples/telco/knowledge/*.json src/knowledge/
-npm run build
+npx create-airgap-bot acme-help --template telco
+cd acme-help
+npm install
+npm run android
 ```
+
+The app starts in deterministic `demo` mode. It does not access an account or download a model.
+
+## Included data and actions
+
+- 105 local documents across FAQ, plans, promotions, roaming, stores, payments, and troubleshooting
+- 5 online action definitions for balance, plan changes, tickets, outages, and account changes
+- 5 deterministic tools for balance, outage, ticket, add-on, and callback routes
+- 7 blocked-topic fixtures and account-action refusal copy
+
+[View the checked emulator recording](../../demo/industry-telco.gif).
+
+## Operator work before a pilot
+
+- Replace every plan, price, promotion, address, roaming rate, and support instruction.
+- Connect account, billing, network, order, and ticket systems behind an operator service.
+- Add identity and authorization for balance, plan, SIM, and account work.
+- Define stale-data rules for promotions, outages, roaming, eligibility, and store hours.
+- Add fraud, child-safety, accessibility, privacy, complaint, and human escalation review.
+
+The sample cannot read a real balance, change a plan, activate service, or report a live outage.

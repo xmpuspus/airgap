@@ -41,7 +41,12 @@ The CLI does five operations.
 | Telco            | `telco`            | Plans, roaming, troubleshooting      |
 | Water utility    | `water-utility`    | Outages, billing, conservation       |
 
-The configuration contract is in [`airgap.schema.json`](https://github.com/xmpuspus/airgap/blob/main/airgap.schema.json). Edit `airgap.config.json` in the new project to change its brand, model, remote services, quick replies, and operating mode.
+The configuration contract is in
+[`airgap.schema.json`](https://github.com/xmpuspus/airgap/blob/main/airgap.schema.json). Edit
+`airgap.config.json` in the new project to change its brand, downloaded model, provider policy,
+remote services, quick replies, and operating mode. See the
+[`CUSTOMIZATION.md`](https://github.com/xmpuspus/airgap/blob/main/CUSTOMIZATION.md) guide before
+changing provider or backend fields.
 
 ## CLI options control the first project
 

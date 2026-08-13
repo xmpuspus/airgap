@@ -1,147 +1,93 @@
-# Tool calling
+# Deterministic tools and customer actions
 
-Airgap's tool calling is a **deterministic keyword router** that feeds
-structured backend results into the LLM as grounded context. It is
-deliberately NOT a native function-calling implementation that trusts the
-model to emit structured tool calls. This document explains why and how.
+Airgap chooses backend tools with set keyword rules. A model does not emit a tool name,
+tool input, or authorization decision. This keeps account actions separate from answer wording and
+makes the action path testable without a model.
 
-## Decision: keyword routing, not LLM-emitted function calls
+## Tool choice happens before generation
 
-Three factors drove the choice:
+`processMessage()` follows this order.
 
-1. **Gemma 4 E2B τ2-bench (Retail) = 24.5.** Multi-step agentic reasoning
-   is the benchmark on which E2B performs worst among its peers. Trusting
-   the model to pick the right tool, emit syntactically valid JSON, and
-   thread tool results back into a coherent answer is betting the
-   reliability of the entire product on its weakest capability.
-2. **llama.rn 0.12.0-rc.3 function-calling support is uncertain.** The
-   llama.rn release notes do not highlight first-class structured tool
-   calling for Gemma 4. Chat-template-dependent tool invocation in the
-   GGUF ecosystem is a moving target. We could layer a prompt-based JSON
-   parser on top, but that adds failure modes (truncated JSON,
-   hallucinated tool names, malformed args) without addressing the τ2
-   accuracy problem.
-3. **Determinism is cheap.** Most support tool calls are triggered by
-   recognizable phrases: "what is my balance", "report outage",
-   "schedule callback". A keyword router costs O(tools × keywords) per
-   query and never misses a well-known trigger.
+1. Check the safety blocklist.
+2. Match the first listed whole-word tool keyword.
+3. Run the known backend method, queue it if policy permits, or fail closed.
+4. Pass a successful structured result to the active answer provider for wording.
+5. Check sourced amounts and dates before display.
 
-The keyword router is the first stop in `processMessage`. If it matches,
-the tool executes against the `BackendConnector` interface and the
-structured result is passed to the LLM as a synthesized KBDocument whose
-`content` is the tool's JSON output. The LLM only paraphrases; it does
-not get to decide whether to call a tool, or which one.
+If no answer provider is ready, Airgap displays the tool's prepared summary. It does not lose the
+backend result because a model is absent.
 
-## Anatomy of a tool definition
+## Tool definition
 
 ```json
 {
   "name": "checkBalance",
-  "description": "Look up the caller's account balance, data remaining, and active promo",
-  "keywords": [
-    "my balance",
-    "my bill amount",
-    "my data usage"
-  ],
-  "offlineQueueEligible": true,
+  "description": "Check the current account balance",
+  "keywords": ["my balance", "bill amount", "data usage"],
+  "offlineQueueEligible": false,
   "stateChanging": false,
   "vertical": "telco",
   "backendMethod": "checkBalance"
 }
 ```
 
-- **`name`**: unique identifier used for audit logs, telemetry, and
-  offline-queue routing.
-- **`description`**: shown in the dev panel and in docs. Also used as
-  the queued-action label when the tool is offline-queued.
-- **`keywords`**: whole-word matches select this tool. Order matters —
-  the first matching tool wins, so put more specific tools above more
-  generic ones.
-- **`offlineQueueEligible`**: if `true`, state-changing calls get
-  queued when offline instead of failing. If `false`, the tool returns
-  a `state_changing_offline` refusal when offline.
-- **`stateChanging`**: annotates whether the tool mutates remote state.
-  Purely informational today; will gate confirmation prompts in a
-  future release.
-- **`vertical`**: used for the dev panel grouping. Does not affect
-  routing.
-- **`backendMethod`**: the `BackendConnector` method to invoke. Defaults
-  to `name`. See `src/services/backendConnector.ts` for the method
-  catalog.
+| Field                  | Meaning                                                         |
+| ---------------------- | --------------------------------------------------------------- |
+| `name`                 | Stable audit and outbox identifier                              |
+| `description`          | Human label for status and receipts                             |
+| `keywords`             | Whole-word phrases. The first listed match wins                 |
+| `offlineQueueEligible` | Allows a state-changing call into the outbox when offline       |
+| `stateChanging`        | Marks a call that can change remote state                       |
+| `vertical`             | Optional fixture or diagnostics group                           |
+| `backendMethod`        | Method on `BackendConnector`. The default is `name`             |
+| `refusalReason`        | Optional safe refusal category                                  |
+| `parameters`           | Documentation schema. The current router does not model-fill it |
 
-## Tool result flow
+Place specific keywords before broad ones. Add tests for similar phrases and words that must not
+match. The router uses whole-word, case-insensitive regular expressions.
 
+## Backend methods
+
+The shipped connectors expose these typed methods.
+
+| Method                                   | Purpose                    |
+| ---------------------------------------- | -------------------------- |
+| `checkBalance(accountId)`                | Read an account summary    |
+| `changePlan(accountId, planId, options)` | Request a plan change      |
+| `createTicket(description, options)`     | Create a support ticket    |
+| `checkOutage(location, options)`         | Read service status        |
+| `executeAction(type, params, options)`   | Operator-defined extension |
+
+The mock connector returns fictional development data. The REST connector sends requests to an
+operator service and adds an idempotency key when the outbox supplies one.
+
+## Offline behavior
+
+| State                                   | Result                                             |
+| --------------------------------------- | -------------------------------------------------- |
+| Read-only tool while online             | Call backend and display the result                |
+| State-changing, queue eligible, offline | Store in encrypted outbox and show a receipt       |
+| Tool marked not queue eligible, offline | Show a network-needed failure                      |
+| Backend call fails                      | Show a retry or hotline response without fake data |
+
+Queue eligibility is an operator safety decision. Do not queue work whose price, consent,
+identity, or urgency can change while the device is offline.
+
+## Add a tool
+
+1. Add the definition under `tools` in `airgap.config.json`.
+2. Add or map the method in `BackendConnector`, `MockBackendConnector`, and the production adapter.
+3. Add keyword, near-match, offline, and backend-failure tests.
+4. Add an industry journey with the expected `expectTool` value.
+5. Check the receipt, outbox, retry, removal, and answer provenance in the app.
+6. Document the server authorization and idempotency rule.
+
+Run these checks.
+
+```bash
+npm test -- --runInBand __tests__/tool-router.test.ts __tests__/offline-queue.test.ts
+npm run journeys
 ```
-user query
-    |
-    v
-findToolForQuery  -- match by keyword
-    |
-    v
-executeTool       -- call backend or queue if offline
-    |
-    v
-formatToolResultForLLM  -- build TOOL RESULT: block
-    |
-    v
-buildUserMessage  -- synthesize pseudo-KBDocument
-    |
-    v
-routeGeneration   -- local or cloud LLM paraphrases
-    |
-    v
-validateAnswer    -- grounding check against the tool result
-    |
-    v
-user-facing answer
-```
 
-Key points:
-
-- The tool result is injected as a synthetic KBDocument with
-  `id: "tool:${toolName}"`. The grounding check will then verify that
-  any numbers or dates the LLM mentions are present in the tool result.
-  If the tool returns `balance: "PHP 127.50"` and the LLM says
-  `"You owe PHP 500"`, that answer is rejected.
-- State-changing tools called offline go through `offlineQueue.enqueue`
-  with the `tool_call` type and the tool name stashed in `toolName`.
-  On reconnect, `processQueue` executes them against the real backend.
-- Tool latency is recorded for the dev panel p50/p95.
-
-## Backend method catalog
-
-The shipped `MockBackendConnector` and `RestBackendConnector` cover the
-following methods. Verticals reuse them by pointing `backendMethod` at
-the right one.
-
-| Method | Purpose | Used by |
-|---|---|---|
-| `checkBalance(accountId)` | Account balance lookup | telco, banking, insurance (policy status via alias) |
-| `changePlan(accountId, planId)` | Plan change / add-on activation | telco |
-| `createTicket(description)` | Open a support ticket / claim / dispute | telco, insurance, banking |
-| `checkOutage(location?)` | Service outage lookup | telco, electric, water |
-| `executeAction(type, params)` | Catch-all for tools without a dedicated method | any |
-
-Production deployments should extend `BackendConnector` with
-vertical-specific methods and map tools to them via `backendMethod`.
-
-## Adding a new tool
-
-1. Add the tool definition to `airgap.config.json` under `tools`.
-2. If the backend method is new, add it to `BackendConnector` in
-   `src/services/backendConnector.ts` and wire it in both the mock and
-   REST implementations.
-3. Map the tool to the backend method via `backendMethod`.
-4. Add an adversarial test case to
-   `__tests__/golden/adversarial.json` under the matching vertical.
-5. If the tool introduces new numbers or dates in its response,
-   double-check the safety layer's grounding check still passes for
-   the synthesized KBDocument.
-
-## What happens when the LLM is not loaded
-
-If neither the local nor the cloud LLM is available (fresh install
-before first model download, `llm.mode: offline-only` on a device that
-hasn't downloaded the model yet, etc.) the tool router falls back to
-returning the pre-formatted `result.summary` directly. Users still see a
-coherent answer; they just don't get the LLM paraphrase layer.
+See [`enterprise-integration.md`](enterprise-integration.md) for the server boundary and
+[`safety-layer.md`](safety-layer.md) for the answer checks.

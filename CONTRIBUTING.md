@@ -56,6 +56,7 @@ these commands.
 
 ```bash
 npm run format:check
+npm run docs:check
 npm run lint
 npx tsc --noEmit
 npm test -- --runInBand
@@ -70,6 +71,10 @@ npm run recordings:validate
 Run `cd android && ./gradlew assembleDebug` after native Android, dependency, or
 build configuration changes. Run the CI iOS Simulator build command after the
 equivalent iOS changes.
+
+For README or interface recordings, follow [`docs/recordings.md`](docs/recordings.md).
+Record from a committed application state, inspect the contact sheet and full loop, and update
+`demo/recordings.json` with the measured facts.
 
 When a change affects the site or mobile interface, capture the relevant widths,
 font sizes, and platform screens. Check keyboard focus, screen-reader labels,

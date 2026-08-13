@@ -1,337 +1,127 @@
-# Enterprise Integration Architecture
+# Connect Airgap to operator systems
 
-## How Airgap Connects to Enterprise BSS/OSS
+Airgap keeps local answers and remote account actions on separate paths. The mobile app can answer
+from approved documents while offline. Identity, account data, and state-changing work stay behind
+an operator service.
 
-Airgap is offline-first. The integration architecture reflects this: the app works independently using local KB + on-device LLM, and syncs with enterprise backends when online through a Backend-for-Frontend (BFF) middleware layer.
+## The repository defines the mobile contracts
 
----
+| Area                  | Included here                                     | Operator work                                      |
+| --------------------- | ------------------------------------------------- | -------------------------------------------------- |
+| Local support content | Bundled documents, search, citations, signed sync | Content ownership, publishing, expiry, translation |
+| Identity              | Async access-token provider interface             | Login, token issuer, audience, revocation          |
+| Account actions       | Mock and REST connector interfaces, outbox        | Authorization, APIs, idempotency, audit            |
+| Cloud generation      | Authenticated request client and fallback policy  | Model service, filtering, retention, cost controls |
+| Telemetry             | Bounded client events and a reference file sink   | Durable storage, access rules, monitoring          |
+| Operations            | Health route and deterministic release checks     | TLS, scaling, backup, incident response, support   |
 
-## The Three Layers
+The included Node server handles signed knowledge delivery, model metadata, telemetry intake,
+health, authentication, body limits, and one-process rate limiting. It does not contain account
+lookups, customer authentication, or production action routes.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  DEVICE LAYER (Offline-First)                                   │
-│                                                                 │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────┐   │
-│  │ On-Device│  │MiniSearch │  │ Action   │  │ Cached       │   │
-│  │ LLM      │  │ KB Index │  │ Queue    │  │ Account Data │   │
-│  │(Gemma 4 E2B) │  │(105 docs)│  │ (MMKV)  │  │ (MMKV)       │   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────────┘   │
-│       │              │              │              │            │
-│  ┌────┴──────────────┴──────────────┴──────────────┴────┐      │
-│  │              Orchestrator Pipeline                     │      │
-│  └───────────────────────┬───────────────────────────────┘      │
-│                          │ (when online)                        │
-└──────────────────────────┼──────────────────────────────────────┘
-                           │
-                    HTTPS + JWT
-                           │
-┌──────────────────────────┼──────────────────────────────────────┐
-│  BFF LAYER (Backend-for-Frontend)                               │
-│                                                                 │
-│  ┌────────────┐  ┌──────────────┐  ┌─────────────┐            │
-│  │ Auth       │  │ Action       │  │ KB Sync     │            │
-│  │ Service    │  │ Processor    │  │ Service     │            │
-│  │ (OAuth2)   │  │ (queue replay│  │ (version +  │            │
-│  │            │  │  + conflict  │  │  delta push)│            │
-│  │            │  │  resolution) │  │             │            │
-│  └────────────┘  └──────┬───────┘  └─────────────┘            │
-│                         │                                       │
-│  ┌──────────────────────┴───────────────────────────────┐      │
-│  │              Enterprise Adapter Layer                  │      │
-│  │  (Translates bot actions → enterprise API calls)       │      │
-│  └──────┬──────┬──────┬──────┬──────┬──────┬────────────┘      │
-│         │      │      │      │      │      │                    │
-└─────────┼──────┼──────┼──────┼──────┼──────┼────────────────────┘
-          │      │      │      │      │      │
-┌─────────┼──────┼──────┼──────┼──────┼──────┼────────────────────┐
-│  ENTERPRISE LAYER (BSS/OSS Systems of Record)                   │
-│         │      │      │      │      │      │                    │
-│    ┌────┴─┐ ┌──┴──┐ ┌─┴──┐ ┌┴───┐ ┌┴───┐ ┌┴────┐             │
-│    │ CRM  │ │Bill-│ │Tick-│ │OMS │ │Pro- │ │Net- │             │
-│    │      │ │ing  │ │eting│ │    │ │duct │ │work │             │
-│    │Salesf│ │Amdoc│ │Servi│ │    │ │Cat- │ │Mgmt │             │
-│    │orce/ │ │s/CSG│ │ceNow│ │    │ │alog │ │     │             │
-│    │Siebel│ │     │ │     │ │    │ │     │ │     │             │
-│    └──────┘ └─────┘ └─────┘ └────┘ └─────┘ └─────┘             │
-│                                                                  │
-│    TMF629   TMF678   TMF621  TMF622  TMF637   Custom            │
-│    Customer Bill     Trouble Product Product  Network            │
-│    Mgmt     Mgmt     Ticket  Order   Inventory Status           │
-└──────────────────────────────────────────────────────────────────┘
+## Runtime flow
+
+```mermaid
+flowchart LR
+    U[Customer question] --> A[Airgap mobile app]
+    A --> K[Local approved documents]
+    K --> P[Provider policy]
+    P --> R[Answer with citations]
+    A --> T{Configured action keyword}
+    T -->|online| B[Operator service]
+    T -->|offline and eligible| O[Encrypted outbox]
+    O --> B
+    B --> I[Identity and authorization]
+    B --> S[Account or service system]
+    B --> C[Signed knowledge publisher]
 ```
 
----
+The model provider receives retrieved document text only after Airgap applies the operator policy.
+The tool router chooses known methods before generation. The backend must make every authorization
+decision again.
 
-## Enterprise Systems Map
+## Mobile REST contract
 
-### BSS (Business Support Systems)
+`RestBackendConnector` calls these routes.
 
-| System | Purpose | TMF API | Typical Vendors | Bot Actions |
-|--------|---------|---------|-----------------|-------------|
-| **CRM** | Customer profiles, interaction history | TMF629 | Salesforce, Amdocs, Siebel | Account lookup, update contact info |
-| **Billing** | Invoices, payments, balance | TMF678 | Amdocs Optima, CSG Ascendon, Ericsson | Check balance, view bill, payment status |
-| **Product Catalog** | Plans, promos, add-ons | TMF620 | Amdocs, Sigma Systems | Fetch current plans/pricing (sync to KB) |
-| **Order Management** | Plan changes, activations | TMF622 | Amdocs, Oracle Communications | Change plan, activate promo, order SIM |
-| **Trouble Ticketing** | Issue tracking, escalation | TMF621 | ServiceNow, BMC Remedy, Zendesk | Create ticket, check ticket status |
-| **Revenue Mgmt** | Rating, charging, prepaid balance | TMF654 | Amdocs, Ericsson OCS | Check prepaid balance, buy load |
+| Method | Route                           | Mobile expectation                  |
+| ------ | ------------------------------- | ----------------------------------- |
+| `GET`  | `/api/v1/accounts/{id}/balance` | Current account summary             |
+| `POST` | `/api/v1/accounts/{id}/plan`    | Idempotent plan request             |
+| `POST` | `/api/v1/tickets`               | Idempotent ticket request           |
+| `GET`  | `/api/v1/outages`               | Outage status, optional location    |
+| `POST` | `/api/v1/actions/{type}`        | Operator-defined action             |
+| `GET`  | `/api/v1/sync/kb`               | Signed knowledge manifest           |
+| `GET`  | Manifest download URL           | Exact signed knowledge bytes        |
+| `GET`  | `/api/v1/sync/model`            | Downloaded-model release metadata   |
+| `POST` | `/api/v1/telemetry`             | Bounded event batch                 |
+| `POST` | `/api/v1/llm/generate`          | Optional authenticated cloud answer |
 
-### OSS (Operations Support Systems)
+Every protected call asks the installed token provider for a fresh token. REST endpoints need
+HTTPS. State-changing calls include an `Idempotency-Key` header when the outbox supplies one.
 
-| System | Purpose | TMF API | Bot Actions |
-|--------|---------|---------|-------------|
-| **Network Management** | Tower/cell status, outages | TMF656 | Check outage status, coverage info |
-| **Service Assurance** | SLA monitoring, speed tests | TMF657 | Report speed issues, check service quality |
-| **Provisioning** | Activate/deactivate services | TMF633 | SIM activation, eSIM provisioning |
+The reference server in [`server/`](../server/) handles only the sync, model, telemetry, and
+health routes. Add account and action routes in an operator-owned service or replace
+`BackendConnector` with a domain adapter.
 
-### SORs (Systems of Record)
+## Identity and authorization
 
-| System | Data | Bot Actions |
-|--------|------|-------------|
-| **HLR/HSS** | Subscriber registration, SIM status | Check SIM status, verify registration |
-| **PCRF/OCS** | Real-time charging, data quota | Check data remaining, buy add-on |
-| **Number DB** | MSISDN allocation, porting | Number porting status |
+Install an access-token provider during application startup. The provider receives the set
+audience and returns a short-lived token. Do not store a client secret or long-lived bearer value in
+the app configuration.
 
----
+The operator service must complete these checks.
 
-## BFF Server Design
+1. Check token signature, issuer, audience, expiry, and revocation state.
+2. Map the caller to an account through operator-owned identity rules.
+3. Authorize the exact resource and action.
+4. Check all request fields without trusting model output.
+5. Enforce idempotency for retries.
+6. write an audit record that excludes secrets and unnecessary customer text.
 
-The BFF is the single integration point between the mobile app and all enterprise systems.
+Airgap does not ship a generic login screen because identity flows and recovery rules differ by
+operator and industry.
 
-### API Endpoints
+## Signed knowledge publishing
 
-```
-POST /api/v1/auth/token          # OAuth2 token exchange
-POST /api/v1/sync/actions        # Process queued offline actions
-GET  /api/v1/sync/kb             # Check for KB updates
-GET  /api/v1/sync/kb/download    # Download updated KB package
+The server returns a manifest that names the bundle version, URL, length, SHA-256 digest, signing
+key ID, and Ed25519 signature. The app downloads the exact bytes, checks every field, checks the
+document schema, and swaps the local bundle only after all checks pass.
 
-GET  /api/v1/account/balance     # TMF678 → Billing
-GET  /api/v1/account/bills       # TMF678 → Billing
-GET  /api/v1/account/usage       # TMF654 → Rating/Charging
-POST /api/v1/account/plan-change # TMF622 → Order Management
-POST /api/v1/account/activate    # TMF633 → Provisioning
+Keep the private signing key in an operator key service. Pin only raw public keys in the app. Plan a
+release window where old and new public keys overlap before removing the old key.
 
-POST /api/v1/tickets             # TMF621 → Trouble Ticketing
-GET  /api/v1/tickets/:id         # TMF621 → Trouble Ticketing
+See [`sync-architecture.md`](sync-architecture.md) for the byte-level protocol.
 
-GET  /api/v1/network/outages     # TMF656 → Network Management
-GET  /api/v1/network/coverage    # Custom → Coverage DB
+## Offline actions
 
-POST /api/v1/analytics/events    # Collect bot usage analytics
-POST /api/v1/analytics/feedback  # Collect thumbs up/down
-```
+Only set-up state-changing tools with `offlineQueueEligible: true` enter the outbox. The app
+shows a receipt, retry state, and removal control. Connectivity starts a retry, but the server still
+owns authorization and idempotency.
 
-### Offline Sync Protocol
+Do not queue an operation when delay changes its meaning, safety, price, or consent. Examples
+include emergency dispatch, market orders, prescription approval, and one-time authentication.
 
-```
-1. App comes online
-2. POST /api/v1/sync/actions with queued actions:
-   {
-     "deviceId": "abc-123",
-     "actions": [
-       {
-         "id": "q-001",
-         "type": "balance_check",
-         "query": "What is my balance?",
-         "timestamp": 1712300000,
-         "accountId": "09171234567"
-       },
-       {
-         "id": "q-002",
-         "type": "ticket_create",
-         "query": "My internet has been down for 3 days",
-         "timestamp": 1712300120,
-         "accountId": "09171234567"
-       }
-     ]
-   }
+## Cloud generation
 
-3. BFF processes each action against enterprise APIs:
-   - q-001 → TMF678 getCustomerBill → returns balance PHP 127.50
-   - q-002 → TMF621 createTroubleTicket → returns ticket #TT-2026-04821
+Cloud generation is off by default. To enable it, the operator must set an allowed routing mode,
+enable the `cloud` provider, set an HTTPS endpoint or backend base URL, and install an access-token
+provider for the cloud audience.
 
-4. BFF returns results:
-   {
-     "results": [
-       { "actionId": "q-001", "status": "success", "data": { "balance": 127.50, ... } },
-       { "actionId": "q-002", "status": "success", "data": { "ticketId": "TT-2026-04821" } }
-     ],
-     "kbUpdate": { "available": true, "version": "2026-04-05", "url": "/sync/kb/download" }
-   }
+The request has the system prompt, retrieved document context, token limit, and temperature.
+Treat this as customer-data processing. Define retention, region, vendor, incident, deletion, and
+fallback rules before use.
 
-5. App displays results, syncs KB if update available
-```
+## Production acceptance checks
 
-### Authentication Flow
+- Run offline cold start and cited local answers with the operator bundle.
+- Reject expired tokens, wrong audiences, unauthorized accounts, and changed request fields.
+- Replay each state-changing request and check that the backend applies one effect.
+- Alter one byte in a knowledge bundle and check that the app keeps the last valid version.
+- Test key rotation with both keys, then with the old key removed.
+- Stop the cloud service and check the listed local fallback.
+- Check outbox behavior across restart, reconnect, duplicate response, and permanent failure.
+- Review logs and telemetry for customer text, tokens, account data, and retention.
 
-```
-User opens app → cached JWT in MMKV
-  ↓
-JWT expired? → Background refresh via /auth/token (if online)
-  ↓
-No internet? → Use cached account data (balance, plan info from last sync)
-  ↓
-First launch? → Login screen → OAuth2 flow → JWT stored in MMKV (encrypted)
-```
-
----
-
-## BackendConnector Implementation for TMF APIs
-
-```typescript
-// This is what the RestBackendConnector would look like for a real telco
-
-class TMFBackendConnector implements BackendConnector {
-  private bffBaseUrl: string;
-  private authToken: string;
-
-  async checkBalance(accountId: string) {
-    // BFF routes to: TMF678 Customer Bill Management API
-    // GET /customerBillManagement/v4/customerBill?billingAccount.id={accountId}&type=current
-    const res = await fetch(`${this.bffBaseUrl}/account/balance`, {
-      headers: { Authorization: `Bearer ${this.authToken}` }
-    });
-    const data = await res.json();
-    return {
-      balance: `PHP ${data.amountDue.value}`,
-      data: `${data.dataRemaining}GB remaining`,
-      promos: data.activePromos.map(p => p.name).join(', ')
-    };
-  }
-
-  async changePlan(accountId: string, planId: string) {
-    // BFF routes to: TMF622 Product Ordering API
-    // POST /productOrderingManagement/v4/productOrder
-    const res = await fetch(`${this.bffBaseUrl}/account/plan-change`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${this.authToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ accountId, planId })
-    });
-    const data = await res.json();
-    return {
-      message: `Plan change to ${data.planName} submitted.`,
-      effectiveDate: data.effectiveDate
-    };
-  }
-
-  async createTicket(description: string) {
-    // BFF routes to: TMF621 Trouble Ticket Management API
-    // POST /troubleTicketManagement/v4/troubleTicket
-    const res = await fetch(`${this.bffBaseUrl}/tickets`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${this.authToken}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        description,
-        severity: 'medium',
-        channel: 'mobile-bot'
-      })
-    });
-    const data = await res.json();
-    return {
-      ticketId: data.id,
-      message: `Ticket ${data.id} created. A representative will contact you within ${data.slaHours} hours.`
-    };
-  }
-
-  async checkOutage(location?: string) {
-    // BFF routes to: TMF656 Service Problem Management API
-    // GET /serviceProblemManagement/v3/serviceProblem?affectedLocation={location}
-    const res = await fetch(
-      `${this.bffBaseUrl}/network/outages?location=${encodeURIComponent(location || '')}`,
-      { headers: { Authorization: `Bearer ${this.authToken}` } }
-    );
-    const data = await res.json();
-    return {
-      hasOutage: data.activeOutages.length > 0,
-      message: data.activeOutages.length > 0
-        ? `Outage reported in ${data.activeOutages[0].area}. Estimated resolution: ${data.activeOutages[0].eta}.`
-        : 'No outages currently reported in your area.'
-    };
-  }
-}
-```
-
----
-
-## KB Sync Architecture
-
-```
-┌─────────────────┐     ┌──────────────┐     ┌──────────────────┐
-│  Admin CMS      │     │  BFF Server  │     │  Mobile App      │
-│                 │     │              │     │                  │
-│  Edit FAQ    ───┼────►│  Store KB    │     │  On launch:      │
-│  Add plans   ───┼────►│  as versioned│◄────┼── GET /sync/kb   │
-│  Update promo───┼────►│  JSON bundle │     │  {version: "v3"} │
-│                 │     │              │     │                  │
-│  Publish ───────┼────►│  Increment   │────►│  If new version: │
-│                 │     │  version     │     │  Download bundle │
-│                 │     │              │     │  Rebuild index   │
-│                 │     │              │     │  Store locally   │
-└─────────────────┘     └──────────────┘     └──────────────────┘
-```
-
-Updates flow: Admin edits content → BFF stores versioned KB → App checks on launch → Downloads delta → Rebuilds MiniSearch index. No app store update needed.
-
----
-
-## Deployment Options
-
-### Option A: Enterprise Self-Hosted
-```
-Enterprise datacenter
-├── BFF Server (Docker/K8s)
-├── Connected to existing BSS via TMF APIs
-├── KB managed via Admin CMS
-└── Mobile app distributed via enterprise MDM or Play Store
-```
-
-### Option B: SaaS Multi-Tenant
-```
-Airgap Cloud
-├── Multi-tenant BFF (tenant isolation)
-├── Per-tenant brand config + KB
-├── API Gateway (Kong/Apigee) for TMF API routing
-├── Each tenant connects their own BSS endpoints
-└── Mobile app is white-labeled per tenant
-```
-
-### Option C: Hybrid (most common for telcos)
-```
-Telco's own infrastructure
-├── BFF runs in telco's cloud (GCP/AWS)
-├── Connected to on-prem BSS via VPN/private link
-├── KB sync via telco's CDN
-└── App on public app stores with telco branding
-```
-
----
-
-## What We'd Need to Build
-
-| Component | Effort | Status |
-|-----------|--------|--------|
-| BackendConnector interface | Done | src/services/backendConnector.ts |
-| MockBackendConnector | Done | Ships with app for PoC |
-| RestBackendConnector (TMF) | 1 week | Stub exists, needs real HTTP calls |
-| BFF Server (Node/FastAPI) | 2-3 weeks | New service |
-| Auth flow (OAuth2 + JWT) | 1 week | App + BFF changes |
-| KB Sync protocol | 3 days | App-side mostly designed |
-| Admin CMS | 2-3 weeks | New web app |
-| Offline sync with conflict resolution | 1 week | Queue exists, needs server-side |
-| TMF API adapters | 2-4 weeks per system | BFF-side, per enterprise |
-
-Sources:
-- [TM Forum Open APIs](https://www.tmforum.org/oda/open-apis/)
-- [TMF621 Trouble Ticket API](https://www.tmforum.org/resources/specification/tmf621-trouble-ticket-management-api-rest-specification-r19-0-0/)
-- [TMF678 Customer Bill API](https://www.tmforum.org/oda/open-apis/directory/customer-bill-management-api-TMF678/v5.0)
-- [Offline-First Architecture for Enterprise](https://www.ianhafkenschiel.com/blog/offline-first-architecture-enterprise-mobile/)
-- [BFF Pattern](https://samnewman.io/patterns/architectural/bff/)
-- [CSG BSS/OSS Architecture](https://www.csgi.com/insights/understanding-bss-oss-architecture/)
-- [Ericsson BSS](https://www.ericsson.com/en/oss-bss)
+Use [`DEPLOYMENT.md`](../DEPLOYMENT.md) for the full mobile release checklist and
+[`server/README.md`](../server/README.md) for the reference process.

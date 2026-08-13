@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://airgap.dev/schema/v1.json",
-  "title": "ACME Telecom Configuration",
-  "description": "Formal spec for offline-first enterprise chatbot. Edit this file to configure your bot — no code changes needed.",
+  "title": "Airgap Configuration",
+  "description": "Configuration contract for an offline-first mobile support app.",
   "type": "object",
   "required": ["specVersion", "brand", "theme", "model", "knowledge", "prompts", "actions"],
   "additionalProperties": false,
@@ -224,8 +224,8 @@
       "properties": {
         "provider": {
           "type": "string",
-          "enum": ["llama.cpp", "execu-torch", "core-ml", "onnx", "cloud"],
-          "description": "LLM inference engine"
+          "enum": ["llama.cpp"],
+          "description": "Downloaded-model engine. Cloud and platform models are configured under llm.providers."
         },
         "url": {
           "type": "string",

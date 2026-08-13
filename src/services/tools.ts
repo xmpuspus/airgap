@@ -1,11 +1,9 @@
 /**
  * Tool calling — deterministic keyword router with LLM-assisted synthesis.
  *
- * Design: Airgap ships Gemma 4 E2B, which scores 24.5 on τ2-bench (Retail)
- * and is not reliable at multi-step agentic function calling. Instead of
- * trusting the model to emit structured tool calls, we route by keywords
- * that the config author opts into, execute the backend call deterministically,
- * then feed the structured tool result back into the LLM as grounding.
+ * Design: the model provider never chooses or authorizes backend work.
+ * Airgap routes with configured keywords, runs the known backend method,
+ * then gives the structured result to the selected provider for wording.
  *
  * This keeps tool calling:
  *   - Fast (keyword match, no extra LLM pass to decide)
@@ -13,9 +11,7 @@
  *   - Grounded (the LLM sees a verified tool result, not a guess)
  *   - Offline-aware (state-changing tools queue when offline)
  *
- * When Airgap later runs with a larger cloud model (Phase 6 hybrid mode),
- * the same tool definitions will be usable by a proper function-calling
- * LLM with no code changes. See docs/tool-calling.md for the full rationale.
+ * See docs/tool-calling.md for the full boundary.
  */
 
 import {config} from '../config/loader';
@@ -99,19 +95,11 @@ export function findToolForQuery(query: string): ToolDefinition | null {
  * If the tool is state-changing and the device is offline, queue the action
  * instead and return a queuedActionId.
  */
-export async function executeTool(
-  tool: ToolDefinition,
-  query: string,
-): Promise<ToolResult> {
+export async function executeTool(tool: ToolDefinition, query: string): Promise<ToolResult> {
   const online = connectivityService.isOnline();
 
   if (!online && tool.offlineQueueEligible !== false && tool.stateChanging) {
-    const action = offlineQueue.enqueue(
-      'tool_call' as QueuedAction['type'],
-      query,
-      '',
-      tool.name,
-    );
+    const action = offlineQueue.enqueue('tool_call' as QueuedAction['type'], query, '', tool.name);
     logger.info('tools', 'Queued offline tool call', {
       tool: tool.name,
       id: action.id,
@@ -203,8 +191,7 @@ export async function executeTool(
       toolName: tool.name,
       ok: false,
       error: err?.message ?? 'unknown_error',
-      summary:
-        'I couldn\'t complete that request right now. Please try again or call the hotline.',
+      summary: "I couldn't complete that request right now. Please try again or call the hotline.",
     };
   }
 }
@@ -224,11 +211,7 @@ export function formatToolResultForLLM(result: ToolResult): string {
   const dataLines = Object.entries(result.data ?? {})
     .map(([k, v]) => `  ${k}: ${JSON.stringify(v)}`)
     .join('\n');
-  return [
-    `TOOL RESULT (${result.toolName}):`,
-    dataLines,
-    `Summary: ${result.summary ?? ''}`,
-  ]
+  return [`TOOL RESULT (${result.toolName}):`, dataLines, `Summary: ${result.summary ?? ''}`]
     .filter(Boolean)
     .join('\n');
 }

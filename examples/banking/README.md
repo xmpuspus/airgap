@@ -1,45 +1,34 @@
-# Banking Template - PrimaBank
+# PrimaBank fixture
 
-An Airgap configuration for a retail banking customer support chatbot.
+PrimaBank and PrimaAssist are fictional. This template tests offline answers for retail accounts,
+cards, fees, ATMs, security, loans, and common banking problems.
 
-## Brand
+## Run the fixture
 
-- **Company:** PrimaBank
-- **Bot name:** PrimaAssist
-- **Hotline:** 1-800-PRIMA
-- **Locale:** USD / US English
+```bash
+npx create-airgap-bot prima-help --template banking
+cd prima-help
+npm install
+npm run android
+```
 
-## Actions (online-required)
+The app starts in deterministic `demo` mode. It does not access an account or download a model.
 
-| Action | Description |
-|--------|-------------|
-| `balance_check` | Check account balance |
-| `card_block` | Block lost/stolen card |
-| `transaction_dispute` | Dispute a transaction |
-| `loan_application` | Apply for a loan |
-| `account_transfer` | Transfer funds |
-| `statement_request` | Request account statement |
+## Included data and actions
 
-## Knowledge Base Files
+- 62 local documents across FAQ, products, ATM locations, security, troubleshooting, and fees
+- 6 online action definitions for balance, card block, disputes, loans, transfers, and statements
+- 3 deterministic tools for balance, recent transactions, and disputes
+- 8 blocked-topic fixtures and financial-advice refusal copy
 
-| File | Entries | Content |
-|------|---------|---------|
-| `faq.json` | 26 | Account opening, account types, interest rates, direct deposit, wire transfers, mobile deposit, cards, online banking, 2FA, statements, tax forms, beneficiaries, joint accounts, POA, dormant accounts, safe deposit boxes, notary services |
-| `products.json` | 12 | Savings (basic, premium), checking (standard, student, business), personal loan, mortgage, auto loan, credit cards (standard, rewards, platinum), CD rates |
-| `atm-locations.json` | 8 | Branch and ATM locations with addresses, hours, services, and coordinates |
-| `security.json` | 5 | Phishing, stolen cards, fraud alerts, password security, mobile banking security |
-| `troubleshooting.json` | 5 | Card declined, online banking locked, app issues, transfer failures, suspicious transactions |
-| `fees.json` | 6 | Monthly maintenance, ATM fees, wire transfer fees, overdraft/NSF, returned checks, foreign transaction fees |
+[View the checked emulator recording](../../demo/industry-banking.gif).
 
-## Setup
+## Operator work before a pilot
 
-1. Copy `airgap.config.json` and the `knowledge/` directory to your project root
-2. Adjust brand details, theme colors, and hotline as needed
-3. Build the app
+- Replace every product, rate, fee, address, eligibility rule, and security instruction.
+- Put account reads and transfers behind strong identity, authorization, fraud, and audit controls.
+- Never queue transfers or other time-sensitive financial instructions for later execution.
+- Review PCI, privacy, consumer-protection, recordkeeping, accessibility, and local banking rules.
+- Add human escalation for fraud, stolen cards, disputes, hardship, and complaints.
 
-## Notes
-
-- The system prompt includes a directive to never provide financial advice or investment recommendations
-- Currency is set to USD; change `locale.currency` for other currencies
-- All KB entries use the `kbdoc-v1` schema
-- Mock responses use USD amounts; update if changing locale
+The sample does not give financial advice, move money, block a real card, or show compliance.

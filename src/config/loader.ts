@@ -146,7 +146,7 @@ export interface ThemeSection {
 }
 
 export interface ModelSection {
-  provider: 'llama.cpp' | 'execu-torch' | 'core-ml' | 'onnx' | 'cloud';
+  provider: 'llama.cpp';
   url: string;
   filename: string;
   sha256?: string;

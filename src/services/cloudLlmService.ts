@@ -20,8 +20,8 @@
  *     body: { system, user, maxTokens, temperature }
  *     response: { text, model, latencyMs }
  *
- * Production operators should authenticate this endpoint with whatever
- * their infrastructure already uses (mTLS, IAP, shared-secret, whatever).
+ * Production operators must use their identity, authorization, retention,
+ * and audit controls at this endpoint.
  */
 
 import {config} from '../config/loader';

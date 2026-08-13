@@ -1,5 +1,6 @@
 import type {
   InferenceCapabilities,
+  InferenceMode,
   InferencePlatform,
   InferenceProvider,
   ProviderPolicyEntry,
@@ -19,6 +20,13 @@ function unavailableCapabilities(
     platform: entry.platform === 'all' || !entry.platform ? platform : entry.platform,
     reason: entry.enabled ? 'generation_failed' : 'provider_disabled',
   };
+}
+
+export function selectProviderEntriesForMode(
+  mode: InferenceMode,
+  entries: readonly ProviderPolicyEntry[],
+): ProviderPolicyEntry[] {
+  return mode === 'demo' ? entries.filter(entry => entry.id === 'demo') : [...entries];
 }
 
 export async function readConfiguredProviderCapabilities(
