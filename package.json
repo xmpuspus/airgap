@@ -39,7 +39,8 @@
     "recordings:rebuild": "node scripts/rebuild-recording-gifs.mjs",
     "recordings:validate": "node scripts/validate-recordings.mjs",
     "providers:scenarios": "node scripts/validate-provider-evidence.mjs --list",
-    "providers:validate": "node scripts/validate-provider-evidence.mjs"
+    "providers:validate": "node scripts/validate-provider-evidence.mjs",
+    "providers:swift:test": "swiftc ios/Airgap/ProviderHarness.swift scripts/provider-harness-swift-tests/main.swift -o \"${TMPDIR:-/tmp}/airgap-provider-harness-tests\" && \"${TMPDIR:-/tmp}/airgap-provider-harness-tests\" validation/provider-scenarios.json"
   },
   "dependencies": {
     "@react-native-community/netinfo": "12.0.1",

@@ -13,6 +13,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A1F000012026081300000001 /* AppleFoundationModelsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F000022026081300000002 /* AppleFoundationModelsModule.swift */; };
 		A1F000032026081300000003 /* AppleFoundationModelsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = A1F000042026081300000004 /* AppleFoundationModelsModule.m */; };
+		A1F000052026081300000005 /* ProviderHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F000062026081300000006 /* ProviderHarness.swift */; };
 		C668741104E5868E562089DF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Airgap/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1F000022026081300000002 /* AppleFoundationModelsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppleFoundationModelsModule.swift; path = Airgap/AppleFoundationModelsModule.swift; sourceTree = "<group>"; };
 		A1F000042026081300000004 /* AppleFoundationModelsModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppleFoundationModelsModule.m; path = Airgap/AppleFoundationModelsModule.m; sourceTree = "<group>"; };
+		A1F000062026081300000006 /* ProviderHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProviderHarness.swift; path = Airgap/ProviderHarness.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -50,6 +52,7 @@
 				761780EC2CA45674006654EE /* AppDelegate.swift */,
 				A1F000022026081300000002 /* AppleFoundationModelsModule.swift */,
 				A1F000042026081300000004 /* AppleFoundationModelsModule.m */,
+				A1F000062026081300000006 /* ProviderHarness.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
@@ -115,6 +118,7 @@
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				A1F000072026081300000007 /* Copy provider scenarios for Debug */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
@@ -178,6 +182,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		A1F000072026081300000007 /* Copy provider scenarios for Debug */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/../validation/provider-scenarios.json",
+			);
+			name = "Copy provider scenarios for Debug";
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/provider-scenarios.json",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nif [ \"$CONFIGURATION\" = \"Debug\" ]; then\n  cp \"$SCRIPT_INPUT_FILE_0\" \"$SCRIPT_OUTPUT_FILE_0\"\nelse\n  rm -f \"$SCRIPT_OUTPUT_FILE_0\"\nfi\n";
+		};
 		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -260,6 +280,7 @@
 				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
 				A1F000012026081300000001 /* AppleFoundationModelsModule.swift in Sources */,
 				A1F000032026081300000003 /* AppleFoundationModelsModule.m in Sources */,
+				A1F000052026081300000005 /* ProviderHarness.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
