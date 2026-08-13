@@ -48,9 +48,7 @@ function main() {
     ...new Set(platformRecords.flatMap(recording => recording.evidenceClass)),
   ].sort();
   const providerIds = [...new Set(platformRecords.map(recording => recording.providerId))];
-  const modelIdentities = [
-    ...new Set(platformRecords.map(recording => recording.modelIdentity)),
-  ];
+  const modelIdentities = [...new Set(platformRecords.map(recording => recording.modelIdentity))];
   const layout = readmeLayoutFilter(README_GIF_OPTIONS);
   run('ffmpeg', [
     '-y',

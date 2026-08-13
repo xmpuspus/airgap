@@ -65,10 +65,7 @@
       "mode": "demo",
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
-      "evidenceClass": [
-        "emulator",
-        "simulator"
-      ],
+      "evidenceClass": ["emulator", "simulator"],
       "captureCommand": "node scripts/build-readme-gif.mjs --commit 0233edb705f7a58ba1300f6458785a955669bac4",
       "config": "airgap.config.json",
       "capturedAt": "2026-08-12T12:43:21.704Z",
