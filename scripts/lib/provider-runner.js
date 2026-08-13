@@ -49,6 +49,10 @@ function stateLabel(platform, capability) {
   }[capability.state];
 }
 
+function escapeMaestroRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function maestroValues({platform, appId, scenario}) {
   const capability = scenario.capabilities[platform];
   const expectedResult =
@@ -58,6 +62,7 @@ function maestroValues({platform, appId, scenario}) {
     PROVIDER_NAME: platform === 'ios' ? 'Apple on-device model' : 'Android system AI',
     PROVIDER_STATE: stateLabel(platform, capability),
     EXPECTED_RESULT: expectedResult,
+    EXPECTED_RESULT_REGEX: `.*${escapeMaestroRegex(expectedResult)}.*`,
   };
 }
 

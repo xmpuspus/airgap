@@ -23,6 +23,6 @@ name: Airgap Android provider scenario
           timeout: 20000
       - tapOn: 'Check plans'
       - extendedWaitUntil:
-          visible: ${EXPECTED_RESULT}
+          visible: ${EXPECTED_RESULT_REGEX}
           timeout: 30000
       - takeScreenshot: ${SHOT_PREFIX}-generation

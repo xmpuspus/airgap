@@ -82,7 +82,33 @@ describe('provider scenario runner commands', () => {
       PROVIDER_NAME: 'Apple on-device model',
       PROVIDER_STATE: 'Ready',
       EXPECTED_RESULT: 'Local answer',
+      EXPECTED_RESULT_REGEX: '.*Local answer.*',
     });
+  });
+
+  test('escapes generated text for merged iOS accessibility labels', () => {
+    if (!runner.maestroValues) return;
+    const values = runner.maestroValues({
+      platform: 'ios',
+      appId: 'org.reactjs.native.example.Airgap',
+      scenario: {
+        id: 'available',
+        capabilities: {ios: {state: 'available'}},
+        generation: {
+          text: 'Your approved support document says service can continue offline [1].',
+        },
+      },
+    });
+
+    const matcher = new RegExp(values.EXPECTED_RESULT_REGEX);
+    expect(
+      matcher.test(
+        '(I have not synced with the server yet.), Your approved support document says service can continue offline [1].',
+      ),
+    ).toBe(true);
+    expect(
+      matcher.test('Your approved support document says service can continue offline 1.'),
+    ).toBe(false);
   });
 });
 
