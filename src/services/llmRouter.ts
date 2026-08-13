@@ -1,14 +1,17 @@
-// LLM router. Picks demo / on-device / cloud based on config.llm.mode plus
-// connectivity. Demo is operator-only (cannot be set via setUserMode); when
-// the operator config says demo, it overrides any stale MMKV preference.
-
-import {config} from '../config/loader';
+import {Platform} from 'react-native';
+import {config, providerPolicyFromConfig} from '../config/loader';
 import type {LlmSection} from '../config/loader';
-import {llmService} from './llmService';
+import type {
+  InferencePlatform,
+  InferenceProvider,
+  InferenceProviderId,
+  InferenceRunStats,
+} from './inference/types';
+import {generateWithProviders, resolveProviderChain} from './inference/providerResolver';
+import {createExistingProviders} from './inference/existingProviders';
 import {cloudLlmService} from './cloudLlmService';
-import {demoLlmService} from './demoLlmService';
 import {connectivityService} from './connectivityService';
-import {logger} from './logger';
+import {llmService} from './llmService';
 import {getSecureStore} from './secureStorage';
 
 export type Mode = 'offline-only' | 'prefer-online' | 'prefer-offline' | 'demo';
@@ -31,9 +34,20 @@ function isUserMode(value: unknown): value is UserMode {
 
 const userPreferences = () => getSecureStore('user-prefs');
 const USER_LLM_MODE_KEY = 'user-llm-mode';
+let requestSequence = 0;
+let inferenceProviders = createExistingProviders();
 
-// Pure resolver. Exposed so tests can pump synthetic `llm` blocks through
-// without swapping the module-level config singleton.
+export function registerInferenceProvider(provider: InferenceProvider): void {
+  inferenceProviders = [
+    ...inferenceProviders.filter(candidate => candidate.id !== provider.id),
+    provider,
+  ];
+}
+
+export function getInferenceProviders(): readonly InferenceProvider[] {
+  return inferenceProviders;
+}
+
 export function resolveConfigMode(llm: unknown): Mode {
   const block = (llm ?? {}) as {mode?: unknown};
   if (isMode(block.mode)) return block.mode;
@@ -56,14 +70,33 @@ export function setUserMode(mode: UserMode | null): void {
     userPreferences().remove(USER_LLM_MODE_KEY);
     return;
   }
-  if (isUserMode(mode)) {
-    userPreferences().set(USER_LLM_MODE_KEY, mode);
-  }
+  if (isUserMode(mode)) userPreferences().set(USER_LLM_MODE_KEY, mode);
 }
 
 export interface LlmRouteResult {
   text: string;
   source: 'local' | 'cloud';
+  providerId: InferenceProviderId;
+  modelIdentity?: string;
+  stats?: InferenceRunStats;
+}
+
+function currentPlatform(): InferencePlatform {
+  return Platform.OS === 'ios' ? 'ios' : 'android';
+}
+
+function currentLocale(): string {
+  const language = config.locale?.language ?? 'en';
+  const region = config.locale?.region;
+  return region ? `${language}-${region}` : language;
+}
+
+function activePolicy() {
+  return providerPolicyFromConfig(
+    {...config.llm, mode: getMode()},
+    currentPlatform(),
+    currentLocale(),
+  );
 }
 
 export function localAvailable(): boolean {
@@ -74,62 +107,33 @@ export function cloudAvailable(): boolean {
   return cloudLlmService.isAvailable() && connectivityService.isOnline();
 }
 
-// Generate via the active mode. Throws only when no path is available.
+export async function generationAvailable(): Promise<boolean> {
+  const providers = resolveProviderChain(inferenceProviders, activePolicy());
+  const states = await Promise.all(providers.map(provider => provider.getCapabilities()));
+  return states.some(state => state.state === 'available');
+}
+
 export async function routeGeneration(
   systemPrompt: string,
   userMessage: string,
   onToken?: (token: string) => void,
 ): Promise<LlmRouteResult> {
-  const mode = getMode();
-
-  if (mode === 'demo') {
-    const text = await demoLlmService.generate(systemPrompt, userMessage, onToken);
-    return {text, source: 'local'};
-  }
-
-  const localOk = localAvailable();
-  const cloudOk = cloudAvailable();
-
-  const tryLocal = async (): Promise<LlmRouteResult> => {
-    const text = await llmService.generate(systemPrompt, userMessage, onToken);
-    return {text, source: 'local'};
+  requestSequence += 1;
+  const result = await generateWithProviders(
+    {
+      requestId: `airgap-${Date.now()}-${requestSequence}`,
+      systemPrompt,
+      userMessage,
+      onToken,
+    },
+    inferenceProviders,
+    activePolicy(),
+  );
+  return {
+    text: result.text,
+    source: result.locality,
+    providerId: result.providerId,
+    modelIdentity: result.modelIdentity,
+    stats: result.stats,
   };
-  const tryCloud = async (): Promise<LlmRouteResult> => {
-    const text = await cloudLlmService.generate(systemPrompt, userMessage, onToken);
-    return {text, source: 'cloud'};
-  };
-
-  if (mode === 'offline-only') {
-    if (!localOk) throw new Error('local LLM not loaded and mode=offline-only');
-    return tryLocal();
-  }
-
-  if (mode === 'prefer-online') {
-    if (cloudOk) {
-      try {
-        return await tryCloud();
-      } catch (err) {
-        logger.warn('llmRouter', 'cloud failed, falling back to local', {
-          err: String(err),
-        });
-      }
-    }
-    if (localOk) return tryLocal();
-    throw new Error('no LLM available (prefer-online, both paths failed)');
-  }
-
-  // prefer-offline (default)
-  if (localOk) {
-    try {
-      return await tryLocal();
-    } catch (err) {
-      logger.warn('llmRouter', 'local failed, escalating to cloud', {
-        err: String(err),
-      });
-    }
-  }
-  if (cloudOk) {
-    return tryCloud();
-  }
-  throw new Error('no LLM available (prefer-offline, local not loaded and cloud disabled)');
 }

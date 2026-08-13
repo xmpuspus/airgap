@@ -10,6 +10,8 @@ export interface MessageAudit {
   toolName?: string;
   refusalReason?: string;
   groundingIssues?: string[];
+  providerId?: import('../services/inference/types').InferenceProviderId;
+  modelIdentity?: string;
 }
 
 export interface BotMessage {

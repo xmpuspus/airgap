@@ -1,5 +1,5 @@
 import {searchKB} from './searchService';
-import {routeGeneration, localAvailable, cloudAvailable, getMode} from './llmRouter';
+import {routeGeneration, generationAvailable} from './llmRouter';
 import {offlineQueue} from './offlineQueue';
 import {connectivityService} from './connectivityService';
 import {requiresOnline, getOnlineActionType} from '../utils/onlineCheck';
@@ -15,6 +15,7 @@ import {getBackendConnector} from './backendConnector';
 import {logger} from './logger';
 import type {QueuedAction} from '../types/chat';
 import type {QuickReply} from '../types/chat';
+import type {InferenceProviderId} from './inference/types';
 import {conversationStore} from './conversationStore';
 import {checkBlocklist, validateAnswer, refusalFor} from './safetyLayer';
 import {findToolForQuery, executeTool, formatToolResultForLLM} from './tools';
@@ -41,6 +42,8 @@ export interface OrchestratorResponse {
     toolName?: string;
     refusalReason?: string;
     groundingIssues?: string[];
+    providerId?: InferenceProviderId;
+    modelIdentity?: string;
   };
 }
 
@@ -184,7 +187,7 @@ async function processMessageInner(
     // grounding. The router picks local, cloud, or demo formatter based
     // on config.llm.mode. If no path is available, fall through to the
     // raw summary.
-    if (localAvailable() || cloudAvailable() || getMode() === 'demo') {
+    if (await generationAvailable()) {
       try {
         const systemPrompt = getSystemPrompt();
         const groundingBlock = formatToolResultForLLM(result);
@@ -205,7 +208,11 @@ async function processMessageInner(
           conversationHistory,
         );
         const llmStart = Date.now();
-        const {text: generated} = await routeGeneration(systemPrompt, userMessage, onToken);
+        const {
+          text: generated,
+          providerId,
+          modelIdentity,
+        } = await routeGeneration(systemPrompt, userMessage, onToken);
         recordLlmLatency(Date.now() - llmStart);
 
         // Safety: validate the generated answer against the tool grounding.
@@ -234,6 +241,8 @@ async function processMessageInner(
               toolName: tool.name,
               refusalReason: verdict.reason,
               groundingIssues: verdict.issues,
+              providerId,
+              modelIdentity,
             },
           };
         }
@@ -247,6 +256,8 @@ async function processMessageInner(
             kbDocIds: [`tool:${tool.name}`],
             confidence: verdict.confidence,
             toolName: tool.name,
+            providerId,
+            modelIdentity,
           },
         };
       } catch (err) {
@@ -347,12 +358,16 @@ async function processMessageInner(
   // 7. If a local LLM, cloud LLM, or demo formatter is available, route
   // the generation. Demo mode bypasses the model load and produces a
   // deterministic streamed reply built from finalResults.
-  if ((localAvailable() || cloudAvailable() || getMode() === 'demo') && finalResults.length > 0) {
+  if ((await generationAvailable()) && finalResults.length > 0) {
     try {
       const systemPrompt = getSystemPrompt();
       const userMessage = buildUserMessage(text, finalResults, conversationHistory);
       const llmStart = Date.now();
-      const {text: response} = await routeGeneration(systemPrompt, userMessage, onToken);
+      const {
+        text: response,
+        providerId,
+        modelIdentity,
+      } = await routeGeneration(systemPrompt, userMessage, onToken);
       recordLlmLatency(Date.now() - llmStart);
 
       // Safety: validate the generated answer against the retrieved KB
@@ -369,6 +384,8 @@ async function processMessageInner(
             confidence: verdict.confidence,
             refusalReason: verdict.reason,
             groundingIssues: verdict.issues,
+            providerId,
+            modelIdentity,
           },
         };
       }
@@ -381,6 +398,8 @@ async function processMessageInner(
         audit: {
           kbDocIds: finalResults.map(d => d.id),
           confidence: verdict.confidence,
+          providerId,
+          modelIdentity,
         },
       };
     } catch (err) {

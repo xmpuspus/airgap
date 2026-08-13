@@ -6,6 +6,7 @@ jest.mock('../src/services/connectivityService', () =>
   require('./helpers/rn-mocks').connectivity(),
 );
 jest.mock('../src/services/secureStorage', () => require('./helpers/rn-mocks').secureStorage());
+jest.mock('uuid', () => ({v4: () => 'test-id'}));
 
 import {readFileSync, readdirSync} from 'fs';
 import {join} from 'path';
@@ -14,9 +15,10 @@ import {
   formatReferenceAsReply,
   demoLlmService,
 } from '../src/services/demoLlmService';
-import {resolveConfigMode, setUserMode, getMode} from '../src/services/llmRouter';
+import {resolveConfigMode, setUserMode, getMode, routeGeneration} from '../src/services/llmRouter';
 import {buildUserMessage} from '../src/utils/promptBuilder';
 import type {KBDocument} from '../src/types/knowledge';
+import {clearConversationHistory, processMessage} from '../src/services/orchestrator';
 
 describe('demoLlmService.extractReferenceBlock', () => {
   it('returns the KB context block from a buildUserMessage payload', () => {
@@ -149,6 +151,30 @@ describe('llmRouter mode resolution', () => {
     // returns demo for that reason, not because the override stuck.)
     setUserMode(null);
     expect(getMode()).toBe(before);
+  });
+
+  it('records the deterministic provider and model identity', async () => {
+    const result = await routeGeneration('system', 'no reference here');
+
+    expect(result).toMatchObject({
+      source: 'local',
+      providerId: 'demo',
+      modelIdentity: 'document-formatter-v1',
+    });
+  });
+});
+
+describe('provider audit metadata', () => {
+  beforeEach(() => clearConversationHistory());
+
+  it('keeps provider and model identity with a grounded answer', async () => {
+    const response = await processMessage('What prepaid data plans are available?');
+
+    expect(response.source).toBe('llm');
+    expect(response.audit).toMatchObject({
+      providerId: 'demo',
+      modelIdentity: 'document-formatter-v1',
+    });
   });
 });
 
