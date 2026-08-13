@@ -89,10 +89,11 @@ describe('web/data/build.mjs', () => {
     }
   });
 
-  test('README gives one current CLI path and one primary recording', () => {
+  test('README gives one current CLI path and one freshly recorded primary flow', () => {
     const readme = fs.readFileSync(README, 'utf8');
     expect(readme).toContain('npx create-airgap-bot support-app --template telco');
-    expect(readme.match(/demo\/airgap-readme-side-by-side\.gif/g) ?? []).toHaveLength(1);
+    expect(readme.match(/demo\/airgap-demo-ios\.gif/g) ?? []).toHaveLength(1);
+    expect(readme).not.toContain('demo/airgap-readme-side-by-side.gif');
     expect(readme.toLowerCase()).not.toContain('coming soon');
     expect(readme.toLowerCase()).not.toContain('coming once');
   });
@@ -128,12 +129,6 @@ describe('web/data/build.mjs', () => {
       .filter(target => !/^(?:https?:|mailto:|#)/.test(target));
     const missing = targets.filter(target => {
       const pathname = decodeURIComponent(target.split('#')[0]);
-      if (
-        pathname === 'demo/airgap-readme-side-by-side.gif' &&
-        !fs.existsSync(path.join(ROOT, 'demo', 'recordings.json'))
-      ) {
-        return false;
-      }
       return !fs.existsSync(path.join(ROOT, pathname));
     });
     expect(missing).toEqual([]);

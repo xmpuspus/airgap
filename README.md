@@ -44,6 +44,16 @@ npm run android
 Choose **Try Offline Demo**, then tap a suggested question. This path needs no
 model file or support service.
 
+To create a branded telco starting point without cloning the full repository,
+use the published scaffolder.
+
+```bash
+npx create-airgap-bot support-app --template telco
+cd support-app
+npm install
+npm run android
+```
+
 For iOS, install CocoaPods dependencies and run the checked `Airgap` scheme.
 
 ```bash
