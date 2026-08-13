@@ -63,6 +63,9 @@ npm test -- --runInBand
 npm run journeys
 npm run kb:validate
 npm run server:test
+npm run signing:test
+npm run providers:validate
+npm run providers:swift:test
 npm run cli:pack:test
 npm run security:direct
 npm run recordings:validate
@@ -77,6 +80,12 @@ check that it passes startup. An unsigned compile cannot check Keychain access.
 For README or interface recordings, follow [`docs/recordings.md`](docs/recordings.md).
 Record from a committed application state, inspect the contact sheet and full loop, and update
 `demo/recordings.json` with the measured facts.
+
+For provider work, follow [`docs/provider-validation.md`](docs/provider-validation.md). Run the
+matching controlled scenario on a simulator or emulator, keep simulated model identities labeled
+`simulated/`, and run the target-device preflight before making a physical-provider claim. An
+unsigned iOS Simulator build checks compilation only; provider journeys need a normally signed
+Debug build so secure storage can open.
 
 When a change affects the site or mobile interface, capture the relevant widths,
 font sizes, and platform screens. Check keyboard focus, screen-reader labels,

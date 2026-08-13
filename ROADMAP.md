@@ -21,6 +21,13 @@ release evidence exists.
   command, playback speed, media facts, and loop review for all ten GIFs.
 - Public docs use checked local links and separate current guidance from historical plans.
 - Android and iOS native bridges compile in debug builds.
+- One debug-only manifest drives 13 controlled Apple and Android provider scenarios through the
+  native bridges, application routing, fallback, provenance, and visible app journey.
+- Swift and Kotlin parser checks run in CI. Local iOS Simulator and Android Emulator journeys write
+  machine-checked `simulated-provider` reports without claiming physical-device results.
+- A macOS Foundation Models probe and three fictional grounded cases can produce
+  `host-native-model` evidence when Apple Intelligence is available. The latest maintainer probe
+  reported `appleIntelligenceNotEnabled`, so this is not yet model-generation evidence.
 - Existing knowledge signing, encrypted storage, authenticated network access,
   deterministic actions, and encrypted outbox behavior stay in the same app.
 
@@ -50,6 +57,8 @@ release evidence exists.
 - Add config and knowledge schema migration contracts.
 - Add a device matrix that can block a release when a supported model identity
   has no current evaluation.
+- Keep reviewed provider reports as versioned release artifacts with explicit prompt-pack,
+  knowledge, device, OS-build, and model identity fields.
 
 ## Later, if measured results support it
 

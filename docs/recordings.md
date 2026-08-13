@@ -37,6 +37,11 @@ xcrun xctrace list devices
 Use `emulator`, `simulator`, or `physical-device` only when it matches the named target. A native
 bridge compile or simulator run is not physical-device provider evidence.
 
+Capture hardware and provider proof are separate fields. `evidenceClass` names the capture target.
+`providerEvidenceClass` names the answer path: `deterministic-runtime`, `simulated-provider`,
+`host-native-model`, or `target-device`. Follow [`provider-validation.md`](provider-validation.md)
+before recording a native-provider claim.
+
 ## Record the platform flows
 
 ```bash
@@ -67,6 +72,12 @@ Build the joint README asset only after both platform recordings use the same so
 ```bash
 node scripts/build-readme-gif.mjs --commit <40-character-commit>
 ```
+
+The current public GIFs use `providerId: demo` and
+`providerEvidenceClass: deterministic-runtime`. The provider scenario harness is debug-only and
+does not change that recorded path, so adding or extending a scenario does not by itself need a
+new GIF. Re-record when visible release behavior, the recording flow, the configured provider,
+model identity, source commit, capture target, or recorded facts change.
 
 ## Record industry fixtures
 

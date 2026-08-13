@@ -20,7 +20,7 @@ const excludedSegments = new Set([
   'tmp',
 ]);
 
-const directories = ['android', 'assets', 'examples', 'ios', 'scripts', 'src'];
+const directories = ['android', 'assets', 'examples', 'ios', 'scripts', 'src', 'validation'];
 const files = [
   '.editorconfig',
   '.eslintrc.js',
@@ -32,6 +32,7 @@ const files = [
   'airgap.schema.json',
   'app.json',
   'babel.config.js',
+  'docs/provider-validation.md',
   'index.js',
   'metro.config.js',
   'package-lock.json',
@@ -82,7 +83,9 @@ for (const file of files) {
   if (!trackedPaths.has(file)) {
     throw new Error(`Template source is not version controlled: ${file}`);
   }
-  await cp(join(repositoryRoot, file), join(templateRoot, file));
+  const destination = join(templateRoot, file);
+  await mkdir(dirname(destination), {recursive: true});
+  await cp(join(repositoryRoot, file), destination);
 }
 
 const packagePath = join(templateRoot, 'package.json');

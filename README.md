@@ -30,6 +30,9 @@ This GIF combines real Android 15 emulator and iPhone 17 Pro Simulator runs from
 the same source commit. Both use the deterministic `demo` provider. The footage
 does not prove Apple Foundation Models or Android system AI on a physical device.
 Exact capture metadata is in [`demo/recordings.json`](demo/recordings.json).
+The provider harness can also run controlled Apple and Android states through the native bridges
+and visible app journey. Those runs are labeled simulated provider evidence and are separate from
+the deterministic public GIFs.
 
 ## Get the first offline answer
 
@@ -245,12 +248,21 @@ shows exact answer provenance.
 | Seven fresh industry GIFs | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked | Production data, actions, approvals, or compliance |
 | iOS native compile        | Generic iOS Simulator                    | Foundation Models bridge compiles                        | Eligible physical-device runtime                   |
 | Android debug compile     | Android app, min SDK 24                  | ML Kit beta2 bridge compiles                             | Supported AICore device runtime                    |
+| iOS provider scenario     | iOS 26.4 simulator                       | Native bridge, routing, answer, provenance, and UI       | Apple model output or physical-device behavior     |
+| Android provider scenario | Android 15 emulator                      | Native bridge, routing, answer, provenance, and UI       | AICore or Gemini Nano model output                 |
+| Apple host probe          | Apple-silicon Mac, macOS 26              | Framework and environment availability                   | iPhone behavior; latest probe found AI disabled    |
 
 Every kept GIF records source commit, provider ID, model identity, device,
 operating system, evidence class, capture command, dimensions, duration, byte
 size, public playback speed, and loop review. Label simulator and emulator footage
 by its actual target, never as a physical device. Run `npm run recordings:validate`
 to check all ten assets.
+
+Provider reports add a separate class for what generated the answer:
+`deterministic-runtime`, `simulated-provider`, `host-native-model`, or `target-device`. Run
+`npm run providers:validate` to check the scenario manifest, or follow
+[`docs/provider-validation.md`](docs/provider-validation.md) to run the full app scenario, Apple
+host probe, physical-device preflight, and optional downloaded-model placement.
 
 ## Current limits
 
@@ -281,6 +293,7 @@ to check all ten assets.
 - [`docs/observability.md`](docs/observability.md) lists diagnostics, telemetry fields, and privacy limits
 - [`docs/kb-studio.md`](docs/kb-studio.md) covers local knowledge authoring and validation
 - [`docs/recordings.md`](docs/recordings.md) gives the reproducible media evidence process
+- [`docs/provider-validation.md`](docs/provider-validation.md) explains provider scenarios, host and device checks, and evidence labels
 - [`SECURITY.md`](SECURITY.md) lists supported versions and private vulnerability reporting
 - [`SUPPORT.md`](SUPPORT.md) explains how to report a reproducible problem
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) gives the development and test workflow

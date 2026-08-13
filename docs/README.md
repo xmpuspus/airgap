@@ -42,6 +42,8 @@ reader does not need to infer which document applies. Start with the path that m
 
 ## Maintainers check evidence before publication
 
+- [`provider-validation.md`](provider-validation.md) gives the simulator scenarios, Apple host
+  probe, physical-device preflight, optional Android model placement, and report rules.
 - [`recordings.md`](recordings.md) gives the Android, iOS, joint, and industry recording process.
 - [`observability.md`](observability.md) lists diagnostic and telemetry fields and their privacy
   limits.

@@ -18,6 +18,14 @@ test('checks local documentation links in CI', () => {
   expect(workflow).toContain('npm run docs:check');
 });
 
+test('validates provider evidence and both native scenario parsers in CI', () => {
+  const workflow = fs.readFileSync(path.join(root, '.github', 'workflows', 'ci.yml'), 'utf8');
+
+  expect(workflow).toContain('npm run providers:validate');
+  expect(workflow).toContain('npm run providers:swift:test');
+  expect(workflow).toContain("./gradlew testDebugUnitTest --tests '*ProviderHarnessTest'");
+});
+
 test('declares the Ruby nkf compatibility gem that provides kconv', () => {
   const gemfile = fs.readFileSync(path.join(root, 'Gemfile'), 'utf8');
 

@@ -34,6 +34,17 @@ describe('packaged template', () => {
       await expect(
         fsp.access(path.join(templateRoot, 'ios', 'Airgap', 'AirgapSimulator.entitlements')),
       ).resolves.toBeUndefined();
+      for (const relativePath of [
+        'validation/provider-scenarios.json',
+        'ios/Airgap/ProviderHarness.swift',
+        'android/app/src/main/java/com/airgap/inference/ProviderHarness.kt',
+        'scripts/run-provider-scenario.mjs',
+        'scripts/provider-device-preflight.mjs',
+        'scripts/validate-provider-evidence.mjs',
+        'docs/provider-validation.md',
+      ]) {
+        await expect(fsp.access(path.join(templateRoot, relativePath))).resolves.toBeUndefined();
+      }
     } finally {
       await fsp.rm(sentinel, {force: true});
     }

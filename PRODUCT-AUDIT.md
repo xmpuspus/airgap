@@ -23,16 +23,16 @@ The repository includes the following parts.
 
 ## Readiness depends on the use case
 
-| Use case                                     | Repository state                     | Work an operator still owns                           |
-| -------------------------------------------- | ------------------------------------ | ----------------------------------------------------- |
-| Offline FAQs and troubleshooting             | Ready for evaluation and bounded POC | Replace and approve knowledge and test target devices |
-| Locations, hours, plans, and policy guidance | Ready for evaluation and bounded POC | Content ownership, expiry, escalation, accessibility  |
-| Account lookups and service requests         | Interface and queue contracts exist  | Identity, authorization, backend adapter, audit       |
-| Apple Foundation Models answers              | Bridge compiles                      | Eligible physical-device evaluation                   |
-| Android ML Kit Prompt API answers            | Bridge compiles                      | Listed physical-device evaluation and terms review    |
-| Downloaded GGUF answers                      | Runtime and integrity checks exist   | Model license, hosting, device matrix, prompt tests   |
-| Regulated or safety-sensitive customer use   | No compliance claim                  | Legal, privacy, security, clinical, and policy review |
-| Production operations                        | Reference contracts exist            | Monitoring, support, release, rollback, and recovery  |
+| Use case                                     | Repository state                       | Work an operator still owns                           |
+| -------------------------------------------- | -------------------------------------- | ----------------------------------------------------- |
+| Offline FAQs and troubleshooting             | Ready for evaluation and bounded POC   | Replace and approve knowledge and test target devices |
+| Locations, hours, plans, and policy guidance | Ready for evaluation and bounded POC   | Content ownership, expiry, escalation, accessibility  |
+| Account lookups and service requests         | Interface and queue contracts exist    | Identity, authorization, backend adapter, audit       |
+| Apple Foundation Models answers              | Bridge and controlled app journey pass | Eligible physical-device evaluation                   |
+| Android ML Kit Prompt API answers            | Bridge and controlled app journey pass | Listed physical-device evaluation and terms review    |
+| Downloaded GGUF answers                      | Runtime and integrity checks exist     | Model license, hosting, device matrix, prompt tests   |
+| Regulated or safety-sensitive customer use   | No compliance claim                    | Legal, privacy, security, clinical, and policy review |
+| Production operations                        | Reference contracts exist              | Monitoring, support, release, rollback, and recovery  |
 
 ## Evidence that exists
 
@@ -40,11 +40,19 @@ The repository includes the following parts.
   recording facts.
 - Journey runners check 100 single-turn cases, 100 conversations, and 66 industry cases.
 - CI builds Android and iOS debug targets and checks direct dependency advisories.
+- One manifest supplies 13 debug-only Apple and Android provider scenarios. Swift and Kotlin parse
+  it directly, and Maestro runs available or failure paths through the native bridge and visible UI.
+- The evidence validator distinguishes deterministic runtime, simulated provider, host-native
+  model, and target-device reports. Capture hardware remains a separate field.
+- The macOS Foundation Models probe loads the real framework. The 2026-08-13 maintainer run found
+  Apple Intelligence disabled, which is an environment observation and not a passing model run.
 - Every kept GIF records the source commit, device, OS, provider, model identity, capture command,
   duration, dimensions, byte size, public playback speed, evidence class, and loop review.
 
 See [`README.md`](README.md) for the current evidence table and
 [`demo/recordings.json`](demo/recordings.json) for exact media facts.
+Use [`docs/provider-validation.md`](docs/provider-validation.md) for the exact provider commands and
+the limits of each evidence class.
 
 ## Release gaps
 
