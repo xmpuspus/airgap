@@ -37,7 +37,9 @@
     "cli:pack:test": "npm run build-template --workspace create-airgap-bot && npm test --workspace create-airgap-bot -- --runInBand && npm pack --workspace create-airgap-bot --dry-run",
     "security:direct": "node scripts/check-direct-advisories.mjs",
     "recordings:rebuild": "node scripts/rebuild-recording-gifs.mjs",
-    "recordings:validate": "node scripts/validate-recordings.mjs"
+    "recordings:validate": "node scripts/validate-recordings.mjs",
+    "providers:scenarios": "node scripts/validate-provider-evidence.mjs --list",
+    "providers:validate": "node scripts/validate-provider-evidence.mjs"
   },
   "dependencies": {
     "@react-native-community/netinfo": "12.0.1",

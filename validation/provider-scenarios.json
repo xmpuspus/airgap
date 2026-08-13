@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "scenarios": [
+    {
+      "id": "available",
+      "platforms": [
+        "android",
+        "ios"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "AVAILABLE",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/google-gemini-nano"
+        },
+        "ios": {
+          "state": "available",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/apple-system-model"
+        }
+      },
+      "generation": {
+        "tokens": [
+          "Your approved support document says ",
+          "service can continue offline [1]."
+        ],
+        "text": "Your approved support document says service can continue offline [1]."
+      }
+    },
+    {
+      "id": "background-blocked",
+      "platforms": [
+        "android"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "AVAILABLE",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/google-gemini-nano"
+        }
+      },
+      "generation": {
+        "error": "background_blocked"
+      }
+    },
+    {
+      "id": "busy",
+      "platforms": [
+        "android",
+        "ios"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "AVAILABLE",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/google-gemini-nano"
+        },
+        "ios": {
+          "state": "available",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/apple-system-model"
+        }
+      },
+      "generation": {
+        "error": "busy"
+      }
+    },
+    {
+      "id": "cancelled",
+      "platforms": [
+        "android",
+        "ios"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "AVAILABLE",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/google-gemini-nano"
+        },
+        "ios": {
+          "state": "available",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/apple-system-model"
+        }
+      },
+      "generation": {
+        "error": "cancelled"
+      }
+    },
+    {
+      "id": "context-exceeded",
+      "platforms": [
+        "android",
+        "ios"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "AVAILABLE",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/google-gemini-nano"
+        },
+        "ios": {
+          "state": "available",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/apple-system-model"
+        }
+      },
+      "generation": {
+        "error": "context_exceeded"
+      }
+    },
+    {
+      "id": "device-not-eligible",
+      "platforms": [
+        "android",
+        "ios"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "UNAVAILABLE",
+          "reason": "unsupported_device"
+        },
+        "ios": {
+          "state": "unavailable",
+          "reason": "deviceNotEligible"
+        }
+      },
+      "generation": {
+        "error": "model_not_ready"
+      }
+    },
+    {
+      "id": "downloadable",
+      "platforms": [
+        "android"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "DOWNLOADABLE",
+          "modelIdentity": "simulated/google-gemini-nano"
+        }
+      },
+      "generation": {
+        "error": "model_not_ready"
+      },
+      "downloadProgress": [
+        0,
+        0.25,
+        0.75,
+        1
+      ]
+    },
+    {
+      "id": "downloading",
+      "platforms": [
+        "android"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "DOWNLOADING",
+          "modelIdentity": "simulated/google-gemini-nano"
+        }
+      },
+      "generation": {
+        "error": "model_not_ready"
+      },
+      "downloadProgress": [
+        0.1,
+        0.5,
+        0.9,
+        1
+      ]
+    },
+    {
+      "id": "generation-failed",
+      "platforms": [
+        "android",
+        "ios"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "AVAILABLE",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/google-gemini-nano"
+        },
+        "ios": {
+          "state": "available",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/apple-system-model"
+        }
+      },
+      "generation": {
+        "error": "generation_failed"
+      }
+    },
+    {
+      "id": "model-not-ready",
+      "platforms": [
+        "android",
+        "ios"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "UNAVAILABLE",
+          "reason": "model_not_ready"
+        },
+        "ios": {
+          "state": "unavailable",
+          "reason": "modelNotReady"
+        }
+      },
+      "generation": {
+        "error": "model_not_ready"
+      }
+    },
+    {
+      "id": "provider-disabled",
+      "platforms": [
+        "ios"
+      ],
+      "capabilities": {
+        "ios": {
+          "state": "unavailable",
+          "reason": "appleIntelligenceNotEnabled"
+        }
+      },
+      "generation": {
+        "error": "model_not_ready"
+      }
+    },
+    {
+      "id": "quota-exceeded",
+      "platforms": [
+        "android",
+        "ios"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "AVAILABLE",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/google-gemini-nano"
+        },
+        "ios": {
+          "state": "available",
+          "contextSize": 4096,
+          "modelIdentity": "simulated/apple-system-model"
+        }
+      },
+      "generation": {
+        "error": "quota_exceeded"
+      }
+    },
+    {
+      "id": "unsupported-locale",
+      "platforms": [
+        "android",
+        "ios"
+      ],
+      "capabilities": {
+        "android": {
+          "state": "UNAVAILABLE",
+          "reason": "unsupported_locale"
+        },
+        "ios": {
+          "state": "unavailable",
+          "reason": "unsupportedLocale"
+        }
+      },
+      "generation": {
+        "error": "unsupported_locale"
+      }
+    }
+  ]
+}
