@@ -5,7 +5,7 @@
 <h1 align="center">Airgap</h1>
 
 <p align="center">
-  An offline-first React Native starter kit for mobile customer support.
+  Offline-first customer support for React Native, with local knowledge, device AI, visible sources, and a recoverable action outbox.
 </p>
 
 <p align="center">
@@ -14,118 +14,167 @@
   <img src="https://img.shields.io/badge/License-MIT-0B1F33" alt="MIT License" />
 </p>
 
-Airgap combines local knowledge retrieval, optional on-device generation, visible
-answer sources, and an encrypted action outbox. Its default demo mode needs no
-model download and makes no support or model network request. The repository
-includes seven industry templates, a reference Node server, and a CLI that
-copies a version-matched template without downloading a mutable branch.
+Airgap is a starter kit for branded mobile support apps that must stay useful
+when a network is slow, unavailable, or intentionally blocked. It retrieves
+approved local documents first, then uses an operator-controlled answer provider
+to phrase the result. Models do not supply company facts. The bundled documents
+do.
 
-![Airgap running on Android and iOS](demo/airgap-readme-side-by-side.gif)
+The default demo makes no model request and needs no download. It lets a new
+contributor check retrieval, citations, privacy status, and the interface before
+choosing an inference provider or connecting a backend.
 
-## Install from source
+![Airgap iOS simulator flow from provider readiness to a cited offline answer](demo/airgap-demo-ios.gif)
 
-The `create-airgap-bot` npm release is not published from this candidate branch.
-The current checked path builds and runs the packaged CLI from a clone.
+This GIF is a real iPhone 17 Pro Simulator run of the deterministic `demo`
+provider. It is not physical-device proof of Apple Foundation Models. Exact
+capture metadata is in [`demo/recordings.json`](demo/recordings.json).
+
+## Get the first offline answer
+
+Install Node.js 22.11 or newer, JDK 17, and Android SDK 36. Then run these
+commands.
 
 ```bash
-git clone https://github.com/xmpuspus/airgap.git
-cd airgap
-npm ci
-npm run prepack --workspace create-airgap-bot
-npx create-airgap-bot support-app --template telco
-cd support-app
+git clone https://github.com/xmpuspus/airgap.git && cd airgap
 npm ci
 npm run android
 ```
 
-Use `npm run ios` for the iOS Simulator after running `bundle install` at the
-repository root and `bundle exec pod install` in `ios/`.
+Choose **Try Offline Demo**, then tap a suggested question. This path needs no
+model file or support service.
 
-The development toolchain is Node.js 22.11 or newer, JDK 17 and Android SDK 36
-for Android, and Xcode with CocoaPods for iOS. The new app starts in demo
-mode, so the first run does not need a model file.
+For iOS, install CocoaPods dependencies and run the checked `Airgap` scheme.
 
-## Operating modes
-
-| Mode             | Answer path                                               | Network behavior                                                               |
-| ---------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `demo`           | Formats retrieved local documents without loading a model | No generation request. Sync and real actions stay off unless set up separately |
-| `offline-only`   | Uses the configured `llama.rn` model and local knowledge  | Does not use cloud generation                                                  |
-| `prefer-offline` | Tries local generation, then an enabled cloud service     | Requests a fresh access token only when cloud fallback runs                    |
-| `prefer-online`  | Tries an enabled cloud service, then the local model      | Falls back to the device when cloud generation fails                           |
-
-The app header reports Demo, Local, Cloud, or Offline from runtime state. Answer
-cards show whether a response came from local knowledge, local generation,
-cloud generation, or an action result.
-
-## What is available
-
-| Area             | Repository behavior                                                                       | Operator work                                                   |
-| ---------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Local data       | Random keys protect separate encrypted MMKV stores                                        | Define device eligibility and backup policy                     |
-| Knowledge        | Retrieval, source details, signed updates, and rollback                                   | Host bundles and protect signing keys                           |
-| Generation       | Demo formatting, `llama.rn`, and optional cloud routing                                   | Pin model URL, size, and SHA-256. Test target devices           |
-| Actions          | Configured routes, idempotency keys, encrypted queue, receipts, Retry and Remove controls | Supply authorization policy and production backend methods      |
-| Authentication   | An asynchronous token-provider interface obtains a fresh token per request                | Install the identity-provider-specific token source             |
-| Reference server | Bearer checks, bounded bodies, rate headers, signed bundles, and health                   | Add durable limits, monitoring, TLS, and production data        |
-| Privacy controls | Runtime privacy facts and full in-app data deletion                                       | Check platform backups and external-system retention            |
-| Scaffolding      | The CLI ships an allowlisted template inside its tarball                                  | Review native identifiers, signing, branding, and domain policy |
-
-Airgap does not include a hosted control plane, built-in identity-provider login,
-production account systems, or a claim of regulatory compliance.
-
-## Architecture
-
-```mermaid
-flowchart LR
-    U[User question] --> R[Local MiniSearch retrieval]
-    R --> P{Configured response mode}
-    P -->|demo| D[Document formatter]
-    P -->|local| L[llama.rn]
-    P -->|cloud| C[Authenticated cloud endpoint]
-    D --> A[Answer and source details]
-    L --> A
-    C --> A
-    U --> T{Configured action?}
-    T -->|online| B[Authenticated backend]
-    T -->|offline| Q[Encrypted outbox]
-    Q --> B
-    S[Signed knowledge bundle] --> V[Length, hash, key, signature, schema]
-    V -->|valid| R
+```bash
+npm ci && bundle install
+cd ios && bundle exec pod install && cd ..
+npm run ios
 ```
 
-The central pipeline is in [`src/services/orchestrator.ts`](src/services/orchestrator.ts).
-Generation routing lives in [`src/services/llmRouter.ts`](src/services/llmRouter.ts),
-network access in [`src/services/backendConnector.ts`](src/services/backendConnector.ts),
-and bundle checks in [`src/services/bundleVerifier.ts`](src/services/bundleVerifier.ts).
-See [`docs/sync-architecture.md`](docs/sync-architecture.md) for the complete
-update sequence.
+Compile Apple Foundation Models support with Xcode 26 or newer. The
+app still deploys to iOS 15.1 and reports the Apple provider as unavailable on
+older or ineligible devices.
 
-## Security boundary
+## One answer pipeline, five providers
 
-- Secure storage must open before app services can access user data. Startup
-  fails closed if the platform key store is unavailable.
-- Mobile configuration has no bearer token or OAuth client secret. The app
-  asks the installed provider for a token on every authenticated request.
-- The app accepts a knowledge update only when its exact bytes match the declared
-  length, SHA-256 digest, pinned key ID, Ed25519 signature, and bundle schema.
-- A failed update leaves the last valid knowledge bundle in place.
-- The reference server reads secrets from its environment. Its in-memory rate
-  limiter supports only a single-node reference deployment.
-- Rooted or jailbroken devices, a stolen signing key, a compromised backend, and
-  a malicious model source stay operator risks.
+Airgap routes every model-made answer through the same provider contract. Before each
+request, Airgap reads the current device state, applies operator policy, and
+tries permitted providers in priority order. Cancellation, failure reasons,
+model identity, timing, and answer provenance use one result shape.
 
-Report suspected vulnerabilities through
-[GitHub private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new).
-Do not include a secret or exploit detail in a public issue. See
-[`SECURITY.md`](SECURITY.md) for the supported-version and response policy.
+| Provider                | Runs where                                  | Data path               | Current state in this repository                            |
+| ----------------------- | ------------------------------------------- | ----------------------- | ----------------------------------------------------------- |
+| Apple on-device model   | iOS 26+, Apple Intelligence eligible device | On device               | Swift bridge, streaming, cancellation, readiness checks     |
+| Android system AI       | Android API 26+, supported AICore device    | On device               | ML Kit Prompt API beta2 bridge, download, warmup, streaming |
+| Downloaded Airgap model | iOS 15.1+ and Android API 24+               | On device               | `llama.rn`, pinned file size and SHA-256                    |
+| Cloud service           | Either platform                             | Operator endpoint       | Off by default, needs policy and a fresh access token       |
+| Document answers        | Either platform                             | Deterministic on device | Default demo provider, no model request                     |
 
-## Industry templates
+[Apple Foundation Models](https://developer.apple.com/documentation/FoundationModels)
+needs an Apple Intelligence-capable device. The Android code uses
+[ML Kit GenAI Prompt API](https://developers.google.com/ml-kit/genai/prompt/android/get-started),
+which needs API 26, a supported device, and an available or downloadable
+Gemini Nano feature.
 
-Each template has a configuration file and local knowledge documents under
-[`examples/`](examples/). The runtime stays the same across templates.
+### Modes decide which chain is active
 
-| Industry         | Example                                                    | Current recording                                              |
+| Mode             | Selection rule                                                                 |
+| ---------------- | ------------------------------------------------------------------------------ |
+| `demo`           | Uses only `demo`, regardless of the configured production provider order       |
+| `offline-only`   | Excludes cloud and tries permitted local providers in priority order           |
+| `prefer-offline` | Uses the configured order, normally system model, downloaded model, then cloud |
+| `prefer-online`  | Uses the configured order, normally cloud before local providers               |
+
+The operator order takes precedence over a user routing preference. A busy,
+unsupported, quota-limited, background-blocked, oversized, or failed provider
+can fall through to the next permitted provider. Cancellation does not fall
+through and cannot create a second answer.
+
+### The interface explains four setup states
+
+| State           | What the person sees                 | Next action                                       |
+| --------------- | ------------------------------------ | ------------------------------------------------- |
+| Ready           | Provider is available now            | Continue                                          |
+| Download needed | The device can obtain the model      | Download, only when operator policy permits it    |
+| Downloading     | Current model transfer progress      | Keep the app open                                 |
+| Unavailable     | Plain reason and the remaining chain | Update, enable, or use another permitted provider |
+
+Onboarding shows only the next useful action. Settings shows the complete
+ordered chain, provider state, model identity, operating-system version, and
+operator policy result.
+
+## Operator policy is explicit
+
+`airgap.config.json` controls platform, domain, locale, OS floor, model
+downloads, cloud use, and provider priority.
+
+```json
+{
+  "llm": {
+    "mode": "offline-only",
+    "supportDomain": "telco",
+    "providers": [
+      {
+        "id": "apple-foundation-models",
+        "enabled": true,
+        "priority": 0,
+        "platform": "ios",
+        "minimumOsVersion": "26.0",
+        "locales": ["en", "en-US"],
+        "allowModelDownload": false,
+        "allowCloudFallback": false
+      },
+      {
+        "id": "llama-rn",
+        "enabled": true,
+        "priority": 10,
+        "platform": "all",
+        "allowModelDownload": true,
+        "allowCloudFallback": false
+      },
+      {
+        "id": "demo",
+        "enabled": true,
+        "priority": 30,
+        "platform": "all"
+      }
+    ]
+  }
+}
+```
+
+Unknown IDs, duplicate providers, explicit platform conflicts, and an empty
+enabled chain fail validation. The resolver enforces `minimumOsVersion` against
+fresh device-state data. A downloadable Android system model is not offered when
+`allowModelDownload` is false. For a cloud entry, `allowCloudFallback: false`
+removes it from the chosen chain.
+
+## What remains local
+
+- Airgap searches local documents before generation.
+- Apple, Android, downloaded-model, and demo answers keep prompt text and output
+  on the device during inference.
+- Conversations, the action outbox, user preferences, telemetry buffers, and
+  other application state use separate encrypted MMKV stores. Their random keys
+  live in the platform key store.
+- Telemetry is off by default and does not include customer text by default.
+- Cloud generation is off until an operator enables its provider, sets up
+  the endpoint, and installs an access-token provider.
+
+Android ML Kit processes prompts and outputs locally, but its terms state that
+the APIs can contact Google for updated models, fixes, compatibility data, and
+performance or usage metrics. Operators must show that in user notices and
+store disclosures. See [ML Kit terms and privacy](https://developers.google.com/ml-kit/terms).
+
+## Industry use depends on configuration and approval
+
+The runtime can support offline FAQs, troubleshooting, policies, locations,
+hours, eligibility guidance, and queued service requests across the seven
+included industries. The examples show that the same code can load
+different brands, prompts, actions, and documents.
+
+| Industry         | Configuration and knowledge                                | Recorded example                                               |
 | ---------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
 | Airline          | [`examples/airline/`](examples/airline/)                   | [`demo/industry-airline.gif`](demo/industry-airline.gif)       |
 | Banking          | [`examples/banking/`](examples/banking/)                   | [`demo/industry-banking.gif`](demo/industry-banking.gif)       |
@@ -135,71 +184,94 @@ Each template has a configuration file and local knowledge documents under
 | Telecom          | [`examples/telco/`](examples/telco/)                       | [`demo/industry-telco.gif`](demo/industry-telco.gif)           |
 | Water utility    | [`examples/water-utility/`](examples/water-utility/)       | [`demo/industry-water.gif`](demo/industry-water.gif)           |
 
-Use the CLI `--template` flag to start from one of these names. Edit
-`airgap.config.json` to change brand, colors, support copy, model policy, actions,
-and safety rules. Run `npm run kb:validate` after editing knowledge JSON.
+An operator still owns document accuracy, identity, authorization, production
+actions, escalation, retention, accessibility, legal review, and device fleet
+testing. The examples are fixtures and do not certify industry use. In
+particular,
+Google's ML Kit GenAI terms prohibit clients directed to people under 18 and
+prohibit clinical practice or medical advice. Review the
+[GenAI terms](https://developers.google.com/ml-kit/genai-terms) before
+enabling Android system AI.
 
-## Checked platforms
+## Architecture keeps models away from authority
 
-The project targets Android SDK 24 and newer and iOS 15.1 and newer. CI builds an
-Android debug app on Linux and an iOS Simulator debug app on macOS. The
-release-candidate process runs both native builds locally and
-records exact devices, operating systems, commands, and artifacts before a tag.
+```mermaid
+flowchart LR
+    Q[Support question] --> R[Local document retrieval]
+    R --> P[Operator provider policy]
+    P --> A[Apple on-device model]
+    P --> G[Android system AI]
+    P --> L[Downloaded llama.rn model]
+    P --> C[Authenticated cloud service]
+    P --> D[Deterministic document answer]
+    A --> V[Answer, model identity, sources]
+    G --> V
+    L --> V
+    C --> V
+    D --> V
+    Q --> T{Configured action route}
+    T -->|online| B[Authorized backend]
+    T -->|offline| O[Encrypted outbox]
+    O --> B
+```
 
-Automated repository checks include formatting, ESLint, TypeScript, Jest with
-coverage, domain journeys, knowledge validation, reference-server tests, CLI
-tarball installation, direct dependency advisory checks, recording validation,
-CodeQL, dependency review, and OpenSSF Scorecard.
+Models phrase retrieved information. They do not choose tools, authenticate a
+person, approve a sensitive action, or mutate an account. The deterministic
+tool router and operator backend keep those responsibilities.
 
-Device speed, memory use, model quality, and accessibility are hardware and
-content dependent. Do not treat the host fixtures in [`bench/`](bench/) as a
-physical-device performance claim.
+The main path starts in [`src/services/orchestrator.ts`](src/services/orchestrator.ts).
+Provider choice lives in
+[`src/services/inference/providerResolver.ts`](src/services/inference/providerResolver.ts),
+and [`src/components/chat/AnswerProvenance.tsx`](src/components/chat/AnswerProvenance.tsx)
+shows exact answer provenance.
 
-### Host fixtures measure developer paths only
+## Evidence labels state the checked behavior
 
-These measurements describe host fixtures. They make no physical-device claim.
-Run the benchmark scripts on named target hardware before using a result for planning.
+| Evidence                           | Target                  | Result                              | Unchecked behavior                            |
+| ---------------------------------- | ----------------------- | ----------------------------------- | --------------------------------------------- |
+| Fresh iOS demo GIF                 | iOS 26.4 simulator      | UI and answer checked               | Physical Apple model                          |
+| iOS native compile                 | Generic iOS Simulator   | Foundation Models bridge compiles   | Eligible physical-device runtime              |
+| Android debug compile              | Android app, min SDK 24 | ML Kit beta2 bridge compiles        | Supported AICore device runtime               |
+| Existing Android and industry GIFs | Android 15 emulator     | Demo journeys and templates checked | Android system AI or physical-device behavior |
 
-<!-- BENCH START -->
+Every kept GIF records source commit, provider ID, model identity, device,
+operating system, evidence class, capture command, dimensions, duration, byte
+size, and loop review. Label simulator and emulator footage by its actual target,
+never as a physical device. Run `npm run recordings:validate` to check all ten
+assets.
 
-| Device                  | Mode | Model                                         | First-token (p50 ms) | Tokens/sec (p50) | Cold load (ms) | Notes                |
-| ----------------------- | ---- | --------------------------------------------- | -------------------- | ---------------- | -------------- | -------------------- |
-| mac-host-gemma3-fixture | real | hf_bartowski_google_gemma-3-1b-it-Q4_K_M.gguf | 29                   | 84.5             | 610.8          | Gemma 3 host fixture |
-| mac-host-node           | demo | gemma-4-e2b-it-q3ks.gguf                      | 0.6                  | n/a (demo)       | n/a            | Host formatter       |
+## Current limits
 
-<!-- BENCH END -->
+- Physical-device evaluation for Apple Foundation Models and Android system AI
+  is still a release gate.
+- Android Prompt API is beta, foreground-only, quota-limited, device-limited,
+  and restricted to inputs under 4,000 tokens.
+- Apple and Android system model output can change after operating-system or
+  model updates. Prompt and retrieval evaluation must run against each supported
+  device and model identity.
+- The downloaded model is about 2.4 GB. Its latency, memory use, and answer
+  quality are device-dependent.
+- The reference server uses an in-memory rate limiter. Production deployments
+  need durable controls, monitoring, TLS termination, and real business systems.
+- Airgap is not a hosted control plane, identity provider, account system, or
+  claim of regulatory compliance.
 
-## Limitations
+## Documentation
 
-- Demo mode checks retrieval and presentation. Local model quality needs separate
-  device tests.
-- Airgap uses only `llama.rn` as a native inference adapter.
-- The reference server uses process memory for rate limits and sample data.
-- Real actions need an operator backend. Do not present the bundled mock
-  connector as an account system.
-- Cloud generation needs both an enabled cloud policy and an installed token
-  provider. Airgap does not embed a client secret.
-- Model files are public content, and Airgap does not encrypt them at rest. The
-  app checks their expected byte length and SHA-256 before use.
-- Security and accessibility checks in this repository do not replace a review
-  for a specific organization, jurisdiction, content set, and device fleet.
-
-[`ROADMAP.md`](ROADMAP.md) lists planned work and explicit non-goals.
-
-## Support and contribution
+- [`DEPLOYMENT.md`](DEPLOYMENT.md) covers native provider setup, signing, rollout, and rollback
+- [`CUSTOMIZATION.md`](CUSTOMIZATION.md) covers brand, knowledge, actions, and configuration fields
+- [`docs/hybrid-llm-design.md`](docs/hybrid-llm-design.md) explains provider routing and failure handling
+- [`docs/sync-architecture.md`](docs/sync-architecture.md) explains signed knowledge updates
+- [`docs/tool-calling.md`](docs/tool-calling.md) explains the deterministic action boundary
+- [`SECURITY.md`](SECURITY.md) lists supported versions and private vulnerability reporting
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) gives the development and test workflow
+- [`ROADMAP.md`](ROADMAP.md) lists release gates and planned work
 
 Use [GitHub Issues](https://github.com/xmpuspus/airgap/issues) for reproducible
-bugs and scoped feature requests. [`SUPPORT.md`](SUPPORT.md) explains what the
-maintainer can support and what belongs with React Native, `llama.rn`, or an
-operator's backend team.
-
-Contributions are welcome. Start with [`CONTRIBUTING.md`](CONTRIBUTING.md), add a
-failing test for behavior changes, and run the checks that match the files you
-changed. [`GOVERNANCE.md`](GOVERNANCE.md) documents project decisions and
-maintainer responsibilities. [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) governs
-participation.
+bugs and scoped feature requests. Report vulnerabilities through
+[private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new).
 
 ## License
 
-Airgap is available under the [MIT License](LICENSE). Model files and connected
-services keep their own licenses and terms.
+Airgap is available under the [MIT License](LICENSE). Apple, Google, model files,
+and connected services keep their own terms and licenses.

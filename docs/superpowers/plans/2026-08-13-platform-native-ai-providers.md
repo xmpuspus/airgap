@@ -541,27 +541,27 @@ Only stage GIF paths that the recording process regenerated and checked.
 - Consumes: actual checked behavior and recording metadata from Tasks 1 through 7.
 - Produces: public setup, fallback, support, privacy, terms, evidence, and troubleshooting instructions matching the checked code.
 
-- [ ] **Step 1: Rewrite the README around the first successful offline answer**
+- [x] **Step 1: Rewrite the README around the first successful offline answer**
 
-Add a short product definition, a three-command quick start, and the kept side-by-side GIF. Add an exact provider support table, fallback order, four setup states, privacy boundary, operator-policy example, device-evidence table, known limitations, and documentation links. State that system models phrase retrieved company information and are not knowledge sources.
+Add a short product definition, a three-command quick start, and the fresh iOS simulator GIF. Add an exact provider support table, fallback order, four setup states, privacy boundary, operator-policy example, device-evidence table, known limitations, and documentation links. State that system models phrase retrieved company information and are not knowledge sources.
 
-- [ ] **Step 2: Update deployment and architecture guidance**
+- [x] **Step 2: Update deployment and architecture guidance**
 
 Document Xcode 26/iOS 26 build requirements and Android API 26/ML Kit beta2 setup. Cover platform eligibility, model download, foreground and quota behavior, locale and domain policy, cloud authentication, and failure reasons. Add the physical-device test procedure, prompt/model drift evaluation, and rollback by disabling a provider entry.
 
-- [ ] **Step 3: Move provider work to the current roadmap section**
+- [x] **Step 3: Move provider work to the current roadmap section**
 
 Move Apple Foundation Models and Android AICore from Later to Now. Preserve LiteRT-LM benchmarking as later work. List physical-device evaluation and an operator integration as release gates.
 
-- [ ] **Step 4: Check public prose and formatting**
+- [x] **Step 4: Check public prose and formatting**
 
-Run: `python3 /Users/xavier/.claude/skills/deslop/references/deslop_lint.py README.md DEPLOYMENT.md ROADMAP.md docs/hybrid-llm-design.md docs/superpowers/specs/2026-08-13-platform-native-ai-providers-design.md docs/superpowers/plans/2026-08-13-platform-native-ai-providers.md`
+Run the prose checker with `--file <path> --mode prose` for `README.md`, `DEPLOYMENT.md`, `ROADMAP.md`, `docs/hybrid-llm-design.md`, and the design specification.
 
 Run: `npx prettier --check README.md DEPLOYMENT.md ROADMAP.md docs/hybrid-llm-design.md docs/superpowers/specs/2026-08-13-platform-native-ai-providers-design.md docs/superpowers/plans/2026-08-13-platform-native-ai-providers.md`
 
 Expected: both commands PASS.
 
-- [ ] **Step 5: Commit public documentation**
+- [x] **Step 5: Commit public documentation**
 
 ```bash
 git add README.md DEPLOYMENT.md ROADMAP.md docs/hybrid-llm-design.md
