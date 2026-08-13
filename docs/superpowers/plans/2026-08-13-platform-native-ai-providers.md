@@ -38,7 +38,7 @@
 - Produces: `InferenceProviderId`, `ProviderState`, `ProviderFailureReason`, `InferenceCapabilities`, `InferenceRequest`, `InferenceResult`, `InferenceRunStats`, `InferenceProvider`, `ProviderPolicy`, `resolveProviderChain()`, and `generateWithProviders()`.
 - `InferenceProvider.getCapabilities()` returns a fresh `Promise<InferenceCapabilities>`; `generate()` returns `Promise<InferenceResult>`; `cancel(requestId)` returns `Promise<void>`; `getLastRunStats()` returns `InferenceRunStats | null`.
 
-- [ ] **Step 1: Write the failing resolver tests**
+- [x] **Step 1: Write the failing resolver tests**
 
 ```ts
 test('uses ready providers in operator priority order', async () => {
@@ -58,13 +58,13 @@ test('offline-only excludes cloud even when it is first', async () => {
 });
 ```
 
-- [ ] **Step 2: Run the tests and confirm the resolver is missing**
+- [x] **Step 2: Run the tests and confirm the resolver is missing**
 
 Run: `npm test -- --runInBand __tests__/inference-provider-resolver.test.ts`
 
 Expected: FAIL because `src/services/inference/providerResolver.ts` does not exist.
 
-- [ ] **Step 3: Implement the minimal contract and resolver**
+- [x] **Step 3: Implement the minimal contract and resolver**
 
 ```ts
 export async function generateWithProviders(
@@ -87,13 +87,13 @@ export async function generateWithProviders(
 
 Implement literal domain, platform, locale, enabled, priority, and routing-mode filters. Reject a second concurrent request to the same provider with `busy`, and forward cancellation to the active provider.
 
-- [ ] **Step 4: Run the resolver tests**
+- [x] **Step 4: Run the resolver tests**
 
 Run: `npm test -- --runInBand __tests__/inference-provider-resolver.test.ts`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit the resolver**
+- [x] **Step 5: Commit the resolver**
 
 ```bash
 git add src/services/inference/types.ts src/services/inference/providerResolver.ts __tests__/inference-provider-resolver.test.ts
@@ -122,7 +122,7 @@ git commit -m "Add policy-controlled inference resolution"
 - Consumes: `InferenceProviderId` from Task 1.
 - Produces: `LlmProviderConfig`, `defaultProviderPolicy(mode, platform)`, and validated `llm.providers` entries with `enabled`, `priority`, `platform`, domain filters, `minimumOsVersion`, locale filters, `allowModelDownload`, and `allowCloudFallback`.
 
-- [ ] **Step 1: Add failing validation and compatibility tests**
+- [x] **Step 1: Add failing validation and compatibility tests**
 
 ```ts
 test('rejects duplicate inference providers', () => {
@@ -139,13 +139,13 @@ test('keeps legacy configurations on their current provider chain', () => {
 
 Add literal tests for unknown IDs, an empty enabled chain, and explicit wrong-platform entries.
 
-- [ ] **Step 2: Run the validation tests and confirm they fail**
+- [x] **Step 2: Run the validation tests and confirm they fail**
 
 Run: `npm test -- --runInBand __tests__/config-validation.test.ts`
 
 Expected: FAIL because provider-list validation and defaults do not exist.
 
-- [ ] **Step 3: Add typed config, schema constraints, and system-first examples**
+- [x] **Step 3: Add typed config, schema constraints, and system-first examples**
 
 ```ts
 export interface LlmProviderConfig {
@@ -164,13 +164,13 @@ export interface LlmProviderConfig {
 
 Keep configs without `providers` valid. Add `apple-foundation-models`, `android-aicore`, `llama-rn`, and `demo` to the sample chain; keep `cloud` disabled in the public demo config unless its existing authenticated endpoint is configured.
 
-- [ ] **Step 4: Run config and knowledge checks**
+- [x] **Step 4: Run config and knowledge checks**
 
 Run: `npm test -- --runInBand __tests__/config-validation.test.ts && npm run kb:validate`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit configuration support**
+- [x] **Step 5: Commit configuration support**
 
 ```bash
 git add src/config/loader.ts src/config/validate.ts airgap.schema.json airgap.config.json examples/airline/airgap.config.json examples/banking/airgap.config.json examples/electric-utility/airgap.config.json examples/healthcare/airgap.config.json examples/insurance/airgap.config.json examples/telco/airgap.config.json examples/water-utility/airgap.config.json __tests__/config-validation.test.ts
@@ -195,7 +195,7 @@ git commit -m "Configure ordered inference providers"
 - Consumes: provider contract and config policy from Tasks 1 and 2; existing `llmService`, `cloudLlmService`, and `demoLlmService`.
 - Produces: `routeGeneration()` result `{text, source, providerId, modelIdentity, stats}`, async `generationAvailable()`, and audit fields `providerId` and `modelIdentity`.
 
-- [ ] **Step 1: Write failing routing and provenance tests**
+- [x] **Step 1: Write failing routing and provenance tests**
 
 ```ts
 expect(await routeGeneration('instructions', 'grounded prompt')).toMatchObject({
@@ -211,13 +211,13 @@ expect(getProvenanceView({source: 'llm', providerId: 'apple-foundation-models'})
 
 Add a test proving persisted message audit keeps both identity fields.
 
-- [ ] **Step 2: Run the focused tests and confirm the missing metadata**
+- [x] **Step 2: Run the focused tests and confirm the missing metadata**
 
 Run: `npm test -- --runInBand __tests__/demo-mode.test.ts __tests__/components/answer-provenance.test.tsx`
 
 Expected: FAIL because route and provenance results omit provider identity.
 
-- [ ] **Step 3: Wrap existing services and refactor routing**
+- [x] **Step 3: Wrap existing services and refactor routing**
 
 ```ts
 const providers: InferenceProvider[] = [
@@ -231,13 +231,13 @@ const providers: InferenceProvider[] = [
 
 Use the resolver for every generation. Replace synchronous availability guards in the orchestrator with `await generationAvailable()`. Copy provider and model identity into successful LLM/tool audit objects and leave non-model responses unchanged.
 
-- [ ] **Step 4: Run routing, chat, and provenance tests**
+- [x] **Step 4: Run routing, chat, and provenance tests**
 
 Run: `npm test -- --runInBand __tests__/demo-mode.test.ts __tests__/llm-service.test.ts __tests__/components/answer-provenance.test.tsx`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit router integration**
+- [x] **Step 5: Commit router integration**
 
 ```bash
 git add src/services/inference/existingProviders.ts src/services/llmRouter.ts src/services/orchestrator.ts src/types/chat.ts src/hooks/useChat.ts src/components/chat/AnswerProvenance.tsx __tests__/demo-mode.test.ts __tests__/components/answer-provenance.test.tsx
@@ -259,7 +259,7 @@ git commit -m "Route generation through provider contracts"
 - Consumes: `InferenceProvider` and normalized errors from Task 1.
 - Produces: `appleFoundationModelsProvider`, native methods `getCapabilities`, `generate`, and `cancel`, and `AirgapInferenceToken` events keyed by `requestId`.
 
-- [ ] **Step 1: Write failing adapter behavior tests**
+- [x] **Step 1: Write failing adapter behavior tests**
 
 ```ts
 test('maps an ineligible Apple device without sending a prompt', async () => {
@@ -274,13 +274,13 @@ test('maps an ineligible Apple device without sending a prompt', async () => {
 
 Add tests for `appleIntelligenceNotEnabled`, `modelNotReady`, streaming snapshots converted to deltas, cancellation, and context errors.
 
-- [ ] **Step 2: Run the Apple tests and confirm the adapter is missing**
+- [x] **Step 2: Run the Apple tests and confirm the adapter is missing**
 
 Run: `npm test -- --runInBand __tests__/apple-foundation-models-provider.test.ts`
 
 Expected: FAIL because the provider module does not exist.
 
-- [ ] **Step 3: Implement the TypeScript and Swift bridge**
+- [x] **Step 3: Implement the TypeScript and Swift bridge**
 
 ```swift
 #if canImport(FoundationModels)
@@ -301,7 +301,7 @@ final class AppleFoundationModelsModule: RCTEventEmitter {
 
 Create a new `LanguageModelSession(instructions:)` per request. Iterate `streamResponse(to:)`, emit only the suffix added since the preceding snapshot, store the active `Task` by request ID, and clear it after success, failure, or cancellation. Report `contextSize` and a stable OS/model label when the framework exposes them.
 
-- [ ] **Step 4: Run the Apple adapter test and compile for an iOS simulator**
+- [x] **Step 4: Run the Apple adapter test and compile for an iOS simulator**
 
 Run: `npm test -- --runInBand __tests__/apple-foundation-models-provider.test.ts`
 

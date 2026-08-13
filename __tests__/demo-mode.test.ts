@@ -15,7 +15,13 @@ import {
   formatReferenceAsReply,
   demoLlmService,
 } from '../src/services/demoLlmService';
-import {resolveConfigMode, setUserMode, getMode, routeGeneration} from '../src/services/llmRouter';
+import {
+  resolveConfigMode,
+  setUserMode,
+  getMode,
+  routeGeneration,
+  getInferenceProviders,
+} from '../src/services/llmRouter';
 import {buildUserMessage} from '../src/utils/promptBuilder';
 import type {KBDocument} from '../src/types/knowledge';
 import {clearConversationHistory, processMessage} from '../src/services/orchestrator';
@@ -161,6 +167,12 @@ describe('llmRouter mode resolution', () => {
       providerId: 'demo',
       modelIdentity: 'document-formatter-v1',
     });
+  });
+
+  it('registers the Apple system provider', () => {
+    expect(getInferenceProviders().map(provider => provider.id)).toContain(
+      'apple-foundation-models',
+    );
   });
 });
 

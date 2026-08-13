@@ -9,6 +9,7 @@ import type {
 } from './inference/types';
 import {generateWithProviders, resolveProviderChain} from './inference/providerResolver';
 import {createExistingProviders} from './inference/existingProviders';
+import {appleFoundationModelsProvider} from './inference/appleFoundationModelsProvider';
 import {cloudLlmService} from './cloudLlmService';
 import {connectivityService} from './connectivityService';
 import {llmService} from './llmService';
@@ -35,7 +36,7 @@ function isUserMode(value: unknown): value is UserMode {
 const userPreferences = () => getSecureStore('user-prefs');
 const USER_LLM_MODE_KEY = 'user-llm-mode';
 let requestSequence = 0;
-let inferenceProviders = createExistingProviders();
+let inferenceProviders = [appleFoundationModelsProvider, ...createExistingProviders()];
 
 export function registerInferenceProvider(provider: InferenceProvider): void {
   inferenceProviders = [
