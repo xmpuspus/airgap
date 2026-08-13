@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "airline-baggage",
+      "systemPrompt": "Answer only from the approved document. Cite it as [1].",
+      "question": "Can I carry a power bank in checked baggage?",
+      "approvedDocument": "[1] Northwind Air permits power banks only in cabin baggage. Terminals must be protected from short circuits.",
+      "promptPackVersion": "host-eval-v1",
+      "knowledgeVersion": "fictional-support-v1"
+    },
+    {
+      "id": "telco-no-signal",
+      "systemPrompt": "Answer only from the approved document. Cite it as [1].",
+      "question": "My phone has no signal. What should I try first?",
+      "approvedDocument": "[1] Contoso Mobile asks customers to toggle airplane mode on for 10 seconds, turn it off, and then check signal bars.",
+      "promptPackVersion": "host-eval-v1",
+      "knowledgeVersion": "fictional-support-v1"
+    },
+    {
+      "id": "water-restoration",
+      "systemPrompt": "Answer only from the approved document. Cite it as [1].",
+      "question": "When will water service return after the repair?",
+      "approvedDocument": "[1] Fabrikam Water expects service to return within two hours after repair completion. Temporary discoloration can clear after running a cold tap for five minutes.",
+      "promptPackVersion": "host-eval-v1",
+      "knowledgeVersion": "fictional-support-v1"
+    }
+  ]
+}

@@ -40,7 +40,9 @@
     "recordings:validate": "node scripts/validate-recordings.mjs",
     "providers:scenarios": "node scripts/validate-provider-evidence.mjs --list",
     "providers:validate": "node scripts/validate-provider-evidence.mjs",
-    "providers:swift:test": "swiftc ios/Airgap/ProviderHarness.swift scripts/provider-harness-swift-tests/main.swift -o \"${TMPDIR:-/tmp}/airgap-provider-harness-tests\" && \"${TMPDIR:-/tmp}/airgap-provider-harness-tests\" validation/provider-scenarios.json"
+    "providers:swift:test": "swiftc ios/Airgap/ProviderHarness.swift scripts/provider-harness-swift-tests/main.swift -o \"${TMPDIR:-/tmp}/airgap-provider-harness-tests\" && \"${TMPDIR:-/tmp}/airgap-provider-harness-tests\" validation/provider-scenarios.json",
+    "providers:apple:probe": "node scripts/evaluate-apple-host.mjs --probe",
+    "providers:apple:evaluate": "node scripts/evaluate-apple-host.mjs --require-available"
   },
   "dependencies": {
     "@react-native-community/netinfo": "12.0.1",
