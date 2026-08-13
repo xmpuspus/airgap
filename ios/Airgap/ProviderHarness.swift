@@ -49,14 +49,22 @@ struct ProviderHarnessResolvedGeneration {
 enum ProviderHarness {
   static let argumentName = "-AirgapProviderScenario"
 
-  static func load(
-    bundle: Bundle = .main,
-    arguments: [String] = CommandLine.arguments
-  ) throws -> ProviderHarnessResolvedScenario {
+  static func requestedScenarioName(arguments: [String] = CommandLine.arguments) -> String? {
     guard
       let argumentIndex = arguments.firstIndex(of: argumentName),
       arguments.indices.contains(argumentIndex + 1)
     else {
+      return nil
+    }
+    let name = arguments[argumentIndex + 1].trimmingCharacters(in: .whitespacesAndNewlines)
+    return name.isEmpty ? nil : name
+  }
+
+  static func load(
+    bundle: Bundle = .main,
+    arguments: [String] = CommandLine.arguments
+  ) throws -> ProviderHarnessResolvedScenario {
+    guard let scenarioName = requestedScenarioName(arguments: arguments) else {
       throw ProviderHarnessError.scenarioArgumentMissing
     }
     guard let url = bundle.url(forResource: "provider-scenarios", withExtension: "json") else {
@@ -65,7 +73,7 @@ enum ProviderHarness {
 
     return try load(
       data: Data(contentsOf: url),
-      scenarioName: arguments[argumentIndex + 1],
+      scenarioName: scenarioName,
       platform: "ios"
     )
   }

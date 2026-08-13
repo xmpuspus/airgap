@@ -79,6 +79,7 @@ const ERROR_REASONS: Record<string, ProviderFailureReason> = {
   quota_exceeded: 'quota_exceeded',
   background_blocked: 'background_blocked',
   context_exceeded: 'context_exceeded',
+  unsupported_locale: 'unsupported_locale',
   model_not_ready: 'model_not_ready',
   busy: 'busy',
   cancelled: 'cancelled',

@@ -79,6 +79,32 @@ describe('Apple Foundation Models provider', () => {
     });
   });
 
+  test('keeps the simulated model identity in capabilities and results', async () => {
+    const native = {
+      getCapabilities: jest.fn(async () => ({
+        state: 'available' as const,
+        modelIdentity: 'simulated/apple-system-model',
+      })),
+      generate: jest.fn(async () => ({
+        text: 'Simulated answer',
+        modelIdentity: 'simulated/apple-system-model',
+      })),
+      cancel: jest.fn(async () => true),
+    };
+    const provider = createAppleFoundationModelsProvider(native, eventSource().source);
+
+    await expect(provider.getCapabilities()).resolves.toMatchObject({
+      modelIdentity: 'simulated/apple-system-model',
+    });
+    await expect(
+      provider.generate({
+        requestId: 'apple-simulated',
+        systemPrompt: 'system',
+        userMessage: 'user',
+      }),
+    ).resolves.toMatchObject({modelIdentity: 'simulated/apple-system-model'});
+  });
+
   test.each([
     ['context_exceeded', 'context_exceeded'],
     ['unsupported_locale', 'unsupported_locale'],

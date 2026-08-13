@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {Platform} from 'react-native';
 import {config} from '../config/loader';
-import {getInferenceProviders} from '../services/llmRouter';
+import {getInferenceProviders, getMode} from '../services/llmRouter';
 import type {AndroidDownloadProgress} from '../services/inference/androidAicoreProvider';
 import {
   readConfiguredProviderCapabilities,
@@ -63,10 +63,7 @@ export function useInferenceProviders() {
     const capabilities = await readConfiguredProviderCapabilities(
       currentPlatform(),
       registered,
-      selectProviderEntriesForMode(
-        config.llm?.mode ?? 'prefer-offline',
-        configuredEntries(registered),
-      ),
+      selectProviderEntriesForMode(getMode(), configuredEntries(registered)),
     );
     if (mounted.current) {
       setProviders(capabilities);

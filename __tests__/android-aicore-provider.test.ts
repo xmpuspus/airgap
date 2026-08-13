@@ -125,6 +125,7 @@ describe('Android AICore provider', () => {
     ['quota_exceeded', 'quota_exceeded'],
     ['background_blocked', 'background_blocked'],
     ['context_exceeded', 'context_exceeded'],
+    ['unsupported_locale', 'unsupported_locale'],
     ['model_not_ready', 'model_not_ready'],
     ['cancelled', 'cancelled'],
     ['generation_failed', 'generation_failed'],

@@ -1,6 +1,7 @@
 package com.airgap.inference
 
 import android.os.Build
+import com.airgap.BuildConfig
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -21,6 +22,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AndroidAicoreModule(
@@ -33,8 +35,26 @@ class AndroidAicoreModule(
 
   override fun getName(): String = "AndroidAicoreModule"
 
+  override fun getConstants(): MutableMap<String, Any> {
+    val scenarioName = harnessScenarioName()
+    return if (scenarioName == null) mutableMapOf() else mutableMapOf("harnessScenario" to scenarioName)
+  }
+
   @ReactMethod
   fun getCapabilities(promise: Promise) {
+    val harness = loadHarnessScenario(promise) ?: if (harnessScenarioName() != null) return else null
+    if (harness != null) {
+      promise.resolve(
+        Arguments.createMap().apply {
+          putString("state", harness.capability.state)
+          putString("osVersion", Build.VERSION.SDK_INT.toString())
+          harness.capability.contextSize?.let { putInt("contextSize", it) }
+          harness.capability.modelIdentity?.let { putString("modelIdentity", it) }
+          harness.capability.reason?.let { putString("reason", it) }
+        },
+      )
+      return
+    }
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
       promise.resolve(
         Arguments.createMap().apply {
@@ -66,6 +86,24 @@ class AndroidAicoreModule(
 
   @ReactMethod
   fun download(requestId: String, promise: Promise) {
+    val harness = loadHarnessScenario(promise) ?: if (harnessScenarioName() != null) return else null
+    if (harness != null) {
+      val job = scope.launch {
+        try {
+          harness.downloadProgress.forEach { progress ->
+            emitDownload(requestId, (progress * 100).toLong(), 100)
+            delay(10)
+          }
+          promise.resolve(true)
+        } catch (error: Throwable) {
+          reject(error, promise)
+        } finally {
+          activeJobs.remove(requestId)
+        }
+      }
+      replaceJob(requestId, job)
+      return
+    }
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
       promise.reject("unsupported_os", "Android system AI requires API 26 or newer")
       return
@@ -100,6 +138,11 @@ class AndroidAicoreModule(
 
   @ReactMethod
   fun warmup(promise: Promise) {
+    val harness = loadHarnessScenario(promise) ?: if (harnessScenarioName() != null) return else null
+    if (harness != null) {
+      promise.resolve(true)
+      return
+    }
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
       promise.reject("unsupported_os", "Android system AI requires API 26 or newer")
       return
@@ -125,6 +168,11 @@ class AndroidAicoreModule(
     val userMessage = request["userMessage"] as? String
     if (requestId == null || systemPrompt == null || userMessage == null) {
       promise.reject("generation_failed", "The inference request is incomplete")
+      return
+    }
+    val harness = loadHarnessScenario(promise) ?: if (harnessScenarioName() != null) return else null
+    if (harness != null) {
+      runHarnessGeneration(harness, requestId, promise)
       return
     }
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -209,6 +257,69 @@ class AndroidAicoreModule(
     activeJobs.put(requestId, job)?.cancel()
   }
 
+  private fun harnessScenarioName(): String? {
+    if (!BuildConfig.DEBUG) return null
+    return reactApplicationContext.currentActivity
+      ?.intent
+      ?.getStringExtra(HARNESS_SCENARIO_EXTRA)
+      ?.trim()
+      ?.takeIf(String::isNotEmpty)
+  }
+
+  private fun loadHarnessScenario(promise: Promise): ProviderHarnessResolvedScenario? {
+    val scenarioName = harnessScenarioName() ?: return null
+    return try {
+      val manifest = reactApplicationContext.assets
+        .open("provider-scenarios.json")
+        .bufferedReader()
+        .use { it.readText() }
+      ProviderHarness.load(manifest, scenarioName)
+    } catch (error: Throwable) {
+      promise.reject(
+        "generation_failed",
+        "The provider harness scenario could not be loaded",
+        error,
+      )
+      null
+    }
+  }
+
+  private fun runHarnessGeneration(
+    scenario: ProviderHarnessResolvedScenario,
+    requestId: String,
+    promise: Promise,
+  ) {
+    val job = scope.launch {
+      try {
+        scenario.generation.error?.let { errorCode ->
+          promise.reject(errorCode, "Provider harness scenario: $errorCode")
+          return@launch
+        }
+        scenario.generation.tokens.forEach { token ->
+          emitToken(requestId, token)
+          delay(10)
+        }
+        promise.resolve(
+          Arguments.createMap().apply {
+            putString(
+              "text",
+              scenario.generation.text ?: scenario.generation.tokens.joinToString(""),
+            )
+            putString(
+              "modelIdentity",
+              scenario.capability.modelIdentity ?: "simulated/google-gemini-nano",
+            )
+          },
+        )
+      } catch (error: Throwable) {
+        reject(error, promise)
+      } finally {
+        activeJobs.remove(requestId)
+      }
+    }
+    replaceJob(requestId, job)
+  }
+
   private fun emitToken(requestId: String, token: String) {
     emit(
       "AirgapInferenceToken",
@@ -271,6 +382,7 @@ class AndroidAicoreModule(
     }
 
   companion object {
+    private const val HARNESS_SCENARIO_EXTRA = "airgapProviderScenario"
     private const val MAX_INPUT_TOKENS = 4_000
     private const val MIN_OUTPUT_TOKENS = 64
     private const val DEFAULT_OUTPUT_TOKENS = 512

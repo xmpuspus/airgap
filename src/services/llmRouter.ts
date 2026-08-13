@@ -11,6 +11,7 @@ import {generateWithProviders, resolveProviderChain} from './inference/providerR
 import {createExistingProviders} from './inference/existingProviders';
 import {appleFoundationModelsProvider} from './inference/appleFoundationModelsProvider';
 import {androidAicoreProvider} from './inference/androidAicoreProvider';
+import {providerHarnessActive} from './inference/providerHarness';
 import {cloudLlmService} from './cloudLlmService';
 import {connectivityService} from './connectivityService';
 import {llmService} from './llmService';
@@ -61,6 +62,7 @@ export function resolveConfigMode(llm: unknown): Mode {
 }
 
 export function getConfigMode(): Mode {
+  if (providerHarnessActive()) return 'prefer-offline';
   return resolveConfigMode(config.llm as LlmSection | undefined);
 }
 

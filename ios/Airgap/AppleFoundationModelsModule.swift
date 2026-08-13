@@ -19,11 +19,45 @@ final class AppleFoundationModelsModule: RCTEventEmitter {
     ["AirgapInferenceToken"]
   }
 
+  override func constantsToExport() -> [AnyHashable: Any]! {
+    #if DEBUG
+    if let scenarioName = ProviderHarness.requestedScenarioName() {
+      return ["harnessScenario": scenarioName]
+    }
+    #endif
+    return [:]
+  }
+
   @objc(getCapabilities:rejecter:)
   func getCapabilities(
     _ resolve: RCTPromiseResolveBlock,
     rejecter reject: RCTPromiseRejectBlock
   ) {
+    #if DEBUG
+    if ProviderHarness.requestedScenarioName() != nil {
+      do {
+        let scenario = try ProviderHarness.load()
+        var result: [String: Any] = [
+          "state": scenario.capability.state,
+          "osVersion": UIDevice.current.systemVersion,
+        ]
+        if let contextSize = scenario.capability.contextSize {
+          result["contextSize"] = contextSize
+        }
+        if let modelIdentity = scenario.capability.modelIdentity {
+          result["modelIdentity"] = modelIdentity
+        }
+        if let reason = scenario.capability.reason {
+          result["reason"] = reason
+        }
+        resolve(result)
+      } catch {
+        reject("generation_failed", "The provider harness scenario could not be loaded", error)
+      }
+      return
+    }
+    #endif
+
     #if canImport(FoundationModels)
     if #available(iOS 26.0, *) {
       let model = SystemLanguageModel.default
@@ -73,6 +107,22 @@ final class AppleFoundationModelsModule: RCTEventEmitter {
       reject("generation_failed", "The inference request is incomplete", nil)
       return
     }
+
+    #if DEBUG
+    if ProviderHarness.requestedScenarioName() != nil {
+      do {
+        runHarnessGeneration(
+          try ProviderHarness.load(),
+          requestId: requestId,
+          resolve: resolve,
+          reject: reject
+        )
+      } catch {
+        reject("generation_failed", "The provider harness scenario could not be loaded", error)
+      }
+      return
+    }
+    #endif
 
     #if canImport(FoundationModels)
     if #available(iOS 26.0, *) {
@@ -150,6 +200,46 @@ final class AppleFoundationModelsModule: RCTEventEmitter {
     activeTasks.removeValue(forKey: requestId)
     taskLock.unlock()
   }
+
+  #if DEBUG
+  private func runHarnessGeneration(
+    _ scenario: ProviderHarnessResolvedScenario,
+    requestId: String,
+    resolve: @escaping RCTPromiseResolveBlock,
+    reject: @escaping RCTPromiseRejectBlock
+  ) {
+    let task = Task { [weak self] in
+      guard let self else { return }
+      defer { self.removeTask(requestId) }
+
+      if let errorCode = scenario.generation.error {
+        reject(errorCode, "Provider harness scenario: \(errorCode)", nil)
+        return
+      }
+
+      do {
+        for token in scenario.generation.tokens {
+          try Task.checkCancellation()
+          self.sendEvent(
+            withName: "AirgapInferenceToken",
+            body: ["requestId": requestId, "token": token]
+          )
+          try await Task.sleep(nanoseconds: 10_000_000)
+        }
+        try Task.checkCancellation()
+        resolve([
+          "text": scenario.generation.text ?? scenario.generation.tokens.joined(),
+          "modelIdentity": scenario.capability.modelIdentity ?? "simulated/apple-system-model",
+        ])
+      } catch is CancellationError {
+        reject("cancelled", "The inference request was cancelled", nil)
+      } catch {
+        reject("generation_failed", error.localizedDescription, error)
+      }
+    }
+    storeTask(task, requestId: requestId)
+  }
+  #endif
 
   private func modelIdentity() -> String {
     "apple-system-model/iOS-\(UIDevice.current.systemVersion)"
