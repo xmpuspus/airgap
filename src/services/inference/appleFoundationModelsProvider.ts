@@ -55,6 +55,8 @@ const AVAILABILITY_REASONS: Record<string, ProviderFailureReason> = {
 const ERROR_REASONS: Record<string, ProviderFailureReason> = {
   context_exceeded: 'context_exceeded',
   unsupported_locale: 'unsupported_locale',
+  busy: 'busy',
+  quota_exceeded: 'quota_exceeded',
   cancelled: 'cancelled',
   generation_failed: 'generation_failed',
 };

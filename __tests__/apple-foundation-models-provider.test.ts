@@ -82,6 +82,8 @@ describe('Apple Foundation Models provider', () => {
   test.each([
     ['context_exceeded', 'context_exceeded'],
     ['unsupported_locale', 'unsupported_locale'],
+    ['busy', 'busy'],
+    ['quota_exceeded', 'quota_exceeded'],
     ['cancelled', 'cancelled'],
     ['generation_failed', 'generation_failed'],
   ] as const)('normalizes native error %s', async (nativeCode, reason) => {
