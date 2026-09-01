@@ -140,7 +140,7 @@ dependencies {
     implementation("com.google.mlkit:genai-prompt:1.0.0-beta2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.json:json:20240303")
+    testImplementation("org.json:json:20260814")
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
