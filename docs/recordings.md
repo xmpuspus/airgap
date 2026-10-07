@@ -10,6 +10,7 @@ named target and a committed application state.
 
 - Node.js 22.11 or newer
 - FFmpeg and FFprobe
+- ImageMagick 7 for the text cards of the comparison GIF
 - Maestro with JDK 17
 - Android SDK platform tools for Android capture
 - Xcode and an installed iOS Simulator runtime for iOS capture

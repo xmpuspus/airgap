@@ -55,12 +55,7 @@
       "bytes": 3230696,
       "loopReviewed": true,
       "playbackSpeed": 4,
-      "omittedSourceRangesSeconds": [
-        [
-          107,
-          114
-        ]
-      ]
+      "omittedSourceRangesSeconds": [[107, 114]]
     },
     {
       "id": "readme-side-by-side",
@@ -76,10 +71,7 @@
       "mode": "demo",
       "providerId": "demo",
       "modelIdentity": "document-formatter-v1",
-      "evidenceClass": [
-        "emulator",
-        "simulator"
-      ],
+      "evidenceClass": ["emulator", "simulator"],
       "providerEvidenceClass": "deterministic-runtime",
       "captureCommand": "node scripts/build-readme-gif.mjs --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47",
       "config": "airgap.config.json",
@@ -92,6 +84,34 @@
       "loopReviewed": true,
       "playbackSpeed": 1,
       "omittedSourceRangesSeconds": []
+    },
+    {
+      "id": "showcase-government-comparison",
+      "kind": "showcase",
+      "output": "demo/airgap-showcase-government.gif",
+      "source": "tmp/recordings/0b838b9a0d24684ce177957a6b046edc9a4e5e06/showcase-government-comparison.mp4",
+      "contactSheet": "tmp/recordings/0b838b9a0d24684ce177957a6b046edc9a4e5e06/showcase-government-contact.png",
+      "script": "scripts/build-showcase-gif.mjs",
+      "sourceCommit": "0b838b9a0d24684ce177957a6b046edc9a4e5e06",
+      "platform": "android",
+      "os": "Android 15 API 35",
+      "device": "sdk_gphone64_arm64",
+      "mode": "offline-only",
+      "providerId": "llama-rn",
+      "modelIdentity": "gemma-4-e2b-it-q3ks.gguf",
+      "evidenceClass": "emulator",
+      "providerEvidenceClass": "virtual-device-model",
+      "captureCommand": "node scripts/build-showcase-gif.mjs --spec demo/showcase/government.json",
+      "config": "examples/government-services/airgap.config.json",
+      "capturedAt": "2026-10-07T12:18:27.656Z",
+      "width": 630,
+      "height": 680,
+      "fps": 10,
+      "durationSeconds": 76.7,
+      "bytes": 4770622,
+      "playbackSpeed": 1,
+      "omittedSourceRangesSeconds": [],
+      "loopReviewed": true
     },
     {
       "id": "industry-airline",
@@ -176,6 +196,38 @@
       "loopReviewed": true,
       "playbackSpeed": 4,
       "omittedSourceRangesSeconds": []
+    },
+    {
+      "id": "industry-government",
+      "kind": "industry",
+      "output": "demo/industry-government.gif",
+      "source": "tmp/recordings/0b838b9a0d24684ce177957a6b046edc9a4e5e06/industry-government.mp4",
+      "contactSheet": "tmp/recordings/0b838b9a0d24684ce177957a6b046edc9a4e5e06/industry-government-contact.png",
+      "script": "scripts/record-demo.mjs",
+      "sourceCommit": "0b838b9a0d24684ce177957a6b046edc9a4e5e06",
+      "platform": "android",
+      "os": "Android 15 API 35",
+      "device": "sdk_gphone64_arm64",
+      "mode": "offline-only",
+      "providerId": "llama-rn",
+      "modelIdentity": "gemma-4-e2b-it-q3ks.gguf",
+      "evidenceClass": "emulator",
+      "providerEvidenceClass": "virtual-device-model",
+      "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 0b838b9a0d24684ce177957a6b046edc9a4e5e06 --id industry-government --flow government-android-model.yaml --kind industry --output demo/industry-government.gif --config examples/government-services/airgap.config.json --quick-reply \"Current president\" --provider llama-rn --model-identity gemma-4-e2b-it-q3ks.gguf --evidence-class emulator --llm-mode offline-only --model-file models/gemma-4-e2b-it-q3ks.gguf",
+      "config": "examples/government-services/airgap.config.json",
+      "capturedAt": "2026-10-07T12:04:08.133Z",
+      "width": 360,
+      "height": 800,
+      "fps": 10,
+      "durationSeconds": 18.3,
+      "bytes": 1898834,
+      "playbackSpeed": 8,
+      "omittedSourceRangesSeconds": [
+        [1.7, 43.8],
+        [119.4, 124.5],
+        [168.5, 179.1]
+      ],
+      "loopReviewed": true
     },
     {
       "id": "industry-healthcare",
@@ -288,6 +340,40 @@
       "loopReviewed": true,
       "playbackSpeed": 4,
       "omittedSourceRangesSeconds": []
+    },
+    {
+      "id": "showcase-government",
+      "kind": "showcase",
+      "output": "demo/showcase-government.gif",
+      "source": "tmp/recordings/0b838b9a0d24684ce177957a6b046edc9a4e5e06/showcase-government.mp4",
+      "contactSheet": "tmp/recordings/0b838b9a0d24684ce177957a6b046edc9a4e5e06/showcase-government-contact.png",
+      "script": "scripts/record-demo.mjs",
+      "sourceCommit": "0b838b9a0d24684ce177957a6b046edc9a4e5e06",
+      "platform": "android",
+      "os": "Android 15 API 35",
+      "device": "sdk_gphone64_arm64",
+      "mode": "offline-only",
+      "providerId": "llama-rn",
+      "modelIdentity": "gemma-4-e2b-it-q3ks.gguf",
+      "evidenceClass": "emulator",
+      "providerEvidenceClass": "virtual-device-model",
+      "captureCommand": "node scripts/record-demo.mjs --platform android --device emulator-5554 --commit 0b838b9a0d24684ce177957a6b046edc9a4e5e06 --id showcase-government --flow government-android-showcase.yaml --kind showcase --output demo/showcase-government.gif --config examples/government-services/airgap.config.json --quick-reply \"Current president\" --provider llama-rn --model-identity gemma-4-e2b-it-q3ks.gguf --evidence-class emulator --llm-mode offline-only --model-file models/gemma-4-e2b-it-q3ks.gguf",
+      "config": "examples/government-services/airgap.config.json",
+      "capturedAt": "2026-10-07T11:58:46.651Z",
+      "width": 360,
+      "height": 800,
+      "fps": 10,
+      "durationSeconds": 52.7,
+      "bytes": 3370361,
+      "playbackSpeed": 8,
+      "omittedSourceRangesSeconds": [
+        [1.9, 47.3],
+        [124.6, 172.9],
+        [243.5, 284.1],
+        [348.4, 397.1],
+        [476.1, 510.9]
+      ],
+      "loopReviewed": true
     }
   ]
 }

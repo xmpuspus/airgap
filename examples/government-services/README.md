@@ -23,10 +23,11 @@ application, and downloads no model.
 - 2 deterministic tools for the same routes
 - 11 blocked-topic fixtures with refusal copy for political opinions and legal advice
 
-Two checked recordings replay the six prompts listed below with a real on-device model. The
+One checked recording replays the six prompts listed below with a real on-device model. The
 [Android emulator take](../../demo/industry-government.gif) runs the downloaded Gemma 4 E2B file.
-The [iOS Simulator take](../../demo/industry-government-ios.gif) runs the Apple on-device model.
-Neither take proves phone speed. The manifest in `demo/recordings.json` records each model.
+It does not prove phone speed. The manifest in `demo/recordings.json` records the model.
+A second GIF, [`airgap-showcase-government.gif`](../../demo/airgap-showcase-government.gif), puts
+a ten-prompt take next to the published replies of the 2026-09-21 launch.
 
 ## Public records instead of fiction
 
