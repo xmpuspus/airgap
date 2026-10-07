@@ -54,6 +54,7 @@ export function TypingIndicator() {
   return (
     <Animated.View
       style={[styles.wrapper, {opacity: pulseAnim}]}
+      accessible
       accessibilityLabel="Assistant is typing">
       <View style={styles.avatar}>
         <Image
