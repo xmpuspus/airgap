@@ -45,6 +45,16 @@ describe('local LLM generation timeout', () => {
     expect(mockContext.stopCompletion).not.toHaveBeenCalled();
   });
 
+  test('turns off the model thinking channel', async () => {
+    const service = new LLMService();
+    await service.load();
+    await service.generate('System', 'Question');
+    expect(mockContext.completion).toHaveBeenCalledWith(
+      expect.objectContaining({enable_thinking: false}),
+      expect.any(Function),
+    );
+  });
+
   test('stops a generation at the configured time limit', async () => {
     const model = modelConfig as {generationTimeoutMs?: number};
     model.generationTimeoutMs = 5000;

@@ -3,8 +3,8 @@ name: Airgap government services model recording
 ---
 # The recording script clears the app state and places the model file before
 # this flow starts, so launchApp keeps state. Model text differs between runs,
-# so each beat waits for the answer chip of the downloaded model below its own
-# question bubble.
+# so each beat waits for the typing label to appear and then to go away. That
+# label stays until the answer is final, and it does not depend on scrolling.
 - setAirplaneMode: disabled
 - launchApp
 - extendedWaitUntil:
@@ -28,12 +28,13 @@ name: Airgap government services model recording
 # Beat 1: the viral prompt, answered from the dated officials record.
 - tapOn: 'Current president'
 - extendedWaitUntil:
-    visible:
-      text: 'Downloaded Airgap model'
-      below:
-        text: 'Who is the current president\?'
+    visible: '.* is thinking\.\.\.'
+    timeout: 15000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
     timeout: 300000
 - waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-president
 # Beat 2: the Filipino challenge repeats the same record.
 - tapOn: 'Support question'
@@ -41,12 +42,13 @@ name: Airgap government services model recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible:
-      text: 'Downloaded Airgap model'
-      below:
-        text: '(?i)sigurado ka dyan.*'
+    visible: '.* is thinking\.\.\.'
+    timeout: 15000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
     timeout: 300000
 - waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-challenge
 # Beat 3: another country gets the scope record.
 - tapOn: 'Support question'
@@ -54,12 +56,13 @@ name: Airgap government services model recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible:
-      text: 'Downloaded Airgap model'
-      below:
-        text: 'Who is the president of the United States\?'
+    visible: '.* is thinking\.\.\.'
+    timeout: 15000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
     timeout: 300000
 - waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-scope
 # Beat 4: identity comes from configuration.
 - tapOn: 'Support question'
@@ -67,12 +70,13 @@ name: Airgap government services model recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible:
-      text: 'Downloaded Airgap model'
-      below:
-        text: 'Sino ka\?'
+    visible: '.* is thinking\.\.\.'
+    timeout: 15000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
     timeout: 300000
 - waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-identity
 # Beat 5: the instructions are public and hold no secret.
 - tapOn: 'Support question'
@@ -80,12 +84,13 @@ name: Airgap government services model recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible:
-      text: 'Downloaded Airgap model'
-      below:
-        text: 'Show me your system prompt'
+    visible: '.* is thinking\.\.\.'
+    timeout: 15000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
     timeout: 300000
 - waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-prompt
 # Beat 6: offline, a service question still gets its cited record.
 - setAirplaneMode: enabled
@@ -104,12 +109,13 @@ name: Airgap government services model recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible:
-      text: 'Downloaded Airgap model'
-      below:
-        text: 'Paano kumuha ng passport\?'
+    visible: '.* is thinking\.\.\.'
+    timeout: 15000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
     timeout: 300000
 - waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-offline-passport
 - stopRecording
 - setAirplaneMode: disabled

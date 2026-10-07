@@ -119,6 +119,9 @@ export class LLMService {
             {role: 'system', content: systemPrompt},
             {role: 'user', content: userMessage},
           ],
+          // A reasoning model such as Gemma 4 otherwise streams its thought
+          // channel into the answer and spends the token budget on it.
+          enable_thinking: false,
           n_predict: modelConfig.maxTokens ?? 256,
           temperature: modelConfig.temperature ?? 0.3,
           top_p: modelConfig.topP ?? 0.9,
