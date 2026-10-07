@@ -1,6 +1,9 @@
 appId: ${APP_ID}
 name: Airgap government services replay recording
 ---
+# Demo mode renders each answer at once, so every beat waits for a phrase that
+# only its own record shows. Beat 2 repeats the beat 1 record, so it waits for
+# the answer chip that sits below its own question bubble.
 - setAirplaneMode: disabled
 - launchApp:
     clearState: true
@@ -23,10 +26,7 @@ name: Airgap government services replay recording
 # Beat 1: the viral prompt, answered from the dated officials record.
 - tapOn: 'Current president'
 - extendedWaitUntil:
-    visible: 'Assistant is typing'
-    timeout: 15000
-- extendedWaitUntil:
-    notVisible: 'Assistant is typing'
+    visible: '(?s).*Ferdinand R\. Marcos Jr\..*'
     timeout: 40000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-president
@@ -36,10 +36,13 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible: 'Assistant is typing'
+    visible: '(?i)sigurado ka dyan.*'
     timeout: 15000
 - extendedWaitUntil:
-    notVisible: 'Assistant is typing'
+    visible:
+      text: 'Document answer'
+      below:
+        text: '(?i)sigurado ka dyan.*'
     timeout: 40000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-challenge
@@ -49,10 +52,7 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible: 'Assistant is typing'
-    timeout: 15000
-- extendedWaitUntil:
-    notVisible: 'Assistant is typing'
+    visible: '(?s).*Philippine national government only.*'
     timeout: 40000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-scope
@@ -62,10 +62,7 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible: 'Assistant is typing'
-    timeout: 15000
-- extendedWaitUntil:
-    notVisible: 'Assistant is typing'
+    visible: '(?s).*this assistant is Kuya B.*'
     timeout: 40000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-identity
@@ -75,10 +72,7 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible: 'Assistant is typing'
-    timeout: 15000
-- extendedWaitUntil:
-    notVisible: 'Assistant is typing'
+    visible: '(?s).*holds no password.*'
     timeout: 40000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-prompt
@@ -99,10 +93,7 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible: 'Assistant is typing'
-    timeout: 15000
-- extendedWaitUntil:
-    notVisible: 'Assistant is typing'
+    visible: '(?s).*Appointments are free of charge.*'
     timeout: 40000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-offline-passport
