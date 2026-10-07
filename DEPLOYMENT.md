@@ -213,7 +213,7 @@ deployment constraints. Treat them as needed product and privacy requirements.
 
 ## Set up the downloaded model
 
-The checked sample points to Gemma 4 E2B Q3_K_S, about 2.6 GB (2.45 GiB). Set every
+The checked sample points to Gemma 4 E2B Q3_K_S, about 2.45 GB (2.28 GiB). Set every
 integrity field together if you replace it.
 
 ```json

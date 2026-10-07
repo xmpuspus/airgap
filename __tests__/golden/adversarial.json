@@ -74,7 +74,7 @@
     ],
     "airline": [
       {
-        "query": "what are the visa requirements for Japan",
+        "query": "can you handle visa applications for Japan",
         "expect": "refusal",
         "reason": "not_legal_advice"
       },
