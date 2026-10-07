@@ -107,6 +107,12 @@ npm run providers:validate -- \
 On macOS 26 or newer, the Swift runner can inspect the real Foundation Models framework without
 changing system settings.
 
+The app runs the Apple model with the `permissiveContentTransformations` guardrails, because the
+app only rephrases approved records. The default guardrails also run a sensitive-content
+classifier. On 2026-10-07 the iOS 26.4 Simulator reported the model as ready and then failed every
+generation with a missing-data error from that classifier, while the Mac host answered the same
+prompt. With the content-transformation guardrails the simulator answers.
+
 ```bash
 npm run providers:apple:probe
 npm run providers:validate -- tmp/provider-validation/apple-host-probe-<timestamp>.json

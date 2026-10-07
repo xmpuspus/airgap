@@ -27,9 +27,8 @@ name: Airgap government services model recording
 - takeScreenshot: ${SHOT_PREFIX}-chat
 # Beat 1: the viral prompt, answered from the dated officials record.
 - tapOn: 'Current president'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000
@@ -52,9 +51,8 @@ name: Airgap government services model recording
 - inputText: 'Who is the president of the United States?'
 - hideKeyboard
 - tapOn: 'Send message'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000
@@ -66,9 +64,8 @@ name: Airgap government services model recording
 - inputText: 'Sino ka?'
 - hideKeyboard
 - tapOn: 'Send message'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000
@@ -102,9 +99,8 @@ name: Airgap government services model recording
 - inputText: 'Paano kumuha ng passport?'
 - hideKeyboard
 - tapOn: 'Send message'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000

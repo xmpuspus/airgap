@@ -26,9 +26,8 @@ name: Airgap government services showcase recording, Android model
 - takeScreenshot: ${SHOT_PREFIX}-chat
 # Beat 1: the viral prompt.
 - tapOn: 'Current president'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000
@@ -61,9 +60,8 @@ name: Airgap government services showcase recording, Android model
 - inputText: 'Who is the president of the United States?'
 - hideKeyboard
 - tapOn: 'Send message'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000
@@ -75,9 +73,8 @@ name: Airgap government services showcase recording, Android model
 - inputText: 'Sino ka?'
 - hideKeyboard
 - tapOn: 'Send message'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000
@@ -99,9 +96,8 @@ name: Airgap government services showcase recording, Android model
 - inputText: 'Who is the DICT secretary?'
 - hideKeyboard
 - tapOn: 'Send message'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000
@@ -113,9 +109,8 @@ name: Airgap government services showcase recording, Android model
 - inputText: 'Who is the vice president?'
 - hideKeyboard
 - tapOn: 'Send message'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000
@@ -148,9 +143,8 @@ name: Airgap government services showcase recording, Android model
 - inputText: 'Paano kumuha ng passport?'
 - hideKeyboard
 - tapOn: 'Send message'
-- extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
+# A fast answer can finish inside the tap's settle wait, so only wait for the
+# typing label to be gone.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000

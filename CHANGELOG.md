@@ -10,7 +10,22 @@ minor releases.
 
 - A `government-services` template with dated, sourced public records for Philippine officials,
   holidays, hotlines, and service steps, plus golden and adversarial cases that replay the
-  2026-09-21 eGovPH assistant failures.
+  2026-09-21 eGovPH assistant failures. Two recordings replay the prompts with real on-device
+  models: Gemma 4 E2B on an Android emulator and the Apple on-device model on an iOS Simulator.
+- A comparison GIF builder that puts one quote card per published reply next to the recorded
+  takes, with a `showcase` recording kind and a `virtual-device-model` provider evidence class.
+- A model recording path in the industry runner: `--llm-mode`, `--provider`, `--model-file`, and
+  `--platform ios`, with a streamed model copy into the app directory.
+- `model.recordChars` and `model.generationTimeoutMs` in the configuration contract.
+- A built-in prompt probe guardrail: a request to show or override the instructions gets a fixed
+  public answer before any model runs.
+- Date and time answers from the device clock as system messages.
+- A doubt check such as "sigurado ka dyan?" repeats the last record-backed answer from the record
+  store, with the same sources.
+- A short question that equals a record keyword searches on its own instead of as a follow-up.
+- The answer chip says why the model did not answer when the app shows records instead.
+- A `docs/support-bot-minimum.md` page with the eight controls any support bot needs, and a case
+  study that maps one public launch to them.
 - A streaming gate that holds model text until the grounding check passes, so an unsourced
   amount or date never reaches the screen before the refusal.
 - Publisher, source URL, checked date, and review status in the source drawer when a record
@@ -28,6 +43,12 @@ minor releases.
 ### Changed
 
 - Kept demo-mode provider status on the deterministic document-answer path.
+- Matched the model checksum and size to the current upstream Gemma 4 E2B file.
+- Turned off the Gemma 4 thinking channel, which streamed reasoning into the answer.
+- Accepted a sourced date in either word order in the grounding check.
+- Fixed the refusal bubble, which collapsed its text to a tall empty bar.
+- Ran the Apple on-device model with content-transformation guardrails, because the iOS Simulator
+  cannot load the sensitive-content classifier that the default guardrails need.
 - Limited the downloaded-model engine field to the built `llama.cpp` runtime.
 - Updated public setup, customization, examples, integration, recording, and contributor guidance
   to match the provider-based runtime.

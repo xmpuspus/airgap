@@ -1,9 +1,10 @@
 # Record release GIFs
 
-Airgap keeps twelve GIFs as product evidence. The set has one Android flow, one iOS flow, one joint
-README flow, and nine industry recordings. The government services template has two of those: an
-Android take with the downloaded model and an iOS take with the Apple on-device model. Each GIF
-must come from a named target and a committed application state.
+Airgap keeps thirteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
+joint README flow, nine industry recordings, and one comparison GIF. The government services
+template has two industry recordings, an Android take with the downloaded model and an iOS take
+with the Apple on-device model. The comparison GIF puts its ten-prompt takes next to published
+replies. Each GIF must come from a named target and a committed application state.
 
 ## Needed tools
 
@@ -148,6 +149,39 @@ npm run recordings:rebuild -- --commit <40-character-commit>
 ```
 
 The rebuild resets `loopReviewed` to `false`. Inspect the new public loops before changing it back.
+
+## Build the comparison GIF
+
+The comparison needs one ten-prompt take per model. Record them with `--kind showcase` and the
+ten-prompt flows, one take at a time, then build the comparison from the spec. The left card of
+each beat quotes a published reply and says where it came from. Nothing on the left is a recording
+of another app.
+
+```bash
+node scripts/record-industries.mjs \
+  --device emulator-5554 \
+  --commit <40-character-commit> \
+  --industry government-services \
+  --kind showcase \
+  --flow government-android-showcase.yaml \
+  --llm-mode offline-only \
+  --provider llama-rn \
+  --model-identity gemma-4-e2b-it-q3ks.gguf \
+  --model-file models/gemma-4-e2b-it-q3ks.gguf
+
+node scripts/record-industries.mjs \
+  --platform ios \
+  --device <simulator-udid> \
+  --commit <40-character-commit> \
+  --industry government-services \
+  --kind showcase \
+  --flow government-ios-showcase.yaml \
+  --llm-mode offline-only \
+  --provider apple-foundation-models \
+  --model-identity apple-system-model/iOS-26.4
+
+node scripts/build-showcase-gif.mjs --spec demo/showcase/government.json
+```
 
 ## Inspect every output
 
