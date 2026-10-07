@@ -1,5 +1,21 @@
 import {getProvenanceView} from '../../src/components/chat/AnswerProvenance';
 
+test('says why the model did not answer when the app fell back to records', () => {
+  const view = getProvenanceView({
+    source: 'search',
+    docIds: ['off-001'],
+    providerFailure: {
+      providerId: 'apple-foundation-models',
+      reason: 'generation_failed',
+      message: 'The Apple system model does not support this locale',
+    },
+  });
+  expect(view.sourceLabel).toBe('Local knowledge');
+  expect(view.failureLabel).toBe(
+    'Apple on-device model did not answer (generation_failed): The Apple system model does not support this locale',
+  );
+});
+
 test('states answer source, knowledge version, and source count', () => {
   expect(
     getProvenanceView({

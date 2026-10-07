@@ -1,5 +1,7 @@
 import {matchesKnowledgeKeyword, searchKB} from './searchService';
 import {routeGeneration, generationAvailable, getMode} from './llmRouter';
+import {InferenceProviderError} from './inference/providerResolver';
+import type {MessageAudit} from '../types/chat';
 import {offlineQueue} from './offlineQueue';
 import {connectivityService} from './connectivityService';
 import {requiresOnline, getOnlineActionType} from '../utils/onlineCheck';
@@ -389,6 +391,7 @@ async function processMessageInner(
   // 7. If a local LLM, cloud LLM, or demo formatter is available, route
   // the generation. Demo mode bypasses the model load and produces a
   // deterministic streamed reply built from finalResults.
+  let generationFailure: MessageAudit['providerFailure'];
   if ((await generationAvailable()) && finalResults.length > 0) {
     // Safety: a weak retrieval refuses before any text streams to the screen.
     const retrieval = checkConfidence(finalResults);
@@ -457,6 +460,11 @@ async function processMessageInner(
       logger.warn('orchestrator', 'LLM generation failed, falling back to search', {
         err: String(err),
       });
+      // The answer chip tells the user why records answered instead of the model.
+      generationFailure =
+        err instanceof InferenceProviderError
+          ? {providerId: err.providerId, reason: err.reason, message: err.message}
+          : {reason: 'generation_failed', message: String(err)};
     }
   }
 
@@ -472,6 +480,7 @@ async function processMessageInner(
       audit: {
         kbDocIds: finalResults.map(d => d.id),
         confidence: 1,
+        ...(generationFailure ? {providerFailure: generationFailure} : {}),
       },
     };
   }

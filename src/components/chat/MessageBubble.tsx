@@ -449,6 +449,7 @@ export function MessageBubble({
               docIds={message.audit?.kbDocIds}
               providerId={message.audit?.providerId}
               modelIdentity={message.audit?.modelIdentity}
+              providerFailure={message.audit?.providerFailure}
             />
             <CitationChips docIds={message.audit?.kbDocIds} />
           </>

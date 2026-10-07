@@ -12,6 +12,12 @@ export interface MessageAudit {
   groundingIssues?: string[];
   providerId?: import('../services/inference/types').InferenceProviderId;
   modelIdentity?: string;
+  /** Set when a model failed and the answer came from records instead. */
+  providerFailure?: {
+    providerId?: import('../services/inference/types').InferenceProviderId;
+    reason: string;
+    message: string;
+  };
 }
 
 export interface BotMessage {

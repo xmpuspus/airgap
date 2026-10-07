@@ -10,6 +10,7 @@ export interface ProvenanceInput {
   docIds?: string[];
   providerId?: InferenceProviderId;
   modelIdentity?: string;
+  providerFailure?: {providerId?: InferenceProviderId; reason: string; message: string};
 }
 
 const SOURCE_LABELS: Record<string, string> = {
@@ -39,6 +40,16 @@ export function getProvenanceView(input: ProvenanceInput) {
     versionLabel: input.kbVersion ? `v${input.kbVersion}` : 'Built-in release',
     sourceCountLabel: `${count} ${count === 1 ? 'source' : 'sources'}`,
     ...(input.modelIdentity ? {modelLabel: input.modelIdentity} : {}),
+    // The user sees why the model did not answer, not only that records did.
+    ...(input.providerFailure
+      ? {
+          failureLabel: `${
+            input.providerFailure.providerId
+              ? PROVIDER_LABELS[input.providerFailure.providerId]
+              : 'The model'
+          } did not answer (${input.providerFailure.reason}): ${input.providerFailure.message}`,
+        }
+      : {}),
   };
 }
 
@@ -53,6 +64,7 @@ export function AnswerProvenance(props: ProvenanceInput) {
           {view.versionLabel} · {view.sourceCountLabel}
         </Text>
         {'modelLabel' in view && <Text style={styles.model}>{view.modelLabel}</Text>}
+        {'failureLabel' in view && <Text style={styles.model}>{view.failureLabel}</Text>}
       </View>
     </View>
   );
