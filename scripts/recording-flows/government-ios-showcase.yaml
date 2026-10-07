@@ -129,8 +129,11 @@ name: Airgap government services showcase recording, Apple model
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-passport
-# The simulator recorder falls behind during a fast stream and drops its
-# backlog at the stop. A twelve-second pause in the Maestro process lets it
-# catch up. The GIF build trims the still tail.
-- evalScript: ${(function () { var end = Date.now() + 12000; while (Date.now() < end) {} })()}
+# The simulator recorder loses its last few dozen captured frames at the
+# stop, and a still screen adds no frames. A slow four-second drag of the
+# list by two percent keeps frames coming, so the finished answer stays in.
+- swipe:
+    start: 50%, 50%
+    end: 50%, 52%
+    duration: 4000
 - stopRecording
