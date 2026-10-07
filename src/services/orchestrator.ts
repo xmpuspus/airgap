@@ -11,7 +11,15 @@ import {
   MODEL_CONTEXT_CHARS,
 } from '../utils/promptBuilder';
 import {isFollowUp, expandQuery} from '../utils/followUpDetector';
-import {config, brand, prompts, quickReplies, actions, interpolate} from '../config/loader';
+import {
+  config,
+  brand,
+  modelConfig,
+  prompts,
+  quickReplies,
+  actions,
+  interpolate,
+} from '../config/loader';
 import {getBackendConnector} from './backendConnector';
 import {logger} from './logger';
 import type {QueuedAction} from '../types/chat';
@@ -472,8 +480,8 @@ async function processMessageInner(
 
 // Demo mode renders the record as the answer, so it gets the whole record. Model
 // modes keep the cap that small on-device contexts need.
-function recordContextChars(): number | null {
-  return getMode() === 'demo' ? null : MODEL_CONTEXT_CHARS;
+export function recordContextChars(): number | null {
+  return getMode() === 'demo' ? null : modelConfig.recordChars ?? MODEL_CONTEXT_CHARS;
 }
 
 function addToHistory(role: 'user' | 'bot', text: string) {

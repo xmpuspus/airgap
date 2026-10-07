@@ -8,6 +8,19 @@ test('reports demo as a local no-network mode', () => {
   });
 });
 
+test('says when the on-device model is not loaded yet', () => {
+  expect(getOperatingStateView({mode: 'offline-only', isOnline: true, localReady: false})).toEqual({
+    label: 'Local',
+    detail: 'Local knowledge is ready. The on-device model is not loaded.',
+    tone: 'neutral',
+  });
+  expect(getOperatingStateView({mode: 'offline-only', isOnline: true, localReady: true})).toEqual({
+    label: 'Local',
+    detail: 'Answers use local knowledge and the on-device model.',
+    tone: 'ready',
+  });
+});
+
 test('names the ready system provider without implying cloud use', () => {
   expect(
     getOperatingStateView({

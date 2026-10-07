@@ -124,10 +124,17 @@ download. The app checks the byte count and digest before loading the file.
     "contextSize": 4096,
     "maxTokens": 256,
     "temperature": 0.3,
-    "topP": 0.9
+    "topP": 0.9,
+    "recordChars": 400,
+    "generationTimeoutMs": 15000
   }
 }
 ```
+
+`recordChars` caps each retrieved record that the model receives. Raise it when a record must
+keep its source line and the model context allows it. Demo mode shows whole records.
+`generationTimeoutMs` limits one answer, including prompt processing, and stops the model at the
+limit.
 
 Do not publish an empty digest or a moving model URL. Measure memory, latency, heat, and answer
 quality on every supported device class.

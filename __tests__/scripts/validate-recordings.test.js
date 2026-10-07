@@ -8,6 +8,7 @@ const {
   REQUIRED_OUTPUTS,
   gifFilter,
   gifPaletteFilter,
+  inferProviderEvidenceClass,
   maestroRecordingPath,
   readmeLayoutFilter,
   sizeLimitFor,
@@ -15,6 +16,7 @@ const {
   selectIndustryQuickReply,
   validateManifest,
   validateRecording,
+  withLlmMode,
 } = require('../../scripts/lib/recordings.js');
 
 const SHA = '1234567890abcdef1234567890abcdef12345678';
@@ -323,7 +325,7 @@ describe('recording manifest validation', () => {
     expect(() => validateManifest({schemaVersion: 2, recordings: [record()]})).toThrow(
       'recording_output_missing',
     );
-    expect(REQUIRED_OUTPUTS).toHaveLength(10);
+    expect(REQUIRED_OUTPUTS).toHaveLength(11);
   });
 
   test.each([
@@ -352,15 +354,93 @@ describe('recording manifest validation', () => {
     ).toThrow('recording_provider_evidence_simulated_invalid');
   });
 
-  test('labels all current release recordings as the deterministic runtime', () => {
+  test('accepts a real downloaded model on virtual hardware as its own class', () => {
+    const virtual = record({
+      id: 'industry-government',
+      kind: 'industry',
+      output: 'demo/industry-government.gif',
+      mode: 'offline-only',
+      providerId: 'llama-rn',
+      modelIdentity: 'gemma-4-e2b-it-q3ks.gguf',
+      providerEvidenceClass: 'virtual-device-model',
+    });
+    expect(validateRecording(virtual)).toEqual(virtual);
+    expect(() => validateRecording({...virtual, providerId: 'demo'})).toThrow(
+      'recording_provider_evidence_virtual_invalid',
+    );
+    expect(() =>
+      validateRecording({...virtual, modelIdentity: 'simulated/google-gemini-nano'}),
+    ).toThrow('recording_provider_evidence_virtual_invalid');
+    expect(() =>
+      validateRecording({...virtual, evidenceClass: 'physical-device', device: 'Pixel 9'}),
+    ).toThrow('recording_provider_evidence_virtual_invalid');
+  });
+
+  test('infers the provider evidence class from the answer path and capture target', () => {
+    expect(
+      inferProviderEvidenceClass({
+        providerId: 'demo',
+        modelIdentity: 'document-formatter-v1',
+        evidenceClass: 'emulator',
+      }),
+    ).toBe('deterministic-runtime');
+    expect(
+      inferProviderEvidenceClass({
+        providerId: 'android-aicore',
+        modelIdentity: 'simulated/google-gemini-nano',
+        evidenceClass: 'emulator',
+      }),
+    ).toBe('simulated-provider');
+    expect(
+      inferProviderEvidenceClass({
+        providerId: 'llama-rn',
+        modelIdentity: 'gemma-4-e2b-it-q3ks.gguf',
+        evidenceClass: 'emulator',
+      }),
+    ).toBe('virtual-device-model');
+    expect(
+      inferProviderEvidenceClass({
+        providerId: 'llama-rn',
+        modelIdentity: 'gemma-4-e2b-it-q3ks.gguf',
+        evidenceClass: 'physical-device',
+      }),
+    ).toBe('target-device');
+  });
+
+  test('switches a fixture config to one real provider for a recording', () => {
+    const config = {
+      brand: {name: 'Fixture'},
+      llm: {
+        mode: 'demo',
+        supportDomain: 'government',
+        providers: [{id: 'demo', enabled: true, priority: 0, platform: 'all'}],
+      },
+    };
+    const result = withLlmMode(config, 'offline-only', 'llama-rn');
+    expect(result.llm).toEqual({
+      mode: 'offline-only',
+      supportDomain: 'government',
+      providers: [{id: 'llama-rn', enabled: true, priority: 0, platform: 'all'}],
+    });
+    expect(result.brand).toEqual({name: 'Fixture'});
+    expect(config.llm.mode).toBe('demo');
+    expect(withLlmMode(config, 'demo', 'demo')).toEqual(config);
+  });
+
+  test('labels every release recording by its answer path', () => {
     const manifest = JSON.parse(
       fs.readFileSync(path.join(process.cwd(), 'demo', 'recordings.json'), 'utf8'),
     );
 
-    expect(validateManifest(manifest).recordings).toHaveLength(10);
-    expect(new Set(manifest.recordings.map(item => item.providerEvidenceClass))).toEqual(
-      new Set(['deterministic-runtime']),
-    );
+    // The government services GIF runs the downloaded model. Every other GIF
+    // shows the deterministic document path.
+    for (const item of manifest.recordings) {
+      const expected =
+        item.output === 'demo/industry-government.gif'
+          ? 'virtual-device-model'
+          : 'deterministic-runtime';
+      expect(`${item.output}:${item.providerEvidenceClass}`).toBe(`${item.output}:${expected}`);
+    }
   });
 
   test('requires a bounded public playback speed', () => {

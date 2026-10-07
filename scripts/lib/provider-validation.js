@@ -6,6 +6,7 @@ const PROVIDER_EVIDENCE_CLASSES = Object.freeze([
   'host-native-model',
   'simulated-provider',
   'target-device',
+  'virtual-device-model',
 ]);
 
 const PLATFORMS = new Set(['android', 'ios']);
@@ -188,6 +189,16 @@ function validateProviderEvidence(report) {
   if (report.evidenceClass === 'host-native-model') {
     if (report.platform !== 'macos' || report.deviceClass !== 'host') {
       fail('provider_evidence_host_device_invalid');
+    }
+  }
+  if (report.evidenceClass === 'virtual-device-model') {
+    if (
+      !['emulator', 'simulator'].includes(report.deviceClass) ||
+      report.providerId === 'demo' ||
+      report.modelIdentity.startsWith('simulated/') ||
+      report.generationMethod !== 'model'
+    ) {
+      fail('provider_evidence_virtual_device_invalid');
     }
   }
   if (report.evidenceClass === 'target-device') {

@@ -47,6 +47,13 @@ export function getOperatingStateView(input: OperatingStateInput): {
       tone: 'ready',
     };
   }
+  if (!input.localReady) {
+    return {
+      label: 'Local',
+      detail: 'Local knowledge is ready. The on-device model is not loaded.',
+      tone: 'neutral',
+    };
+  }
   return {
     label: 'Local',
     detail: 'Answers use local knowledge and the on-device model.',

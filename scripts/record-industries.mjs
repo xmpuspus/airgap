@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 import recordingHelpers from './lib/recordings.js';
 import {currentCommit, evidenceDirectory, run} from './recording-utils.mjs';
 
-const {replaceKnowledgeData, selectIndustryQuickReply} = recordingHelpers;
+const {replaceKnowledgeData, selectIndustryQuickReply, withLlmMode} = recordingHelpers;
 
 const INDUSTRIES = [
   ['airline', 'airline'],
@@ -49,6 +49,13 @@ function main() {
   }
   const industries = requestedIndustry ? [requestedEntry] : INDUSTRIES;
   const sourceCommit = valueAfter('--commit') ?? currentCommit(root);
+  // One real provider for a take. The shipped fixture stays in demo mode.
+  const llmMode = valueAfter('--llm-mode') ?? 'demo';
+  const provider = valueAfter('--provider') ?? 'demo';
+  const modelIdentity = valueAfter('--model-identity') ?? 'document-formatter-v1';
+  const modelFile = valueAfter('--model-file');
+  const flowOverride = valueAfter('--flow');
+  if (modelFile && !requestedIndustry) throw new Error('recording_model_file_needs_industry');
   const evidence = evidenceDirectory(root, sourceCommit);
   const configPath = path.join(root, 'airgap.config.json');
   const knowledgePath = path.join(root, 'src', 'knowledge');
@@ -74,7 +81,12 @@ function main() {
       const example = path.join(root, 'examples', industry);
       const configSource = path.join(example, 'airgap.config.json');
       const config = JSON.parse(fs.readFileSync(configSource, 'utf8'));
-      fs.copyFileSync(configSource, configPath);
+      if (llmMode === 'demo') {
+        fs.copyFileSync(configSource, configPath);
+      } else {
+        const switched = withLlmMode(config, llmMode, provider);
+        fs.writeFileSync(configPath, `${JSON.stringify(switched, null, 2)}\n`);
+      }
       replaceKnowledgeData(path.join(example, 'knowledge'), knowledgePath);
       run('node', ['scripts/generate-manifest.js'], {cwd: root});
       run(
@@ -90,7 +102,7 @@ function main() {
           '--id',
           `industry-${slug}`,
           '--flow',
-          FLOWS[industry] ?? 'industry-android.yaml',
+          flowOverride ?? FLOWS[industry] ?? 'industry-android.yaml',
           '--kind',
           'industry',
           '--output',
@@ -100,11 +112,13 @@ function main() {
           '--quick-reply',
           selectIndustryQuickReply(config),
           '--provider',
-          'demo',
+          provider,
           '--model-identity',
-          'document-formatter-v1',
+          modelIdentity,
           '--evidence-class',
           'emulator',
+          ...(llmMode === 'demo' ? [] : ['--llm-mode', llmMode]),
+          ...(modelFile ? ['--model-file', modelFile] : []),
         ],
         {cwd: root},
       );

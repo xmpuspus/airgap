@@ -1,8 +1,8 @@
 # Record release GIFs
 
-Airgap keeps ten GIFs as product evidence. The set has one Android flow, one iOS flow, one joint README
-flow, and seven industry flows. Each GIF must come from a named target and a committed application
-state.
+Airgap keeps eleven GIFs as product evidence. The set has one Android flow, one iOS flow, one joint
+README flow, and eight industry flows. Each GIF must come from a named target and a committed
+application state.
 
 ## Needed tools
 
@@ -23,7 +23,7 @@ secure storage access.
 ## Commit code before capture
 
 Commit interface, provider, flow, and fixture changes before recording. The source commit in
-`demo/recordings.json` names the application behavior shown in the media. The later media
+`demo/recordings.json` records the application behavior shown in the media. The later media
 commit can contain the GIF and manifest update.
 
 Check the capture targets.
@@ -37,10 +37,10 @@ xcrun xctrace list devices
 Use `emulator`, `simulator`, or `physical-device` only when it matches the named target. A native
 bridge compile or simulator run is not physical-device provider evidence.
 
-Capture hardware and provider proof are separate fields. `evidenceClass` names the capture target.
-`providerEvidenceClass` names the answer path: `deterministic-runtime`, `simulated-provider`,
-`host-native-model`, or `target-device`. Follow [`provider-validation.md`](provider-validation.md)
-before recording a native-provider claim.
+Capture hardware and provider proof are separate fields. `evidenceClass` records the capture target.
+`providerEvidenceClass` records the answer path: `deterministic-runtime`, `simulated-provider`,
+`host-native-model`, `virtual-device-model`, or `target-device`. Follow
+[`provider-validation.md`](provider-validation.md) before recording a native-provider claim.
 
 ## Record the platform flows
 
@@ -98,6 +98,24 @@ node scripts/record-industries.mjs \
   --device emulator-5554 \
   --commit <40-character-commit> \
   --industry water-utility
+```
+
+Record one fixture with the configured downloaded model instead of the demo formatter. The runner
+clears the app state, streams the model file into the app directory, switches the copied
+configuration to `offline-only` with the `llama-rn` provider, and runs a flow that keeps state.
+The manifest then records `mode: offline-only`, the model file name, and
+`providerEvidenceClass: virtual-device-model`. The shipped fixture stays in demo mode.
+
+```bash
+node scripts/record-industries.mjs \
+  --device emulator-5554 \
+  --commit <40-character-commit> \
+  --industry government-services \
+  --flow government-android-model.yaml \
+  --llm-mode offline-only \
+  --provider llama-rn \
+  --model-identity gemma-4-e2b-it-q3ks.gguf \
+  --model-file models/gemma-4-e2b-it-q3ks.gguf
 ```
 
 Android and industry GIFs play at four times the source-video speed so a public loop does not spend

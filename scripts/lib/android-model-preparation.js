@@ -17,47 +17,23 @@ function verifyModelFile(file, config) {
   return {file, filename: config.filename, sizeBytes, sha256};
 }
 
+// The file streams through `adb shell` into the app directory. A push to
+// /data/local/tmp plus a copy needs twice the model size on the data partition,
+// which a default emulator does not have. `adb exec-in` truncates binary input,
+// so the stream uses the plain shell with the file on stdin.
 function placementCommands({adb = 'adb', device, model}) {
-  const temporary = `/data/local/tmp/${model.filename}`;
-  const prefix = [adb, '-s', device];
+  const target = `files/models/${model.filename}`;
+  const prefix = ['-s', device, 'shell', 'run-as', 'com.airgap'];
   return {
-    temporary,
     steps: [
-      {command: prefix[0], args: [...prefix.slice(1), 'push', model.file, temporary]},
-      {command: prefix[0], args: [...prefix.slice(1), 'shell', 'chmod', '644', temporary]},
+      {command: adb, args: [...prefix, 'mkdir', '-p', 'files/models']},
       {
-        command: prefix[0],
-        args: [...prefix.slice(1), 'shell', 'run-as', 'com.airgap', 'mkdir', '-p', 'files/models'],
+        command: adb,
+        args: ['-s', device, 'shell', `run-as com.airgap sh -c 'cat > ${target}'`],
+        stdinFile: model.file,
       },
-      {
-        command: prefix[0],
-        args: [
-          ...prefix.slice(1),
-          'shell',
-          'run-as',
-          'com.airgap',
-          'cp',
-          temporary,
-          `files/models/${model.filename}`,
-        ],
-      },
-      {
-        command: prefix[0],
-        args: [
-          ...prefix.slice(1),
-          'shell',
-          'run-as',
-          'com.airgap',
-          'sha256sum',
-          `files/models/${model.filename}`,
-        ],
-        capture: true,
-      },
+      {command: adb, args: [...prefix, 'sha256sum', target], capture: true},
     ],
-    cleanup: {
-      command: prefix[0],
-      args: [...prefix.slice(1), 'shell', 'rm', '-f', temporary],
-    },
   };
 }
 

@@ -102,7 +102,8 @@ export class LLMService {
     let firstTokenFired = false;
 
     // Generation timeout — prevent infinite hangs on slow devices
-    const timeoutMs = 15_000; // Safety limit — not configurable
+    // The limit covers prompt processing too. Slow hardware needs a higher value.
+    const timeoutMs = modelConfig.generationTimeoutMs ?? 15_000;
     let timeoutHandle: ReturnType<typeof setTimeout> | null = null;
     const timeoutPromise = new Promise<never>((_, reject) => {
       timeoutHandle = setTimeout(() => {

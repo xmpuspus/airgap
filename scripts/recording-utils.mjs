@@ -7,12 +7,16 @@ import recordings from './lib/recordings.js';
 const {gifFilter} = recordings;
 
 export function run(command, args, options = {}) {
+  // A file on stdin streams without loading it into memory.
+  const input = options.stdinFile ? fs.openSync(options.stdinFile, 'r') : undefined;
+  const output = options.capture ? 'pipe' : 'inherit';
   const result = spawnSync(command, args, {
     cwd: options.cwd,
     encoding: 'utf8',
     env: options.env ?? process.env,
-    stdio: options.capture ? 'pipe' : 'inherit',
+    stdio: [input ?? (options.capture ? 'pipe' : 'inherit'), output, output],
   });
+  if (input !== undefined) fs.closeSync(input);
   if (result.status !== 0) {
     const detail = options.capture ? `${result.stdout ?? ''}${result.stderr ?? ''}`.trim() : '';
     throw new Error(

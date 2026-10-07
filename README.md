@@ -259,7 +259,8 @@ by its actual target, never as a physical device. Run `npm run recordings:valida
 to check all ten assets.
 
 Provider reports add a separate class for what generated the answer:
-`deterministic-runtime`, `simulated-provider`, `host-native-model`, or `target-device`. Run
+`deterministic-runtime`, `simulated-provider`, `host-native-model`, `virtual-device-model`, or
+`target-device`. Run
 `npm run providers:validate` to check the scenario manifest, or follow
 [`docs/provider-validation.md`](docs/provider-validation.md) to run the full app scenario, Apple
 host probe, physical-device preflight, and optional downloaded-model placement.

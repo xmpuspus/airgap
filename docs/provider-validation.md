@@ -7,20 +7,23 @@ and battery use still need a supported physical device.
 
 ## Provider evidence and capture hardware are separate facts
 
-Provider reports and recordings use one of four `providerEvidenceClass` values.
+Provider reports and recordings use one of five `providerEvidenceClass` values.
 
 | Provider evidence class | What it proves                                                                    |
 | ----------------------- | --------------------------------------------------------------------------------- |
 | `deterministic-runtime` | The real local retrieval and document-formatting path ran without model output    |
 | `simulated-provider`    | The app, native bridge, provider state, streaming, failure, fallback, and UI path |
 | `host-native-model`     | A real platform model generated output on the named development host              |
+| `virtual-device-model`  | A real downloaded model generated output in the app on an emulator or simulator   |
 | `target-device`         | The named provider and model ran on the named physical mobile device and OS build |
 
 Recording `evidenceClass` describes only the capture hardware: `emulator`, `simulator`, or
 `physical-device`. It does not say whether a real model generated the answer. For example, an iOS
 Simulator recording can have `evidenceClass: simulator` and `providerEvidenceClass:
-simulated-provider`. Only a physical-device capture with a valid target report may claim
-`target-device` provider evidence.
+simulated-provider`. An emulator recording that runs the downloaded GGUF model through `llama-rn`
+has `providerEvidenceClass: virtual-device-model`: the answer came from a real model, but the
+hardware proves nothing about a phone. Only a physical-device capture with a valid target report
+may claim `target-device` provider evidence.
 
 ## Check the manifest and native parsers
 

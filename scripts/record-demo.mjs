@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import preparation from './lib/android-model-preparation.js';
 import recordings from './lib/recordings.js';
 import {
   assertCommit,
@@ -17,7 +18,27 @@ import {
   upsertRecording,
 } from './recording-utils.mjs';
 
-const {maestroRecordingPath} = recordings;
+const {inferProviderEvidenceClass, maestroRecordingPath} = recordings;
+const {placementCommands, verifyModelFile} = preparation;
+
+// A real downloaded model needs the file inside the app directory. The flow
+// must then launch without clearState, because clearState would remove it.
+function placeModel({root, device, modelFile, appId, configPath}) {
+  const adb = adbCommand();
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  const model = verifyModelFile(modelFile, config.model);
+  run(adb, ['-s', device, 'shell', 'pm', 'clear', appId], {cwd: root, capture: true});
+  for (const step of placementCommands({adb, device, model}).steps) {
+    const output = run(step.command, step.args, {
+      cwd: root,
+      capture: step.capture,
+      stdinFile: step.stdinFile,
+    });
+    if (step.capture && output.split(/\s+/)[0] !== model.sha256) {
+      throw new Error('recording_model_device_sha256_invalid');
+    }
+  }
+}
 
 function rootFromScript() {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -113,6 +134,16 @@ function main() {
   const recordingPath = maestroRecordingPath(sourceBase);
   const appId =
     args['app-id'] ?? (platform === 'android' ? 'com.airgap' : 'org.reactjs.native.example.Airgap');
+  if (args['model-file']) {
+    if (platform !== 'android') throw new Error('recording_model_file_android_only');
+    placeModel({
+      root,
+      device: args.device,
+      modelFile: path.resolve(root, args['model-file']),
+      appId,
+      configPath: path.join(root, 'airgap.config.json'),
+    });
+  }
 
   runMaestro({
     root,
@@ -168,10 +199,17 @@ function main() {
     platform,
     os: facts.os,
     device: facts.device,
-    mode: 'demo',
+    mode: args['llm-mode'] ?? 'demo',
     providerId: args.provider ?? 'demo',
     modelIdentity: args['model-identity'] ?? 'document-formatter-v1',
     evidenceClass,
+    providerEvidenceClass:
+      args['provider-evidence-class'] ??
+      inferProviderEvidenceClass({
+        providerId: args.provider ?? 'demo',
+        modelIdentity: args['model-identity'] ?? 'document-formatter-v1',
+        evidenceClass,
+      }),
     captureCommand: captureCommand(process.argv.slice(2)),
     config: args.config ?? 'airgap.config.json',
     capturedAt,

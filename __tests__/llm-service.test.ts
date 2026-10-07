@@ -22,6 +22,7 @@ jest.mock('../src/services/modelManager', () => ({
   modelManager: {getModelPath: () => '/tmp/model.gguf'},
 }));
 
+import {modelConfig} from '../src/config/loader';
 import {LLMService} from '../src/services/llmService';
 
 describe('local LLM generation timeout', () => {
@@ -42,5 +43,21 @@ describe('local LLM generation timeout', () => {
 
     expect(jest.getTimerCount()).toBe(0);
     expect(mockContext.stopCompletion).not.toHaveBeenCalled();
+  });
+
+  test('stops a generation at the configured time limit', async () => {
+    const model = modelConfig as {generationTimeoutMs?: number};
+    model.generationTimeoutMs = 5000;
+    mockContext.completion.mockImplementationOnce(() => new Promise(() => undefined));
+    const service = new LLMService();
+    await service.load();
+    try {
+      const pending = service.generate('System', 'Question');
+      jest.advanceTimersByTime(5000);
+      await expect(pending).rejects.toThrow('timed out after 5s');
+      expect(mockContext.stopCompletion).toHaveBeenCalled();
+    } finally {
+      delete model.generationTimeoutMs;
+    }
   });
 });

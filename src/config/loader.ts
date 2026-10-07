@@ -159,6 +159,10 @@ export interface ModelSection {
   stopTokens?: string[];
   gpuLayers?: number;
   threads?: number;
+  /** Characters of each retrieved record the model receives. Demo mode shows whole records. */
+  recordChars?: number;
+  /** Time limit for one answer, including prompt processing. */
+  generationTimeoutMs?: number;
 }
 
 export interface KnowledgeSection {
@@ -276,6 +280,8 @@ function applyDefaults(raw: any): AirgapConfig {
       stopTokens: ['<end_of_turn>', '<eos>', '</s>'],
       gpuLayers: 99,
       threads: 4,
+      recordChars: 400,
+      generationTimeoutMs: 15000,
       ...raw.model,
     },
     knowledge: {

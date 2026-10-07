@@ -160,6 +160,9 @@ export function ChatScreen(_props: Props) {
   );
   const scrollButtonOpacity = useRef(new Animated.Value(0)).current;
   const scrollButtonScale = useRef(new Animated.Value(0.8)).current;
+  // The header shows the model state, so a load that finishes after the first
+  // render must trigger a render.
+  const [modelReady, setModelReady] = useState(llmService.isLoaded());
 
   useEffect(() => {
     // Demo mode skips model load entirely. Quickstart stays under 5 minutes.
@@ -172,6 +175,7 @@ export function ChatScreen(_props: Props) {
         try {
           await llmService.load();
           logger.info('ChatScreen', 'Model auto-loaded successfully');
+          setModelReady(true);
         } catch (err) {
           logger.warn('ChatScreen', 'Model auto-load failed', err);
         }
@@ -330,7 +334,7 @@ export function ChatScreen(_props: Props) {
       <OperatingState
         mode={getMode()}
         isOnline={isOnline}
-        localReady={llmService.isLoaded()}
+        localReady={modelReady || llmService.isLoaded()}
         cloudReady={getMode() === 'prefer-online' && isOnline}
         systemProviderName={
           readySystemProvider ? providerDisplayName(readySystemProvider.providerId) : undefined

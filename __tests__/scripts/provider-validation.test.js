@@ -107,7 +107,31 @@ describe('provider validation contract', () => {
       'host-native-model',
       'simulated-provider',
       'target-device',
+      'virtual-device-model',
     ]);
+  });
+
+  test('accepts a real downloaded model on an emulator as virtual-device evidence', () => {
+    const virtual = report({
+      evidenceClass: 'virtual-device-model',
+      providerId: 'llama-rn',
+      modelIdentity: 'gemma-4-e2b-it-q3ks.gguf',
+      platform: 'android',
+      deviceClass: 'emulator',
+      device: 'sdk_gphone64_arm64',
+      osVersion: '15',
+      generationMethod: 'model',
+    });
+    expect(validateProviderEvidence(virtual)).toEqual(virtual);
+    expect(() => validateProviderEvidence({...virtual, deviceClass: 'physical-device'})).toThrow(
+      'provider_evidence_virtual_device_invalid',
+    );
+    expect(() => validateProviderEvidence({...virtual, generationMethod: 'script'})).toThrow(
+      'provider_evidence_virtual_device_invalid',
+    );
+    expect(() =>
+      validateProviderEvidence({...virtual, modelIdentity: 'simulated/google-gemini-nano'}),
+    ).toThrow('provider_evidence_virtual_device_invalid');
   });
 
   test.each([

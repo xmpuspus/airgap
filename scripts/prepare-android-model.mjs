@@ -40,15 +40,15 @@ function main(argv = process.argv.slice(2)) {
   const config = JSON.parse(fs.readFileSync(path.join(root, 'airgap.config.json'), 'utf8'));
   const model = verifyModelFile(args.model, config.model);
   const commands = placementCommands({adb: adbCommand(), device: args.device, model});
-  try {
-    for (const step of commands.steps) {
-      const output = run(step.command, step.args, {cwd: root, capture: step.capture});
-      if (step.capture && output.split(/\s+/)[0] !== model.sha256) {
-        throw new Error('provider_android_model_device_sha256_invalid');
-      }
+  for (const step of commands.steps) {
+    const output = run(step.command, step.args, {
+      cwd: root,
+      capture: step.capture,
+      stdinFile: step.stdinFile,
+    });
+    if (step.capture && output.split(/\s+/)[0] !== model.sha256) {
+      throw new Error('provider_android_model_device_sha256_invalid');
     }
-  } finally {
-    run(commands.cleanup.command, commands.cleanup.args, {cwd: root, capture: true});
   }
   process.stdout.write(`Prepared ${model.filename} for com.airgap on ${args.device}.\n`);
 }

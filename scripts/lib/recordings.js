@@ -21,6 +21,7 @@ const REQUIRED_OUTPUTS = Object.freeze([
   'demo/industry-airline.gif',
   'demo/industry-banking.gif',
   'demo/industry-electric.gif',
+  'demo/industry-government.gif',
   'demo/industry-healthcare.gif',
   'demo/industry-insurance.gif',
   'demo/industry-telco.gif',
@@ -118,6 +119,37 @@ function validateProviderEvidenceClass(recording) {
   ) {
     fail('recording_provider_evidence_target_invalid');
   }
+  if (
+    recording.providerEvidenceClass === 'virtual-device-model' &&
+    (recording.providerId === 'demo' ||
+      recording.modelIdentity.startsWith('simulated/') ||
+      captureClasses.includes('physical-device'))
+  ) {
+    fail('recording_provider_evidence_virtual_invalid');
+  }
+}
+
+// A real model on virtual hardware is its own class. It proves the answer path,
+// never the device.
+function inferProviderEvidenceClass({providerId, modelIdentity, evidenceClass}) {
+  if (providerId === 'demo') return 'deterministic-runtime';
+  if (modelIdentity.startsWith('simulated/')) return 'simulated-provider';
+  const classes = Array.isArray(evidenceClass) ? evidenceClass : [evidenceClass];
+  return classes.includes('physical-device') ? 'target-device' : 'virtual-device-model';
+}
+
+// Recording a fixture with one real provider keeps the shipped example in demo
+// mode. The capture command records the switch, so the take stays reproducible.
+function withLlmMode(config, mode, providerId) {
+  if (mode === 'demo') return config;
+  return {
+    ...config,
+    llm: {
+      ...config.llm,
+      mode,
+      providers: [{id: providerId, enabled: true, priority: 0, platform: 'all'}],
+    },
+  };
 }
 
 function maestroRecordingPath(target) {
@@ -324,6 +356,7 @@ module.exports = {
   SIZE_LIMITS,
   gifFilter,
   gifPaletteFilter,
+  inferProviderEvidenceClass,
   maestroRecordingPath,
   readmeLayoutFilter,
   replaceKnowledgeData,
@@ -331,4 +364,5 @@ module.exports = {
   sizeLimitFor,
   validateManifest,
   validateRecording,
+  withLlmMode,
 };
