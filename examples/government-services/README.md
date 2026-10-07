@@ -1,6 +1,6 @@
 # Patnub.ai fixture
 
-Patnub.ai and Patnubay are spoof names. No government agency runs this template.
+Patnub.ai and Kuya B are spoof names. No government agency runs this template.
 It answers questions about Philippine government services from dated copies of official pages.
 Each record shows its source page and the date someone checked it.
 
@@ -22,6 +22,11 @@ application, and downloads no model.
 - 2 online action definitions for concern reports and application status
 - 2 deterministic tools for the same routes
 - 11 blocked-topic fixtures with refusal copy for political opinions and legal advice
+
+Two checked recordings replay the six prompts listed below with a real on-device model. The
+[Android emulator take](../../demo/industry-government.gif) runs the downloaded Gemma 4 E2B file.
+The [iOS Simulator take](../../demo/industry-government-ios.gif) runs the Apple on-device model.
+Neither take proves phone speed. The manifest in `demo/recordings.json` records each model.
 
 ## Public records instead of fiction
 

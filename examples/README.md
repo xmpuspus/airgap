@@ -10,16 +10,16 @@ approved the sample content.
 
 ## Included templates
 
-| Industry            | Template                                       | Documents | Recorded fixture                                             |
-| ------------------- | ---------------------------------------------- | --------- | ------------------------------------------------------------ |
-| Airline             | [`airline/`](airline/)                         | 54        | [`industry-airline.gif`](../demo/industry-airline.gif)       |
-| Banking             | [`banking/`](banking/)                         | 62        | [`industry-banking.gif`](../demo/industry-banking.gif)       |
-| Electric utility    | [`electric-utility/`](electric-utility/)       | 53        | [`industry-electric.gif`](../demo/industry-electric.gif)     |
-| Government services | [`government-services/`](government-services/) | 37        | recording pending                                            |
-| Healthcare          | [`healthcare/`](healthcare/)                   | 50        | [`industry-healthcare.gif`](../demo/industry-healthcare.gif) |
-| Insurance           | [`insurance/`](insurance/)                     | 47        | [`industry-insurance.gif`](../demo/industry-insurance.gif)   |
-| Telecom             | [`telco/`](telco/)                             | 105       | [`industry-telco.gif`](../demo/industry-telco.gif)           |
-| Water utility       | [`water-utility/`](water-utility/)             | 36        | [`industry-water.gif`](../demo/industry-water.gif)           |
+| Industry            | Template                                       | Documents | Recorded fixture                                                                                                                      |
+| ------------------- | ---------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Airline             | [`airline/`](airline/)                         | 54        | [`industry-airline.gif`](../demo/industry-airline.gif)                                                                                |
+| Banking             | [`banking/`](banking/)                         | 62        | [`industry-banking.gif`](../demo/industry-banking.gif)                                                                                |
+| Electric utility    | [`electric-utility/`](electric-utility/)       | 53        | [`industry-electric.gif`](../demo/industry-electric.gif)                                                                              |
+| Government services | [`government-services/`](government-services/) | 37        | [`industry-government.gif`](../demo/industry-government.gif) and [`industry-government-ios.gif`](../demo/industry-government-ios.gif) |
+| Healthcare          | [`healthcare/`](healthcare/)                   | 50        | [`industry-healthcare.gif`](../demo/industry-healthcare.gif)                                                                          |
+| Insurance           | [`insurance/`](insurance/)                     | 47        | [`industry-insurance.gif`](../demo/industry-insurance.gif)                                                                            |
+| Telecom             | [`telco/`](telco/)                             | 105       | [`industry-telco.gif`](../demo/industry-telco.gif)                                                                                    |
+| Water utility       | [`water-utility/`](water-utility/)             | 36        | [`industry-water.gif`](../demo/industry-water.gif)                                                                                    |
 
 The recordings use the deterministic `demo` provider on an Android emulator. They record fixture
 loading and local answer behavior. Public GIF playback is four times faster than the kept source

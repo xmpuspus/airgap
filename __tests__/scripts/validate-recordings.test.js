@@ -325,7 +325,7 @@ describe('recording manifest validation', () => {
     expect(() => validateManifest({schemaVersion: 2, recordings: [record()]})).toThrow(
       'recording_output_missing',
     );
-    expect(REQUIRED_OUTPUTS).toHaveLength(11);
+    expect(REQUIRED_OUTPUTS).toHaveLength(12);
   });
 
   test.each([
@@ -432,13 +432,12 @@ describe('recording manifest validation', () => {
       fs.readFileSync(path.join(process.cwd(), 'demo', 'recordings.json'), 'utf8'),
     );
 
-    // The government services GIF runs the downloaded model. Every other GIF
-    // shows the deterministic document path.
+    // The government services GIFs run a real model on virtual hardware. Every
+    // other GIF shows the deterministic document path.
     for (const item of manifest.recordings) {
-      const expected =
-        item.output === 'demo/industry-government.gif'
-          ? 'virtual-device-model'
-          : 'deterministic-runtime';
+      const expected = item.output.startsWith('demo/industry-government')
+        ? 'virtual-device-model'
+        : 'deterministic-runtime';
       expect(`${item.output}:${item.providerEvidenceClass}`).toBe(`${item.output}:${expected}`);
     }
   });

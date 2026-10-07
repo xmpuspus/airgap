@@ -32,7 +32,18 @@ export type RefusalReason =
   | 'not_medical_advice'
   | 'not_financial_advice'
   | 'not_legal_advice'
+  | 'prompt_probe'
   | 'state_changing_offline';
+
+// Attempts to read or override the instructions get a fixed answer before
+// retrieval and before any model. The answer is honest: the prompt is public.
+const PROMPT_PROBE_PATTERNS = [
+  /\b(system|hidden|secret|initial|developer)\s+(prompt|instructions?|message)\b/i,
+  /\b(your|the)\s+(prompt|instructions|rules|guidelines)\b/i,
+  /\b(ignore|disregard|forget|override|bypass)\b.{0,40}\b(instructions?|rules|prompt|guidelines)\b/i,
+  /\b(reveal|print|show|repeat|leak|dump)\b.{0,30}\b(prompt|instructions)\b/i,
+  /\bjailbreak\b/i,
+];
 
 export interface SafetyVerdict {
   allow: boolean;
@@ -69,6 +80,8 @@ const DEFAULT_REFUSAL_TEMPLATES: Record<RefusalReason, string> = {
     "I can't give investment or financial advice. For financial planning, please consult a licensed advisor.",
   not_legal_advice:
     "I can't give legal advice. For legal matters, please consult a licensed attorney.",
+  prompt_probe:
+    "My instructions are public. They are in {{brandName}}'s configuration file under prompts.system, and they hold no secret, key, or permission. I answer from approved records only.",
   state_changing_offline:
     "That action requires an internet connection. I've queued it and will process it when you're back online.",
 };
@@ -101,6 +114,11 @@ export function checkBlocklist(query: string): {
   reason?: RefusalReason;
 } {
   if (!isEnabled()) return {blocked: false};
+
+  if (PROMPT_PROBE_PATTERNS.some(pattern => pattern.test(query))) {
+    logger.info('safetyLayer', 'prompt probe', {});
+    return {blocked: true, reason: 'prompt_probe'};
+  }
 
   const blocklist = getSafetyConfig().topicBlocklist ?? [];
   if (blocklist.length === 0) return {blocked: false};

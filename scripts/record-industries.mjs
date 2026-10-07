@@ -42,6 +42,10 @@ function main() {
   const root = rootFromScript();
   const device = valueAfter('--device');
   if (!device) throw new Error('recording_device_required');
+  const platform = valueAfter('--platform') ?? 'android';
+  if (!['android', 'ios'].includes(platform)) throw new Error('recording_platform_invalid');
+  // An iOS take is a second recording of the same fixture, named by platform.
+  const suffix = platform === 'ios' ? '-ios' : '';
   const requestedIndustry = valueAfter('--industry');
   const requestedEntry = INDUSTRIES.find(([industry]) => industry === requestedIndustry);
   if (requestedIndustry && !requestedEntry) {
@@ -94,19 +98,19 @@ function main() {
         [
           'scripts/record-demo.mjs',
           '--platform',
-          'android',
+          platform,
           '--device',
           device,
           '--commit',
           sourceCommit,
           '--id',
-          `industry-${slug}`,
+          `industry-${slug}${suffix}`,
           '--flow',
           flowOverride ?? FLOWS[industry] ?? 'industry-android.yaml',
           '--kind',
           'industry',
           '--output',
-          `demo/industry-${slug}.gif`,
+          `demo/industry-${slug}${suffix}.gif`,
           '--config',
           `examples/${industry}/airgap.config.json`,
           '--quick-reply',
@@ -116,7 +120,7 @@ function main() {
           '--model-identity',
           modelIdentity,
           '--evidence-class',
-          'emulator',
+          platform === 'ios' ? 'simulator' : 'emulator',
           ...(llmMode === 'demo' ? [] : ['--llm-mode', llmMode]),
           ...(modelFile ? ['--model-file', modelFile] : []),
         ],

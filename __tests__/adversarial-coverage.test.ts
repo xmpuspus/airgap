@@ -28,17 +28,9 @@ const fixture: Fixture = JSON.parse(fs.readFileSync(fixturePath, 'utf-8'));
 
 const exampleConfigs: Record<string, any> = {};
 for (const vertical of Object.keys(fixture.verticals)) {
-  const configPath = path.join(
-    __dirname,
-    '..',
-    'examples',
-    vertical,
-    'airgap.config.json',
-  );
+  const configPath = path.join(__dirname, '..', 'examples', vertical, 'airgap.config.json');
   if (fs.existsSync(configPath)) {
-    exampleConfigs[vertical] = JSON.parse(
-      fs.readFileSync(configPath, 'utf-8'),
-    );
+    exampleConfigs[vertical] = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
   }
 }
 
@@ -65,9 +57,9 @@ describe('adversarial coverage', () => {
       });
 
       for (const c of cases.filter(x => x.expect === 'refusal')) {
-        const matches = blocklistPhrases.some(phrase =>
-          c.query.toLowerCase().includes(phrase),
-        );
+        // Prompt probes are a built-in guardrail, not a config phrase.
+        if (c.reason === 'prompt_probe') continue;
+        const matches = blocklistPhrases.some(phrase => c.query.toLowerCase().includes(phrase));
         if (!matches) {
           // Fail loudly with diagnostic info
           throw new Error(
@@ -88,9 +80,7 @@ describe('adversarial coverage', () => {
       const toolNames: string[] = (cfg.tools ?? []).map((t: any) => t.name);
       for (const c of cases.filter(x => x.expect === 'tool')) {
         if (!c.tool) {
-          throw new Error(
-            `Vertical "${vertical}" has tool-case "${c.query}" with no tool name`,
-          );
+          throw new Error(`Vertical "${vertical}" has tool-case "${c.query}" with no tool name`);
         }
         expect(toolNames).toContain(c.tool);
       }

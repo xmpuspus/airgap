@@ -857,7 +857,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Override the default refusal copy per reason. Known reasons: blocked_topic, low_confidence, ungrounded_answer, not_medical_advice, not_financial_advice, not_legal_advice, state_changing_offline. Supports {{brandName}} and {{hotline}} interpolation."
+          "description": "Override the default refusal copy per reason. Known reasons: blocked_topic, low_confidence, ungrounded_answer, not_medical_advice, not_financial_advice, not_legal_advice, prompt_probe, state_changing_offline. Supports {{brandName}} and {{hotline}} interpolation."
         }
       }
     },

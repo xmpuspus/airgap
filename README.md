@@ -188,15 +188,16 @@ hours, eligibility guidance, and queued service requests across the seven
 included industries. The examples show that the same code can load
 different brands, prompts, actions, and documents.
 
-| Industry         | Configuration and knowledge                                | Recorded example                                               |
-| ---------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
-| Airline          | [`examples/airline/`](examples/airline/)                   | [`demo/industry-airline.gif`](demo/industry-airline.gif)       |
-| Banking          | [`examples/banking/`](examples/banking/)                   | [`demo/industry-banking.gif`](demo/industry-banking.gif)       |
-| Electric utility | [`examples/electric-utility/`](examples/electric-utility/) | [`demo/industry-electric.gif`](demo/industry-electric.gif)     |
-| Healthcare       | [`examples/healthcare/`](examples/healthcare/)             | [`demo/industry-healthcare.gif`](demo/industry-healthcare.gif) |
-| Insurance        | [`examples/insurance/`](examples/insurance/)               | [`demo/industry-insurance.gif`](demo/industry-insurance.gif)   |
-| Telecom          | [`examples/telco/`](examples/telco/)                       | [`demo/industry-telco.gif`](demo/industry-telco.gif)           |
-| Water utility    | [`examples/water-utility/`](examples/water-utility/)       | [`demo/industry-water.gif`](demo/industry-water.gif)           |
+| Industry            | Configuration and knowledge                                      | Recorded example                                                                                                                          |
+| ------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Airline             | [`examples/airline/`](examples/airline/)                         | [`demo/industry-airline.gif`](demo/industry-airline.gif)                                                                                  |
+| Banking             | [`examples/banking/`](examples/banking/)                         | [`demo/industry-banking.gif`](demo/industry-banking.gif)                                                                                  |
+| Electric utility    | [`examples/electric-utility/`](examples/electric-utility/)       | [`demo/industry-electric.gif`](demo/industry-electric.gif)                                                                                |
+| Government services | [`examples/government-services/`](examples/government-services/) | [`demo/industry-government.gif`](demo/industry-government.gif) and [`demo/industry-government-ios.gif`](demo/industry-government-ios.gif) |
+| Healthcare          | [`examples/healthcare/`](examples/healthcare/)                   | [`demo/industry-healthcare.gif`](demo/industry-healthcare.gif)                                                                            |
+| Insurance           | [`examples/insurance/`](examples/insurance/)                     | [`demo/industry-insurance.gif`](demo/industry-insurance.gif)                                                                              |
+| Telecom             | [`examples/telco/`](examples/telco/)                             | [`demo/industry-telco.gif`](demo/industry-telco.gif)                                                                                      |
+| Water utility       | [`examples/water-utility/`](examples/water-utility/)             | [`demo/industry-water.gif`](demo/industry-water.gif)                                                                                      |
 
 An operator still owns document accuracy, identity, authorization, production
 actions, escalation, retention, accessibility, legal review, and device fleet
@@ -234,7 +235,7 @@ person, approve a sensitive action, or mutate an account. The deterministic
 tool router and operator backend keep those responsibilities.
 
 The main path starts in [`src/services/orchestrator.ts`](src/services/orchestrator.ts).
-Provider choice lives in
+The provider policy is in
 [`src/services/inference/providerResolver.ts`](src/services/inference/providerResolver.ts),
 and [`src/components/chat/AnswerProvenance.tsx`](src/components/chat/AnswerProvenance.tsx)
 shows exact answer provenance.
@@ -291,6 +292,8 @@ host probe, physical-device preflight, and optional downloaded-model placement.
 - [`docs/sync-architecture.md`](docs/sync-architecture.md) explains signed knowledge updates
 - [`docs/tool-calling.md`](docs/tool-calling.md) explains the deterministic action boundary
 - [`docs/safety-layer.md`](docs/safety-layer.md) explains safety checks and their limits
+- [`docs/support-bot-minimum.md`](docs/support-bot-minimum.md) lists the eight controls any support bot needs before the model matters
+- [`docs/case-study-government-assistant-launch.md`](docs/case-study-government-assistant-launch.md) replays one public launch failure against those controls
 - [`docs/observability.md`](docs/observability.md) lists diagnostics, telemetry fields, and privacy limits
 - [`docs/kb-studio.md`](docs/kb-studio.md) covers local knowledge authoring and validation
 - [`docs/recordings.md`](docs/recordings.md) gives the reproducible media evidence process

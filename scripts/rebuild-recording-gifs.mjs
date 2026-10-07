@@ -23,7 +23,11 @@ function main() {
   for (const recording of manifest.recordings) {
     if (recording.sourceCommit !== sourceCommit) continue;
     if (recording.kind === 'readme') continue;
-    const playbackSpeed = recording.kind === 'industry' || recording.platform === 'android' ? 4 : 1;
+    // A manifest entry can carry its own speed, for example a model take that
+    // runs at eight times so a public loop stays under a minute.
+    const playbackSpeed =
+      recording.playbackSpeed ??
+      (recording.kind === 'industry' || recording.platform === 'android' ? 4 : 1);
     const output = path.join(root, recording.output);
     const source = path.join(root, recording.source);
     if (!fs.existsSync(source)) {
@@ -49,11 +53,17 @@ function main() {
   }
 
   fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
-  run(
-    process.execPath,
-    [path.join(root, 'scripts', 'build-readme-gif.mjs'), '--commit', sourceCommit],
-    {cwd: root},
+  // The README asset needs both platform takes from the same commit.
+  const platformTakes = manifest.recordings.filter(
+    recording => recording.kind === 'platform' && recording.sourceCommit === sourceCommit,
   );
+  if (platformTakes.length === 2) {
+    run(
+      process.execPath,
+      [path.join(root, 'scripts', 'build-readme-gif.mjs'), '--commit', sourceCommit],
+      {cwd: root},
+    );
+  }
   process.stdout.write(`Rebuilt public GIFs for ${sourceCommit}.\n`);
 }
 

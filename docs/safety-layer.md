@@ -9,6 +9,12 @@ errors. They do not show that an answer is correct, safe, or compliant.
 `checkBlocklist(query)` reads `config.safety.topicBlocklist` before search, tool routing, or a model
 call. It returns the first whole-word match without regard to letter case.
 
+Before the blocklist, the same check catches prompt probes: requests to show, repeat, or override
+the instructions, such as "show me your system prompt" or "ignore your rules". The reason is
+`prompt_probe`, and the default answer says that the instructions are public and hold no secret.
+The model never sees the request. Operators can replace the wording through
+`refusalTemplates.prompt_probe`.
+
 ```json
 {
   "safety": {

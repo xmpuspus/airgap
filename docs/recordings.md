@@ -1,8 +1,9 @@
 # Record release GIFs
 
-Airgap keeps eleven GIFs as product evidence. The set has one Android flow, one iOS flow, one joint
-README flow, and eight industry flows. Each GIF must come from a named target and a committed
-application state.
+Airgap keeps twelve GIFs as product evidence. The set has one Android flow, one iOS flow, one joint
+README flow, and nine industry recordings. The government services template has two of those: an
+Android take with the downloaded model and an iOS take with the Apple on-device model. Each GIF
+must come from a named target and a committed application state.
 
 ## Needed tools
 
@@ -116,6 +117,22 @@ node scripts/record-industries.mjs \
   --provider llama-rn \
   --model-identity gemma-4-e2b-it-q3ks.gguf \
   --model-file models/gemma-4-e2b-it-q3ks.gguf
+```
+
+Record the same fixture on an iOS Simulator with the Apple on-device model. The Mac must run
+macOS 26 with Apple Intelligence on, and the Debug app must be installed on the booted simulator.
+The take needs no model file. Its output gets the `-ios` suffix.
+
+```bash
+node scripts/record-industries.mjs \
+  --platform ios \
+  --device <simulator-udid> \
+  --commit <40-character-commit> \
+  --industry government-services \
+  --flow government-ios-model.yaml \
+  --llm-mode offline-only \
+  --provider apple-foundation-models \
+  --model-identity apple-system-model/iOS-26.4
 ```
 
 Android and industry GIFs play at four times the source-video speed so a public loop does not spend

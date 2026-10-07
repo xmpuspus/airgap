@@ -11,6 +11,7 @@ import {
   MODEL_CONTEXT_CHARS,
 } from '../utils/promptBuilder';
 import {isFollowUp, expandQuery} from '../utils/followUpDetector';
+import {formatDeviceClock, isClockQuestion} from '../utils/deviceClock';
 import {
   config,
   brand,
@@ -151,6 +152,15 @@ async function processMessageInner(
       source: 'system',
       suggestedReplies: quickReplies as QuickReply[],
     };
+  }
+
+  // 2b. Date and time come from the device clock, never from a model or a record.
+  if (isClockQuestion(text)) {
+    const clock = formatDeviceClock(new Date(), config.locale?.language ?? 'en');
+    const response = `It is ${clock} on this device's clock. I have no clock of my own, and each record shows the date it was checked.`;
+    addToHistory('user', text);
+    addToHistory('bot', response);
+    return {text: response, source: 'system'};
   }
 
   // 3. Tool router — config-driven keyword match. Replaces the old hardcoded
