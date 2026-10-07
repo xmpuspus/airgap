@@ -60,6 +60,10 @@ function main() {
   const modelFile = valueAfter('--model-file');
   const flowOverride = valueAfter('--flow');
   if (modelFile && !requestedIndustry) throw new Error('recording_model_file_needs_industry');
+  // The industry flows toggle airplane mode, which the iOS Simulator lacks.
+  if (platform === 'ios' && !flowOverride) {
+    throw new Error('recording_ios_flow_required: pass --flow with an iOS flow file.');
+  }
   // A showcase take is a longer flow for the comparison GIF. It keeps its own
   // output name and the larger size limit of its kind.
   const kind = valueAfter('--kind') ?? 'industry';

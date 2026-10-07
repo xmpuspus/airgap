@@ -91,8 +91,9 @@ The `interpolate()` helper replaces `{{brandName}}` and `{{hotline}}` in all thr
 
 ## Adversarial fixtures keep literal rules in sync
 
-`__tests__/golden/adversarial.json` has 10 prompts for each of the seven industry fixtures.
-Each of the 70 cases expects `refusal`, `tool`, `fallback`, or `ungrounded_answer`.
+`__tests__/golden/adversarial.json` has 10 prompts for each of the seven fictional fixtures and
+14 for the government services template. Each of the 84 cases expects `refusal`, `tool`,
+`fallback`, or `ungrounded_answer`.
 `__tests__/adversarial-coverage.test.ts` checks that every expected refusal maps to a real phrase in
 that fixture's blocklist.
 

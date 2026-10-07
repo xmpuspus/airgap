@@ -5,6 +5,9 @@
   "author": "Xavier Puspus (https://github.com/xmpuspus)",
   "repository": "https://github.com/xmpuspus/airgap",
   "license": "MIT",
+  "engines": {
+    "node": ">=22.11.0"
+  },
   "keywords": [
     "air-gapped",
     "offline-first",

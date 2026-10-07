@@ -1,2 +1,4 @@
 # CocoaPods RNKeychain 10.0.0 checksum, not a credential.
 590db64150b7e14f602aba140012e035b83ccaba:ios/Podfile.lock:generic-api-key:2384
+# Fake signing key in a unit test fixture, not a credential.
+70171ba42b39e394377b54f339f97767ea16344b:__tests__/sync-service.test.ts:generic-api-key:52

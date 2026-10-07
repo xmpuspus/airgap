@@ -4,7 +4,13 @@
     "category": "payment",
     "title": "Online payment via PowerGrid website",
     "content": "Pay your electric bill online at powergridelectric.com/pay. Log in with your account number and password, or use the one-time guest payment option with your account number and ZIP code. Accepted payment methods include Visa, Mastercard, Discover, American Express, and bank account (ACH) transfers. ACH payments are free; credit/debit card payments incur a $2.50 convenience fee charged by the payment processor. Payments posted before 3:00 PM are credited the same business day. You will receive a confirmation email with a transaction number.",
-    "keywords": ["online payment", "pay online", "website payment", "pay bill online", "credit card payment"],
+    "keywords": [
+      "online payment",
+      "pay online",
+      "website payment",
+      "pay bill online",
+      "credit card payment"
+    ],
     "tags": ["payment", "online"],
     "metadata": {
       "channel": "PowerGrid Website",
@@ -60,7 +66,13 @@
     "category": "payment",
     "title": "In-person payment at service centers",
     "content": "Pay your electric bill in person at any PowerGrid service center. We accept cash, check, money order, and debit/credit cards. No fee for cash or check payments; a $2.50 fee applies for card payments. Bring your bill stub or account number. Service centers are open Monday through Friday and select Saturdays. Payment drop boxes are available at all locations for 24/7 after-hours check or money order payments (do not deposit cash in drop boxes). Receipts are issued for all in-person payments.",
-    "keywords": ["in-person payment", "pay in person", "service center payment", "walk-in payment", "cash payment"],
+    "keywords": [
+      "in-person payment",
+      "pay in person",
+      "service center payment",
+      "walk-in payment",
+      "cash payment"
+    ],
     "tags": ["payment", "in-person"],
     "metadata": {
       "channel": "Service Center",
@@ -74,7 +86,15 @@
     "category": "payment",
     "title": "Third-party payment locations (7-Eleven, Walmart, etc.)",
     "content": "Pay your PowerGrid bill at authorized third-party locations including 7-Eleven, Walmart, Walgreens, and CVS stores. Bring your bill stub or account number and pay in cash, debit card, or money order. A convenience fee of $1.50-$3.00 is charged by the payment agent (varies by location). Payments at these locations typically post to your PowerGrid account within 24-48 hours. Keep your receipt as proof of payment. To find the nearest authorized payment location, visit powergridelectric.com/payment-locations or call 1-800-POWER.",
-    "keywords": ["7-Eleven", "Walmart", "Walgreens", "CVS", "third party", "convenience store", "pay at store"],
+    "keywords": [
+      "7-Eleven",
+      "Walmart",
+      "Walgreens",
+      "CVS",
+      "third party",
+      "convenience store",
+      "pay at store"
+    ],
     "tags": ["payment", "third-party", "in-person"],
     "metadata": {
       "channel": "Authorized Third-Party Locations",

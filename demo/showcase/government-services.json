@@ -1,7 +1,7 @@
 {
   "id": "showcase-government-services-comparison",
   "output": "demo/airgap-showcase-government-services.gif",
-  "title": "The job Kuya A was built for: five service prompts on Kuya B, Gemma 4 E2B",
+  "title": "Five government service prompts on Kuya B, Gemma 4 E2B",
   "leftHeading": "What a government services assistant must do",
   "panels": [
     {

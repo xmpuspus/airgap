@@ -8,3 +8,4 @@ coverage/
 tmp/
 demo/*.gif
 web/data/manifest.json
+bench/RESULTS.md

@@ -35,7 +35,7 @@ npm run kb:validate
 Run Android.
 
 ```bash
-JAVA_HOME=/opt/homebrew/opt/openjdk@17 npm run android
+JAVA_HOME=<path-to-jdk-17> npm run android
 ```
 
 Run iOS.
@@ -54,7 +54,8 @@ before enabling another provider.
 
 ## Replace brand and support content
 
-Run the guided setup.
+Run the guided setup. It copies one template and sets the brand fields in `airgap.config.json`.
+It does not rename the native projects. `npx create-airgap-bot` does that for a new app.
 
 ```bash
 ./scripts/setup.sh
@@ -64,7 +65,7 @@ Or change the files directly.
 
 1. Edit `airgap.config.json` for brand, colors, provider policy, support routes,
    actions, retention, and prompts.
-2. Replace JSON documents in `src/knowledge/`, or copy one of the seven examples.
+2. Replace JSON documents in `src/knowledge/`, or copy one of the eight examples.
 3. Run `node scripts/generate-manifest.js`.
 4. Run `npm run kb:validate` and the applicable industry journey.
 5. Review every visible answer and refusal with the people who own the content.
@@ -212,7 +213,7 @@ deployment constraints. Treat them as needed product and privacy requirements.
 
 ## Set up the downloaded model
 
-The checked sample points to Gemma 4 E2B Q3_K_S, about 2.4 GB. Set every
+The checked sample points to Gemma 4 E2B Q3_K_S, about 2.6 GB (2.45 GiB). Set every
 integrity field together if you replace it.
 
 ```json
@@ -287,7 +288,7 @@ export AIRGAP_RELEASE_KEY_ALIAS=release
 export AIRGAP_RELEASE_STORE_PASSWORD='from-your-secret-manager'
 export AIRGAP_RELEASE_KEY_PASSWORD='from-your-secret-manager'
 cd android
-JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew bundleRelease
+JAVA_HOME=<path-to-jdk-17> ./gradlew bundleRelease
 ```
 
 Airgap leaves a release build unsigned when all four variables are absent and

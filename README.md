@@ -24,7 +24,7 @@ The default demo makes no model request and needs no download. It lets a new
 contributor check retrieval, citations, privacy status, and the interface before
 choosing an inference provider or connecting a backend.
 
-![Airgap Android emulator and iOS simulator flows from provider readiness to cited offline answers](demo/airgap-readme-side-by-side.gif)
+![Airgap on the Android emulator and the iOS simulator: provider readiness, then cited offline answers](demo/airgap-readme-side-by-side.gif)
 
 This GIF combines real Android 15 emulator and iPhone 17 Pro Simulator runs from
 the same source commit. Both use the deterministic `demo` provider. The footage
@@ -246,7 +246,7 @@ shows exact answer provenance.
 | ------------------------- | ---------------------------------------- | -------------------------------------------------------- | -------------------------------------------------- |
 | Joint and iOS GIFs        | Android 15 emulator + iOS 26.4 simulator | Readiness, UI, and cited answers                         | Physical native providers                          |
 | Fresh Android GIF         | Android 15 emulator                      | Answer, queue, Outbox, and privacy checked               | Android system AI or physical-device behavior      |
-| Seven fresh industry GIFs | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked | Production data, actions, approvals, or compliance |
+| Eight industry GIFs       | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked | Production data, actions, approvals, or compliance |
 | iOS native compile        | Generic iOS Simulator                    | Foundation Models bridge compiles                        | Eligible physical-device runtime                   |
 | Android debug compile     | Android app, min SDK 24                  | ML Kit beta2 bridge compiles                             | Supported AICore device runtime                    |
 | iOS provider scenario     | iOS 26.4 simulator                       | Native bridge, routing, answer, provenance, and UI       | Apple model output or physical-device behavior     |

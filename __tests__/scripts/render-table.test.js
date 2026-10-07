@@ -1,9 +1,9 @@
 // render-table.test.js
 //
 // Fixture-based test for bench/render-table.mjs. Each test creates a
-// throwaway directory under `os.tmpdir()`, drops a synthetic README and
-// (optionally) a few result JSON files into it, runs the script with
-// `--root <fixture>`, and asserts on the resulting README contents.
+// throwaway directory under `os.tmpdir()`, drops a synthetic bench/RESULTS.md
+// and (optionally) a few result JSON files into it, runs the script with
+// `--root <fixture>`, and asserts on the resulting page contents.
 
 const fs = require('fs');
 const os = require('os');
@@ -20,11 +20,11 @@ function makeFixture() {
 }
 
 function writeReadme(dir, body) {
-  fs.writeFileSync(path.join(dir, 'README.md'), body);
+  fs.writeFileSync(path.join(dir, 'bench', 'RESULTS.md'), body);
 }
 
 function readReadme(dir) {
-  return fs.readFileSync(path.join(dir, 'README.md'), 'utf8');
+  return fs.readFileSync(path.join(dir, 'bench', 'RESULTS.md'), 'utf8');
 }
 
 function writeResult(dir, name, payload) {

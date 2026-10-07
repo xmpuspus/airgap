@@ -7,55 +7,60 @@ import {fileURLToPath} from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-test(
-  'gives iOS simulator builds an entitlement input for private Keychain access',
-  {skip: process.platform !== 'darwin'},
-  () => {
-    const result = spawnSync(
-      'xcodebuild',
-      [
-        '-workspace',
-        'ios/Airgap.xcworkspace',
-        '-scheme',
-        'Airgap',
-        '-sdk',
-        'iphonesimulator',
-        '-configuration',
-        'Debug',
-        '-showBuildSettings',
-      ],
-      {cwd: root, encoding: 'utf8'},
-    );
+// The build settings query needs Xcode and an installed Pods project.
+const podsProject = path.join(root, 'ios', 'Pods', 'Pods.xcodeproj');
+const skip =
+  process.platform !== 'darwin'
+    ? 'needs macOS'
+    : !fs.existsSync(podsProject)
+    ? 'needs pod install'
+    : false;
 
-    assert.equal(result.status, 0, result.stderr);
-    assert.match(result.stdout, /CODE_SIGN_ENTITLEMENTS = Airgap\/AirgapSimulator\.entitlements/);
+test('gives iOS simulator builds an entitlement input for private Keychain access', {skip}, () => {
+  const result = spawnSync(
+    'xcodebuild',
+    [
+      '-workspace',
+      'ios/Airgap.xcworkspace',
+      '-scheme',
+      'Airgap',
+      '-sdk',
+      'iphonesimulator',
+      '-configuration',
+      'Debug',
+      '-showBuildSettings',
+    ],
+    {cwd: root, encoding: 'utf8'},
+  );
 
-    const plist = spawnSync('plutil', ['-lint', 'ios/Airgap/Airgap.entitlements'], {
-      cwd: root,
-      encoding: 'utf8',
-    });
-    assert.equal(plist.status, 0, plist.stderr);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /CODE_SIGN_ENTITLEMENTS = Airgap\/AirgapSimulator\.entitlements/);
 
-    const accessGroup = spawnSync(
-      'plutil',
-      ['-extract', 'keychain-access-groups.0', 'raw', 'ios/Airgap/Airgap.entitlements'],
-      {cwd: root, encoding: 'utf8'},
-    );
-    assert.equal(accessGroup.status, 0, accessGroup.stderr);
-    assert.equal(accessGroup.stdout.trim(), '$(AppIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)');
+  const plist = spawnSync('plutil', ['-lint', 'ios/Airgap/Airgap.entitlements'], {
+    cwd: root,
+    encoding: 'utf8',
+  });
+  assert.equal(plist.status, 0, plist.stderr);
 
-    const simulatorAccessGroup = spawnSync(
-      'plutil',
-      ['-extract', 'keychain-access-groups.0', 'raw', 'ios/Airgap/AirgapSimulator.entitlements'],
-      {cwd: root, encoding: 'utf8'},
-    );
-    assert.equal(simulatorAccessGroup.status, 0, simulatorAccessGroup.stderr);
-    assert.equal(
-      simulatorAccessGroup.stdout.trim(),
-      '$(TeamIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)',
-    );
+  const accessGroup = spawnSync(
+    'plutil',
+    ['-extract', 'keychain-access-groups.0', 'raw', 'ios/Airgap/Airgap.entitlements'],
+    {cwd: root, encoding: 'utf8'},
+  );
+  assert.equal(accessGroup.status, 0, accessGroup.stderr);
+  assert.equal(accessGroup.stdout.trim(), '$(AppIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)');
 
-    const project = fs.readFileSync('ios/Airgap.xcodeproj/project.pbxproj', 'utf8');
-    assert.match(project, /com\.apple\.Keychain = \{\s*enabled = 1;/);
-  },
-);
+  const simulatorAccessGroup = spawnSync(
+    'plutil',
+    ['-extract', 'keychain-access-groups.0', 'raw', 'ios/Airgap/AirgapSimulator.entitlements'],
+    {cwd: root, encoding: 'utf8'},
+  );
+  assert.equal(simulatorAccessGroup.status, 0, simulatorAccessGroup.stderr);
+  assert.equal(
+    simulatorAccessGroup.stdout.trim(),
+    '$(TeamIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)',
+  );
+
+  const project = fs.readFileSync('ios/Airgap.xcodeproj/project.pbxproj', 'utf8');
+  assert.match(project, /com\.apple\.Keychain = \{\s*enabled = 1;/);
+});

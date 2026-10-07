@@ -67,6 +67,7 @@ android/app/src/main/assets/*.map
 
 # testing
 /coverage
+.ruff_cache/
 
 # Yarn
 .yarn/*
@@ -87,6 +88,8 @@ __tests__/llm-journey-results.json
 # Planning artifacts
 .planning/
 .claude/
+/docs/plans/
+/docs/superpowers/
 *.so
 /.worktrees/
 /tmp/

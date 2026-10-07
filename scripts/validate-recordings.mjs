@@ -34,8 +34,12 @@ function probeGif(root, output) {
     ],
     {encoding: 'utf8'},
   );
-  if (result.status !== 0)
-    throw new Error(`recording_probe_failed:${output}:${result.stderr.trim()}`);
+  if (result.error?.code === 'ENOENT') {
+    throw new Error('recording_probe_failed: ffprobe is not installed. Install FFmpeg first.');
+  }
+  if (result.status !== 0) {
+    throw new Error(`recording_probe_failed:${output}:${(result.stderr ?? '').trim()}`);
+  }
   const data = JSON.parse(result.stdout);
   const stream = data.streams?.[0] ?? {};
   return {

@@ -12,11 +12,7 @@
       "*123#",
       "remaining load"
     ],
-    "tags": [
-      "prepaid",
-      "balance",
-      "self-service"
-    ],
+    "tags": ["prepaid", "balance", "self-service"],
     "metadata": {}
   },
   {
@@ -32,12 +28,7 @@
       "internet usage",
       "data consumption"
     ],
-    "tags": [
-      "data",
-      "self-service",
-      "prepaid",
-      "postpaid"
-    ],
+    "tags": ["data", "self-service", "prepaid", "postpaid"],
     "metadata": {}
   },
   {
@@ -45,18 +36,8 @@
     "category": "faq",
     "title": "How to activate a new ACME SIM",
     "content": "To activate your new ACME SIM: 1) Insert the SIM into your phone and power it on. 2) Wait for network registration (up to 5 minutes). 3) Dial *888# to start the activation wizard. 4) Enter the 13-digit SIM serial number printed on the SIM card holder. 5) Complete SIM registration by providing your full name, address, valid ID type, and ID number as required by Philippine law (RA 11934). 6) You will receive a confirmation SMS once activation is complete. New SIMs come with 1GB free data valid for 3 days.",
-    "keywords": [
-      "activate SIM",
-      "new SIM",
-      "SIM activation",
-      "register SIM",
-      "new number"
-    ],
-    "tags": [
-      "sim",
-      "activation",
-      "getting-started"
-    ],
+    "keywords": ["activate SIM", "new SIM", "SIM activation", "register SIM", "new number"],
+    "tags": ["sim", "activation", "getting-started"],
     "metadata": {}
   },
   {
@@ -76,11 +57,7 @@
       "physical to eSIM",
       "SIM conversion"
     ],
-    "tags": [
-      "sim",
-      "esim",
-      "activation"
-    ],
+    "tags": ["sim", "esim", "activation"],
     "metadata": {}
   },
   {
@@ -96,11 +73,7 @@
       "mobile wallet",
       "payment app"
     ],
-    "tags": [
-      "meridiapay",
-      "wallet",
-      "payment"
-    ],
+    "tags": ["meridiapay", "wallet", "payment"],
     "metadata": {}
   },
   {
@@ -119,10 +92,7 @@
       "211",
       "email"
     ],
-    "tags": [
-      "support",
-      "contact"
-    ],
+    "tags": ["support", "contact"],
     "metadata": {}
   },
   {
@@ -138,11 +108,7 @@
       "blocked SIM",
       "lost phone"
     ],
-    "tags": [
-      "sim",
-      "replacement",
-      "security"
-    ],
+    "tags": ["sim", "replacement", "security"],
     "metadata": {}
   },
   {
@@ -150,18 +116,8 @@
     "category": "faq",
     "title": "How to change or upgrade your postpaid plan",
     "content": "Postpaid subscribers can change their plan after the minimum lock-in period (24 months). To upgrade: 1) Dial *888*1# or call 211. 2) You can also visit any ACME store or submit a request through the ACME app under Account > Plan > Change Plan. Early termination incurs a fee equal to the remaining months multiplied by PHP 500. Upgrading to a higher plan during lock-in is allowed without penalty. Downgrades during lock-in require the early termination difference. Plan changes take effect on the next billing cycle.",
-    "keywords": [
-      "change plan",
-      "upgrade plan",
-      "switch plan",
-      "postpaid upgrade",
-      "plan change"
-    ],
-    "tags": [
-      "postpaid",
-      "plan",
-      "upgrade"
-    ],
+    "keywords": ["change plan", "upgrade plan", "switch plan", "postpaid upgrade", "plan change"],
+    "tags": ["postpaid", "plan", "upgrade"],
     "metadata": {}
   },
   {
@@ -177,12 +133,7 @@
       "data package",
       "data promo"
     ],
-    "tags": [
-      "data",
-      "add-on",
-      "prepaid",
-      "postpaid"
-    ],
+    "tags": ["data", "add-on", "prepaid", "postpaid"],
     "metadata": {}
   },
   {
@@ -197,11 +148,7 @@
       "call divert",
       "redirect calls"
     ],
-    "tags": [
-      "calls",
-      "forwarding",
-      "self-service"
-    ],
+    "tags": ["calls", "forwarding", "self-service"],
     "metadata": {}
   },
   {
@@ -209,18 +156,8 @@
     "category": "faq",
     "title": "Voicemail setup and access",
     "content": "ACME voicemail lets callers leave messages when you cannot answer. To activate: Dial *888*55# or text VOICEMAIL ON to 2123. To access voicemail: Dial 211 then press 1, or long-press the 1 key on your phone dialer. First-time setup requires creating a 4-digit PIN. Voicemail stores up to 20 messages for 7 days. To deactivate: Text VOICEMAIL OFF to 2123. Voicemail is free for postpaid subscribers. Prepaid subscribers pay PHP 1.50/day when active.",
-    "keywords": [
-      "voicemail",
-      "voice mail",
-      "missed call",
-      "message recording",
-      "voice message"
-    ],
-    "tags": [
-      "calls",
-      "voicemail",
-      "self-service"
-    ],
+    "keywords": ["voicemail", "voice mail", "missed call", "message recording", "voice message"],
+    "tags": ["calls", "voicemail", "self-service"],
     "metadata": {}
   },
   {
@@ -236,11 +173,7 @@
       "switch network",
       "transfer number"
     ],
-    "tags": [
-      "sim",
-      "mnp",
-      "switching"
-    ],
+    "tags": ["sim", "mnp", "switching"],
     "metadata": {}
   },
   {
@@ -256,11 +189,7 @@
       "international dialing",
       "country code"
     ],
-    "tags": [
-      "calls",
-      "international",
-      "idd"
-    ],
+    "tags": ["calls", "international", "idd"],
     "metadata": {}
   },
   {
@@ -278,10 +207,7 @@
       "coverage map",
       "network area"
     ],
-    "tags": [
-      "network",
-      "coverage"
-    ],
+    "tags": ["network", "coverage"],
     "metadata": {}
   },
   {
@@ -297,11 +223,7 @@
       "LTE bands",
       "compatible devices"
     ],
-    "tags": [
-      "device",
-      "compatibility",
-      "network"
-    ],
+    "tags": ["device", "compatibility", "network"],
     "metadata": {}
   },
   {
@@ -318,12 +240,7 @@
       "postpaid bill",
       "fiber bill"
     ],
-    "tags": [
-      "billing",
-      "payment",
-      "postpaid",
-      "fiber"
-    ],
+    "tags": ["billing", "payment", "postpaid", "fiber"],
     "metadata": {}
   },
   {
@@ -331,18 +248,8 @@
     "category": "faq",
     "title": "Auto-debit enrollment and management",
     "content": "Set up auto-debit to never miss a payment. In the ACME app, go to Billing > Auto-Pay > Set Up Auto-Debit. Supported: BDO, BPI, Metrobank, UnionBank savings/checking accounts, and Visa/Mastercard credit cards. Enter your bank details or card number and authorize the recurring charge. Auto-debit processes on the 13th of each month (2 days before due date). To cancel auto-debit, go to the same menu and tap 'Disable Auto-Pay'. Changes take one billing cycle to apply. You will still receive monthly bill notifications via SMS and email.",
-    "keywords": [
-      "auto-debit",
-      "auto pay",
-      "automatic payment",
-      "recurring payment",
-      "autopay"
-    ],
-    "tags": [
-      "billing",
-      "payment",
-      "auto-debit"
-    ],
+    "keywords": ["auto-debit", "auto pay", "automatic payment", "recurring payment", "autopay"],
+    "tags": ["billing", "payment", "auto-debit"],
     "metadata": {}
   },
   {
@@ -350,18 +257,8 @@
     "category": "faq",
     "title": "Referral program and rewards",
     "content": "Earn rewards by referring friends to ACME. Share your unique referral code (found in the ACME app under Rewards > Refer a Friend). When your friend activates a new ACME SIM and loads at least PHP 100, you both receive 2GB free data valid for 7 days. For postpaid referrals, both parties get PHP 200 bill credit after the referee's first full billing month. There is no limit to the number of referrals. Top referrers each quarter are featured in the ACMEStars program and receive exclusive merchandise.",
-    "keywords": [
-      "referral",
-      "refer a friend",
-      "referral code",
-      "referral bonus",
-      "invite friend"
-    ],
-    "tags": [
-      "rewards",
-      "referral",
-      "promo"
-    ],
+    "keywords": ["referral", "refer a friend", "referral code", "referral bonus", "invite friend"],
+    "tags": ["rewards", "referral", "promo"],
     "metadata": {}
   },
   {
@@ -377,10 +274,7 @@
       "ACME Rewards",
       "redeem points"
     ],
-    "tags": [
-      "rewards",
-      "loyalty"
-    ],
+    "tags": ["rewards", "loyalty"],
     "metadata": {}
   },
   {
@@ -388,19 +282,8 @@
     "category": "faq",
     "title": "5G availability and compatible devices",
     "content": "ACME 5G is available in select areas of Metro Manila (BGC, Makati CBD, Ortigas, Eastwood, Mall of Asia area), Cebu IT Park, and Davao CBD. Expanding to Clark, Iloilo, and Baguio by Q3 2026. 5G delivers speeds up to 1Gbps with latency under 10ms. Compatible devices include iPhone 12 and later, Samsung Galaxy S21 and later, and other 5G phones supporting n78 band. You must be on a 5G-eligible plan (all postpaid plans and prepaid plans PHP 99+ include 5G access). No additional fee for 5G. Check availability at airgap.dev/5g.",
-    "keywords": [
-      "5G",
-      "fifth generation",
-      "5G coverage",
-      "5G phone",
-      "5G speed",
-      "5G plan"
-    ],
-    "tags": [
-      "network",
-      "5g",
-      "coverage"
-    ],
+    "keywords": ["5G", "fifth generation", "5G coverage", "5G phone", "5G speed", "5G plan"],
+    "tags": ["network", "5g", "coverage"],
     "metadata": {}
   },
   {
@@ -417,11 +300,7 @@
       "2FA",
       "two-factor"
     ],
-    "tags": [
-      "security",
-      "privacy",
-      "account"
-    ],
+    "tags": ["security", "privacy", "account"],
     "metadata": {}
   },
   {
@@ -429,18 +308,8 @@
     "category": "faq",
     "title": "Call barring and blocking",
     "content": "Restrict certain types of outgoing or incoming calls: Bar all outgoing calls: Dial *33*[PIN]# (default PIN is 0000). Bar outgoing international calls: Dial *331*[PIN]#. Bar all incoming calls: Dial *35*[PIN]#. Bar incoming calls when roaming: Dial *351*[PIN]#. Cancel all barring: Dial #330*[PIN]#. To change your barring PIN, call 211 or visit the ACME app under Settings > Call Barring. Call barring is useful for controlling charges, especially when lending your phone or traveling.",
-    "keywords": [
-      "call barring",
-      "block calls",
-      "restrict calls",
-      "call blocking",
-      "bar calls"
-    ],
-    "tags": [
-      "calls",
-      "barring",
-      "security"
-    ],
+    "keywords": ["call barring", "block calls", "restrict calls", "call blocking", "bar calls"],
+    "tags": ["calls", "barring", "security"],
     "metadata": {}
   },
   {
@@ -456,11 +325,7 @@
       "slow internet",
       "check speed"
     ],
-    "tags": [
-      "data",
-      "speed",
-      "self-service"
-    ],
+    "tags": ["data", "speed", "self-service"],
     "metadata": {}
   },
   {
@@ -468,18 +333,8 @@
     "category": "faq",
     "title": "Dual SIM setup with ACME",
     "content": "If your phone supports dual SIM (or eSIM + physical SIM), you can use ACME alongside another carrier. Go to Settings > Cellular/Mobile Network on your device. Assign ACME as your preferred line for data, calls, or both. On iOS: Settings > Cellular > select ACME line > turn on data. On Android: Settings > SIM Card Manager > set ACME as default for data. Note: Only one SIM can use mobile data at a time. Calls and texts can be received on both SIMs simultaneously. If using eSIM, ensure your device supports dual active SIM.",
-    "keywords": [
-      "dual SIM",
-      "two SIM",
-      "eSIM dual",
-      "multiple SIM",
-      "secondary SIM"
-    ],
-    "tags": [
-      "device",
-      "sim",
-      "dual-sim"
-    ],
+    "keywords": ["dual SIM", "two SIM", "eSIM dual", "multiple SIM", "secondary SIM"],
+    "tags": ["device", "sim", "dual-sim"],
     "metadata": {}
   },
   {
@@ -495,11 +350,7 @@
       "share data",
       "personal hotspot"
     ],
-    "tags": [
-      "data",
-      "hotspot",
-      "self-service"
-    ],
+    "tags": ["data", "hotspot", "self-service"],
     "metadata": {}
   },
   {
@@ -515,11 +366,7 @@
       "block content",
       "ACME Safe"
     ],
-    "tags": [
-      "safety",
-      "parental",
-      "content-filter"
-    ],
+    "tags": ["safety", "parental", "content-filter"],
     "metadata": {}
   },
   {
@@ -535,11 +382,7 @@
       "SIM unlock",
       "IMEI"
     ],
-    "tags": [
-      "device",
-      "unlock",
-      "postpaid"
-    ],
+    "tags": ["device", "unlock", "postpaid"],
     "metadata": {}
   },
   {
@@ -547,20 +390,8 @@
     "category": "faq",
     "title": "How to buy prepaid load",
     "content": "Top up your ACME prepaid balance through multiple channels: ACME app (ACMEPay, credit/debit card), GCash or Maya (search 'ACME'), retailer load (any sari-sari store or loading station \u2014 ask for ACME load), 7-Eleven Cliqq kiosk, bank apps (BDO, BPI \u2014 under Bills > Telco > ACME), or scratch cards (available at convenience stores in PHP 50, 100, 300, 500 denominations). For scratch cards, dial *123*[14-digit PIN]# to load. Electronic load reflects instantly. Minimum load amount is PHP 10.",
-    "keywords": [
-      "buy load",
-      "top up",
-      "prepaid load",
-      "reload",
-      "load up",
-      "pasaload",
-      "recharge"
-    ],
-    "tags": [
-      "prepaid",
-      "load",
-      "payment"
-    ],
+    "keywords": ["buy load", "top up", "prepaid load", "reload", "load up", "pasaload", "recharge"],
+    "tags": ["prepaid", "load", "payment"],
     "metadata": {}
   },
   {
@@ -576,11 +407,7 @@
       "share balance",
       "GoShare"
     ],
-    "tags": [
-      "prepaid",
-      "load",
-      "sharing"
-    ],
+    "tags": ["prepaid", "load", "sharing"],
     "metadata": {}
   },
   {
@@ -595,11 +422,7 @@
       "SIM card registration",
       "SIM reg"
     ],
-    "tags": [
-      "sim",
-      "registration",
-      "compliance"
-    ],
+    "tags": ["sim", "registration", "compliance"],
     "metadata": {}
   },
   {
@@ -607,20 +430,8 @@
     "category": "faq",
     "title": "How to subscribe to call and text promos",
     "content": "Subscribe to ACME call and text bundles by dialing *123*5# and browsing available offers. Popular bundles: ALLTEXT20 (unlimited texts to all networks, 1 day, PHP 20), CALL10 (30 minutes to ACME numbers, 1 day, PHP 10), COMBO30 (unlimited texts + 30 min calls to all networks, 2 days, PHP 30). You can also text the promo keyword to 2123. To check active subscriptions, dial *123*6#. To cancel a recurring promo, text STOP [promo keyword] to 2123.",
-    "keywords": [
-      "call promo",
-      "text promo",
-      "call and text",
-      "bundle",
-      "unli text",
-      "unli call"
-    ],
-    "tags": [
-      "prepaid",
-      "calls",
-      "texts",
-      "promo"
-    ],
+    "keywords": ["call promo", "text promo", "call and text", "bundle", "unli text", "unli call"],
+    "tags": ["prepaid", "calls", "texts", "promo"],
     "metadata": {}
   },
   {
@@ -628,18 +439,8 @@
     "category": "faq",
     "title": "ACME app download and features",
     "content": "Download the ACME app from the App Store (iOS) or Google Play Store (Android). Search 'ACME Telecom' or 'ACMEPH'. The app provides: account management (balance, usage, plan details), bill payment and ACMEPay wallet, promo subscription, coverage map, speed test, customer support chat, store locator, and device management. Log in with your ACME mobile number and OTP. The app is free and works on both mobile data and WiFi. Requires iOS 15+ or Android 10+.",
-    "keywords": [
-      "ACME app",
-      "download app",
-      "mobile app",
-      "application",
-      "app store"
-    ],
-    "tags": [
-      "app",
-      "self-service",
-      "digital"
-    ],
+    "keywords": ["ACME app", "download app", "mobile app", "application", "app store"],
+    "tags": ["app", "self-service", "digital"],
     "metadata": {}
   },
   {
@@ -654,11 +455,7 @@
       "fiber setup",
       "broadband installation"
     ],
-    "tags": [
-      "fiber",
-      "installation",
-      "getting-started"
-    ],
+    "tags": ["fiber", "installation", "getting-started"],
     "metadata": {}
   },
   {
@@ -673,11 +470,7 @@
       "internet upgrade",
       "broadband change"
     ],
-    "tags": [
-      "fiber",
-      "plan",
-      "upgrade"
-    ],
+    "tags": ["fiber", "plan", "upgrade"],
     "metadata": {}
   },
   {
@@ -693,11 +486,7 @@
       "network down",
       "disruption"
     ],
-    "tags": [
-      "network",
-      "outage",
-      "support"
-    ],
+    "tags": ["network", "outage", "support"],
     "metadata": {}
   },
   {
@@ -713,11 +502,7 @@
       "excess charges",
       "overage"
     ],
-    "tags": [
-      "billing",
-      "postpaid",
-      "charges"
-    ],
+    "tags": ["billing", "postpaid", "charges"],
     "metadata": {}
   },
   {
@@ -733,11 +518,7 @@
       "inactive SIM",
       "deactivated SIM"
     ],
-    "tags": [
-      "prepaid",
-      "load",
-      "validity"
-    ],
+    "tags": ["prepaid", "load", "validity"],
     "metadata": {}
   },
   {
@@ -752,10 +533,7 @@
       "complimentary",
       "free features"
     ],
-    "tags": [
-      "general",
-      "free-services"
-    ],
+    "tags": ["general", "free-services"],
     "metadata": {}
   },
   {
@@ -763,18 +541,8 @@
     "category": "faq",
     "title": "How to enable WiFi calling",
     "content": "WiFi calling lets you make and receive calls over WiFi when mobile signal is weak. To enable: iPhone: Settings > Phone > WiFi Calling > toggle on. Android: Settings > Connections > WiFi Calling > toggle on (varies by device). Requirements: compatible device, active ACME SIM, connected to WiFi. WiFi calls are charged at the same rate as regular calls (or deducted from your call allocation). WiFi calling works domestically only \u2014 it is not available while roaming. If you have trouble enabling it, ensure your device firmware is updated and the feature is supported for your phone model.",
-    "keywords": [
-      "WiFi calling",
-      "VoWiFi",
-      "call over WiFi",
-      "WiFi call",
-      "weak signal calling"
-    ],
-    "tags": [
-      "calls",
-      "wifi",
-      "feature"
-    ],
+    "keywords": ["WiFi calling", "VoWiFi", "call over WiFi", "WiFi call", "weak signal calling"],
+    "tags": ["calls", "wifi", "feature"],
     "metadata": {}
   },
   {
@@ -791,11 +559,7 @@
       "junk messages",
       "block number"
     ],
-    "tags": [
-      "security",
-      "spam",
-      "messaging"
-    ],
+    "tags": ["security", "spam", "messaging"],
     "metadata": {}
   },
   {
@@ -810,11 +574,7 @@
       "travel abroad",
       "roaming settings"
     ],
-    "tags": [
-      "roaming",
-      "international",
-      "travel"
-    ],
+    "tags": ["roaming", "international", "travel"],
     "metadata": {}
   },
   {
@@ -830,11 +590,7 @@
       "change WiFi",
       "fiber router"
     ],
-    "tags": [
-      "fiber",
-      "router",
-      "self-service"
-    ],
+    "tags": ["fiber", "router", "self-service"],
     "metadata": {}
   },
   {
@@ -849,11 +605,7 @@
       "sign up postpaid",
       "postpaid eligibility"
     ],
-    "tags": [
-      "postpaid",
-      "application",
-      "getting-started"
-    ],
+    "tags": ["postpaid", "application", "getting-started"],
     "metadata": {}
   },
   {
@@ -861,19 +613,8 @@
     "category": "faq",
     "title": "How to request a billing statement or SOA",
     "content": "To get a copy of your billing statement or Statement of Account (SOA): 1) Open the ACME app > Billing > Statements. Download any of the last 12 months. 2) Visit airgap.dev/mybill and log in. 3) Call 123 and request a statement to be emailed. 4) Visit a ACME store for a printed copy (PHP 25 per page). SOAs for loan or visa purposes can be requested with an official ACME letterhead \u2014 call 211 or email billing@airgap.dev and allow 5 business days for processing.",
-    "keywords": [
-      "billing statement",
-      "SOA",
-      "statement of account",
-      "bill copy",
-      "bill download"
-    ],
-    "tags": [
-      "billing",
-      "postpaid",
-      "fiber",
-      "documents"
-    ],
+    "keywords": ["billing statement", "SOA", "statement of account", "bill copy", "bill download"],
+    "tags": ["billing", "postpaid", "fiber", "documents"],
     "metadata": {}
   },
   {
@@ -889,12 +630,7 @@
       "service suspended",
       "reconnect"
     ],
-    "tags": [
-      "billing",
-      "disconnection",
-      "postpaid",
-      "fiber"
-    ],
+    "tags": ["billing", "disconnection", "postpaid", "fiber"],
     "metadata": {}
   },
   {
@@ -910,12 +646,7 @@
       "early termination",
       "discontinue"
     ],
-    "tags": [
-      "account",
-      "cancellation",
-      "postpaid",
-      "fiber"
-    ],
+    "tags": ["account", "cancellation", "postpaid", "fiber"],
     "metadata": {}
   },
   {
@@ -930,11 +661,7 @@
       "fiber area",
       "broadband availability"
     ],
-    "tags": [
-      "fiber",
-      "coverage",
-      "availability"
-    ],
+    "tags": ["fiber", "coverage", "availability"],
     "metadata": {}
   },
   {
@@ -942,18 +669,8 @@
     "category": "faq",
     "title": "VoLTE and HD voice calling",
     "content": "Voice over LTE (VoLTE) provides high-definition voice calls with clearer sound and faster call setup times. VoLTE is automatically enabled on all ACME SIMs with compatible devices. To verify it's active: iPhone: Settings > Cellular > Cellular Data Options > Voice & Data > should show 'LTE, VoLTE On'. Android: Settings > Connections > Mobile Networks > VoLTE Calls > toggle on. VoLTE calls are billed at the same rate as regular calls. Benefits include simultaneous voice and data (no dropped data connection during calls), HD audio quality, and call setup in under 2 seconds.",
-    "keywords": [
-      "VoLTE",
-      "HD voice",
-      "high definition calling",
-      "voice over LTE",
-      "clear calls"
-    ],
-    "tags": [
-      "calls",
-      "volte",
-      "network"
-    ],
+    "keywords": ["VoLTE", "HD voice", "high definition calling", "voice over LTE", "clear calls"],
+    "tags": ["calls", "volte", "network"],
     "metadata": {}
   },
   {
@@ -969,11 +686,7 @@
       "fleet",
       "business internet"
     ],
-    "tags": [
-      "business",
-      "enterprise",
-      "plans"
-    ],
+    "tags": ["business", "enterprise", "plans"],
     "metadata": {}
   },
   {
@@ -988,11 +701,7 @@
       "assign number",
       "new owner"
     ],
-    "tags": [
-      "account",
-      "postpaid",
-      "transfer"
-    ],
+    "tags": ["account", "postpaid", "transfer"],
     "metadata": {}
   },
   {
@@ -1009,11 +718,7 @@
       "Quezon",
       "provincial coverage"
     ],
-    "tags": [
-      "network",
-      "coverage",
-      "provincial"
-    ],
+    "tags": ["network", "coverage", "provincial"],
     "metadata": {}
   },
   {
@@ -1029,11 +734,7 @@
       "mobile payment",
       "contactless"
     ],
-    "tags": [
-      "meridiapay",
-      "payment",
-      "qr"
-    ],
+    "tags": ["meridiapay", "payment", "qr"],
     "metadata": {}
   },
   {
@@ -1050,12 +751,7 @@
       "data limit",
       "consumed data"
     ],
-    "tags": [
-      "data",
-      "usage",
-      "prepaid",
-      "postpaid"
-    ],
+    "tags": ["data", "usage", "prepaid", "postpaid"],
     "metadata": {}
   },
   {
@@ -1071,11 +767,7 @@
       "data warning",
       "usage limit"
     ],
-    "tags": [
-      "data",
-      "self-service",
-      "controls"
-    ],
+    "tags": ["data", "self-service", "controls"],
     "metadata": {}
   },
   {
@@ -1083,18 +775,8 @@
     "category": "faq",
     "title": "How to access ACME Free WiFi hotspots",
     "content": "ACME operates free WiFi hotspots in select public areas and all ACME stores. To connect: 1) Enable WiFi on your device. 2) Select the network 'ACME_FreeWiFi' or 'ACME_WiFi'. 3) Open a browser \u2014 you will be redirected to the login portal. 4) ACME subscribers: log in with your mobile number and receive an OTP. You get 1GB daily free. 5) Non-subscribers: register with any mobile number for 300MB daily free. Hotspot locations include ACME stores, select SM malls, Ayala malls, and transport terminals. For postpaid subscribers, WiFi at ACME stores is unlimited.",
-    "keywords": [
-      "free WiFi",
-      "WiFi hotspot",
-      "public WiFi",
-      "ACME WiFi",
-      "free internet"
-    ],
-    "tags": [
-      "wifi",
-      "free-services",
-      "hotspot"
-    ],
+    "keywords": ["free WiFi", "WiFi hotspot", "public WiFi", "ACME WiFi", "free internet"],
+    "tags": ["wifi", "free-services", "hotspot"],
     "metadata": {}
   }
 ]

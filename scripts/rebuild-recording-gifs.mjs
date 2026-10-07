@@ -20,9 +20,16 @@ function main() {
   const manifestPath = path.join(root, 'demo', 'recordings.json');
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 
-  for (const recording of manifest.recordings) {
-    if (recording.sourceCommit !== sourceCommit) continue;
-    if (recording.kind === 'readme') continue;
+  const matching = manifest.recordings.filter(
+    recording => recording.sourceCommit === sourceCommit && recording.kind !== 'readme',
+  );
+  if (matching.length === 0) {
+    throw new Error(
+      `recording_commit_unmatched:${sourceCommit}. Pass --commit <40-character commit>.`,
+    );
+  }
+
+  for (const recording of matching) {
     // A manifest entry can carry its own speed, for example a model take that
     // runs at eight times so a public loop stays under a minute.
     const playbackSpeed =
@@ -31,7 +38,9 @@ function main() {
     const output = path.join(root, recording.output);
     const source = path.join(root, recording.source);
     if (!fs.existsSync(source)) {
-      throw new Error(`recording_source_missing:${recording.source}`);
+      throw new Error(
+        `recording_source_missing:${recording.source}. Source videos live under tmp/, which Git ignores, so only the machine that recorded a take can rebuild its GIF.`,
+      );
     }
     convertToGif({
       source,

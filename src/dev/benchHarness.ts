@@ -1,14 +1,11 @@
 /**
- * Benchmark harness — drives a fixed query set through the orchestrator and
- * captures per-run latency stats. Designed to be importable from a plain
- * Node script as well as from the React Native runtime, so we keep imports
- * minimal at module load time and pull in the orchestrator lazily.
+ * Benchmark harness. It drives a fixed query set through the orchestrator and
+ * records per-run latency. A plain Node script and the React Native runtime
+ * can both import it, so module-load imports stay minimal and the
+ * orchestrator loads lazily.
  *
- * Output shape is consumed by `bench/render-bench.mjs` to produce the
- * Markdown table rendered into the README. Comparing real Gemma 4 E2B on a
- * Pixel emulator against demo mode on an iPhone simulator only makes sense
- * if the same harness drives both runs — which is the whole point of this
- * file.
+ * `bench/render-table.mjs` reads the output shape to build the table in
+ * `bench/RESULTS.md`. One harness for every device keeps the rows comparable.
  */
 
 export interface BenchRun {
@@ -75,10 +72,7 @@ function summarize(runs: BenchRun[], includeTps: boolean): BenchSummary {
  * Date.now() boundaries when stats are unavailable (e.g. the orchestrator
  * short-circuited before invoking the LLM/demo formatter).
  */
-export async function runBench(
-  queries: string[],
-  opts: BenchOpts = {},
-): Promise<BenchResult> {
+export async function runBench(queries: string[], opts: BenchOpts = {}): Promise<BenchResult> {
   // Lazy-load to keep the module pure-Node-importable. The orchestrator
   // pulls in MMKV, react-native-fs, etc. via transitive imports, but those
   // are mocked at the jest layer and only resolved at runBench time.
@@ -90,9 +84,7 @@ export async function runBench(
 
   const mode: string = getMode();
   const isDemo = mode === 'demo';
-  const device =
-    (typeof process !== 'undefined' && process.env?.AIRGAP_BENCH_DEVICE) ||
-    'unknown';
+  const device = (typeof process !== 'undefined' && process.env?.AIRGAP_BENCH_DEVICE) || 'unknown';
   const model = modelConfig?.filename ?? 'unknown';
 
   const runs: BenchRun[] = [];
@@ -101,9 +93,7 @@ export async function runBench(
     await processMessage(query);
     const wallTotal = Date.now() - wallStart;
 
-    const stats = isDemo
-      ? demoLlmService.getLastRunStats()
-      : llmService.getLastRunStats();
+    const stats = isDemo ? demoLlmService.getLastRunStats() : llmService.getLastRunStats();
 
     const firstTokenMs = stats.firstTokenMs ?? wallTotal;
     const totalMs = stats.totalMs ?? wallTotal;

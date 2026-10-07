@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "rationale": "Cross-vertical KB coverage; same set used for every device row for fair comparison. Each query targets a category that exists in at least one of the 7 supported industry templates (telco, banking, healthcare, airline, insurance, electric-utility, water-utility) so the harness can be run against any active config without per-vertical tuning.",
+  "rationale": "The same query set serves every device row, so rows stay comparable. Each query targets a category that exists in at least one of the eight industry templates, so the harness runs against any active config without per-template tuning.",
   "queries": [
     "What plans do you have?",
     "How do I check my balance?",

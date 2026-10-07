@@ -14,11 +14,7 @@
       "prepaid plans",
       "prepaid"
     ],
-    "tags": [
-      "prepaid",
-      "data",
-      "promo"
-    ],
+    "tags": ["prepaid", "data", "promo"],
     "metadata": {
       "type": "prepaid",
       "price": 99,
@@ -45,11 +41,7 @@
       "prepaid plans",
       "prepaid"
     ],
-    "tags": [
-      "prepaid",
-      "data",
-      "promo"
-    ],
+    "tags": ["prepaid", "data", "promo"],
     "metadata": {
       "type": "prepaid",
       "price": 149,
@@ -76,12 +68,7 @@
       "prepaid plans",
       "prepaid"
     ],
-    "tags": [
-      "prepaid",
-      "data",
-      "promo",
-      "best-value"
-    ],
+    "tags": ["prepaid", "data", "promo", "best-value"],
     "metadata": {
       "type": "prepaid",
       "price": 299,
@@ -108,11 +95,7 @@
       "prepaid plans",
       "prepaid"
     ],
-    "tags": [
-      "prepaid",
-      "combo",
-      "budget"
-    ],
+    "tags": ["prepaid", "combo", "budget"],
     "metadata": {
       "type": "prepaid",
       "price": 50,
@@ -139,11 +122,7 @@
       "prepaid plans",
       "prepaid"
     ],
-    "tags": [
-      "prepaid",
-      "combo",
-      "all-in-one"
-    ],
+    "tags": ["prepaid", "combo", "all-in-one"],
     "metadata": {
       "type": "prepaid",
       "price": 199,
@@ -169,10 +148,7 @@
       "postpaid plans",
       "postpaid"
     ],
-    "tags": [
-      "postpaid",
-      "plan"
-    ],
+    "tags": ["postpaid", "plan"],
     "metadata": {
       "type": "postpaid",
       "price": 599,
@@ -199,11 +175,7 @@
       "postpaid plans",
       "postpaid"
     ],
-    "tags": [
-      "postpaid",
-      "plan",
-      "popular"
-    ],
+    "tags": ["postpaid", "plan", "popular"],
     "metadata": {
       "type": "postpaid",
       "price": 999,
@@ -230,11 +202,7 @@
       "postpaid plans",
       "postpaid"
     ],
-    "tags": [
-      "postpaid",
-      "plan",
-      "premium"
-    ],
+    "tags": ["postpaid", "plan", "premium"],
     "metadata": {
       "type": "postpaid",
       "price": 1499,
@@ -262,12 +230,7 @@
       "postpaid plans",
       "postpaid"
     ],
-    "tags": [
-      "postpaid",
-      "plan",
-      "premium",
-      "elite"
-    ],
+    "tags": ["postpaid", "plan", "premium", "elite"],
     "metadata": {
       "type": "postpaid",
       "price": 1999,
@@ -294,11 +257,7 @@
       "postpaid plans",
       "postpaid"
     ],
-    "tags": [
-      "postpaid",
-      "plan",
-      "business"
-    ],
+    "tags": ["postpaid", "plan", "business"],
     "metadata": {
       "type": "postpaid",
       "price": 799,
@@ -326,11 +285,7 @@
       "broadband plans",
       "internet plans"
     ],
-    "tags": [
-      "fiber",
-      "plan",
-      "broadband"
-    ],
+    "tags": ["fiber", "plan", "broadband"],
     "metadata": {
       "type": "fiber",
       "price": 899,
@@ -357,12 +312,7 @@
       "broadband plans",
       "internet plans"
     ],
-    "tags": [
-      "fiber",
-      "plan",
-      "broadband",
-      "popular"
-    ],
+    "tags": ["fiber", "plan", "broadband", "popular"],
     "metadata": {
       "type": "fiber",
       "price": 1499,
@@ -389,12 +339,7 @@
       "broadband plans",
       "internet plans"
     ],
-    "tags": [
-      "fiber",
-      "plan",
-      "broadband",
-      "premium"
-    ],
+    "tags": ["fiber", "plan", "broadband", "premium"],
     "metadata": {
       "type": "fiber",
       "price": 2499,
@@ -421,13 +366,7 @@
       "broadband plans",
       "internet plans"
     ],
-    "tags": [
-      "fiber",
-      "plan",
-      "broadband",
-      "premium",
-      "gigabit"
-    ],
+    "tags": ["fiber", "plan", "broadband", "premium", "gigabit"],
     "metadata": {
       "type": "fiber",
       "price": 4999,
@@ -453,11 +392,7 @@
       "prepaid plans",
       "prepaid"
     ],
-    "tags": [
-      "prepaid",
-      "combo",
-      "budget"
-    ],
+    "tags": ["prepaid", "combo", "budget"],
     "metadata": {
       "type": "prepaid",
       "price": 30,

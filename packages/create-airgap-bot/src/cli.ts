@@ -35,9 +35,7 @@ function parseArgs(argv: string[]): CliArgs {
       if (value && isTemplate(value)) {
         args.template = value;
       } else if (value) {
-        throw new Error(
-          `Unknown template '${value}'. Valid options: ${TEMPLATES.join(', ')}.`,
-        );
+        throw new Error(`Unknown template '${value}'. Valid options: ${TEMPLATES.join(', ')}.`);
       }
       continue;
     }
@@ -46,9 +44,7 @@ function parseArgs(argv: string[]): CliArgs {
       if (isTemplate(value)) {
         args.template = value;
       } else {
-        throw new Error(
-          `Unknown template '${value}'. Valid options: ${TEMPLATES.join(', ')}.`,
-        );
+        throw new Error(`Unknown template '${value}'. Valid options: ${TEMPLATES.join(', ')}.`);
       }
       continue;
     }
@@ -62,7 +58,9 @@ function parseArgs(argv: string[]): CliArgs {
 
 function printHelp(): void {
   const lines = [
-    `${pc.bold('create-airgap-bot')} ${pc.dim(': scaffold an Airgap support bot from an industry template.')}`,
+    `${pc.bold('create-airgap-bot')} ${pc.dim(
+      ': scaffold an Airgap support bot from an industry template.',
+    )}`,
     '',
     `${pc.bold('Usage:')}`,
     '  npx create-airgap-bot <bot-name> [--template <industry>]',
@@ -131,7 +129,7 @@ async function resolveTemplate(initial: Template | undefined): Promise<Template>
       type: 'select',
       name: 'template',
       message: 'Pick an industry template:',
-      choices: TEMPLATES.map((t) => ({title: TEMPLATE_LABELS[t], value: t})),
+      choices: TEMPLATES.map(t => ({title: TEMPLATE_LABELS[t], value: t})),
       initial: TEMPLATES.indexOf('telco'),
     },
     {onCancel: () => process.exit(1)},
@@ -168,7 +166,11 @@ async function main(): Promise<void> {
   const targetDir = path.resolve(process.cwd(), botName);
 
   process.stdout.write(
-    pc.dim(`Bot name: ${pc.bold(botName)}\nTemplate: ${pc.bold(template)}\nTarget:   ${pc.bold(targetDir)}\n\n`),
+    pc.dim(
+      `Bot name: ${pc.bold(botName)}\nTemplate: ${pc.bold(template)}\nTarget:   ${pc.bold(
+        targetDir,
+      )}\n\n`,
+    ),
   );
 
   try {
@@ -184,15 +186,19 @@ async function main(): Promise<void> {
     pc.dim('  npm install'),
     pc.dim('  npm run android   ' + pc.italic('# or npm run ios')),
     '',
-    pc.dim('Edit ') + pc.bold('airgap.config.json') + pc.dim(' to change branding, theme, and policies.'),
-    pc.dim('Native signing keys are NOT regenerated; run ' + pc.bold('./scripts/setup.sh') + ' if needed.'),
+    pc.dim('Edit ') +
+      pc.bold('airgap.config.json') +
+      pc.dim(' to change branding, theme, and policies.'),
+    pc.dim('Release signing reads the AIRGAP_RELEASE_* variables. See ') +
+      pc.bold('DEPLOYMENT.md') +
+      pc.dim('.'),
   ];
   for (const line of next) {
     process.stdout.write(line + '\n');
   }
 }
 
-main().catch((err) => {
+main().catch(err => {
   process.stderr.write(pc.red(`Unexpected error: ${(err as Error).stack ?? err}\n`));
   process.exit(1);
 });

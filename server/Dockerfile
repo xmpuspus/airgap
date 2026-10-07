@@ -6,9 +6,9 @@ WORKDIR /app
 COPY index.mjs ./index.mjs
 COPY README.md ./README.md
 
-# The server creates these on first boot if missing; a volume mount is
-# recommended for production so keys and telemetry persist.
-RUN mkdir -p ./.keys
+# The server writes keys and telemetry here on first boot. Mount a volume in
+# production so they persist. The node user must own the directory to write it.
+RUN mkdir -p ./.keys && chown -R node:node /app
 
 EXPOSE 3000
 

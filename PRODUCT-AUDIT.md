@@ -1,14 +1,15 @@
 # Airgap product readiness review
 
-Checked against `main` on 2026-08-13. This page replaces the April 2026 proof-of-concept scorecard,
+Checked against `main` on 2026-10-08. This page replaces the April 2026 proof-of-concept scorecard,
 which no longer described the repository. Git history keeps that earlier audit.
 
 ## The project is useful for offline support pilots
 
 Airgap now gives maintainers a checked React Native base for local FAQs, troubleshooting, policy lookup,
 locations, eligibility guidance, and recoverable service requests. The default demo works without
-a model file or network request. Seven fictional industry fixtures exercise the same runtime with
-different knowledge, prompts, tools, and safety rules.
+a model file or network request. Eight industry fixtures exercise the same runtime with different
+knowledge, prompts, tools, and safety rules. Seven use fictional data. The government services
+fixture uses dated public records with source links.
 
 The repository includes the following parts.
 
@@ -18,27 +19,28 @@ The repository includes the following parts.
 - operator rules for provider order, platform, domain, locale, OS, downloads, and cloud use
 - separate encrypted stores for conversations, outbox, preferences, and telemetry
 - signed knowledge updates, authenticated network calls, and an idempotent outbox
-- a packaged `create-airgap-bot` command with seven templates
+- a packaged `create-airgap-bot` command with eight templates
 - Android and iOS build checks, journey tests, recording validation, and local link checks.
 
 ## Readiness depends on the use case
 
-| Use case                                     | Repository state                       | Work an operator still owns                           |
-| -------------------------------------------- | -------------------------------------- | ----------------------------------------------------- |
-| Offline FAQs and troubleshooting             | Ready for evaluation and bounded POC   | Replace and approve knowledge and test target devices |
-| Locations, hours, plans, and policy guidance | Ready for evaluation and bounded POC   | Content ownership, expiry, escalation, accessibility  |
-| Account lookups and service requests         | Interface and queue contracts exist    | Identity, authorization, backend adapter, audit       |
-| Apple Foundation Models answers              | Bridge and controlled app journey pass | Eligible physical-device evaluation                   |
-| Android ML Kit Prompt API answers            | Bridge and controlled app journey pass | Listed physical-device evaluation and terms review    |
-| Downloaded GGUF answers                      | Runtime and integrity checks exist     | Model license, hosting, device matrix, prompt tests   |
-| Regulated or safety-sensitive customer use   | No compliance claim                    | Legal, privacy, security, clinical, and policy review |
-| Production operations                        | Reference contracts exist              | Monitoring, support, release, rollback, and recovery  |
+| Use case                                     | Repository state                                               | Work an operator still owns                                  |
+| -------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------ |
+| Offline FAQs and troubleshooting             | Ready for evaluation and bounded POC                           | Replace and approve knowledge and test target devices        |
+| Locations, hours, plans, and policy guidance | Ready for evaluation and bounded POC                           | Content ownership, expiry, escalation, accessibility         |
+| Account lookups and service requests         | Interface and queue contracts exist                            | Identity, authorization, backend adapter, audit              |
+| Answers from Apple Foundation Models         | Bridge and controlled app journey pass                         | Eligible physical-device evaluation                          |
+| Answers from the Android ML Kit Prompt API   | Bridge and controlled app journey pass                         | Listed physical-device evaluation and terms review           |
+| Answers from a downloaded GGUF model         | Runtime, integrity checks, and emulator takes with Gemma 4 E2B | Model license, hosting, device matrix, repeated prompt tests |
+| Regulated or safety-sensitive customer use   | No compliance claim                                            | Legal, privacy, security, clinical, and policy review        |
+| Production operations                        | Reference contracts exist                                      | Monitoring, support, release, rollback, and recovery         |
 
 ## Evidence that exists
 
 - Jest covers provider policy, storage, sync, safety, tools, UI state, package installation, and
   recording facts.
-- Journey runners check 100 single-turn cases, 100 conversations, and 66 industry cases.
+- Journey runners check the single-turn journeys, the multi-turn conversations, and 77 industry
+  cases across eight industries.
 - CI builds Android and iOS debug targets and checks direct dependency advisories.
 - One manifest supplies 13 debug-only Apple and Android provider scenarios. Swift and Kotlin parse
   it directly, and Maestro runs available or failure paths through the native bridge and visible UI.
@@ -46,8 +48,11 @@ The repository includes the following parts.
   model, and target-device reports. Capture hardware remains a separate field.
 - The macOS Foundation Models probe loads the real framework. The 2026-08-13 maintainer run found
   Apple Intelligence disabled, which is an environment observation and not a passing model run.
-- Every kept GIF records the source commit, device, OS, provider, model identity, capture command,
-  duration, dimensions, byte size, public playback speed, evidence class, and loop review.
+  On 2026-10-07 the iOS 26.4 Simulator reported the model as ready and then failed every request.
+- Three government services takes run Gemma 4 E2B as a 3-bit GGUF file through `llama.rn` on an
+  Android 15 emulator. Each take is one recorded run, pinned to its source commit.
+- Every kept app GIF records the source commit, device, OS, provider, model identity, capture
+  command, duration, dimensions, byte size, public playback speed, evidence class, and loop review.
 
 See [`README.md`](README.md) for the current evidence table and
 [`demo/recordings.json`](demo/recordings.json) for exact media facts.

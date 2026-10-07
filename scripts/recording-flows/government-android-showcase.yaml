@@ -1,7 +1,7 @@
 appId: ${APP_ID}
 name: Airgap government services showcase recording, Android model
 ---
-# Ten prompts that match the published Kuya A replies and the basic civics
+# Ten prompts that match the replies in the case study and the basic civics
 # questions. The recording script places the model file first, so launchApp
 # keeps state. Model beats wait for the typing label to appear and go away.
 # Guardrail and clock beats wait for their fixed text.
@@ -24,7 +24,7 @@ name: Airgap government services showcase recording, Android model
 - startRecording:
     path: ${RECORDING_PATH}
 - takeScreenshot: ${SHOT_PREFIX}-chat
-# Beat 1: the viral prompt.
+# Beat 1: the president question.
 - tapOn: 'Current president'
 # The typing label can appear after the tap settles, so wait for a word that
 # only the finished answer shows: its source line.

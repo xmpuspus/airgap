@@ -108,6 +108,5 @@ minor releases.
 - Compliance, physical-device performance, and privacy claims that repository
   checks cannot support.
 
-Compare the [unreleased changes](https://github.com/xmpuspus/airgap/compare/v0.2.0...HEAD)
-or read the [0.2.0 release page](https://github.com/xmpuspus/airgap/releases/tag/v0.2.0)
-after publication.
+The repository has no release tag yet. The first tag, `v0.2.0`, gets a release page on GitHub when
+the maintainers publish it.

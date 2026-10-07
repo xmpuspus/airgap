@@ -4,14 +4,18 @@ Airgap keeps fifteen GIFs as product evidence. The set has one Android flow, one
 joint README flow, eight industry recordings, a ten-prompt take, a five-prompt service take, and
 two composed GIFs with a card per beat. The government services recordings run the downloaded
 Gemma 4 model on an Android emulator. One composed GIF puts the ten-prompt take next to
-published replies. The other labels each service prompt with the control it proves. Each GIF
-must come from a named target and a committed application state.
+published replies. The other labels each service prompt with the control it proves.
+
+Each GIF must come from a named target and a committed application state. `demo/kb-studio.gif`
+is a terminal recording of the KB Studio tool from `demo/kb-studio.tape`. It is not app
+evidence, so the manifest does not list it.
 
 ## Needed tools
 
 - Node.js 22.11 or newer
 - FFmpeg and FFprobe
-- ImageMagick 7 for the text cards of the comparison GIF
+- ImageMagick 7 for the text cards of the comparison GIF. The cards use the macOS font file
+  `/System/Library/Fonts/Helvetica.ttc`, so the comparison build runs on macOS only.
 - Maestro with JDK 17
 - Android SDK platform tools for Android capture
 - Xcode and an installed iOS Simulator runtime for iOS capture
@@ -77,8 +81,9 @@ Build the joint README asset only after both platform recordings use the same so
 node scripts/build-readme-gif.mjs --commit <40-character-commit>
 ```
 
-The current public GIFs use `providerId: demo` and
-`providerEvidenceClass: deterministic-runtime`. The provider scenario harness is debug-only and
+The platform GIFs and the seven fictional industry GIFs use `providerId: demo` and
+`providerEvidenceClass: deterministic-runtime`. The five government services GIFs use
+`providerId: llama-rn` with Gemma 4 E2B. The provider scenario harness is debug-only and
 does not change that recorded path, so adding or extending a scenario does not by itself need a
 new GIF. Re-record when visible release behavior, the recording flow, the configured provider,
 model identity, source commit, capture target, or recorded facts change.
@@ -108,10 +113,12 @@ Record one fixture with the configured downloaded model instead of the demo form
 clears the app state, streams the model file into the app directory, switches the copied
 configuration to `offline-only` with the `llama-rn` provider, and runs a flow that keeps state.
 The manifest then records `mode: offline-only`, the model file name, and
-`providerEvidenceClass: virtual-device-model`. The shipped fixture stays in demo mode. The runner
-also points the debug build at `localhost:8081` over an `adb reverse` tunnel, because the
-airplane-mode beat cuts the emulator network and a lost Metro link paints a banner into the
-footage.
+`providerEvidenceClass: virtual-device-model`. The shipped fixture stays in demo mode.
+
+The runner also points the debug build at `localhost:8081` over an `adb reverse` tunnel, because
+the airplane-mode beat cuts the emulator network and a lost Metro link paints a banner into the
+footage. The model file is not in the repository. [`DEPLOYMENT.md`](../DEPLOYMENT.md) gives the
+download and the checksum. Place the file in `models/` before the take.
 
 ```bash
 node scripts/record-industries.mjs \
@@ -128,7 +135,8 @@ node scripts/record-industries.mjs \
 The runner can also record the fixture on an iOS Simulator with the Apple on-device model. No
 release GIF uses that path. The Mac must run macOS 26 with Apple Intelligence on, and the Debug
 app must be installed on the booted simulator. The take needs no model file. Its output gets the
-`-ios` suffix, and the manifest validator only accepts outputs in its release list.
+`-ios` suffix, and the manifest validator only accepts outputs in its release list. The ten-prompt
+flow has an iOS version, `government-ios-showcase.yaml`, for the same optional path.
 
 ```bash
 node scripts/record-industries.mjs \
@@ -143,8 +151,9 @@ node scripts/record-industries.mjs \
 ```
 
 Android and industry GIFs play at four times the source-video speed so a public loop does not spend
-more than a minute showing streamed text. The manifest records `playbackSpeed`. Source MP4 files
-keep the original timing. Rebuild GIFs from those sources without operating the apps again.
+more than a minute showing streamed text. The Gemma 4 takes play at eight times. The manifest
+records `playbackSpeed`. Source MP4 files keep the original timing. Rebuild GIFs from those
+sources without operating the apps again.
 
 If a development-only notice appears in otherwise valid source footage, record its exact source
 timestamps in `omittedSourceRangesSeconds`. The public GIF can omit that interval, but the source MP4
@@ -201,7 +210,8 @@ node scripts/build-showcase-gif.mjs --spec demo/showcase/government-services.jso
 ## Inspect every output
 
 Each run writes raw video, screenshots, and a first-middle-final contact sheet under
-`tmp/recordings/<commit>/`. The `tmp` directory stays out of Git.
+`tmp/recordings/<commit>/`. The `tmp` directory stays out of Git. The manifest `source` and
+`contactSheet` paths point there, so only the machine that recorded a take can rebuild its GIF.
 
 Check each GIF as follows.
 

@@ -19,11 +19,7 @@
       "Indonesia",
       "Vietnam"
     ],
-    "tags": [
-      "roaming",
-      "international",
-      "asean"
-    ],
+    "tags": ["roaming", "international", "asean"],
     "metadata": {
       "zone": "Zone A - ASEAN",
       "countries": "Indonesia, Malaysia, Singapore, Thailand, Vietnam, Myanmar, Cambodia, Laos, Brunei",
@@ -68,11 +64,7 @@
       "Hong Kong",
       "Taiwan"
     ],
-    "tags": [
-      "roaming",
-      "international",
-      "asia-pacific"
-    ],
+    "tags": ["roaming", "international", "asia-pacific"],
     "metadata": {
       "zone": "Zone B - Asia-Pacific",
       "countries": "Japan, South Korea, China, Hong Kong, Taiwan, India, Australia, New Zealand, Bangladesh, Sri Lanka, Nepal, Pakistan",
@@ -120,12 +112,7 @@
       "Middle East",
       "Africa"
     ],
-    "tags": [
-      "roaming",
-      "international",
-      "worldwide",
-      "ofw"
-    ],
+    "tags": ["roaming", "international", "worldwide", "ofw"],
     "metadata": {
       "zone": "Zone C - Rest of World",
       "countries": "United States, Canada, United Kingdom, Germany, France, Italy, Spain, UAE, Saudi Arabia, Qatar, South Africa, and 100+ other countries",

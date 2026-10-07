@@ -5,29 +5,27 @@
  * Drives the fixed query set in `bench/queries.json` through a
  * Node-importable demo pipeline and writes a per-query timing report
  * to `bench/results/node-<UTC ISO timestamp>.json`. The output shape
- * matches `BenchResult` from `src/dev/benchHarness.ts` so agent C's
- * `bench/render-table.mjs` can consume node and emulator runs uniformly.
+ * matches `BenchResult` from `src/dev/benchHarness.ts`, so
+ * `bench/render-table.mjs` reads node and device runs the same way.
  *
  * Two import strategies are attempted in order:
  *
- *   1. Agent A's harness at `src/dev/benchHarness.ts` via a runtime
+ *   1. The in-app harness at `src/dev/benchHarness.ts` via a runtime
  *      TypeScript loader (`tsx` if installed, then `ts-node`). The
- *      harness currently transitively pulls in React Native modules
- *      (MMKV, react-native-fs) that crash under bare Node, so this
- *      path is best-effort and we fall back on any error.
+ *      harness pulls in React Native modules (MMKV, react-native-fs)
+ *      that crash under bare Node, so this path is best-effort and the
+ *      runner falls back on any error.
  *   2. A pure-JS demo pipeline: load each KB JSON, build a MiniSearch
- *      index in-process, run the demo formatter functions exported
- *      from `src/services/demoLlmService.ts` against the assembled
- *      reference block, and time each query manually.
+ *      index in-process, run a copy of the demo formatter against the
+ *      assembled reference block, and time each query.
  *
- * Strategy (1) is preferred because it exercises the same code path as
- * the on-device run. Strategy (2) is documented in `bench/README.md`
- * as the "node-host" fallback so demo numbers remain reproducible
- * even when RN-bound dependencies cannot resolve outside the bundler.
+ * Strategy (1) exercises the same code path as the on-device run.
+ * Strategy (2) is the "node-host" fallback described in `bench/README.md`,
+ * so demo numbers stay reproducible when React Native dependencies cannot
+ * resolve outside the bundler.
  *
- * If `src/dev/benchHarness.ts` is missing entirely (P1 handoff not yet
- * landed) the script exits non-zero with a clear message so the team
- * doesn't silently ship empty bench tables.
+ * If `src/dev/benchHarness.ts` is missing, the script exits non-zero with
+ * a clear message instead of writing an empty result.
  */
 
 import {readFile, writeFile, access} from 'node:fs/promises';
@@ -45,12 +43,7 @@ const QUERIES_PATH = path.join(projectRoot, 'bench', 'queries.json');
 const RESULTS_DIR = path.join(projectRoot, 'bench', 'results');
 const HARNESS_PATH = path.join(projectRoot, 'src', 'dev', 'benchHarness.ts');
 const CONFIG_PATH = path.join(projectRoot, 'airgap.config.json');
-const DEMO_SERVICE_PATH = path.join(
-  projectRoot,
-  'src',
-  'services',
-  'demoLlmService.ts',
-);
+const DEMO_SERVICE_PATH = path.join(projectRoot, 'src', 'services', 'demoLlmService.ts');
 
 const KB_FILES = [
   'faq.json',
@@ -98,16 +91,13 @@ async function loadConfig() {
 }
 
 /**
- * Try to import agent A's TypeScript harness via a runtime loader.
+ * Try to import the TypeScript harness via a runtime loader.
  * Returns the harness module on success, null on any failure (logged
- * to stderr so the fallback rationale is visible in CI).
+ * to stderr so the fallback reason is visible in CI).
  */
 async function tryLoadHarness() {
   if (!existsSync(HARNESS_PATH)) {
-    throw new Error(
-      'benchHarness.ts not yet built , agent A handoff missing. Expected at ' +
-        HARNESS_PATH,
-    );
+    throw new Error('benchHarness.ts is missing. Expected at ' + HARNESS_PATH);
   }
 
   // Best-effort: only attempted when a TS loader is already on disk.
@@ -129,9 +119,7 @@ async function tryLoadHarness() {
       const mod = await import(url);
       return mod;
     } catch (err) {
-      process.stderr.write(
-        `[bench] harness import via ${loader} failed: ${err.message}\n`,
-      );
+      process.stderr.write(`[bench] harness import via ${loader} failed: ${err.message}\n`);
     }
   }
   return null;
@@ -143,10 +131,9 @@ async function tryLoadHarness() {
  * The formatter is reimplemented inline so we don't depend on the
  * TypeScript-only export from demoLlmService.ts.
  *
- * The reimplementation is byte-for-byte equivalent to
- * `formatReferenceAsReply` in src/services/demoLlmService.ts as of
- * the current commit. Tests live alongside agent A's TS module; this
- * helper exists only to keep the Node fallback dependency-free.
+ * The copy must match `formatReferenceAsReply` in
+ * src/services/demoLlmService.ts. It exists only to keep the Node
+ * fallback free of React Native imports.
  */
 async function runFallback(queries, config) {
   // MiniSearch is a pure-JS dep with no native code; loading via
@@ -165,7 +152,7 @@ async function runFallback(queries, config) {
     }
   }
   if (docs.length === 0) {
-    throw new Error('no KB documents loaded , cannot benchmark demo mode');
+    throw new Error('no KB documents loaded, so demo mode cannot run');
   }
 
   const searchCfg = config?.knowledge?.search ?? {};
@@ -185,9 +172,7 @@ async function runFallback(queries, config) {
     },
     extractField: (document, fieldName) => {
       if (fieldName === 'keywords') {
-        return Array.isArray(document.keywords)
-          ? document.keywords.join(' ')
-          : '';
+        return Array.isArray(document.keywords) ? document.keywords.join(' ') : '';
       }
       return document[fieldName];
     },
@@ -199,9 +184,10 @@ async function runFallback(queries, config) {
     return hits
       .map(
         h =>
-          `[${String(h.category).toUpperCase()}] ${h.title}\n${String(
-            h.content,
-          ).substring(0, 400)}`,
+          `[${String(h.category).toUpperCase()}] ${h.title}\n${String(h.content).substring(
+            0,
+            400,
+          )}`,
       )
       .join('\n\n');
   }
@@ -218,8 +204,7 @@ async function runFallback(queries, config) {
     const sections = [];
     for (let i = 0; i < headers.length; i++) {
       const {titleStart, titleEnd} = headers[i];
-      const nextStart =
-        i + 1 < headers.length ? headers[i + 1].titleStart : block.length;
+      const nextStart = i + 1 < headers.length ? headers[i + 1].titleStart : block.length;
       const headerLine = block.slice(titleStart, titleEnd).trim();
       const headerMatch = headerLine.match(/^\[([A-Z_]+)\]\s*(.*)$/);
       const title = headerMatch ? headerMatch[2].trim() : headerLine;
@@ -235,9 +220,7 @@ async function runFallback(queries, config) {
     const wallStart = performance.now();
     const hits = index.search(query).slice(0, topK);
     const block = buildReferenceBlock(hits);
-    const reply = block
-      ? formatReferenceAsReply(block)
-      : "I don't have that in my knowledge base.";
+    const reply = block ? formatReferenceAsReply(block) : "I don't have that in my knowledge base.";
     const wallTotal = performance.now() - wallStart;
     runs.push({
       query,
@@ -274,7 +257,7 @@ async function main() {
       pathTaken = 'harness';
     }
   } catch (err) {
-    if (/agent A handoff missing/.test(err.message)) {
+    if (/benchHarness\.ts is missing/.test(err.message)) {
       process.stderr.write(`[bench] ${err.message}\n`);
       process.exit(1);
     }
@@ -283,9 +266,7 @@ async function main() {
 
   // Strategy 2: pure-JS fallback.
   if (!runs) {
-    process.stderr.write(
-      '[bench] falling back to pure-Node demo pipeline (RN deps unavailable)\n',
-    );
+    process.stderr.write('[bench] falling back to pure-Node demo pipeline (RN deps unavailable)\n');
     runs = await runFallback(queries, config);
     pathTaken = 'fallback';
   }

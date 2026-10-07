@@ -18,7 +18,13 @@
     "category": "promo",
     "title": "Free Fiber Installation Promo",
     "content": "Get free installation (worth PHP 2,500) when you sign up for any ACME Fiber plan from now until June 30, 2026. No lock-in requirement for the free installation — applies to all new fiber subscribers regardless of plan tier. Includes free router, free cable installation up to 100 meters (extended from standard 50 meters), and free speed test verification. Apply online at airgap.dev/fiber or at any ACME store. Installation is scheduled within 7 business days of application approval.",
-    "keywords": ["free installation", "fiber promo", "no install fee", "free setup", "broadband promo"],
+    "keywords": [
+      "free installation",
+      "fiber promo",
+      "no install fee",
+      "free setup",
+      "broadband promo"
+    ],
     "tags": ["promo", "fiber", "installation"],
     "metadata": {
       "startDate": "2026-01-01",
@@ -32,7 +38,13 @@
     "category": "promo",
     "title": "Postpaid Upgrade Bonus",
     "content": "Upgrade your ACME postpaid plan to any higher tier and receive 3 months of bonus data: Plan 599 to 999: +10GB/month bonus for 3 months. Plan 999 to 1499: +20GB/month bonus for 3 months. Plan 1499 to 1999: +30GB/month bonus for 3 months. The bonus data is added on top of your new plan's allocation. Valid for upgrades processed between now and May 31, 2026. Visit any ACME store or call 123 to upgrade. Your new plan rate takes effect immediately. Lock-in period resets from the upgrade date.",
-    "keywords": ["upgrade bonus", "postpaid upgrade", "plan upgrade promo", "bonus data", "free data"],
+    "keywords": [
+      "upgrade bonus",
+      "postpaid upgrade",
+      "plan upgrade promo",
+      "bonus data",
+      "free data"
+    ],
     "tags": ["promo", "postpaid", "upgrade"],
     "metadata": {
       "startDate": "2026-03-01",
@@ -46,7 +58,13 @@
     "category": "promo",
     "title": "Refer & Earn Double Rewards",
     "content": "From April 1 to July 31, 2026, earn double referral rewards. Normally you and your friend each get 2GB free data — during this promo, you both receive 4GB free data valid for 14 days (instead of the usual 7 days). For postpaid referrals, earn PHP 400 bill credit instead of PHP 200. No limit on referrals. Share your unique referral code from the ACME app under Rewards > Refer a Friend. Your friend must activate a new ACME SIM and load at least PHP 100 (prepaid) or complete the first billing month (postpaid).",
-    "keywords": ["referral promo", "refer a friend", "double referral", "earn rewards", "invite bonus"],
+    "keywords": [
+      "referral promo",
+      "refer a friend",
+      "double referral",
+      "earn rewards",
+      "invite bonus"
+    ],
     "tags": ["promo", "referral", "rewards"],
     "metadata": {
       "startDate": "2026-04-01",
@@ -60,7 +78,13 @@
     "category": "promo",
     "title": "Switch to ACME Welcome Bundle",
     "content": "Port your number to ACME and receive a welcome bundle worth up to PHP 1,000. Prepaid porters: 10GB free data valid for 30 days + PHP 100 load credit. Postpaid porters: first month free (waived monthly fee) + 20GB bonus data for the first 3 months. Fiber porters: first 2 months at 50% off + free mesh WiFi extender. This promo is available for all new MNP (Mobile Number Portability) subscribers. Visit any ACME store with your current SIM and valid ID to start the porting process. Promo valid until December 31, 2026.",
-    "keywords": ["MNP promo", "switch to ACME", "port number promo", "welcome bundle", "number portability promo"],
+    "keywords": [
+      "MNP promo",
+      "switch to ACME",
+      "port number promo",
+      "welcome bundle",
+      "number portability promo"
+    ],
     "tags": ["promo", "mnp", "switching", "welcome"],
     "metadata": {
       "startDate": "2026-01-01",
@@ -74,7 +98,13 @@
     "category": "promo",
     "title": "ACMEPay 10% Cashback",
     "content": "Pay your ACME bill using ACMEPay and get 10% cashback (up to PHP 200 per month). Applies to postpaid mobile and fiber bill payments made through the ACMEPay wallet in the ACME app. Cashback is credited to your ACMEPay wallet within 3 business days. Valid from April 1, 2026 to June 30, 2026. First-time ACMEPay users who set up their wallet during this period also receive an additional PHP 50 welcome credit. Cashback can be used for future bill payments, load purchases, or merchant QR payments.",
-    "keywords": ["ACMEPay cashback", "bill payment promo", "10% cashback", "ewallet promo", "pay bill discount"],
+    "keywords": [
+      "ACMEPay cashback",
+      "bill payment promo",
+      "10% cashback",
+      "ewallet promo",
+      "pay bill discount"
+    ],
     "tags": ["promo", "meridiapay", "payment", "cashback"],
     "metadata": {
       "startDate": "2026-04-01",
@@ -88,7 +118,13 @@
     "category": "promo",
     "title": "ACME Student Surf Promo",
     "content": "Students get 50% more data on select prepaid promos with a valid student ID. Register once: visit any ACME store with your school ID or enrollment documents, or upload your student ID in the ACME app under Account > Student Verification. Once verified, these promos automatically give bonus data: Super Surf 99 becomes 7.5GB (instead of 5GB), MegaSurf 149 becomes 18GB (instead of 12GB), GigaSurf 299 becomes 37.5GB (instead of 25GB). Valid for students aged 16-25 with current enrollment. Promo runs year-round with annual re-verification required each June.",
-    "keywords": ["student promo", "student discount", "student data", "school promo", "student plan"],
+    "keywords": [
+      "student promo",
+      "student discount",
+      "student data",
+      "school promo",
+      "student plan"
+    ],
     "tags": ["promo", "prepaid", "student", "data"],
     "metadata": {
       "startDate": "2026-01-01",
@@ -102,7 +138,14 @@
     "category": "promo",
     "title": "Fiber + Mobile Bundle Deal",
     "content": "Subscribe to any ACME Fiber plan and add a postpaid mobile line at a discounted rate. Bundle pricing: Fiber 50Mbps + Plan 599: PHP 1,298/month (save PHP 200). Fiber 100Mbps + Plan 999: PHP 2,198/month (save PHP 300). Fiber 300Mbps + Plan 1499: PHP 3,498/month (save PHP 500). Fiber 1Gbps + Plan 1999: PHP 6,298/month (save PHP 700). Both services on one bill. 24-month lock-in for both. Additional mobile lines can be added at 15% off the standard postpaid rate. Apply at airgap.dev/bundle or any ACME store.",
-    "keywords": ["fiber mobile bundle", "bundle deal", "combo plan", "home and mobile", "save", "discount bundle"],
+    "keywords": [
+      "fiber mobile bundle",
+      "bundle deal",
+      "combo plan",
+      "home and mobile",
+      "save",
+      "discount bundle"
+    ],
     "tags": ["promo", "fiber", "postpaid", "bundle"],
     "metadata": {
       "startDate": "2026-01-01",
@@ -116,7 +159,14 @@
     "category": "promo",
     "title": "Payday Data Sale",
     "content": "Every 15th and 30th of the month, ACME runs a Payday Data Sale. For 24 hours only, get select data add-ons at 30% off: DATA50 for PHP 35 (5GB/7 days), DATA99 for PHP 69 (10GB/15 days), DATA149 for PHP 99 (20GB/30 days). Available through *123*2# — look for the 'Payday Sale' section, or text PAYDAY to 2123 to see current offers. Open to all prepaid and postpaid subscribers. Sale starts at 12:00 AM and ends at 11:59 PM on sale days. Stocks are unlimited during the sale window.",
-    "keywords": ["payday sale", "data sale", "discount data", "15th and 30th", "cheap data", "sale"],
+    "keywords": [
+      "payday sale",
+      "data sale",
+      "discount data",
+      "15th and 30th",
+      "cheap data",
+      "sale"
+    ],
     "tags": ["promo", "data", "prepaid", "postpaid", "recurring"],
     "metadata": {
       "startDate": "2026-01-01",

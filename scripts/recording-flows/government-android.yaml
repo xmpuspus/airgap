@@ -23,7 +23,7 @@ name: Airgap government services replay recording
     retryTapIfNoChange: true
 - assertVisible: 'DEMO'
 - takeScreenshot: ${SHOT_PREFIX}-chat
-# Beat 1: the viral prompt, answered from the dated officials record.
+# Beat 1: the president question, answered from the dated officials record.
 - tapOn: 'Current president'
 - extendedWaitUntil:
     visible: '(?s).*Ferdinand R\. Marcos Jr\..*'

@@ -3,7 +3,7 @@
 ## 0.2.0
 
 - Includes the app source in the package, so scaffolding does not download a moving Git branch.
-- Includes all seven industry fixtures and the current provider-based runtime.
+- Includes all eight industry fixtures and the current provider-based runtime.
 - Copies Apple Foundation Models and Android ML Kit Prompt API bridge files into new apps.
 - Excludes repository-only plans, evidence, tests, and local files from new projects.
 - Tests both packaged and local-source installation paths before `npm pack`.

@@ -9,14 +9,12 @@
  * first .gguf in models/. The shipped target is Gemma 4 E2B Q3_K_S
  * (unsloth/gemma-4-E2B-it-GGUF); run `scripts/pull-dev-model.sh` to fetch it.
  *
- * KNOWN LIMITATION (2026-04-09): node-llama-cpp 3.18.1 ships an upstream
- * llama.cpp build that does NOT yet support the gemma4 architecture, so
- * the laptop runner cannot load Gemma 4 E2B GGUF files yet. The on-device
- * runtime (llama.rn) bundles a newer llama.cpp that does load Gemma 4.
- * Until node-llama-cpp catches up, this runner uses the dev fixture
- * (Gemma 3 1B Q4_K_M from .dev-fixtures/) for laptop coverage and the
- * real Gemma 4 E2B verification has to happen on a real device. The
- * isPreferred flag in the JSON output makes this explicit.
+ * Limit: the pinned node-llama-cpp release does not read the gemma4
+ * architecture, so this laptop runner cannot load a Gemma 4 E2B file. The
+ * on-device runtime (llama.rn) does. For laptop coverage, place any smaller
+ * GGUF file in .dev-fixtures/ and pass it with --model. Gemma 4 E2B results
+ * come from device takes. The isPreferred flag in the JSON output records
+ * which model ran.
  *
  * Usage:
  *   node __tests__/run-llm-journeys.mjs                              # Run all journeys
@@ -101,12 +99,30 @@ ${contextBlock}`;
 
 // === Online check ===
 const ONLINE_KW = [
-  'my balance', 'my bill amount', 'what is my bill', 'how much is my bill',
-  'my data usage', 'check my usage', 'my account details', 'my account info',
-  'change my plan', 'switch my plan', 'upgrade my plan', 'activate my plan',
-  'change plan to', 'switch plan to', 'upgrade plan', 'activate plan',
-  'create a ticket', 'create ticket', 'file a complaint', 'file complaint', 'support ticket',
-  'outage status', 'service outage', 'outage in my area',
+  'my balance',
+  'my bill amount',
+  'what is my bill',
+  'how much is my bill',
+  'my data usage',
+  'check my usage',
+  'my account details',
+  'my account info',
+  'change my plan',
+  'switch my plan',
+  'upgrade my plan',
+  'activate my plan',
+  'change plan to',
+  'switch plan to',
+  'upgrade plan',
+  'activate plan',
+  'create a ticket',
+  'create ticket',
+  'file a complaint',
+  'file complaint',
+  'support ticket',
+  'outage status',
+  'service outage',
+  'outage in my area',
 ];
 
 function requiresOnline(query) {
@@ -115,24 +131,38 @@ function requiresOnline(query) {
 }
 
 // === Greeting check ===
-const GREETINGS = ['hi', 'hello', 'hey', 'good morning', 'good afternoon',
-  'good evening', 'howdy', 'yo', 'sup', 'hola', 'kamusta', 'musta'];
+const GREETINGS = [
+  'hi',
+  'hello',
+  'hey',
+  'good morning',
+  'good afternoon',
+  'good evening',
+  'howdy',
+  'yo',
+  'sup',
+  'hola',
+  'kamusta',
+  'musta',
+];
 
 function isGreeting(text) {
-  const lower = text.toLowerCase().replace(/[!.,?]/g, '').trim();
+  const lower = text
+    .toLowerCase()
+    .replace(/[!.,?]/g, '')
+    .trim();
   return GREETINGS.includes(lower) || lower.length <= 3;
 }
 
 // === Load journeys ===
 const journeysRaw = readFileSync(path.join(root, '__tests__/journeys.ts'), 'utf-8');
-const journeyPattern = /\{id:\s*(\d+),\s*category:\s*'([^']+)',\s*input:\s*'([^']*)',\s*expectRoute:\s*'([^']+)'(?:,\s*expectContains:\s*\[([^\]]*)\])?(?:,\s*expectNotContains:\s*\[([^\]]*)\])?,\s*description:\s*'([^']*)'\}/g;
+const journeyPattern =
+  /\{id:\s*(\d+),\s*category:\s*'([^']+)',\s*input:\s*'([^']*)',\s*expectRoute:\s*'([^']+)'(?:,\s*expectContains:\s*\[([^\]]*)\])?(?:,\s*expectNotContains:\s*\[([^\]]*)\])?,\s*description:\s*'([^']*)'\}/g;
 
 let journeys = [];
 let match;
 while ((match = journeyPattern.exec(journeysRaw)) !== null) {
-  const expectContains = match[5]
-    ? match[5].split(',').map(s => s.trim().replace(/'/g, ''))
-    : [];
+  const expectContains = match[5] ? match[5].split(',').map(s => s.trim().replace(/'/g, '')) : [];
   journeys.push({
     id: parseInt(match[1]),
     category: match[2],
@@ -164,9 +194,7 @@ const PREFERRED_NAME = 'gemma-4-e2b-it-q3ks.gguf';
 let modelPath = null;
 
 if (modelOverride) {
-  modelPath = path.isAbsolute(modelOverride)
-    ? modelOverride
-    : path.join(root, modelOverride);
+  modelPath = path.isAbsolute(modelOverride) ? modelOverride : path.join(root, modelOverride);
 } else if (process.env.AIRGAP_MODEL_PATH) {
   modelPath = process.env.AIRGAP_MODEL_PATH;
 } else if (existsSync(path.join(modelDir, PREFERRED_NAME))) {
@@ -219,7 +247,8 @@ const llama = await getLlama();
 const model = await llama.loadModel({modelPath});
 console.log('Model loaded.\n');
 
-const SYSTEM_PROMPT = "You are Aya, customer support for Airgap Telco (Philippines). Answer ONLY using the CONTEXT the user provides. Be concise. Use PHP for prices. Never invent information.";
+const SYSTEM_PROMPT =
+  'You are Aya, customer support for Airgap Telco (Philippines). Answer ONLY using the CONTEXT the user provides. Be concise. Use PHP for prices. Never invent information.';
 
 function buildUserMessage(query, kbResults) {
   const contextBlock = kbResults
@@ -240,9 +269,9 @@ function scoreResponse(query, response, searchResults, journey) {
 
   // 2. Check grounding — response should relate to search results
   if (searchResults.length > 0) {
-    const contextTerms = searchResults.flatMap(r =>
-      r.title.toLowerCase().split(/\s+/)
-    ).filter(t => t.length > 3);
+    const contextTerms = searchResults
+      .flatMap(r => r.title.toLowerCase().split(/\s+/))
+      .filter(t => t.length > 3);
     const matchCount = contextTerms.filter(t => lower.includes(t)).length;
     if (matchCount === 0) {
       issues.push('Response appears ungrounded — no context terms found');
@@ -272,8 +301,8 @@ function scoreResponse(query, response, searchResults, journey) {
 
   // 6. Check for obvious fabrication patterns
   const fabricationPatterns = [
-    /\$\d+\.\d{2}/,  // USD format (should be PHP)
-    /call 1-800/i,    // US phone format
+    /\$\d+\.\d{2}/, // USD format (should be PHP)
+    /call 1-800/i, // US phone format
   ];
   for (const pat of fabricationPatterns) {
     if (pat.test(response)) {
@@ -310,7 +339,8 @@ for (let i = 0; i < journeys.length; i++) {
       response = "Hi! I'm your Airgap support assistant. How can I help you today?";
     } else if (requiresOnline(j.input)) {
       route = 'online_queue';
-      response = 'This requires an internet connection. I\'ve saved your request and will process it when you\'re back online.';
+      response =
+        "This requires an internet connection. I've saved your request and will process it when you're back online.";
     } else {
       searchResults = searchKB(j.input, 3);
       if (searchResults.length > 0) {
@@ -332,7 +362,7 @@ for (let i = 0; i < journeys.length; i++) {
         await new Promise(r => setTimeout(r, 50));
       } else {
         route = 'fallback';
-        response = 'I don\'t have information about that. Please call 211.';
+        response = "I don't have information about that. Please call 211.";
       }
     }
 
@@ -416,7 +446,7 @@ if (failures.length > 0) {
     console.log(`  [${f.id}] "${f.input}" (${f.description})`);
     if (!f.routeOk) console.log(`    Route: expected '${f.expectedRoute}', got '${f.actualRoute}'`);
     if (f.error) console.log(`    Error: ${f.error}`);
-    for (const issue of (f.quality?.issues || [])) {
+    for (const issue of f.quality?.issues || []) {
       console.log(`    - ${issue}`);
     }
     if (f.response) {

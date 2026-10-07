@@ -4,7 +4,13 @@
     "category": "payment",
     "title": "Pay via GCash",
     "content": "Pay your ACME postpaid or fiber bill using GCash. Open the GCash app, tap 'Pay Bills', select 'Telecommunications', then 'ACME Telecom'. Enter your ACME account number (found on your bill or in the ACME app under Account > Account Details) and the amount to pay. Confirm with your GCash MPIN. Payment is credited within 1 hour. You can also buy ACME prepaid load through GCash: tap 'Buy Load', enter the ACME number, and select the amount. No transaction fee for bill payments up to PHP 10,000. GCash charges PHP 15 for amounts above PHP 10,000.",
-    "keywords": ["GCash", "GCash payment", "pay bill GCash", "buy load GCash", "mobile wallet payment"],
+    "keywords": [
+      "GCash",
+      "GCash payment",
+      "pay bill GCash",
+      "buy load GCash",
+      "mobile wallet payment"
+    ],
     "tags": ["payment", "ewallet", "gcash"],
     "metadata": {
       "channel": "GCash",
@@ -32,7 +38,15 @@
     "category": "payment",
     "title": "Pay via Bank Transfer (BDO, BPI)",
     "content": "Pay your ACME bill through online banking with BDO or BPI. For BDO: Log in to BDO Online or the BDO app, go to 'Bills Payment', select 'Telecommunications' > 'ACME Telecom', enter your ACME account number, and the amount. For BPI: Log in to BPI Online or the BPI app, go to 'Pay Bills', add 'ACME Telecom' as a biller, enter your account number, and pay. Other banks (Metrobank, UnionBank, RCBC, Security Bank) can also process ACME payments through their bills payment portals — search for 'ACME Telecom' under telecom billers. Bank transfers typically reflect within 1-2 business days. Keep the transaction reference number as confirmation.",
-    "keywords": ["bank transfer", "BDO", "BPI", "online banking", "bank payment", "Metrobank", "UnionBank"],
+    "keywords": [
+      "bank transfer",
+      "BDO",
+      "BPI",
+      "online banking",
+      "bank payment",
+      "Metrobank",
+      "UnionBank"
+    ],
     "tags": ["payment", "bank", "online-banking"],
     "metadata": {
       "channel": "Bank Transfer (BDO, BPI, and major banks)",
@@ -46,7 +60,14 @@
     "category": "payment",
     "title": "Pay at 7-Eleven (Cliqq)",
     "content": "Pay your ACME bill or buy prepaid load at any 7-Eleven branch nationwide using the Cliqq kiosk or over the counter. Using the Cliqq kiosk: Tap 'Bills Payment', select 'ACME Telecom', enter your account number and amount, the machine prints a payment slip, bring the slip to the cashier, and pay in cash. Over-the-counter: Tell the cashier you want to pay your ACME bill or buy ACME load. Provide your account number or mobile number. Pay in cash. You will receive a receipt. Keep the receipt as proof of payment. Bill payments reflect within 24 hours. Load purchases are credited instantly. Available at all 3,000+ 7-Eleven branches nationwide. A PHP 10 convenience fee applies per transaction.",
-    "keywords": ["7-Eleven", "Cliqq", "convenience store", "over the counter", "cash payment", "7-11"],
+    "keywords": [
+      "7-Eleven",
+      "Cliqq",
+      "convenience store",
+      "over the counter",
+      "cash payment",
+      "7-11"
+    ],
     "tags": ["payment", "otc", "convenience-store"],
     "metadata": {
       "channel": "7-Eleven (Cliqq)",
@@ -60,7 +81,14 @@
     "category": "payment",
     "title": "Pay at SM Bills Payment",
     "content": "Pay your ACME bill at SM Bills Payment counters located inside SM Supermalls, SM Hypermarkets, and SaveMore stores. Go to the SM Bills Payment counter (usually near the customer service area or business center). Fill out a ACME payment form with your account number and amount. Pay in cash. Receive a machine-validated receipt. Payment reflects within 1-2 business days. Available at all SM retail locations nationwide during mall hours. A PHP 15 service fee applies per transaction. Maximum single transaction amount is PHP 50,000.",
-    "keywords": ["SM Bills Payment", "SM mall", "SM Supermall", "SM payment", "SaveMore", "bills payment counter"],
+    "keywords": [
+      "SM Bills Payment",
+      "SM mall",
+      "SM Supermall",
+      "SM payment",
+      "SaveMore",
+      "bills payment counter"
+    ],
     "tags": ["payment", "otc", "sm"],
     "metadata": {
       "channel": "SM Bills Payment",
@@ -88,7 +116,15 @@
     "category": "payment",
     "title": "Auto-Debit (Bank Account or Credit Card)",
     "content": "Set up automatic monthly payments so you never miss a due date. Enroll through the ACME app: go to Billing > Auto-Pay > Set Up Auto-Debit. Supported bank accounts: BDO, BPI, Metrobank, UnionBank, Security Bank, and RCBC (savings or checking). Supported credit/debit cards: Visa and Mastercard issued by any Philippine bank. Enter your account or card details and authorize the recurring debit. Auto-debit processes on the 13th of each month (2 days before the due date). The exact bill amount is debited — no rounding or estimates. You receive an SMS notification before and after each auto-debit. To modify or cancel, go to the same menu in the app. Changes take effect the following billing cycle. No fees for auto-debit enrollment or transactions. If auto-debit fails (insufficient funds, expired card), you receive an SMS alert and must pay manually before the due date to avoid late fees.",
-    "keywords": ["auto-debit", "auto pay", "automatic payment", "credit card payment", "recurring payment", "autopay", "direct debit"],
+    "keywords": [
+      "auto-debit",
+      "auto pay",
+      "automatic payment",
+      "credit card payment",
+      "recurring payment",
+      "autopay",
+      "direct debit"
+    ],
     "tags": ["payment", "auto-debit", "bank", "credit-card"],
     "metadata": {
       "channel": "Auto-Debit (Bank Account or Credit Card)",
@@ -102,7 +138,14 @@
     "category": "payment",
     "title": "Pay at ACME Stores",
     "content": "Pay your ACME bill directly at any of the 10 ACME stores nationwide. Accepted payment methods at stores: cash, credit/debit card (Visa, Mastercard, JCB), ACMEPay QR, GCash QR, and Maya QR. Simply visit the store during operating hours and proceed to the billing counter. Provide your ACME account number or registered mobile number. Payment reflects immediately for in-store transactions. You can also buy prepaid load, subscribe to promos, and manage your account during the same visit. No additional fees for in-store payments. Stores also accept advance payments (pay multiple months ahead). Receipt is issued for all transactions. Store hours are typically 10:00 AM to 9:00 PM daily — check specific store hours at airgap.dev/stores.",
-    "keywords": ["ACME store", "store payment", "in-store payment", "walk-in payment", "pay in person", "counter payment"],
+    "keywords": [
+      "ACME store",
+      "store payment",
+      "in-store payment",
+      "walk-in payment",
+      "pay in person",
+      "counter payment"
+    ],
     "tags": ["payment", "store", "in-person"],
     "metadata": {
       "channel": "ACME Stores",

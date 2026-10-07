@@ -25,7 +25,7 @@ name: Airgap government services model recording
 - startRecording:
     path: ${RECORDING_PATH}
 - takeScreenshot: ${SHOT_PREFIX}-chat
-# Beat 1: the viral prompt, answered from the dated officials record.
+# Beat 1: the president question, answered from the dated officials record.
 - tapOn: 'Current president'
 # The typing label can appear after the tap settles, so wait for a word that
 # only the finished answer shows: its source line.

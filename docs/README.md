@@ -51,5 +51,5 @@ reader does not need to infer which document applies. Start with the path that m
 - [`../PRODUCT-AUDIT.md`](../PRODUCT-AUDIT.md) separates checked behavior from open product gates.
 - [`../ROADMAP.md`](../ROADMAP.md) lists current release gates and deferred work.
 
-Files under `docs/superpowers/` and `docs/plans/` are code history. They can explain a past
-decision. The guides above, the public schema, tests, and source define current behavior.
+The guides above, the public schema, tests, and source define current behavior. Git history
+holds past design notes.

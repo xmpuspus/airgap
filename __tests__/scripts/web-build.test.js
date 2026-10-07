@@ -81,12 +81,12 @@ describe('web/data/build.mjs', () => {
     expect(fs.existsSync(path.join(ROOT, 'web', 'assets', 'gifs', 'airgap-demo.gif'))).toBe(true);
   });
 
-  test('per-vertical config snippet has no LinkedIn or marketing language', () => {
+  test('per-vertical config snippet has no marketing language', () => {
     for (const v of VERTICALS) {
       const raw = fs.readFileSync(path.join(ROOT, 'web', 'data', `${v}.json`), 'utf8');
-      expect(raw.toLowerCase()).not.toContain('linkedin');
-      expect(raw.toLowerCase()).not.toContain('demo reel');
-      expect(raw.toLowerCase()).not.toContain('wow factor');
+      for (const phrase of ['demo reel', 'wow factor', 'follow us', 'share this']) {
+        expect(raw.toLowerCase()).not.toContain(phrase);
+      }
     }
   });
 
