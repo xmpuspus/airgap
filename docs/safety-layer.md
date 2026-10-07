@@ -59,7 +59,8 @@ When the grounding check fails, the orchestrator shows the retrieved records ins
 text. The answer chip then says that the model did not answer and quotes the first unsourced
 amount or date. The logger records the rejection reason and leaves out the raw rejected answer by
 default. A record with `metadata.verbatim` set to `true` skips the model, so an identity statement
-or a legal notice reads the same in every run.
+or a legal notice reads the same in every run. After the checks pass, the orchestrator appends
+the top record's `metadata.source` line when the model text does not contain it.
 
 ## Refusal text follows a fixed order
 

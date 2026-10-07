@@ -1,5 +1,6 @@
 import {matchesKnowledgeKeyword, searchKB} from './searchService';
 import {routeGeneration, generationAvailable, getMode} from './llmRouter';
+import {ensureSourceLine} from '../utils/sourceLine';
 import {InferenceProviderError} from './inference/providerResolver';
 import type {MessageAudit} from '../types/chat';
 import {offlineQueue} from './offlineQueue';
@@ -453,11 +454,12 @@ async function processMessageInner(
       // Safety: validate the generated answer against the retrieved KB
       const verdict = validateAnswer(response, finalResults);
       if (verdict.allow && !gate.halted) {
+        const cited = ensureSourceLine(response, finalResults[0]);
         addToHistory('user', text);
-        addToHistory('bot', response);
-        lastRecordAnswer = {text: response, docIds: finalResults.map(d => d.id)};
+        addToHistory('bot', cited);
+        lastRecordAnswer = {text: cited, docIds: finalResults.map(d => d.id)};
         return {
-          text: response,
+          text: cited,
           source: 'llm',
           audit: {
             kbDocIds: finalResults.map(d => d.id),

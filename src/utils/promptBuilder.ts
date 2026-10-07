@@ -86,12 +86,10 @@ export function formatSearchResults(kbResults: KBDocument[]): string {
     return `I couldn't find any relevant information. Please call our hotline at ${brand.hotline} for assistance.`;
   }
 
-  // Limit to 2 results for readability in search-only mode
+  // Limit to 2 results for readability in search-only mode. Each record shows
+  // whole, because its source line sits at the end.
   const results = kbResults.slice(0, 2);
-  const sections = results.map(doc => {
-    const content = doc.content.length > 200 ? doc.content.substring(0, 200) + '...' : doc.content;
-    return `**${doc.title}**\n${content}`;
-  });
+  const sections = results.map(doc => `**${doc.title}**\n${doc.content}`);
 
   const header =
     results.length < kbResults.length

@@ -25,7 +25,7 @@ name: Airgap government services showcase recording, Apple model
 # The view hierarchy is empty while the Apple model runs, so wait for a word
 # that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(?s).*(Marcos|pco\.gov\.ph/photos).*'
+    visible: '(?s).*post_id=153368.*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-president
@@ -58,7 +58,7 @@ name: Airgap government services showcase recording, Apple model
 # The view hierarchy is empty while the Apple model runs, so wait for a word
 # that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(?s).*(another country|other country|Philippine national government|Airgap demo configuration).*'
+    visible: '(?s).*Airgap demo configuration.*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-scope
@@ -91,7 +91,7 @@ name: Airgap government services showcase recording, Apple model
 # The view hierarchy is empty while the Apple model runs, so wait for a word
 # that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(?s).*(Aguda|ghost-internet).*'
+    visible: '(?s).*ghost-internet-projects.*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-dict
@@ -103,7 +103,7 @@ name: Airgap government services showcase recording, Apple model
 # The view hierarchy is empty while the Apple model runs, so wait for a word
 # that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(?s).*(Duterte|ovp\.gov\.ph).*'
+    visible: '(?s).*ovp\.gov\.ph/category.*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-vp
@@ -125,7 +125,7 @@ name: Airgap government services showcase recording, Apple model
 # The view hierarchy is empty while the Apple model runs, so wait for a word
 # that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(?s).*(dfa\.gov\.ph|passport\.gov\.ph).*'
+    visible: '(?s).*passport-faqs.*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-passport

@@ -14,6 +14,7 @@ phrases the record. It never supplies a fact from memory. When no record covers 
 bot says so and gives a human route: a hotline, a page, or a ticket.
 
 Airgap: `knowledge/` holds the records, retrieval picks them, and the answer chip counts them.
+When the model drops the record's source line, the orchestrator appends it.
 
 ## 2. Put identity and scope in configuration
 
