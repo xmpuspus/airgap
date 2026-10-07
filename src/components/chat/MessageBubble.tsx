@@ -672,7 +672,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   refusalColumn: {
-    flex: 1,
+    // flex: 1 collapses to zero width inside a content-sized row, which hid
+    // the refusal text behind a tall empty bar.
+    flexShrink: 1,
     marginLeft: SPACING.sm + 2,
   },
   refusalLabel: {

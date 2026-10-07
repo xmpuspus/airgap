@@ -102,11 +102,16 @@ describe('safetyLayer.checkGrounding', () => {
     expect(result.issues.join(' ')).toMatch(/Amount "\$1000"/);
   });
 
+  test('a sourced date in month-day order is grounded', () => {
+    const docs = [doc({content: 'He took the oath of office on 30 June 2022.'})];
+    expect(checkGrounding('He took office on June 30, 2022.', docs).grounded).toBe(true);
+    expect(checkGrounding('He took office on June 29, 2022.', docs).grounded).toBe(false);
+  });
+
   test('answer with a made-up date fails grounding', () => {
-    const result = checkGrounding(
-      'Your expiry is 2030-12-31, do not worry.',
-      [doc({content: 'Standard SIMs expire 30 days after last load.'})],
-    );
+    const result = checkGrounding('Your expiry is 2030-12-31, do not worry.', [
+      doc({content: 'Standard SIMs expire 30 days after last load.'}),
+    ]);
     expect(result.grounded).toBe(false);
     expect(result.issues.join(' ')).toMatch(/Date "2030-12-31"/);
   });

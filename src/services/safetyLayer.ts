@@ -217,7 +217,10 @@ export function checkGrounding(
       /\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}\/\d{1,2}\/\d{2,4}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2})\b/gi;
     const datesInAnswer = answer.match(dateRe) ?? [];
     for (const raw of datesInAnswer) {
-      if (!corpus.includes(raw.toLowerCase())) {
+      const date = raw.toLowerCase();
+      // "June 30" and "30 June" are the same sourced date in another order.
+      const swapped = date.replace(/^([a-z]+)\s+(\d{1,2})$/, '$2 $1');
+      if (!corpus.includes(date) && !corpus.includes(swapped)) {
         issues.push(`Date "${raw}" is not present in the retrieved knowledge base`);
       }
     }
