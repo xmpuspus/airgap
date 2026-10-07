@@ -1,0 +1,85 @@
+{
+  "vertical": "government-services",
+  "label": "Airgap",
+  "botName": "Kuya B",
+  "tagline": "Philippine government services, with sources",
+  "theme": {
+    "primary": "#1E40AF",
+    "primaryDark": "#1E3A8A",
+    "secondary": "#B45309",
+    "background": "#F5F7FB",
+    "surface": "#FFFFFF",
+    "text": "#0F172A",
+    "botBubble": "#F1F5F9",
+    "userBubble": "#1E40AF"
+  },
+  "locale": {
+    "currency": "PHP",
+    "language": "en",
+    "region": "PH"
+  },
+  "knowledge": {
+    "totalDocs": 37,
+    "categories": {
+      "faq": 11,
+      "fees": 3,
+      "holidays": 4,
+      "hotlines": 6,
+      "officials": 8,
+      "requirements": 2,
+      "services": 3
+    }
+  },
+  "config": {
+    "brand": {
+      "name": "Airgap",
+      "botName": "Kuya B",
+      "tagline": "Philippine government services, with sources",
+      "hotline": "8888",
+      "hotlineLabel": "Citizens' Complaint Hotline",
+      "website": "gov.ph"
+    },
+    "theme": {
+      "primary": "#1E40AF",
+      "secondary": "#B45309",
+      "background": "#F5F7FB"
+    },
+    "locale": {
+      "currency": "PHP",
+      "language": "en",
+      "region": "PH"
+    },
+    "llm": {
+      "mode": "demo",
+      "supportDomain": "government",
+      "providers": [
+        {
+          "id": "demo",
+          "enabled": true,
+          "priority": 0,
+          "platform": "all"
+        }
+      ]
+    },
+    "quickReplies": [
+      {
+        "title": "Current president",
+        "value": "Who is the current president?"
+      },
+      {
+        "title": "Passport steps",
+        "value": "Paano kumuha ng passport?"
+      },
+      {
+        "title": "NBI clearance",
+        "value": "What are the requirements for NBI clearance?"
+      },
+      {
+        "title": "Holidays",
+        "value": "What are the regular holidays this year?"
+      }
+    ],
+    "toolCount": 2
+  },
+  "gif": "assets/gifs/industry-government.gif"
+}

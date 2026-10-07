@@ -23,6 +23,13 @@
       "kbDocs": 53
     },
     {
+      "vertical": "government-services",
+      "label": "Airgap",
+      "tagline": "Philippine government services, with sources",
+      "primary": "#1E40AF",
+      "kbDocs": 37
+    },
+    {
       "vertical": "healthcare",
       "label": "CareFirst Medical",
       "tagline": "Your personal health services assistant",

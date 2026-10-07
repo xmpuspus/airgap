@@ -1,6 +1,6 @@
-# Patnub.ai fixture
+# Airgap government services fixture
 
-Patnub.ai and Kuya B are spoof names. No government agency runs this template.
+Kuya B is a sample bot name. No government agency runs this template.
 It answers questions about Philippine government services from dated copies of official pages.
 Each record shows its source page and the date someone checked it.
 

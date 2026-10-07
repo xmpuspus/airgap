@@ -142,7 +142,7 @@
     "id": "faq-008",
     "category": "faq",
     "title": "Who this assistant is",
-    "content": "As of 2026-10-07, this assistant is Kuya B, a sample built on the open-source Airgap kit. The brand in its configuration is Patnub.ai, a spoof name. No government agency runs it. Its name and role come from the application configuration file, not from a language model, so they do not change between answers. It answers questions about Philippine government services, officials, holidays, and hotlines. Source: Airgap demo configuration (checked 2026-10-07).",
+    "content": "As of 2026-10-07, this assistant is Kuya B, a sample built on the open-source Airgap kit. No government agency runs it. Its name and role come from the application configuration file, not from a language model, so they do not change between answers. It answers questions about Philippine government services, officials, holidays, and hotlines. Source: Airgap demo configuration (checked 2026-10-07).",
     "keywords": [
       "who are you",
       "sino ka",

@@ -2,7 +2,7 @@
   "$schema": "../../airgap.schema.json",
   "specVersion": "1.0.0",
   "brand": {
-    "name": "Patnub.ai",
+    "name": "Airgap",
     "botName": "Kuya B",
     "tagline": "Philippine government services, with sources",
     "hotline": "8888",
