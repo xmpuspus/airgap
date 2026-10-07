@@ -141,14 +141,14 @@ export function checkBlocklist(query: string): {
  * fixtures), confidence falls back to 1 so we don't break existing tests
  * that pre-date the scoring change.
  */
-export function checkConfidence(
-  retrievedDocs: KBDocument[],
-): {confident: boolean; confidence: number} {
+export function checkConfidence(retrievedDocs: KBDocument[]): {
+  confident: boolean;
+  confidence: number;
+} {
   if (!isEnabled()) {
     return {confident: true, confidence: 1};
   }
-  const threshold =
-    getSafetyConfig().confidenceThreshold ?? DEFAULT_CONFIDENCE_THRESHOLD;
+  const threshold = getSafetyConfig().confidenceThreshold ?? DEFAULT_CONFIDENCE_THRESHOLD;
   if (retrievedDocs.length === 0) {
     return {confident: false, confidence: 0};
   }
@@ -206,9 +206,7 @@ export function checkGrounding(
       const num = raw.match(/\d+(?:\.\d+)?/)?.[0];
       if (!num) continue;
       if (!corpus.includes(num)) {
-        issues.push(
-          `Amount "${raw}" is not present in the retrieved knowledge base`,
-        );
+        issues.push(`Amount "${raw}" is not present in the retrieved knowledge base`);
       }
     }
   }
@@ -220,9 +218,7 @@ export function checkGrounding(
     const datesInAnswer = answer.match(dateRe) ?? [];
     for (const raw of datesInAnswer) {
       if (!corpus.includes(raw.toLowerCase())) {
-        issues.push(
-          `Date "${raw}" is not present in the retrieved knowledge base`,
-        );
+        issues.push(`Date "${raw}" is not present in the retrieved knowledge base`);
       }
     }
   }
@@ -231,14 +227,61 @@ export function checkGrounding(
 }
 
 /**
+ * Token gate for streamed answers. Forwards text only up to the last
+ * whitespace boundary, and only while the settled prefix passes the
+ * grounding check. The first unsourced amount or date stops forwarding for
+ * the rest of the stream, so partial model output never shows a value that
+ * the final check would reject. The caller still runs validateAnswer on the
+ * complete text.
+ */
+export interface GroundedTokenGate {
+  /** Undefined when the caller gave no consumer, so providers skip streaming work. */
+  onToken?: (token: string) => void;
+  readonly halted: boolean;
+}
+
+export function createGroundedTokenGate(
+  retrievedDocs: KBDocument[],
+  onToken?: (token: string) => void,
+): GroundedTokenGate {
+  let received = '';
+  let forwardedLength = 0;
+  let halted = false;
+  if (!onToken) {
+    return {
+      onToken: undefined,
+      get halted() {
+        return halted;
+      },
+    };
+  }
+  return {
+    onToken(token: string) {
+      if (halted) return;
+      received += token;
+      const trailingWord = received.match(/\S*$/)?.[0] ?? '';
+      const settled = received.slice(0, received.length - trailingWord.length);
+      if (settled.length <= forwardedLength) return;
+      if (!checkGrounding(settled, retrievedDocs).grounded) {
+        halted = true;
+        logger.info('safetyLayer', 'streamed answer halted at unsourced value');
+        return;
+      }
+      onToken(settled.slice(forwardedLength));
+      forwardedLength = settled.length;
+    },
+    get halted() {
+      return halted;
+    },
+  };
+}
+
+/**
  * Main entry point: validate a final answer against retrieved context and
  * return a verdict. Callers decide whether to show the answer or a refusal
  * based on `verdict.allow`.
  */
-export function validateAnswer(
-  answer: string,
-  retrievedDocs: KBDocument[],
-): SafetyVerdict {
+export function validateAnswer(answer: string, retrievedDocs: KBDocument[]): SafetyVerdict {
   const {confident, confidence} = checkConfidence(retrievedDocs);
   const retrievedDocIds = retrievedDocs.map(d => d.id);
 
@@ -293,8 +336,7 @@ export function getSafetyPolicy() {
   const cfg = getSafetyConfig();
   return {
     enabled: isEnabled(),
-    confidenceThreshold:
-      cfg.confidenceThreshold ?? DEFAULT_CONFIDENCE_THRESHOLD,
+    confidenceThreshold: cfg.confidenceThreshold ?? DEFAULT_CONFIDENCE_THRESHOLD,
     blocklistSize: (cfg.topicBlocklist ?? []).length,
     groundingRules: cfg.groundingRules ?? {},
     brandHotline: brand.hotline,

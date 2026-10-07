@@ -17,7 +17,13 @@ import type {QueuedAction} from '../types/chat';
 import type {QuickReply} from '../types/chat';
 import type {InferenceProviderId} from './inference/types';
 import {conversationStore} from './conversationStore';
-import {checkBlocklist, validateAnswer, refusalFor} from './safetyLayer';
+import {
+  checkBlocklist,
+  checkConfidence,
+  createGroundedTokenGate,
+  validateAnswer,
+  refusalFor,
+} from './safetyLayer';
 import {findToolForQuery, executeTool, formatToolResultForLLM} from './tools';
 import {getDegradedModePrefix, getStalenessInfo} from './syncService';
 import {recordTurn} from './telemetry';
@@ -207,17 +213,7 @@ async function processMessageInner(
           ],
           conversationHistory,
         );
-        const llmStart = Date.now();
-        const {
-          text: generated,
-          providerId,
-          modelIdentity,
-        } = await routeGeneration(systemPrompt, userMessage, onToken);
-        recordLlmLatency(Date.now() - llmStart);
-
-        // Safety: validate the generated answer against the tool grounding.
-        // Use the pseudo-doc so unsourced-amount checks see the backend data.
-        const verdict = validateAnswer(generated, [
+        const toolDocs = [
           {
             id: `tool:${tool.name}`,
             category: 'faq',
@@ -227,8 +223,21 @@ async function processMessageInner(
             tags: [],
             metadata: {},
           } as any,
-        ]);
-        if (!verdict.allow) {
+        ];
+        // Stream only text that the grounding check has already passed.
+        const gate = createGroundedTokenGate(toolDocs, onToken);
+        const llmStart = Date.now();
+        const {
+          text: generated,
+          providerId,
+          modelIdentity,
+        } = await routeGeneration(systemPrompt, userMessage, gate.onToken);
+        recordLlmLatency(Date.now() - llmStart);
+
+        // Safety: validate the generated answer against the tool grounding.
+        // Use the pseudo-doc so unsourced-amount checks see the backend data.
+        const verdict = validateAnswer(generated, toolDocs);
+        if (!verdict.allow || gate.halted) {
           const refusalText = verdict.refusalText ?? refusalFor('ungrounded_answer');
           addToHistory('user', text);
           addToHistory('bot', refusalText);
@@ -359,20 +368,38 @@ async function processMessageInner(
   // the generation. Demo mode bypasses the model load and produces a
   // deterministic streamed reply built from finalResults.
   if ((await generationAvailable()) && finalResults.length > 0) {
+    // Safety: a weak retrieval refuses before any text streams to the screen.
+    const retrieval = checkConfidence(finalResults);
+    if (!retrieval.confident) {
+      const refusalText = refusalFor('low_confidence');
+      addToHistory('user', text);
+      addToHistory('bot', refusalText);
+      return {
+        text: refusalText,
+        source: 'refusal',
+        audit: {
+          kbDocIds: finalResults.map(d => d.id),
+          confidence: retrieval.confidence,
+          refusalReason: 'low_confidence',
+        },
+      };
+    }
     try {
       const systemPrompt = getSystemPrompt();
       const userMessage = buildUserMessage(text, finalResults, conversationHistory);
+      // Stream only text that the grounding check has already passed.
+      const gate = createGroundedTokenGate(finalResults, onToken);
       const llmStart = Date.now();
       const {
         text: response,
         providerId,
         modelIdentity,
-      } = await routeGeneration(systemPrompt, userMessage, onToken);
+      } = await routeGeneration(systemPrompt, userMessage, gate.onToken);
       recordLlmLatency(Date.now() - llmStart);
 
       // Safety: validate the generated answer against the retrieved KB
       const verdict = validateAnswer(response, finalResults);
-      if (!verdict.allow) {
+      if (!verdict.allow || gate.halted) {
         const refusalText = verdict.refusalText ?? refusalFor('ungrounded_answer');
         addToHistory('user', text);
         addToHistory('bot', refusalText);
