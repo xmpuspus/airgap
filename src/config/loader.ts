@@ -268,7 +268,7 @@ function applyDefaults(raw: any): AirgapConfig {
     },
     model: {
       sizeMB: 2445,
-      sizeBytes: 2445645184,
+      sizeBytes: 2445652064,
       contextSize: 4096,
       maxTokens: 256,
       temperature: 0.3,

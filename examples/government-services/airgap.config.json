@@ -20,8 +20,8 @@
     "provider": "llama.cpp",
     "url": "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q3_K_S.gguf",
     "filename": "gemma-4-e2b-it-q3ks.gguf",
-    "sha256": "2d010e251ba1fc44b746eb4059825a1954df5f90a1b7a360cf18232a520709aa",
-    "sizeBytes": 2445645184,
+    "sha256": "80d155f647d3a896669b1d1605b494b97ee9dbd1dcafd27957394134c280d270",
+    "sizeBytes": 2445652064,
     "sizeMB": 2445
   },
   "knowledge": {
