@@ -3,7 +3,10 @@ import {getSearchIndex, getAllDocuments, getDocumentById} from '../knowledge';
 import {config} from '../config/loader';
 import {logger} from './logger';
 
-const DEFAULT_TOP_K = config.knowledge.search?.topK ?? 3;
+// Read at call time so a template or a test can change the depth after load.
+function defaultTopK(): number {
+  return config.knowledge.search?.topK ?? 3;
+}
 
 // Negation patterns: extract the negated term
 const NEGATION_PATTERNS = [
@@ -35,18 +38,10 @@ export function extractNegatedTerms(query: string): string[] {
  * Filter results by removing documents whose category, tags, or title
  * match any of the negated terms.
  */
-function applyNegationFilter(
-  results: KBDocument[],
-  negatedTerms: string[],
-): KBDocument[] {
+function applyNegationFilter(results: KBDocument[], negatedTerms: string[]): KBDocument[] {
   if (negatedTerms.length === 0) return results;
   return results.filter(doc => {
-    const docText = [
-      doc.category,
-      doc.title,
-      ...(doc.tags || []),
-      ...(doc.keywords || []),
-    ]
+    const docText = [doc.category, doc.title, ...(doc.tags || []), ...(doc.keywords || [])]
       .join(' ')
       .toLowerCase();
     return !negatedTerms.some(term => docText.includes(term));
@@ -57,7 +52,7 @@ export function searchKB(
   query: string,
   options?: {category?: KBCategory; topK?: number},
 ): KBDocument[] {
-  const topK = options?.topK ?? DEFAULT_TOP_K;
+  const topK = options?.topK ?? defaultTopK();
 
   const category = options?.category;
 
@@ -112,10 +107,16 @@ export function searchKB(
 
 // Category intent detection — map query keywords to expected categories
 const CATEGORY_SIGNALS: {keywords: string[]; category: KBCategory}[] = [
-  {keywords: ['plan', 'plans', 'prepaid', 'postpaid', 'promo', 'pricing', 'surf', 'giga'], category: 'plan'},
+  {
+    keywords: ['plan', 'plans', 'prepaid', 'postpaid', 'promo', 'pricing', 'surf', 'giga'],
+    category: 'plan',
+  },
   {keywords: ['store', 'branch', 'location', 'nearest', 'address'], category: 'store'},
   {keywords: ['roaming', 'abroad', 'travel', 'international'], category: 'roaming'},
-  {keywords: ['troubleshoot', 'fix', 'not working', 'no signal', 'slow', 'restart'], category: 'troubleshooting'},
+  {
+    keywords: ['troubleshoot', 'fix', 'not working', 'no signal', 'slow', 'restart'],
+    category: 'troubleshooting',
+  },
   {keywords: ['pay', 'payment', 'bill', 'gcash', 'bank'], category: 'payment'},
 ];
 
@@ -139,15 +140,15 @@ function applyCategoryBoost(results: KBDocument[], query: string): KBDocument[] 
 
 // Keyword-to-sort mapping for re-ranking
 const PRICE_ASC_KEYWORDS = [
-  'cheapest', 'most affordable', 'budget', 'lowest price',
-  'least expensive', 'cheap',
+  'cheapest',
+  'most affordable',
+  'budget',
+  'lowest price',
+  'least expensive',
+  'cheap',
 ];
-const PRICE_DESC_KEYWORDS = [
-  'most expensive', 'premium', 'highest price', 'top tier',
-];
-const SPEED_DESC_KEYWORDS = [
-  'fastest', 'highest speed', 'most speed', 'best speed',
-];
+const PRICE_DESC_KEYWORDS = ['most expensive', 'premium', 'highest price', 'top tier'];
+const SPEED_DESC_KEYWORDS = ['fastest', 'highest speed', 'most speed', 'best speed'];
 
 function reRankResults(results: KBDocument[], query: string): KBDocument[] {
   if (results.length <= 1) return results;

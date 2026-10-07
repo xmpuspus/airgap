@@ -1,6 +1,6 @@
-# Citizen Services Desk fixture
+# Patnub.ai fixture
 
-Citizen Services Desk and Patnubay are sample names. No government agency runs this template.
+Patnub.ai and Patnubay are spoof names. No government agency runs this template.
 It answers questions about Philippine government services from dated copies of official pages.
 Each record shows its source page and the date someone checked it.
 

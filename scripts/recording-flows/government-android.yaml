@@ -32,11 +32,11 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible: 'sigurado ka dyan?'
-    timeout: 20000
+    visible: 'Assistant is typing'
+    timeout: 15000
 - extendedWaitUntil:
     notVisible: 'Assistant is typing'
-    timeout: 30000
+    timeout: 40000
 - takeScreenshot: ${SHOT_PREFIX}-challenge
 # Beat 3: another country gets the scope record.
 - tapOn: 'Support question'
@@ -44,8 +44,11 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
+    visible: 'Assistant is typing'
+    timeout: 15000
+- extendedWaitUntil:
     notVisible: 'Assistant is typing'
-    timeout: 30000
+    timeout: 40000
 - takeScreenshot: ${SHOT_PREFIX}-scope
 # Beat 4: identity comes from configuration.
 - tapOn: 'Support question'
@@ -53,8 +56,11 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
+    visible: 'Assistant is typing'
+    timeout: 15000
+- extendedWaitUntil:
     notVisible: 'Assistant is typing'
-    timeout: 30000
+    timeout: 40000
 - takeScreenshot: ${SHOT_PREFIX}-identity
 # Beat 5: the instructions are public and hold no secret.
 - tapOn: 'Support question'
@@ -62,8 +68,11 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
+    visible: 'Assistant is typing'
+    timeout: 15000
+- extendedWaitUntil:
     notVisible: 'Assistant is typing'
-    timeout: 30000
+    timeout: 40000
 - takeScreenshot: ${SHOT_PREFIX}-prompt
 # Beat 6: offline, a service question still gets its cited record.
 - setAirplaneMode: enabled
@@ -71,10 +80,22 @@ name: Airgap government services replay recording
 - tapOn:
     id: 'com.airgap:id/dismiss_button'
     optional: true
-- tapOn: 'Passport steps'
+- tapOn:
+    point: '93%,92%'
+    optional: true
+- extendedWaitUntil:
+    notVisible: 'Open debugger to view warnings\.'
+    timeout: 10000
+- tapOn: 'Support question'
+- inputText: 'Paano kumuha ng passport?'
+- hideKeyboard
+- tapOn: 'Send message'
+- extendedWaitUntil:
+    visible: 'Assistant is typing'
+    timeout: 15000
 - extendedWaitUntil:
     notVisible: 'Assistant is typing'
-    timeout: 30000
+    timeout: 40000
 - takeScreenshot: ${SHOT_PREFIX}-offline-passport
 - stopRecording
 - setAirplaneMode: disabled

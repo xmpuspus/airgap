@@ -2,7 +2,7 @@
   "$schema": "../../airgap.schema.json",
   "specVersion": "1.0.0",
   "brand": {
-    "name": "Citizen Services Desk",
+    "name": "Patnub.ai",
     "botName": "Patnubay",
     "tagline": "Philippine government services, with sources",
     "hotline": "8888",
@@ -27,7 +27,7 @@
   "knowledge": {
     "directory": "knowledge",
     "search": {
-      "topK": 2,
+      "topK": 1,
       "fuzzy": 0.2,
       "boostTitle": 2,
       "boostKeywords": 3,

@@ -358,11 +358,11 @@ async function processMessageInner(
   }
 
   // 6. Search knowledge base
-  const searchResults = searchKB(searchQuery, {topK: 3});
+  // The depth comes from knowledge.search.topK, so a template can keep each answer to one record.
+  const searchResults = searchKB(searchQuery);
 
   // If follow-up search returns nothing, try the original query
-  const finalResults =
-    searchResults.length === 0 && followUp ? searchKB(text, {topK: 3}) : searchResults;
+  const finalResults = searchResults.length === 0 && followUp ? searchKB(text) : searchResults;
 
   // 7. If a local LLM, cloud LLM, or demo formatter is available, route
   // the generation. Demo mode bypasses the model load and produces a
