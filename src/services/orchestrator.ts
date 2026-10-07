@@ -271,7 +271,7 @@ async function processMessageInner(
           } as any,
         ];
         // Stream only text that the grounding check has already passed.
-        const gate = createGroundedTokenGate(toolDocs, onToken);
+        const gate = createGroundedTokenGate(toolDocs, onToken, {question: text});
         const llmStart = Date.now();
         const {
           text: generated,
@@ -282,7 +282,7 @@ async function processMessageInner(
 
         // Safety: validate the generated answer against the tool grounding.
         // Use the pseudo-doc so unsourced-amount checks see the backend data.
-        const verdict = validateAnswer(generated, toolDocs);
+        const verdict = validateAnswer(generated, toolDocs, {question: text});
         if (!verdict.allow || gate.halted) {
           const refusalText = verdict.refusalText ?? refusalFor('ungrounded_answer');
           addToHistory('user', text);
@@ -442,7 +442,7 @@ async function processMessageInner(
         contextChars: recordContextChars(),
       });
       // Stream only text that the grounding check has already passed.
-      const gate = createGroundedTokenGate(finalResults, onToken);
+      const gate = createGroundedTokenGate(finalResults, onToken, {question: text});
       const llmStart = Date.now();
       const {
         text: response,
@@ -452,7 +452,7 @@ async function processMessageInner(
       recordLlmLatency(Date.now() - llmStart);
 
       // Safety: validate the generated answer against the retrieved KB
-      const verdict = validateAnswer(response, finalResults);
+      const verdict = validateAnswer(response, finalResults, {question: text});
       if (verdict.allow && !gate.halted) {
         const cited = ensureSourceLine(response, finalResults[0]);
         addToHistory('user', text);

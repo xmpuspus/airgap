@@ -23,13 +23,11 @@ const REQUIRED_OUTPUTS = Object.freeze([
   'demo/industry-banking.gif',
   'demo/industry-electric.gif',
   'demo/industry-government.gif',
-  'demo/industry-government-ios.gif',
   'demo/industry-healthcare.gif',
   'demo/industry-insurance.gif',
   'demo/industry-telco.gif',
   'demo/industry-water.gif',
   'demo/showcase-government.gif',
-  'demo/showcase-government-ios.gif',
 ]);
 
 const SIZE_LIMITS = Object.freeze({

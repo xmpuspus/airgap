@@ -135,10 +135,48 @@ describe('safetyLayer.checkGrounding', () => {
   });
 
   test('a number before an ordinary word is not a date', () => {
-    const docs = [doc({content: 'Bring two valid IDs. Regular processing takes 10 working days.'})];
+    const docs = [
+      doc({
+        content: 'Bring two valid IDs. Regular processing takes 10 working days in Metro Manila.',
+      }),
+    ];
     const answer = 'Bring 2 separate IDs and wait 10 working days, or 12 outside Metro Manila.';
     expect(checkGrounding(answer, docs).grounded).toBe(true);
     expect(checkGrounding('The mayor 5 years ago decided.', docs).grounded).toBe(true);
+  });
+
+  describe('names', () => {
+    const scope = doc({
+      title: 'Other countries are outside these records',
+      content:
+        'This assistant keeps records for the Philippine national government only. It has no record of the president of the United States. For another country, use that government’s official website.',
+    });
+    const question = 'Who is the president of the United States?';
+
+    test('a name from model memory fails grounding', () => {
+      const answer = 'The president of the United States is currently Joe Biden. Source: records.';
+      const result = checkGrounding(answer, [scope], {question});
+      expect(result.grounded).toBe(false);
+      expect(result.issues.join(' ')).toMatch(/Name "Joe"/);
+      expect(result.issues.join(' ')).toMatch(/Name "Biden"/);
+    });
+
+    test('words from the record, the question, the brand, and the calendar pass', () => {
+      const answer =
+        'I have no record of the president of the United States. Philippine records only, says Alice at ACME Telecom, checked in October.';
+      expect(checkGrounding(answer, [scope], {question}).grounded).toBe(true);
+    });
+
+    test('a word that starts a sentence or a line is not a name', () => {
+      const answer = 'Sure. Bring the documents.\nClaim the passport. Source: records.';
+      expect(checkGrounding(answer, [scope]).grounded).toBe(true);
+    });
+
+    test('a record keyword counts as sourced', () => {
+      const docs = [doc({content: 'The secretary is Henry Aguda.', keywords: ['DICT secretary']})];
+      expect(checkGrounding('The DICT secretary is Henry Aguda.', docs).grounded).toBe(true);
+      expect(checkGrounding('The DICT secretary is Henry Villanueva.', docs).grounded).toBe(false);
+    });
   });
 
   test('answer with a made-up date fails grounding', () => {

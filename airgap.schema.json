@@ -849,6 +849,11 @@
               "type": "boolean",
               "default": true,
               "description": "Reject answers with dates not present in the retrieved KB"
+            },
+            "forbidUnsourcedNames": {
+              "type": "boolean",
+              "default": true,
+              "description": "Reject answers with a capitalized name that the retrieved KB, the question, and the brand do not contain"
             }
           }
         },

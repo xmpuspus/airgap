@@ -1,11 +1,10 @@
 # Record release GIFs
 
-Airgap keeps fifteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
-joint README flow, nine industry recordings, two ten-prompt takes, and one comparison GIF. The
-government services template has two industry recordings, an Android take with the downloaded
-model and an iOS take with the Apple on-device model. The comparison GIF puts the two ten-prompt
-takes next to published replies. Each GIF must come from a named target and a committed
-application state.
+Airgap keeps thirteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
+joint README flow, eight industry recordings, one ten-prompt take, and one comparison GIF. The
+government services recordings run the downloaded Gemma 4 model on an Android emulator. The
+comparison GIF puts the ten-prompt take next to published replies. Each GIF must come from a
+named target and a committed application state.
 
 ## Needed tools
 
@@ -124,9 +123,10 @@ node scripts/record-industries.mjs \
   --model-file models/gemma-4-e2b-it-q3ks.gguf
 ```
 
-Record the same fixture on an iOS Simulator with the Apple on-device model. The Mac must run
-macOS 26 with Apple Intelligence on, and the Debug app must be installed on the booted simulator.
-The take needs no model file. Its output gets the `-ios` suffix.
+The runner can also record the fixture on an iOS Simulator with the Apple on-device model. No
+release GIF uses that path. The Mac must run macOS 26 with Apple Intelligence on, and the Debug
+app must be installed on the booted simulator. The take needs no model file. Its output gets the
+`-ios` suffix, and the manifest validator only accepts outputs in its release list.
 
 ```bash
 node scripts/record-industries.mjs \
@@ -156,10 +156,10 @@ The rebuild resets `loopReviewed` to `false`. Inspect the new public loops befor
 
 ## Build the comparison GIF
 
-The comparison needs one ten-prompt take per model. Record them with `--kind showcase` and the
-ten-prompt flows, one take at a time, then build the comparison from the spec. The left card of
-each beat quotes a published reply and says where it came from. Nothing on the left is a recording
-of another app.
+The comparison needs one ten-prompt take per panel in the spec. Record it with `--kind showcase`
+and the ten-prompt flow, then build the comparison from the spec. The left card of each beat
+quotes a published reply and says where it came from. Nothing on the left is a recording of
+another app. The builder prints each panel's playback speed from the manifest.
 
 ```bash
 node scripts/record-industries.mjs \
@@ -172,17 +172,6 @@ node scripts/record-industries.mjs \
   --provider llama-rn \
   --model-identity gemma-4-e2b-it-q3ks.gguf \
   --model-file models/gemma-4-e2b-it-q3ks.gguf
-
-node scripts/record-industries.mjs \
-  --platform ios \
-  --device <simulator-udid> \
-  --commit <40-character-commit> \
-  --industry government-services \
-  --kind showcase \
-  --flow government-ios-showcase.yaml \
-  --llm-mode offline-only \
-  --provider apple-foundation-models \
-  --model-identity apple-system-model/iOS-26.4
 
 node scripts/build-showcase-gif.mjs --spec demo/showcase/government.json
 ```

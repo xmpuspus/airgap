@@ -77,6 +77,5 @@ Airgap: keyword routes in `orchestrator.ts`, `backendConnector.ts` for actions, 
 
 ## What a small model proves
 
-Two on-device models, Gemma 4 E2B as a 3-bit file and the Apple on-device model, pass the same
-six replay prompts under these controls. The model is the cheapest part to swap. The controls are
-the product.
+Gemma 4 E2B as a 3-bit file on an emulator passes the replay prompts under these controls. The
+model is the cheapest part to swap. The controls are the product.

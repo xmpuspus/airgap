@@ -51,9 +51,15 @@ ISO dates, slash-form dates, and English month-and-day forms into month, day, an
 record that says `2026-09-25` grounds an answer that says `September 25, 2026`. A different day or
 a different year fails the check.
 
-Set `safety.groundingRules.forbidUnsourcedAmounts` or
-`safety.groundingRules.forbidUnsourcedDates` to `false` only after a domain review. These regular
-expressions do not catch unsupported names, procedures, eligibility rules, or ordinary numbers.
+Third, the name check rejects a capitalized word inside a sentence that no retrieved record, the
+question, or the brand has. A model that answers "Joe Biden" from memory fails here, because the
+scope record names nobody. A five-letter prefix matches word forms such as "Philippine" and
+"Philippines". A word at the start of a sentence or a line is skipped, as are month and weekday
+names.
+
+Set `safety.groundingRules.forbidUnsourcedAmounts`, `forbidUnsourcedDates`, or
+`forbidUnsourcedNames` to `false` only after a domain review. These checks do not catch
+unsupported procedures, eligibility rules, lowercase names, or ordinary numbers.
 
 When the grounding check fails, the orchestrator shows the retrieved records instead of the model
 text. The answer chip then says that the model did not answer and quotes the first unsourced

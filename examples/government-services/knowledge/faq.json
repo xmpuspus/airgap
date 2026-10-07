@@ -218,6 +218,6 @@
       "anong araw ngayon"
     ],
     "tags": ["faq", "scope", "time"],
-    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07", "verbatim": true}
   }
 ]

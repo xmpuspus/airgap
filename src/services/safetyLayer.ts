@@ -63,7 +63,13 @@ export interface SafetyConfig {
     requireCitations?: boolean;
     forbidUnsourcedAmounts?: boolean;
     forbidUnsourcedDates?: boolean;
+    forbidUnsourcedNames?: boolean;
   };
+}
+
+export interface GroundingOptions {
+  /** The user's question. Its words count as sourced, because a model echoes them. */
+  question?: string;
 }
 
 const DEFAULT_CONFIDENCE_THRESHOLD = 0;
@@ -256,9 +262,82 @@ function sameDate(a: DateParts, b: DateParts): boolean {
   return a.year === null || b.year === null || a.year === b.year;
 }
 
+// Month and weekday names are capitalized in English and never a person.
+const CALENDAR_WORDS = [
+  ...MONTHS,
+  'january',
+  'february',
+  'march',
+  'april',
+  'june',
+  'july',
+  'august',
+  'sept',
+  'september',
+  'october',
+  'november',
+  'december',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+];
+
+function wordKey(word: string): string {
+  return word.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
+}
+
+// "Philippine" matches "Philippines" and "Marcos" matches "Marcos's" through
+// a five-letter prefix. Short words must match whole.
+function prefixKey(key: string): string {
+  return key.length >= 5 ? key.slice(0, 5) : key;
+}
+
+function knownWordKeys(retrievedDocs: KBDocument[], question: string | undefined): Set<string> {
+  const text = [
+    ...retrievedDocs.map(d => `${d.title} ${d.content} ${(d.keywords ?? []).join(' ')}`),
+    question ?? '',
+    brand.name,
+    brand.botName,
+    ...CALENDAR_WORDS,
+  ].join(' ');
+  const keys = new Set<string>();
+  for (const word of text.split(/[^\p{L}\p{N}'’.-]+/u)) {
+    const key = wordKey(word);
+    if (!key) continue;
+    keys.add(key);
+    keys.add(prefixKey(key));
+  }
+  return keys;
+}
+
+// A capitalized word inside a sentence that no retrieved record, the question,
+// or the brand contains. "Joe Biden" from model memory fails here. A word at
+// the start of a sentence or a line is skipped, because English capitalizes it.
+function unsourcedNames(answer: string, known: Set<string>): string[] {
+  const names: string[] = [];
+  const candidate = /(^|[^\p{L}\p{N}])([A-Z][\p{L}\p{N}'’.-]*)/gu;
+  for (const match of answer.matchAll(candidate)) {
+    const word = match[2].replace(/[.'’-]+$/u, '');
+    const before = answer.slice(0, (match.index ?? 0) + match[1].length);
+    if (/(^|\n)\s*$/.test(before) || /[.!?:("'“‘\-–]\s*$/.test(before)) continue;
+    // An all-caps token is an acronym or a code such as ID, PHP, or DICT.
+    if (!/\p{Ll}/u.test(word)) continue;
+    const key = wordKey(word);
+    if (key.length < 2) continue;
+    if (known.has(key) || known.has(prefixKey(key))) continue;
+    names.push(word);
+  }
+  return names;
+}
+
 export function checkGrounding(
   answer: string,
   retrievedDocs: KBDocument[],
+  options: GroundingOptions = {},
 ): {grounded: boolean; issues: string[]} {
   if (!isEnabled()) {
     return {grounded: true, issues: []};
@@ -296,6 +375,14 @@ export function checkGrounding(
     }
   }
 
+  // Names: a model that answers from memory names someone the record does not.
+  if (rules.forbidUnsourcedNames !== false) {
+    const known = knownWordKeys(retrievedDocs, options.question);
+    for (const raw of unsourcedNames(answer, known)) {
+      issues.push(`Name "${raw}" is not present in the retrieved knowledge base`);
+    }
+  }
+
   return {grounded: issues.length === 0, issues};
 }
 
@@ -316,6 +403,7 @@ export interface GroundedTokenGate {
 export function createGroundedTokenGate(
   retrievedDocs: KBDocument[],
   onToken?: (token: string) => void,
+  options: GroundingOptions = {},
 ): GroundedTokenGate {
   let received = '';
   let forwardedLength = 0;
@@ -335,7 +423,7 @@ export function createGroundedTokenGate(
       const trailingWord = received.match(/\S*$/)?.[0] ?? '';
       const settled = received.slice(0, received.length - trailingWord.length);
       if (settled.length <= forwardedLength) return;
-      if (!checkGrounding(settled, retrievedDocs).grounded) {
+      if (!checkGrounding(settled, retrievedDocs, options).grounded) {
         halted = true;
         logger.info('safetyLayer', 'streamed answer halted at unsourced value');
         return;
@@ -354,7 +442,11 @@ export function createGroundedTokenGate(
  * return a verdict. Callers decide whether to show the answer or a refusal
  * based on `verdict.allow`.
  */
-export function validateAnswer(answer: string, retrievedDocs: KBDocument[]): SafetyVerdict {
+export function validateAnswer(
+  answer: string,
+  retrievedDocs: KBDocument[],
+  options: GroundingOptions = {},
+): SafetyVerdict {
   const {confident, confidence} = checkConfidence(retrievedDocs);
   const retrievedDocIds = retrievedDocs.map(d => d.id);
 
@@ -369,7 +461,7 @@ export function validateAnswer(answer: string, retrievedDocs: KBDocument[]): Saf
     };
   }
 
-  const {grounded, issues} = checkGrounding(answer, retrievedDocs);
+  const {grounded, issues} = checkGrounding(answer, retrievedDocs, options);
   if (!grounded) {
     logger.warn('safetyLayer', 'Answer failed grounding check', {
       issues,
