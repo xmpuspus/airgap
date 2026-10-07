@@ -1,0 +1,71 @@
+[
+  {
+    "id": "fee-002",
+    "category": "fees",
+    "title": "Fees and validity for an NBI clearance",
+    "content": "As of 2026-10-07, the NBI how-to page states that the basic clearance fee is PHP 130. The page adds an e-payment service charge. The official page does not state the validity period of the clearance. The page nbi.gov.ph/citizens-charter/nbi-clearance/ lists PHP 115, PHP 165, and PHP 415 without labels. Check the amount on the portal before you pay. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-07).",
+    "keywords": [
+      "NBI clearance fee",
+      "magkano ang NBI clearance",
+      "bayad sa NBI",
+      "NBI clearance price",
+      "how much is NBI clearance",
+      "NBI validity",
+      "gaano katagal valid ang NBI clearance",
+      "NBI payment"
+    ],
+    "tags": ["nbi", "clearance", "fees"],
+    "metadata": {
+      "source": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+      "publisher": "National Bureau of Investigation",
+      "asOf": "2026-10-07",
+      "agency": "NBI"
+    }
+  },
+  {
+    "id": "fee-005",
+    "category": "fees",
+    "title": "Fees and validity for an SS number",
+    "content": "As of 2026-10-07, the official page does not state the fee for an SS Number. The page does not state a processing time. The page states that the SS Number is a lifetime number. The page states that you use it in all transactions with the SSS. The SSS home page links a contribution table at sss.gov.ph/sss-contribution-table. This record does not cover that table. Source: https://www.sss.gov.ph/become-an-sss-member/ (checked 2026-10-07).",
+    "keywords": [
+      "SSS fee",
+      "magkano ang SSS number",
+      "bayad sa SSS number",
+      "SS number free",
+      "libre ba ang SSS number",
+      "SSS contribution table",
+      "SS number validity"
+    ],
+    "tags": ["sss", "social-security", "fees"],
+    "metadata": {
+      "source": "https://www.sss.gov.ph/become-an-sss-member/",
+      "publisher": "Social Security System",
+      "asOf": "2026-10-07",
+      "agency": "SSS"
+    }
+  },
+  {
+    "id": "fee-011",
+    "category": "fees",
+    "title": "Fees and validity for a Philippine passport",
+    "content": "As of 2026-10-07, the regular passport processing fee is PHP 950. The expedited fee is PHP 1200. The penalty for a lost or mutilated ePassport is PHP 350. A passport for an adult is valid for ten years. A passport for a person under 18 is valid for five years. Appointments are free of charge. The DFA allows rescheduling only for exceptional and emergency reasons, within 6 months of the original date. Source: https://consular.dfa.gov.ph/services/passport/passport-faqs (checked 2026-10-07).",
+    "keywords": [
+      "passport fee",
+      "magkano ang passport",
+      "bayad sa passport",
+      "passport validity",
+      "gaano katagal valid ang passport",
+      "expedited passport",
+      "passport price",
+      "lost passport penalty",
+      "passport reschedule"
+    ],
+    "tags": ["passport", "dfa", "fees"],
+    "metadata": {
+      "source": "https://consular.dfa.gov.ph/services/passport/passport-faqs",
+      "publisher": "Department of Foreign Affairs",
+      "asOf": "2026-10-07",
+      "agency": "DFA"
+    }
+  }
+]

@@ -1,0 +1,223 @@
+[
+  {
+    "id": "faq-001",
+    "category": "faq",
+    "title": "What the assistant can answer",
+    "content": "As of 2026-10-07, this demo assistant answers questions about Philippine government services. It explains the steps for a government service. It lists the requirements and fees that an agency publishes. It gives agency hotlines and websites. It names the current officials, such as the President and the Chief Justice. It lists the 2026 regular holidays and special non-working days. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "what can you answer",
+      "ano ang masasagot mo",
+      "ano ang kaya mong sagutin",
+      "what can this assistant do",
+      "mga tanong na masasagot",
+      "help",
+      "tulong",
+      "sample questions",
+      "anong tanong ang pwede"
+    ],
+    "tags": ["faq", "assistant", "scope"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-002",
+    "category": "faq",
+    "title": "What the assistant does not do",
+    "content": "As of 2026-10-07, this demo assistant does not give legal advice. It does not give political opinions. It cannot open your accounts or see your personal records. It does not decide or approve any application. For these needs, contact a lawyer or the agency that handles your case. It answers only from its saved knowledge and says so when it has no answer. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "legal advice",
+      "payo na legal",
+      "political opinion",
+      "opinyon sa pulitika",
+      "account access",
+      "decision sa application",
+      "hindi kayang gawin",
+      "what the assistant cannot do",
+      "limitations",
+      "hanggang saan ang assistant"
+    ],
+    "tags": ["faq", "limits", "assistant"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-003",
+    "category": "faq",
+    "title": "Where answers come from and how fresh they are",
+    "content": "As of 2026-10-07, every answer comes from a dated snapshot of an official government web page. Each record shows its source link and the date it was checked. The assistant does not read the live internet. A fact can change after the snapshot date. Check the agency's official page for the latest hotline numbers, fees, and office holders. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "saan galing ang sagot",
+      "where do answers come from",
+      "source ng sagot",
+      "dated snapshot",
+      "official page",
+      "gaano ka-updated",
+      "is this up to date",
+      "updated ba ito",
+      "as of date",
+      "pinagmulan ng impormasyon"
+    ],
+    "tags": ["faq", "sources", "freshness"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-004",
+    "category": "faq",
+    "title": "You can ask in English or Filipino",
+    "content": "As of 2026-10-07, you can ask in English or Filipino. The knowledge records include Taglish keywords, so mixed questions also match. Sample questions include sino ang presidente, holiday ba bukas, and hotline ng SSS. Short, clear questions give the best match. Spelling variants and short forms of agency names also match. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "language",
+      "wika",
+      "tagalog",
+      "filipino",
+      "english",
+      "taglish",
+      "pwede bang magtanong sa tagalog",
+      "can I ask in filipino",
+      "magtanong sa tagalog",
+      "anong wika"
+    ],
+    "tags": ["faq", "language"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-005",
+    "category": "faq",
+    "title": "Where to report a wrong answer",
+    "content": "As of 2026-10-07, report a wrong answer to the agency that owns the service. You can also send the problem to the 8888 Citizens' Complaint Hotline. Give the question you asked, the answer you got, and the date. The official page of the agency decides its own rules, fees, and hotlines. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "wrong answer",
+      "maling sagot",
+      "report wrong answer",
+      "paano mag-report ng mali",
+      "mali ang sagot",
+      "magreklamo",
+      "complaint",
+      "8888",
+      "feedback",
+      "saan magrereport"
+    ],
+    "tags": ["faq", "report", "8888"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-006",
+    "category": "faq",
+    "title": "This assistant is an unofficial demo",
+    "content": "As of 2026-10-07, this assistant is an unofficial example and no government agency runs it. It uses copies of public information from official pages. It does not speak for any agency or office. Always confirm important steps, fees, and deadlines with the agency. The demo holds only public information. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "official app",
+      "opisyal ba ito",
+      "government app",
+      "app ng gobyerno",
+      "unofficial",
+      "sino ang gumawa",
+      "who runs this",
+      "demo",
+      "kaninong app ito",
+      "is this from the government"
+    ],
+    "tags": ["faq", "about", "demo"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-007",
+    "category": "faq",
+    "title": "The assistant answers without an internet connection",
+    "content": "As of 2026-10-07, this assistant looks up answers in records saved on your device. It needs no network connection to answer. The saved records stay as they were on their snapshot date until an update arrives. An out-of-date record shows its snapshot date, so you can see how old it is. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "offline",
+      "walang internet",
+      "gumagana ba kahit walang internet",
+      "without internet",
+      "no signal",
+      "walang signal",
+      "airgap",
+      "saved on device",
+      "naka-save sa device",
+      "works offline"
+    ],
+    "tags": ["faq", "offline", "device"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-008",
+    "category": "faq",
+    "title": "Who this assistant is",
+    "content": "As of 2026-10-07, this assistant is Patnubay, a sample built on the open-source Airgap kit. The brand in its configuration is Citizen Services Desk. No government agency runs it. Its name and role come from the application configuration file, not from a language model, so they do not change between answers. It answers questions about Philippine government services, officials, holidays, and hotlines. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "who are you",
+      "sino ka",
+      "ano ang pangalan mo",
+      "what is your name",
+      "are you chatgpt",
+      "are you gemini",
+      "sino si patnubay",
+      "anong ai ka",
+      "which ai are you",
+      "ikaw ba si patnubay",
+      "about you"
+    ],
+    "tags": ["faq", "identity", "assistant"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-009",
+    "category": "faq",
+    "title": "How this assistant is configured",
+    "content": "As of 2026-10-07, the instructions for this assistant are public. They are in the airgap.config.json file of the open-source Airgap project, under prompts.system. The file holds no password, key, or account permission. A model cannot change a record, approve an application, or run an action. Tool routes come from configuration keywords, not from model output. Reading the instructions gives no extra access. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "system prompt",
+      "show me your system prompt",
+      "ignore your instructions",
+      "what are your instructions",
+      "ano ang instructions mo",
+      "jailbreak",
+      "reveal your prompt",
+      "developer mode",
+      "ipakita ang prompt",
+      "hidden instructions",
+      "admin password"
+    ],
+    "tags": ["faq", "configuration", "security"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-010",
+    "category": "faq",
+    "title": "Other countries are outside this assistant's records",
+    "content": "As of 2026-10-07, this assistant keeps records for the Philippine national government only. It has no record of the president, leaders, laws, or services of the United States or any other country. For another country, use that government's official website. For the Philippine President, ask: who is the president of the Philippines. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "united states",
+      "president of the united states",
+      "US president",
+      "american president",
+      "other countries",
+      "ibang bansa",
+      "world leaders",
+      "presidente ng amerika",
+      "president of america",
+      "international",
+      "foreign government"
+    ],
+    "tags": ["faq", "scope", "countries"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "faq-011",
+    "category": "faq",
+    "title": "The assistant does not tell the time or date",
+    "content": "As of 2026-10-07, this assistant has no clock and no calendar. It does not know the current time or today's date. Check the clock on your device. Each record shows the date it was checked, so you can compare that date with today. For holiday dates, ask about the regular holidays or special non-working days for 2026. Source: Airgap demo configuration (checked 2026-10-07).",
+    "keywords": [
+      "what time is it",
+      "anong oras na",
+      "what is the date today",
+      "anong petsa ngayon",
+      "date today",
+      "current time",
+      "oras ngayon",
+      "what day is it",
+      "anong araw ngayon"
+    ],
+    "tags": ["faq", "scope", "time"],
+    "metadata": {"source": "Airgap demo configuration", "asOf": "2026-10-07"}
+  }
+]

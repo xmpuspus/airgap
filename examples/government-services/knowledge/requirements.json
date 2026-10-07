@@ -1,0 +1,46 @@
+[
+  {
+    "id": "req-002",
+    "category": "requirements",
+    "title": "Requirements for an NBI clearance",
+    "content": "As of 2026-10-07, you bring three items to the NBI branch. 1. Your printed or digital reference number or QR code. 2. Your proof of payment or receipt. 3. Two valid government-issued IDs. The page gives these examples of IDs: passport, driver's license, national ID, UMID, postal ID, or a PSA birth certificate. Staff take your digital photo, fingerprints, and electronic signature at the branch. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-07).",
+    "keywords": [
+      "NBI requirements",
+      "requirements sa NBI",
+      "NBI clearance requirements",
+      "valid ID for NBI",
+      "ano ang dadalhin sa NBI",
+      "NBI reference number",
+      "kailangan ko ba ng 2 valid ID sa NBI"
+    ],
+    "tags": ["nbi", "clearance", "requirements"],
+    "metadata": {
+      "source": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+      "publisher": "National Bureau of Investigation",
+      "asOf": "2026-10-07",
+      "agency": "NBI"
+    }
+  },
+  {
+    "id": "req-011",
+    "category": "requirements",
+    "title": "Where the DFA lists passport requirements",
+    "content": "As of 2026-10-07, the DFA lists the documents for a passport application on its requirements page at consular.dfa.gov.ph/services/passport/requirements. The passport.gov.ph site links to that page and to the passport FAQ. This record does not copy the list, because the requirements page blocked the fetch on 2026-10-07. Bring the documents that page lists for your case: new application or renewal, adult or minor. Appointments are free and run only through passport.gov.ph. Source: https://passport.gov.ph/ (checked 2026-10-07).",
+    "keywords": [
+      "passport requirements",
+      "requirements sa passport",
+      "mga kailangan sa passport",
+      "valid ID for passport",
+      "documents for passport",
+      "ano ang dadalhin sa DFA",
+      "passport renewal requirements"
+    ],
+    "tags": ["passport", "dfa", "requirements"],
+    "metadata": {
+      "source": "https://passport.gov.ph/",
+      "publisher": "Department of Foreign Affairs",
+      "asOf": "2026-10-07",
+      "agency": "DFA"
+    }
+  }
+]

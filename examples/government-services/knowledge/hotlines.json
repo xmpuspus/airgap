@@ -1,0 +1,147 @@
+[
+  {
+    "id": "hot-001",
+    "category": "hotlines",
+    "title": "8888 Citizens' Complaint Hotline",
+    "content": "As of 2026-10-07, citizens text 8888 from Globe, Smart, and their affiliate telcos to file complaints. The service covers graft and corrupt practices by government officials and employees. It also covers slow and inefficient delivery of government services and requests for government assistance. The text service is free of charge. The 8888 Citizens' Complaint Center is one of the constituent offices of the OP Strategic Action and Response Office. The source page is dated 2020-11-25 and lists no hours or website, so check current channels with the Office of the President. Source: https://pco.gov.ph/PCO-content/on-text-8888/ (checked 2026-10-07).",
+    "keywords": [
+      "8888",
+      "8888 hotline",
+      "tawag 8888",
+      "text 8888",
+      "citizens complaint hotline",
+      "reklamo sa gobyerno",
+      "paano magreklamo sa gobyerno",
+      "report graft and corruption",
+      "korapsyon",
+      "complaint center"
+    ],
+    "tags": ["hotlines", "complaints", "8888"],
+    "metadata": {
+      "source": "https://pco.gov.ph/PCO-content/on-text-8888/",
+      "publisher": "Presidential Communications Office",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "hot-002",
+    "category": "hotlines",
+    "title": "Emergency hotline 911",
+    "content": "As of 2026-10-07, 911 is the single number to call for emergencies. The Department of the Interior and Local Government (DILG) runs the unified 911 service. A DILG regional page posted on 2025-09-05 says the unified 911 line starts on 11 September. The service is free and available 24/7. It covers police, fire, medical, and disaster response. Source: https://calabarzon.dilg.gov.ph/one-number-for-all-emergencies-unified-911-to-launch-nationwide/ (checked 2026-10-07).",
+    "keywords": [
+      "911",
+      "tawag 911",
+      "emergency 911",
+      "emergency hotline",
+      "national emergency hotline",
+      "saan tatawag kapag emergency",
+      "pulis bumbero ambulansya",
+      "police fire medical",
+      "numero para sa emergency",
+      "911 hotline"
+    ],
+    "tags": ["hotlines", "emergency", "dilg"],
+    "metadata": {
+      "source": "https://calabarzon.dilg.gov.ph/one-number-for-all-emergencies-unified-911-to-launch-nationwide/",
+      "publisher": "DILG Region IV-A",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "hot-004",
+    "category": "hotlines",
+    "title": "PSA certificates through PSAHelpline",
+    "content": "As of 2026-10-07, the PSAHelpline hotline is (02) 8737-1111. Phone lines are open Monday to Saturday, 8:00 AM to 5:00 PM, except holidays. The email address is help@psahelpline.ph and it is available 24/7. PSAHelpline delivers PSA birth, marriage, and death certificates, CENOMAR, and CENODEATH to your home or office. Order online at psahelpline.ph. The PSA website is psa.gov.ph. Source: https://psahelpline.ph/ (checked 2026-10-07).",
+    "keywords": [
+      "PSA",
+      "PSAHelpline",
+      "hotline ng PSA",
+      "PSA hotline",
+      "birth certificate",
+      "sertipiko ng kapanganakan",
+      "marriage certificate",
+      "CENOMAR",
+      "kumuha ng PSA",
+      "psahelpline.ph",
+      "8737-1111"
+    ],
+    "tags": ["hotlines", "civil registry", "psa"],
+    "metadata": {
+      "source": "https://psahelpline.ph/",
+      "publisher": "PSAHelpline",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "hot-005",
+    "category": "hotlines",
+    "title": "SSS hotline 1455",
+    "content": "As of 2026-10-07, the SSS hotline is 1455. The official SSS website is www.sss.gov.ph. The SSS handles member contributions, benefits, and loans. The SSS website says regular payment of contributions is essential to qualify for benefits and loans. The page shows no separate contact center number. Source: https://www.sss.gov.ph/ (checked 2026-10-07).",
+    "keywords": [
+      "SSS",
+      "hotline ng SSS",
+      "SSS hotline",
+      "1455",
+      "tawag SSS",
+      "SSS contribution",
+      "SSS loan",
+      "SSS benefits",
+      "social security system",
+      "pension SSS"
+    ],
+    "tags": ["hotlines", "social security", "sss"],
+    "metadata": {
+      "source": "https://www.sss.gov.ph/",
+      "publisher": "Social Security System",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "hot-008",
+    "category": "hotlines",
+    "title": "BIR hotline and website",
+    "content": "As of 2026-10-07, the BIR contact page lists the hotline (02) 8538-3200. The official BIR website is www.bir.gov.ph. BIR stands for Bureau of Internal Revenue. The website offers tax information, regulations, and eServices for taxpayers. The page lists no hours for the hotline. Source: https://www.bir.gov.ph/contactus (checked 2026-10-07).",
+    "keywords": [
+      "BIR",
+      "hotline ng BIR",
+      "BIR hotline",
+      "BIR contact number",
+      "tawag BIR",
+      "8538-3200",
+      "Bureau of Internal Revenue",
+      "tax hotline",
+      "buwis"
+    ],
+    "tags": ["hotlines", "tax", "bir"],
+    "metadata": {
+      "source": "https://www.bir.gov.ph/contactus",
+      "publisher": "Bureau of Internal Revenue",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "hot-010",
+    "category": "hotlines",
+    "title": "NBI hotline and clearance contacts",
+    "content": "As of 2026-10-07, the NBI main office hotline is (02) 8523-8231 for general inquiries. The NBI Clearance Center answers clearance questions at (02) 8524-1277 and 0939 150 2880. The center is on United Nations Avenue, Ermita, Manila, and opens Monday to Friday, 7:00 AM to 5:00 PM. Apply for an NBI clearance online at clearance.nbi.gov.ph. The NBI has divisions that address crimes such as fraud, public corruption, human trafficking, and cybercrime. Source: https://nbi.gov.ph/contact/ (checked 2026-10-07).",
+    "keywords": [
+      "NBI",
+      "NBI clearance",
+      "hotline ng NBI",
+      "NBI hotline",
+      "NBI contact number",
+      "tawag NBI",
+      "clearance.nbi.gov.ph",
+      "National Bureau of Investigation",
+      "kumuha ng NBI clearance",
+      "8523-8231",
+      "NBI clearance center"
+    ],
+    "tags": ["hotlines", "clearance", "nbi"],
+    "metadata": {
+      "source": "https://nbi.gov.ph/contact/",
+      "publisher": "National Bureau of Investigation",
+      "asOf": "2026-10-07"
+    }
+  }
+]

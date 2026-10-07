@@ -1,0 +1,181 @@
+[
+  {
+    "id": "off-001",
+    "category": "officials",
+    "title": "President of the Philippines",
+    "content": "As of 2026-10-07, the President of the Philippines is Ferdinand R. Marcos Jr. He took the oath of office as the 17th President on 30 June 2022. The ceremony took place at the National Museum of the Philippines in Manila. Chief Justice Alexander Gesmundo administered the oath. The Presidential Communications Office transcript of his 27 July 2026 State of the Nation Address shows him in office. Source: https://pco.gov.ph/photos/?post_id=153368 (checked 2026-10-07).",
+    "keywords": [
+      "president",
+      "pangulo",
+      "presidente",
+      "sino ang presidente",
+      "who is the president",
+      "current president",
+      "kasalukuyang pangulo",
+      "pangulo ng pilipinas",
+      "Marcos",
+      "Bongbong Marcos"
+    ],
+    "tags": ["officials", "executive", "president"],
+    "metadata": {"source": "https://pco.gov.ph/photos/?post_id=153368", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "off-002",
+    "category": "officials",
+    "title": "Vice President of the Philippines",
+    "content": "As of 2026-10-07, the Vice President of the Philippines is Sara Duterte. The Office of the Vice President lists her as Vice President in posts dated 2026-10-01 and 2026-10-05. A post dated 2026-10-05 reports her visit to Cagayan de Oro City. A post dated 2026-10-01 reports her at a Civil Service Month event in Santa Elena, Camarines Norte. Source: https://www.ovp.gov.ph/category/1/press-release (checked 2026-10-07).",
+    "keywords": [
+      "vice president",
+      "bise presidente",
+      "sino ang bise presidente",
+      "who is the vice president",
+      "current vice president",
+      "kasalukuyang bise presidente",
+      "pangalawang pangulo",
+      "VP Sara",
+      "Inday Sara",
+      "Sara Duterte"
+    ],
+    "tags": ["officials", "executive", "vice president"],
+    "metadata": {"source": "https://www.ovp.gov.ph/category/1/press-release", "asOf": "2026-10-07"}
+  },
+  {
+    "id": "off-003",
+    "category": "officials",
+    "title": "Senate President of the Philippines",
+    "content": "As of 2026-10-07, the Senate President is Sherwin Gatchalian. The opening lines of the 27 July 2026 State of the Nation Address name him as Senate President. The Presidential Communications Office publishes the transcript. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-07).",
+    "keywords": [
+      "senate president",
+      "pangulo ng senado",
+      "presidente ng senado",
+      "sino ang senate president",
+      "who is the senate president",
+      "current senate president",
+      "kasalukuyang pangulo ng senado",
+      "Gatchalian",
+      "Win Gatchalian",
+      "senado"
+    ],
+    "tags": ["officials", "legislative", "senate"],
+    "metadata": {
+      "source": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "off-004",
+    "category": "officials",
+    "title": "Speaker of the House of Representatives",
+    "content": "As of 2026-10-07, the Speaker of the House of Representatives is Faustino Dy III. A Presidential Communications Office release dated 2025-09-17 welcomes him as the new Speaker. The release names Martin Romualdez as the former Speaker. The 27 July 2026 State of the Nation Address transcript also names him as House Speaker. Source: https://pco.gov.ph/news_releases/palace-welcomes-new-house-speaker-faustino-dy-iii-thanks-former-speaker-romualdez/ (checked 2026-10-07).",
+    "keywords": [
+      "speaker of the house",
+      "house speaker",
+      "speaker ng kamara",
+      "sino ang speaker",
+      "who is the speaker",
+      "current speaker",
+      "kasalukuyang speaker",
+      "Faustino Dy",
+      "Speaker Dy",
+      "kamara ng mga kinatawan"
+    ],
+    "tags": ["officials", "legislative", "house"],
+    "metadata": {
+      "source": "https://pco.gov.ph/news_releases/palace-welcomes-new-house-speaker-faustino-dy-iii-thanks-former-speaker-romualdez/",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "off-005",
+    "category": "officials",
+    "title": "Chief Justice of the Philippines",
+    "content": "As of 2026-10-07, the Chief Justice of the Philippines is Alexander Gesmundo. The 27 July 2026 State of the Nation Address transcript names him as Chief Justice. A Presidential Communications Office photo caption records that he administered the oath of office to President Marcos on 30 June 2022. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-07).",
+    "keywords": [
+      "chief justice",
+      "punong mahistrado",
+      "sino ang chief justice",
+      "who is the chief justice",
+      "current chief justice",
+      "kasalukuyang punong mahistrado",
+      "Gesmundo",
+      "Alexander Gesmundo",
+      "korte suprema",
+      "head of the supreme court"
+    ],
+    "tags": ["officials", "judiciary", "supreme court"],
+    "metadata": {
+      "source": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "off-006",
+    "category": "officials",
+    "title": "Secretary of the Department of Information and Communications Technology",
+    "content": "As of 2026-10-07, the Secretary of the Department of Information and Communications Technology (DICT) is Henry Aguda. A Presidential Communications Office release dated 2026-09-25 names Secretary Henry Aguda as DICT Secretary. He also appears as DICT Secretary in Palace pages dated 2026-01-15 and 2026-04-13. Source: https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/ (checked 2026-10-07).",
+    "keywords": [
+      "DICT secretary",
+      "kalihim ng DICT",
+      "sino ang DICT secretary",
+      "who is the DICT secretary",
+      "current DICT secretary",
+      "kasalukuyang DICT secretary",
+      "Henry Aguda",
+      "Secretary Aguda",
+      "Department of Information and Communications Technology"
+    ],
+    "tags": ["officials", "executive", "dict"],
+    "metadata": {
+      "source": "https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "off-007",
+    "category": "officials",
+    "title": "Executive Secretary",
+    "content": "As of 2026-10-07, the Executive Secretary is Ralph G. Recto. A Presidential Communications Office release dated 2025-11-19 reports that President Marcos administered his oath as Acting Executive Secretary. The 27 July 2026 State of the Nation Address transcript calls him Executive Secretary Ralph Recto. Source: https://pco.gov.ph/news_releases/recto-go-take-oath-as-executive-secretary-finance-secretary/ (checked 2026-10-07).",
+    "keywords": [
+      "executive secretary",
+      "sino ang executive secretary",
+      "who is the executive secretary",
+      "current executive secretary",
+      "kasalukuyang executive secretary",
+      "Ralph Recto",
+      "Secretary Recto",
+      "Office of the President",
+      "palasyo",
+      "malacanang"
+    ],
+    "tags": ["officials", "executive", "office of the president"],
+    "metadata": {
+      "source": "https://pco.gov.ph/news_releases/recto-go-take-oath-as-executive-secretary-finance-secretary/",
+      "asOf": "2026-10-07"
+    }
+  },
+  {
+    "id": "off-008",
+    "category": "officials",
+    "title": "How the President is elected and serves one six-year term",
+    "content": "As of 2026-10-07, Article VII, Section 4 of the 1987 Constitution says the people elect the President and the Vice-President by direct vote. The term is six years. It begins at noon on the next 30 June after the election. It ends at noon on the same date six years later. The President is not eligible for any reelection. The person with the highest number of votes wins. President Marcos took the oath on 30 June 2022, so his term ends on 30 June 2028. Source: https://nlrc.dole.gov.ph/uploads/contents/eLibrary/1987-Constitution.pdf (checked 2026-10-07).",
+    "keywords": [
+      "how the president is elected",
+      "paano nahahalal ang pangulo",
+      "six-year term",
+      "termino ng pangulo",
+      "ilang taon ang termino ng pangulo",
+      "reelection ng pangulo",
+      "pwede bang tumakbo ulit ang pangulo",
+      "single term",
+      "presidential election",
+      "halalan sa pagkapangulo",
+      "1987 Constitution",
+      "Article VII"
+    ],
+    "tags": ["officials", "constitution", "elections"],
+    "metadata": {
+      "source": "https://nlrc.dole.gov.ph/uploads/contents/eLibrary/1987-Constitution.pdf",
+      "asOf": "2026-10-07"
+    }
+  }
+]

@@ -29,17 +29,18 @@ The CLI does five operations.
 4. Rebuilds the TypeScript knowledge manifest.
 5. Writes `.airgap-scaffold.json` with the derived app names.
 
-## Seven templates are included
+## Eight templates are included
 
-| Template         | Slug               | Main use                             |
-| ---------------- | ------------------ | ------------------------------------ |
-| Airline          | `airline`          | Reservations, baggage, flight status |
-| Banking          | `banking`          | Retail accounts, cards, transfers    |
-| Electric utility | `electric-utility` | Outages, billing, meters             |
-| Healthcare       | `healthcare`       | Patient triage, appointments         |
-| Insurance        | `insurance`        | Claims, policies, coverage           |
-| Telco            | `telco`            | Plans, roaming, troubleshooting      |
-| Water utility    | `water-utility`    | Outages, billing, conservation       |
+| Template            | Slug                  | Main use                                     |
+| ------------------- | --------------------- | -------------------------------------------- |
+| Airline             | `airline`             | Reservations, baggage, flight status         |
+| Banking             | `banking`             | Retail accounts, cards, transfers            |
+| Electric utility    | `electric-utility`    | Outages, billing, meters                     |
+| Government services | `government-services` | Officials, holidays, hotlines, service steps |
+| Healthcare          | `healthcare`          | Patient triage, appointments                 |
+| Insurance           | `insurance`           | Claims, policies, coverage                   |
+| Telco               | `telco`               | Plans, roaming, troubleshooting              |
+| Water utility       | `water-utility`       | Outages, billing, conservation               |
 
 The configuration contract is in
 [`airgap.schema.json`](https://github.com/xmpuspus/airgap/blob/main/airgap.schema.json). Edit

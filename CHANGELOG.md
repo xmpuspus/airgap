@@ -8,6 +8,14 @@ minor releases.
 
 ### Added
 
+- A `government-services` template with dated, sourced public records for Philippine officials,
+  holidays, hotlines, and service steps, plus golden and adversarial cases that replay the
+  2026-09-21 eGovPH assistant failures.
+- A streaming gate that holds model text until the grounding check passes, so an unsourced
+  amount or date never reaches the screen before the refusal.
+- Publisher, source URL, checked date, and review status in the source drawer when a record
+  carries that metadata.
+- A test that validates every example configuration at startup rules.
 - Apple Foundation Models and Android ML Kit Prompt API adapters behind one provider policy.
 - Provider readiness, fallback reasons, model identity, and answer provenance in onboarding,
   settings, and chat.
@@ -23,7 +31,7 @@ minor releases.
 - Limited the downloaded-model engine field to the built `llama.cpp` runtime.
 - Updated public setup, customization, examples, integration, recording, and contributor guidance
   to match the provider-based runtime.
-- Rerecorded Android, iOS, joint, and seven industry flows from one checked source commit.
+- Rerecorded the Android, iOS, joint, and seven industry flows, all at one checked source commit.
 - Prepared version 0.2.0 across the mobile apps, root workspace, and `create-airgap-bot` package.
 
 ## [0.2.0] release candidate

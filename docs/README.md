@@ -27,7 +27,7 @@ reader does not need to infer which document applies. Start with the path that m
 ## Knowledge authors work locally first
 
 - [`kb-studio.md`](kb-studio.md) covers the browser-based local authoring tool and validation.
-- [`../examples/README.md`](../examples/README.md) compares all seven fixture industries and links to
+- [`../examples/README.md`](../examples/README.md) compares all eight fixture industries and links to
   each checked emulator recording.
 - [`../CUSTOMIZATION.md`](../CUSTOMIZATION.md) gives the schema fields and content workflow.
 

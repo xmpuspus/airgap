@@ -7,7 +7,7 @@ iOS project changes. The exact machine-readable contract is in
 
 ## Start from a checked template
 
-The package command copies a complete application and applies one of the seven included fixtures.
+The package command copies a complete application and applies one of the eight included fixtures.
 
 ```bash
 npx create-airgap-bot field-help --template water-utility

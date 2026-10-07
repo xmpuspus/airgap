@@ -1,0 +1,76 @@
+[
+  {
+    "id": "svc-002",
+    "category": "services",
+    "title": "How to apply for an NBI clearance",
+    "content": "As of 2026-10-07, you apply for an NBI clearance on the NBI Clearance Application Portal at clearance.nbi.gov.ph. 1. Complete the Applicant Information Form. 2. Click Apply for Clearance. 3. Choose an NBI branch, a date, and a time. 4. Choose a payment method and get a reference number. 5. Go to the branch. Staff take your photo, fingerprints, and signature. With no HIT, you get the clearance within minutes. If the system shows a HIT, you usually return after 5 to 10 working days. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-07).",
+    "keywords": [
+      "NBI clearance",
+      "NBI",
+      "paano kumuha ng NBI clearance",
+      "NBI clearance online",
+      "NBI appointment",
+      "apply NBI clearance",
+      "paano mag-apply sa NBI",
+      "NBI HIT",
+      "clearance application portal"
+    ],
+    "tags": ["nbi", "clearance", "employment"],
+    "metadata": {
+      "source": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+      "publisher": "National Bureau of Investigation",
+      "asOf": "2026-10-07",
+      "agency": "NBI"
+    }
+  },
+  {
+    "id": "svc-005",
+    "category": "services",
+    "title": "How to get an SS number and register online with SSS",
+    "content": "As of 2026-10-07, the SSS assigns each member one lifetime SS Number. Prospective employees, self-employed people, overseas Filipino workers, and non-working spouses apply online. 1. Open the SS Number application on the SSS website. 2. Open the link in the confirmation email within 5 days. 3. Enter your personal details and beneficiaries. 4. Create a My.SSS User ID. 5. Generate your SS Number. You can also apply at an SSS branch E-Center. The page sss.gov.ph/register-to-mysss/ offers a Create account link for My.SSS. Source: https://www.sss.gov.ph/become-an-sss-member/ (checked 2026-10-07).",
+    "keywords": [
+      "SSS number",
+      "SS number",
+      "SSS online registration",
+      "My.SSS",
+      "paano kumuha ng SSS number",
+      "paano mag-apply ng SSS",
+      "SSS membership",
+      "SSS registration",
+      "mag-register sa My.SSS"
+    ],
+    "tags": ["sss", "social-security", "membership"],
+    "metadata": {
+      "source": "https://www.sss.gov.ph/become-an-sss-member/",
+      "publisher": "Social Security System",
+      "asOf": "2026-10-07",
+      "agency": "SSS"
+    }
+  },
+  {
+    "id": "svc-011",
+    "category": "services",
+    "title": "How to apply for a Philippine passport",
+    "content": "As of 2026-10-07, you book a passport appointment at passport.gov.ph. Appointments are free of charge. The DFA says appointments not made through passport.gov.ph are not legitimate appointments. 1. Book a site and date at passport.gov.ph. 2. Bring the documents listed on the DFA requirements page at consular.dfa.gov.ph. 3. Go to the site on your date for data capture. 4. Claim the passport on the release date, or send a representative with an authorization letter or a Special Power of Attorney. Regular processing takes 10 working days in Metro Manila and 12 outside it. Expedited processing takes 5 and 7 working days. The DFA cancels a passport not claimed within one year of its release. Source: https://consular.dfa.gov.ph/services/passport/passport-faqs (checked 2026-10-07).",
+    "keywords": [
+      "passport",
+      "pasaporte",
+      "paano kumuha ng passport",
+      "passport application",
+      "DFA appointment",
+      "renew passport",
+      "passport steps",
+      "how to get a passport",
+      "passport.gov.ph",
+      "mag-apply ng passport",
+      "passport processing time"
+    ],
+    "tags": ["passport", "dfa", "travel"],
+    "metadata": {
+      "source": "https://consular.dfa.gov.ph/services/passport/passport-faqs",
+      "publisher": "Department of Foreign Affairs",
+      "asOf": "2026-10-07",
+      "agency": "DFA"
+    }
+  }
+]

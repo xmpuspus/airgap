@@ -17,6 +17,7 @@ const VERTICALS = [
   'insurance',
   'electric-utility',
   'water-utility',
+  'government-services',
 ] as const;
 
 interface ToolDef {
@@ -67,11 +68,7 @@ function loadExampleTools(vertical: string): ToolDef[] {
 describe('per-vertical golden coverage', () => {
   for (const vertical of VERTICALS) {
     describe(vertical, () => {
-      const goldenPath = path.join(
-        REPO_ROOT,
-        '__tests__/golden',
-        `${vertical}.json`,
-      );
+      const goldenPath = path.join(REPO_ROOT, '__tests__/golden', `${vertical}.json`);
 
       test('golden file exists', () => {
         expect(existsSync(goldenPath)).toBe(true);

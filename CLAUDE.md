@@ -1,7 +1,8 @@
 # Airgap repository guidance
 
 Airgap is a React Native starter kit for offline-first mobile customer support.
-The default ACME Telecom app and all industry data are fictional test fixtures.
+The default ACME Telecom app and seven industry templates are fictional test fixtures. The
+`government-services` template holds dated public records, each with its official source URL.
 
 ## Request path
 

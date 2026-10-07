@@ -12,11 +12,17 @@ const INDUSTRIES = [
   ['airline', 'airline'],
   ['banking', 'banking'],
   ['electric-utility', 'electric'],
+  ['government-services', 'government'],
   ['healthcare', 'healthcare'],
   ['insurance', 'insurance'],
   ['telco', 'telco'],
   ['water-utility', 'water'],
 ];
+
+// Flows that replay a documented scenario instead of the generic quick-reply walk.
+const FLOWS = {
+  'government-services': 'government-android.yaml',
+};
 
 function rootFromScript() {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -84,7 +90,7 @@ function main() {
           '--id',
           `industry-${slug}`,
           '--flow',
-          'industry-android.yaml',
+          FLOWS[industry] ?? 'industry-android.yaml',
           '--kind',
           'industry',
           '--output',

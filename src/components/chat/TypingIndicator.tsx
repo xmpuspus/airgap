@@ -10,9 +10,7 @@ const ANIMATION_DURATION = 380;
 const STAGGER_DELAY = 130;
 
 export function TypingIndicator() {
-  const dots = useRef(
-    Array.from({length: DOT_COUNT}, () => new Animated.Value(0)),
-  ).current;
+  const dots = useRef(Array.from({length: DOT_COUNT}, () => new Animated.Value(0))).current;
 
   const pulseAnim = useRef(new Animated.Value(0)).current;
 
@@ -31,9 +29,7 @@ export function TypingIndicator() {
             duration: ANIMATION_DURATION,
             useNativeDriver: true,
           }),
-          Animated.delay(
-            (DOT_COUNT - 1 - index) * STAGGER_DELAY + ANIMATION_DURATION,
-          ),
+          Animated.delay((DOT_COUNT - 1 - index) * STAGGER_DELAY + ANIMATION_DURATION),
         ]),
       ),
     );
@@ -56,7 +52,9 @@ export function TypingIndicator() {
   const radii = BUBBLE_RADIUS.bot.standalone;
 
   return (
-    <Animated.View style={[styles.wrapper, {opacity: pulseAnim}]}>
+    <Animated.View
+      style={[styles.wrapper, {opacity: pulseAnim}]}
+      accessibilityLabel="Assistant is typing">
       <View style={styles.avatar}>
         <Image
           source={require('../../../assets/images/airgap-avatar.png')}
@@ -92,10 +90,7 @@ export function TypingIndicator() {
               return (
                 <Animated.View
                   key={index}
-                  style={[
-                    styles.dot,
-                    {transform: [{translateY}, {scale}], opacity},
-                  ]}
+                  style={[styles.dot, {transform: [{translateY}, {scale}], opacity}]}
                 />
               );
             })}

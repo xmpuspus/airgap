@@ -194,15 +194,16 @@ describe('provider audit metadata', () => {
   });
 });
 
-describe('demo mode works across all 7 industry templates', () => {
+describe('demo mode works across all 8 industry templates', () => {
   const examplesDir = join(__dirname, '..', 'examples');
   const verticals = readdirSync(examplesDir).filter(d => d !== 'README.md' && !d.startsWith('.'));
 
-  it('discovers all 7 verticals', () => {
+  it('discovers all 8 verticals', () => {
     expect(verticals.sort()).toEqual([
       'airline',
       'banking',
       'electric-utility',
+      'government-services',
       'healthcare',
       'insurance',
       'telco',

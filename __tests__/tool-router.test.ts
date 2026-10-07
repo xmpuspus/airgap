@@ -29,6 +29,7 @@ const VERTICALS = [
   'insurance',
   'electric-utility',
   'water-utility',
+  'government-services',
 ] as const;
 
 type Vertical = (typeof VERTICALS)[number];
@@ -56,9 +57,7 @@ function loadExample(vertical: Vertical): ExampleConfig {
 // implementation in src/services/tools.ts findToolForQuery so we can run
 // these checks without booting React Native.
 function matchesKeyword(query: string, keyword: string): boolean {
-  const escaped = keyword
-    .toLowerCase()
-    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escaped = keyword.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const re = new RegExp(`(^|\\W)${escaped}(\\W|$)`, 'i');
   return re.test(query.toLowerCase());
 }
@@ -206,6 +205,18 @@ describe('vertical-specific natural language coverage', () => {
       'No water for hours',
       'Water outage report',
       'My bill amount',
+    ],
+    'government-services': [
+      'Report a concern about a barangay official',
+      'I want to file a complaint about a cashier at city hall',
+      'Magreklamo ako tungkol sa serbisyo ng ahensya',
+      'Report an issue with the passport site',
+      'Status of my application for a business permit',
+      'Track my application for a PSA certificate',
+      'Check the application status of my passport',
+      'Status ng application ko sa SSS',
+      'Report a concern about slow service at the LTO',
+      'Track my application please',
     ],
   };
 

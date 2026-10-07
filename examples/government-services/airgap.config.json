@@ -1,0 +1,188 @@
+{
+  "$schema": "../../airgap.schema.json",
+  "specVersion": "1.0.0",
+  "brand": {
+    "name": "Citizen Services Desk",
+    "botName": "Patnubay",
+    "tagline": "Philippine government services, with sources",
+    "hotline": "8888",
+    "hotlineLabel": "Citizens' Complaint Hotline",
+    "website": "gov.ph"
+  },
+  "theme": {
+    "primary": "#1E40AF",
+    "primaryLight": "#60A5FA",
+    "primaryDark": "#1E3A8A",
+    "secondary": "#B45309",
+    "background": "#F5F7FB"
+  },
+  "model": {
+    "provider": "llama.cpp",
+    "url": "https://huggingface.co/unsloth/gemma-4-E2B-it-GGUF/resolve/main/gemma-4-E2B-it-Q3_K_S.gguf",
+    "filename": "gemma-4-e2b-it-q3ks.gguf",
+    "sha256": "2d010e251ba1fc44b746eb4059825a1954df5f90a1b7a360cf18232a520709aa",
+    "sizeBytes": 2445645184,
+    "sizeMB": 2445
+  },
+  "knowledge": {
+    "directory": "knowledge",
+    "search": {
+      "topK": 2,
+      "fuzzy": 0.2,
+      "boostTitle": 2,
+      "boostKeywords": 3,
+      "boostContent": 1
+    }
+  },
+  "prompts": {
+    "system": "You are {{botName}}, an unofficial guide to Philippine government services. Answer ONLY from the CONTEXT. Keep the source and checked date from the context in your answer. If the context does not cover the question, say so and point to the agency's official website or {{hotline}}. Never give political opinions, legal advice, or medical advice. Never guess an office holder, date, or fee.",
+    "welcome": "Hello! I'm {{botName}}. I can help with:\n\n{{featureList}}\n\nAsk in English or Filipino. Every answer shows its source and the date it was checked.",
+    "fallback": "I don't have an official record for that. I can help with:\n\n{{featureList}}\n\nFor other concerns, call {{hotline}} ({{hotlineLabel}}) or visit the agency's official website."
+  },
+  "onboarding": {
+    "title": "Hi, I'm {{botName}}",
+    "subtitle": "Your guide to Philippine government services",
+    "features": [
+      "Passport, NBI clearance, and PSA certificate steps",
+      "SSS, PhilHealth, Pag-IBIG, BIR, and LTO steps",
+      "Requirements and official fees",
+      "Current national officials and holidays",
+      "Agency hotlines and websites",
+      "English or Filipino questions, answers with sources"
+    ],
+    "downloadPrompt": "Download AI model ({{modelSize}})",
+    "skipLabel": "Skip for now",
+    "wifiNote": "WiFi recommended for download"
+  },
+  "quickReplies": [
+    {
+      "title": "Current president",
+      "value": "Who is the current president?"
+    },
+    {
+      "title": "Passport steps",
+      "value": "Paano kumuha ng passport?"
+    },
+    {
+      "title": "NBI clearance",
+      "value": "What are the requirements for NBI clearance?"
+    },
+    {
+      "title": "Holidays",
+      "value": "What are the regular holidays this year?"
+    }
+  ],
+  "actions": [
+    {
+      "id": "concern_report",
+      "label": "Report a concern",
+      "keywords": ["report a concern", "file a complaint", "magreklamo", "report an issue"],
+      "requiresOnline": true,
+      "category": "support",
+      "mockResponse": "I can log your concern for the 8888 Citizens' Complaint Center. Describe what happened and which agency is involved."
+    },
+    {
+      "id": "application_status",
+      "label": "Check application status",
+      "keywords": [
+        "status of my application",
+        "track my application",
+        "application status",
+        "status ng application ko"
+      ],
+      "requiresOnline": true,
+      "category": "account",
+      "mockResponse": "Application status needs a verified account with the agency. Open the agency's online portal or call {{hotline}}."
+    }
+  ],
+  "backend": {
+    "type": "mock"
+  },
+  "support": [
+    {
+      "type": "phone",
+      "value": "8888",
+      "label": "Citizens' Complaint Hotline"
+    },
+    {
+      "type": "phone",
+      "value": "911",
+      "label": "Emergency"
+    },
+    {
+      "type": "website",
+      "value": "gov.ph",
+      "label": "Official government portal"
+    }
+  ],
+  "locale": {
+    "currency": "PHP",
+    "language": "en",
+    "region": "PH"
+  },
+  "safety": {
+    "enabled": true,
+    "confidenceThreshold": 0,
+    "topicBlocklist": [
+      "blocked_topic:who should I vote for",
+      "blocked_topic:sino ang dapat iboto",
+      "blocked_topic:your opinion on",
+      "blocked_topic:political opinion",
+      "blocked_topic:is the president good",
+      "not_legal_advice:sue",
+      "not_legal_advice:legal advice",
+      "not_legal_advice:can I be arrested",
+      "not_medical_advice:diagnose",
+      "not_medical_advice:prescribe",
+      "not_financial_advice:should I invest"
+    ],
+    "groundingRules": {
+      "requireCitations": false,
+      "forbidUnsourcedAmounts": true,
+      "forbidUnsourcedDates": true
+    },
+    "refusalTemplates": {
+      "blocked_topic": "I don't give political opinions or voting advice. I can explain service steps, requirements, fees, and official records. (Hindi ako nagbibigay ng opinyong pampolitika.)",
+      "not_legal_advice": "I can't give legal advice. For legal help, contact the Public Attorney's Office or a licensed lawyer. I can still explain service steps and requirements.",
+      "low_confidence": "I don't have an official record for that. Check the agency's official website or call {{hotline}}.",
+      "ungrounded_answer": "I can't confirm those details from my official records. Check the agency's official website or call {{hotline}}."
+    }
+  },
+  "tools": [
+    {
+      "name": "reportConcern",
+      "description": "Log a concern for the 8888 Citizens' Complaint Center",
+      "keywords": ["report a concern", "file a complaint", "magreklamo", "report an issue"],
+      "offlineQueueEligible": true,
+      "stateChanging": true,
+      "vertical": "government",
+      "backendMethod": "createTicket"
+    },
+    {
+      "name": "checkApplicationStatus",
+      "description": "Check the status of an application on an agency portal",
+      "keywords": [
+        "status of my application",
+        "track my application",
+        "application status",
+        "status ng application ko"
+      ],
+      "offlineQueueEligible": true,
+      "stateChanging": false,
+      "vertical": "government",
+      "backendMethod": "checkApplicationStatus"
+    }
+  ],
+  "llm": {
+    "mode": "demo",
+    "supportDomain": "government",
+    "providers": [
+      {
+        "id": "demo",
+        "enabled": true,
+        "priority": 0,
+        "platform": "all"
+      }
+    ]
+  }
+}
