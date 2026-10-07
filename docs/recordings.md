@@ -107,7 +107,10 @@ Record one fixture with the configured downloaded model instead of the demo form
 clears the app state, streams the model file into the app directory, switches the copied
 configuration to `offline-only` with the `llama-rn` provider, and runs a flow that keeps state.
 The manifest then records `mode: offline-only`, the model file name, and
-`providerEvidenceClass: virtual-device-model`. The shipped fixture stays in demo mode.
+`providerEvidenceClass: virtual-device-model`. The shipped fixture stays in demo mode. The runner
+also points the debug build at `localhost:8081` over an `adb reverse` tunnel, because the
+airplane-mode beat cuts the emulator network and a lost Metro link paints a banner into the
+footage.
 
 ```bash
 node scripts/record-industries.mjs \

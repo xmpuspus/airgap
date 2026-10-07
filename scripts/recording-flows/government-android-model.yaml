@@ -107,5 +107,13 @@ name: Airgap government services model recording
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-offline-passport
+# The recorder adds no frames while the screen is still, so the finished
+# answer would show for one frame at eight times speed. A slow drag of the
+# list by two percent in the left gutter keeps frames coming for sixteen
+# seconds, two seconds in the public loop.
+- swipe:
+    start: 4%, 50%
+    end: 4%, 52%
+    duration: 16000
 - stopRecording
 - setAirplaneMode: disabled

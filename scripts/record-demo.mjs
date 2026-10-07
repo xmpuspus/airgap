@@ -38,6 +38,27 @@ function placeModel({root, device, modelFile, appId, configPath}) {
       throw new Error('recording_model_device_sha256_invalid');
     }
   }
+  pinDebugServerToAdb({root, device, appId});
+}
+
+// A debug build reaches Metro at 10.0.2.2 over the emulator network, and the
+// airplane-mode beat cuts that link, which paints a "Fast Refresh
+// disconnected" banner and a warning toast into the footage. The adb reverse
+// tunnel survives airplane mode, so the app gets localhost as its dev server
+// host before it launches. pm clear wiped the old value.
+function pinDebugServerToAdb({root, device, appId}) {
+  const adb = adbCommand();
+  run(adb, ['-s', device, 'reverse', 'tcp:8081', 'tcp:8081'], {cwd: root, capture: true});
+  run(
+    adb,
+    [
+      '-s',
+      device,
+      'shell',
+      `run-as ${appId} sh -c 'mkdir -p shared_prefs && cat > shared_prefs/${appId}_preferences.xml'`,
+    ],
+    {cwd: root, stdinFile: path.join(root, 'scripts', 'lib', 'android-debug-server-host.xml')},
+  );
 }
 
 function rootFromScript() {
