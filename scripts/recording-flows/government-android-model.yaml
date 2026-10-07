@@ -8,13 +8,15 @@ name: Airgap government services model recording
 - setAirplaneMode: disabled
 - launchApp
 - extendedWaitUntil:
-    visible: 'Start Chatting'
-    timeout: 240000
+    visible: 'AI FOR THIS DEVICE'
+    timeout: 60000
+# The button renders below the fold once the app checks the model file.
 - scrollUntilVisible:
     element: 'Start Chatting'
     direction: DOWN
     speed: 35
     visibilityPercentage: 80
+    timeout: 240000
 - tapOn: 'Start Chatting'
 - extendedWaitUntil:
     visible: 'Answers use local knowledge and the on-device model\.'
