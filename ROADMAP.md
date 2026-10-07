@@ -8,7 +8,8 @@ release evidence exists.
 
 - One provider contract now covers Apple Foundation Models, Android ML Kit
   GenAI Prompt API, downloaded `llama.rn`, authenticated cloud generation, and
-  deterministic document answers.
+  deterministic document answers. The five model recordings run Gemma 4 E2B on an Android
+  emulator, and Apple Foundation Models stays an optional provider.
 - Provider resolution enforces mode, priority, platform, domain, locale, OS
   floor, model-download permission, and cloud permission.
 - Onboarding explains ready, downloadable, downloading, and unavailable states.
@@ -18,16 +19,16 @@ release evidence exists.
 - Fresh Android emulator and iOS simulator footage covers the deterministic offline path through a
   cited answer without implying physical-device model evidence.
 - Recording schema v2 keeps provider, model, device, OS, evidence class, capture
-  command, playback speed, media facts, and loop review for all ten GIFs.
-- Public docs use checked local links and separate current guidance from historical plans.
+  command, playback speed, media facts, and loop review for all fifteen GIFs.
+- Public docs use checked local links.
 - Android and iOS native bridges compile in debug builds.
 - One debug-only manifest drives 13 controlled Apple and Android provider scenarios through the
   native bridges, application routing, fallback, provenance, and visible app journey.
 - Swift and Kotlin parser checks run in CI. Local iOS Simulator and Android Emulator journeys write
   machine-checked `simulated-provider` reports without claiming physical-device results.
 - A macOS Foundation Models probe and three fictional grounded cases can produce
-  `host-native-model` evidence when Apple Intelligence is available. The latest maintainer probe
-  reported `appleIntelligenceNotEnabled`, so this is not yet model-generation evidence.
+  `host-native-model` evidence when Apple Intelligence is available. The 2026-08-13 probe
+  reported `appleIntelligenceNotEnabled`. No checked `host-native-model` report exists yet.
 - Existing knowledge signing, encrypted storage, authenticated network access,
   deterministic actions, and encrypted outbox behavior stay in the same app.
 

@@ -32,14 +32,15 @@ live. The model never sees the request. Operators can replace the wording throug
 A plain phrase uses the `blocked_topic` reason. A value such as
 `not_medical_advice:diagnose` uses the text before the first separator as the refusal reason. Known
 reasons include `blocked_topic`, `not_medical_advice`, `not_financial_advice`,
-`not_legal_advice`, `low_confidence`, `ungrounded_answer`, and `state_changing_offline`.
+`not_legal_advice`, `prompt_probe`, `low_confidence`, `ungrounded_answer`, and
+`state_changing_offline`.
 
 Whole-word matching means `sue` blocks `can I sue you` but does not block `suede case`. The safety
 tests cover these boundaries.
 
 ## Grounding checks run after a provider replies
 
-`validateAnswer(text, retrievedDocs)` runs two checks before an answer reaches chat.
+`validateAnswer(text, retrievedDocs)` runs three checks before an answer reaches chat.
 
 First, an empty retrieval returns `low_confidence`. The current `confidenceThreshold` value appears
 in the audit record but does not reject a non-empty retrieval. Do not treat that setting as a
@@ -64,7 +65,7 @@ unsupported procedures, eligibility rules, lowercase names, or ordinary numbers.
 
 When the grounding check fails, the orchestrator shows the retrieved records instead of the model
 text. The answer chip then says that the model did not answer and quotes the first unsourced
-amount or date. The logger records the rejection reason and leaves out the raw rejected answer by
+amount, date, or name. The logger records the rejection reason and leaves out the raw rejected answer by
 default. A record with `metadata.verbatim` set to `true` skips the model, so an identity statement
 or a legal notice reads the same in every run. After the checks pass, the orchestrator appends
 the top record's `metadata.source` line when the model text does not contain it.

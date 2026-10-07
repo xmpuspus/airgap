@@ -44,7 +44,8 @@ reader does not need to infer which document applies. Start with the path that m
 
 - [`provider-validation.md`](provider-validation.md) gives the simulator scenarios, Apple host
   probe, physical-device preflight, optional Android model placement, and report rules.
-- [`recordings.md`](recordings.md) gives the Android, iOS, joint, and industry recording process.
+- [`recordings.md`](recordings.md) gives the Android, iOS, joint, and industry recording process,
+  the Gemma 4 E2B takes for the government services template, and the two comparison GIFs.
 - [`observability.md`](observability.md) lists diagnostic and telemetry fields and their privacy
   limits.
 - [`../CONTRIBUTING.md`](../CONTRIBUTING.md) lists needed tests and review checks.

@@ -1,10 +1,11 @@
 # Record release GIFs
 
-Airgap keeps fifteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
-joint README flow, eight industry recordings, a ten-prompt take, a five-prompt service take, and
-two composed GIFs with a card per beat. The government services recordings run the downloaded
-Gemma 4 model on an Android emulator. One composed GIF puts the ten-prompt take next to
-published replies. The other labels each service prompt with the control it proves.
+Airgap keeps sixteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
+joint README flow, eight industry recordings, a ten-prompt take, a five-prompt replay take, a
+five-prompt service take, and two composed GIFs with a card per beat. The government services
+recordings run the downloaded Gemma 4 model on an Android emulator. One composed GIF puts the
+replay take next to published replies. The other labels each service prompt with the control it
+proves.
 
 Each GIF must come from a named target and a committed application state. `demo/kb-studio.gif`
 is a terminal recording of the KB Studio tool from `demo/kb-studio.tape`. It is not app
@@ -167,11 +168,8 @@ The rebuild resets `loopReviewed` to `false`. Inspect the new public loops befor
 
 ## Build the comparison GIF
 
-The comparison needs one ten-prompt take per panel in the spec. Record it with `--kind showcase`
-and the ten-prompt flow, then build the comparison from the spec. The left card of each beat
-shows crops of the published screenshots in `demo/showcase/sources/`, or the quoted reply when
-no screenshot exists, and says where the evidence came from. Nothing on the left is a recording
-of another app. The builder prints each panel's playback speed from the manifest.
+The ten-prompt take records every replay prompt. Record it with `--kind showcase` and the
+ten-prompt flow.
 
 ```bash
 node scripts/record-industries.mjs \
@@ -184,12 +182,35 @@ node scripts/record-industries.mjs \
   --provider llama-rn \
   --model-identity gemma-4-e2b-it-q3ks.gguf \
   --model-file models/gemma-4-e2b-it-q3ks.gguf
+```
+
+The comparison uses a separate five-prompt replay take, in the published order, so the loop shows
+no exchange that its cards do not describe. Record it with `--take replay`, then build the
+comparison from the spec. The left card of each beat shows crops of the published screenshots in
+`demo/showcase/sources/`, or the quoted reply when no screenshot exists, and says where the
+evidence came from. Nothing on the left is a recording of another app. The builder prints each
+panel's playback speed from the manifest.
+
+```bash
+node scripts/record-industries.mjs \
+  --device emulator-5554 \
+  --commit <40-character-commit> \
+  --industry government-services \
+  --kind showcase \
+  --take replay \
+  --flow government-android-replay.yaml \
+  --llm-mode offline-only \
+  --provider llama-rn \
+  --model-identity gemma-4-e2b-it-q3ks.gguf \
+  --model-file models/gemma-4-e2b-it-q3ks.gguf
 
 node scripts/build-showcase-gif.mjs --spec demo/showcase/government.json
 ```
 
 A spec beat can pick a take beat by its one-based `takeBeat` number, so a spec can skip beats.
-The service take uses `--take services` for its own output name and the five-prompt flow.
+A beat can also set `"startAt": "input"` to begin at the typed prompt instead of the end of the
+beat before it. The service take uses `--take services` for its own output name and the
+five-prompt service flow.
 
 ```bash
 node scripts/record-industries.mjs \

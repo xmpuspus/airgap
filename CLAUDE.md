@@ -1,7 +1,7 @@
 # Airgap repository guidance
 
 Airgap is a React Native starter kit for offline-first mobile customer support.
-The default ACME Telecom app and seven industry templates are fictional test fixtures. The
+The default ACME Telecom app and seven of the eight industry templates are fictional test fixtures. The
 `government-services` template holds dated public records, each with its official source URL.
 
 ## Request path
@@ -13,8 +13,8 @@ The default ACME Telecom app and seven industry templates are fictional test fix
 5. `src/services/safetyLayer.ts` checks sourced amounts and dates before display.
 
 Demo mode uses deterministic document answers and makes no model request. Production modes can
-use Apple Foundation Models, Android ML Kit Prompt API, a downloaded `llama.rn` model, or an
-authenticated cloud service. Provider state and answer identity must stay visible to the user.
+use a downloaded `llama.rn` model, Android ML Kit Prompt API, an authenticated cloud service, or
+the optional Apple Foundation Models provider on iOS. Provider state and answer identity must stay visible to the user.
 
 ## Key files
 
@@ -42,7 +42,8 @@ npm run recordings:rebuild -- --commit <40-character-commit>
 npm run recordings:validate
 ```
 
-Use JDK 17 for Android and Xcode 26 or newer for the Foundation Models bridge. The default demo
+Use JDK 17 for Android. Xcode 26 or newer is optional and compiles the Foundation Models bridge for
+the optional iOS provider. The default demo
 works on emulators and simulators. Native provider runtime claims need named physical-device
 evidence.
 

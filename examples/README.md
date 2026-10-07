@@ -23,7 +23,9 @@ approved the sample content.
 
 The recordings use the deterministic `demo` provider on an Android emulator. They record fixture
 loading and local answer behavior. Public GIF playback is four times faster than the kept source
-video. The recordings do not record physical-device AI or customer-system integration.
+video. The government services GIFs are the exception. They run Gemma 4 E2B through `llama-rn` on
+an Android 15 emulator, and their model takes play at eight times speed. The recordings do not
+record physical-device AI or customer-system integration.
 
 ## Create an app from a template
 
@@ -81,13 +83,13 @@ examples/your-industry/
 
 Then complete these steps.
 
-1. Use only fictional data that a contributor can publish.
+1. Use fictional data, or dated public records with official sources, that a contributor can publish.
 2. Keep every knowledge record on the `kbdoc-v1` schema.
 3. Add local-information quick replies and separate online actions.
 4. Add domain refusal and adversarial fixtures without claiming compliance.
 5. Add the template slug to `create-airgap-bot`.
 6. Run knowledge, journey, package, and recording checks.
-7. record and inspect the new fixture.
+7. Record and inspect the new fixture.
 
 See [`CUSTOMIZATION.md`](../CUSTOMIZATION.md) for the config contract and
 [`docs/recordings.md`](../docs/recordings.md) for media evidence.

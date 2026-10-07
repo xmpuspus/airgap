@@ -40,7 +40,9 @@ can include breaking changes before 1.0.
 
 A release needs passing repository checks, Android and iOS build evidence, an
 inspected diff, current docs and recordings, dependency and secret review, and a
-changelog entry. The maintainer approves the tag, GitHub release, and any npm
+changelog entry. The `android` job in `.github/workflows/ci.yml` supplies the
+Android build evidence with `./gradlew assembleDebug`. The `ios` job in the same
+workflow supplies the iOS Simulator build evidence with `xcodebuild`. The maintainer approves the tag, GitHub release, and any npm
 publication as separate actions.
 
 ## Security and conduct

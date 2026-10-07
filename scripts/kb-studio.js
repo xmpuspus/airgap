@@ -22,6 +22,7 @@ const KNOWN_VERTICALS = [
   'airline',
   'banking',
   'electric-utility',
+  'government-services',
   'healthcare',
   'insurance',
   'telco',
@@ -90,9 +91,7 @@ async function main() {
       console.log('No CSV provided, exiting.');
       return 1;
     }
-    const csvPath = path.isAbsolute(csvInput)
-      ? csvInput
-      : path.resolve(REPO_ROOT, csvInput);
+    const csvPath = path.isAbsolute(csvInput) ? csvInput : path.resolve(REPO_ROOT, csvInput);
     if (!fs.existsSync(csvPath)) {
       console.error(`Not found: ${csvPath}`);
       return 1;

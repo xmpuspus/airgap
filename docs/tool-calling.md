@@ -1,6 +1,6 @@
 # Deterministic tools and customer actions
 
-Airgap chooses backend tools with set keyword rules. A model does not emit a tool name,
+Airgap chooses backend tools with fixed keyword rules. A model does not emit a tool name,
 tool input, or authorization decision. This keeps account actions separate from answer wording and
 makes the action path testable without a model.
 
@@ -12,7 +12,7 @@ makes the action path testable without a model.
 2. Match the first listed whole-word tool keyword.
 3. Run the known backend method, queue it if policy permits, or fail closed.
 4. Pass a successful structured result to the active answer provider for wording.
-5. Check sourced amounts and dates before display.
+5. Check sourced amounts, dates, and names before display.
 
 If no answer provider is ready, Airgap displays the tool's prepared summary. It does not lose the
 backend result because a model is absent.

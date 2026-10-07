@@ -17,7 +17,7 @@
       "modelIdentity": "document-formatter-v1",
       "evidenceClass": "simulator",
       "providerEvidenceClass": "deterministic-runtime",
-      "captureCommand": "node scripts/record-demo.mjs --platform ios --device EE9E5BD3-D791-4E08-8775-1CCC688E3896 --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --provider demo --model-identity document-formatter-v1 --evidence-class simulator",
+      "captureCommand": "node scripts/record-demo.mjs --platform ios --device <simulator-udid> --commit 91d6a448d3dfa34e8a481e91a395cc16d34ccf47 --provider demo --model-identity document-formatter-v1 --evidence-class simulator",
       "config": "airgap.config.json",
       "capturedAt": "2026-08-13T03:02:44.825Z",
       "width": 360,
@@ -103,15 +103,15 @@
       "providerEvidenceClass": "virtual-device-model",
       "captureCommand": "node scripts/build-showcase-gif.mjs --spec demo/showcase/government-services.json",
       "config": "examples/government-services/airgap.config.json",
-      "capturedAt": "2026-10-07T14:19:57.848Z",
+      "capturedAt": "2026-10-07T16:46:37.992Z",
       "width": 630,
       "height": 680,
       "fps": 10,
       "durationSeconds": 40.5,
-      "bytes": 2404489,
+      "bytes": 2393123,
       "playbackSpeed": 1,
       "omittedSourceRangesSeconds": [],
-      "loopReviewed": true
+      "loopReviewed": false
     },
     {
       "id": "showcase-government-comparison",
@@ -131,15 +131,15 @@
       "providerEvidenceClass": "virtual-device-model",
       "captureCommand": "node scripts/build-showcase-gif.mjs --spec demo/showcase/government.json",
       "config": "examples/government-services/airgap.config.json",
-      "capturedAt": "2026-10-07T14:19:49.780Z",
+      "capturedAt": "2026-10-07T16:46:30.210Z",
       "width": 630,
       "height": 680,
       "fps": 10,
       "durationSeconds": 43.8,
-      "bytes": 2126825,
+      "bytes": 2021625,
       "playbackSpeed": 1,
       "omittedSourceRangesSeconds": [],
-      "loopReviewed": true
+      "loopReviewed": false
     },
     {
       "id": "industry-airline",

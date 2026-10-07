@@ -57,12 +57,13 @@ Available industries:
   1. airline
   2. banking
   3. electric-utility
-  4. healthcare
-  5. insurance
-  6. telco
-  7. water-utility
-  8. <custom path>
-Choose [1-8]: 6
+  4. government-services
+  5. healthcare
+  6. insurance
+  7. telco
+  8. water-utility
+  9. <custom path>
+Choose [1-9]: 7
 examples/telco/knowledge is not empty. Overwrite? [y/N] y
 Wrote 4 file(s) to examples/telco/knowledge.
 

@@ -31,7 +31,7 @@ Use a random token with at least 24 characters. Do not commit it.
 export BFF_AUTH_TOKEN="replace-with-a-random-development-token"
 node server/index.mjs \
   --port 3000 \
-  --kb-root src/knowledge \
+  --kb-root ../src/knowledge \
   --keypair tmp/airgap-bff/ed25519.json \
   --telemetry-log tmp/airgap-bff/telemetry.jsonl
 ```
@@ -42,17 +42,18 @@ knowledge releases.
 
 ### Configuration
 
-| Setting                                | Purpose                                       | Default                |
-| -------------------------------------- | --------------------------------------------- | ---------------------- |
-| `BFF_AUTH_TOKEN`                       | Required bearer token, at least 24 characters | none                   |
-| `BFF_RATE_LIMIT`                       | Authorized requests allowed per client window | `60`                   |
-| `BFF_RATE_WINDOW_MS`                   | Fixed rate window in milliseconds             | `60000`                |
-| `PORT` or `--port`                     | HTTP port                                     | `3000`                 |
-| `KB_ROOT` or `--kb-root`               | Directory containing knowledge JSON           | `../src/knowledge`     |
-| `KB_VERSION` or `--kb-version`         | Published knowledge version override          | latest file time       |
-| `KEYPAIR` or `--keypair`               | Ed25519 keypair JSON path                     | `./.keys/ed25519.json` |
-| `MODEL_MANIFEST` or `--model-manifest` | Model metadata JSON path                      | `./model.json`         |
-| `TELEMETRY_LOG` or `--telemetry-log`   | Telemetry JSONL path                          | `./telemetry.jsonl`    |
+| Setting                                | Purpose                                                               | Default                |
+| -------------------------------------- | --------------------------------------------------------------------- | ---------------------- |
+| `BFF_AUTH_TOKEN`                       | Required bearer token, at least 24 characters                         | none                   |
+| `BFF_RATE_LIMIT`                       | Requests allowed per client window, `/healthz` included               | `60`                   |
+| `BFF_RATE_WINDOW_MS`                   | Fixed rate window in milliseconds                                     | `60000`                |
+| `BFF_PUBLIC_URL` or `--public-url`     | Base URL of the manifest download link, for use behind an HTTPS proxy | request origin         |
+| `PORT` or `--port`                     | HTTP port                                                             | `3000`                 |
+| `KB_ROOT` or `--kb-root`               | Directory containing knowledge JSON, relative to the `server/` folder | `../src/knowledge`     |
+| `KB_VERSION` or `--kb-version`         | Published knowledge version override                                  | latest file time       |
+| `KEYPAIR` or `--keypair`               | Ed25519 keypair JSON path                                             | `./.keys/ed25519.json` |
+| `MODEL_MANIFEST` or `--model-manifest` | Model metadata JSON path                                              | `./model.json`         |
+| `TELEMETRY_LOG` or `--telemetry-log`   | Telemetry JSONL path                                                  | `./telemetry.jsonl`    |
 
 ## Curl can read the signed manifest
 

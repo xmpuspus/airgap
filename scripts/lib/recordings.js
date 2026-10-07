@@ -28,6 +28,7 @@ const REQUIRED_OUTPUTS = Object.freeze([
   'demo/industry-telco.gif',
   'demo/industry-water.gif',
   'demo/showcase-government.gif',
+  'demo/showcase-government-replay.gif',
   'demo/showcase-government-services.gif',
   'demo/airgap-showcase-government-services.gif',
 ]);

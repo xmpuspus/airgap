@@ -31,7 +31,8 @@ Sleep 3s
 Enter
 Sleep 1s
 
-Type "8"
+# Option 9 is the custom output path.
+Type "9"
 Sleep 600ms
 Enter
 Sleep 1s

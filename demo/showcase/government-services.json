@@ -2,7 +2,7 @@
   "id": "showcase-government-services-comparison",
   "output": "demo/airgap-showcase-government-services.gif",
   "title": "Five government service prompts on Kuya B, Gemma 4 E2B",
-  "leftHeading": "What a government services assistant must do",
+  "leftHeading": "What the assistant must do",
   "panels": [
     {
       "recording": "showcase-government-services",

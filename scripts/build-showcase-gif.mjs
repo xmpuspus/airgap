@@ -68,6 +68,11 @@ function latestCommandLog(root, recording) {
     recording.sourceCommit,
     `${recording.id}-maestro`,
   );
+  if (!fs.existsSync(directory)) {
+    throw new Error(
+      `showcase_take_log_missing:${recording.id}. The Maestro log lives under tmp/, which Git ignores, so only the machine that recorded the take can build this GIF.`,
+    );
+  }
   const runs = fs.readdirSync(directory).sort();
   const latest = runs.at(-1);
   const file = fs
@@ -77,20 +82,27 @@ function latestCommandLog(root, recording) {
 }
 
 // A beat runs from the end of the previous screenshot to the end of its own.
+// `inputAt` marks the typed prompt inside the beat, for a spec that skips the
+// beat before it and wants to start at the typing instead.
 function beatRanges(commands) {
   const sorted = [...commands].sort((a, b) => a.metadata.timestamp - b.metadata.timestamp);
   const start = sorted.find(c => c.command.startRecordingCommand).metadata.timestamp;
   const shots = sorted.filter(
     c => c.command.takeScreenshotCommand && c.metadata.timestamp >= start,
   );
+  const inputs = sorted.filter(c => c.command.inputTextCommand && c.metadata.timestamp >= start);
   const ranges = [];
   for (let index = 1; index < shots.length; index += 1) {
     const previous = shots[index - 1].metadata;
     const current = shots[index].metadata;
-    ranges.push([
-      (previous.timestamp + previous.duration - start) / 1000,
-      (current.timestamp + current.duration - start) / 1000,
-    ]);
+    const input = inputs.findLast(
+      c => c.metadata.timestamp >= previous.timestamp && c.metadata.timestamp < current.timestamp,
+    );
+    ranges.push({
+      from: (previous.timestamp + previous.duration - start) / 1000,
+      to: (current.timestamp + current.duration - start) / 1000,
+      inputAt: input ? (input.metadata.timestamp - start) / 1000 : null,
+    });
   }
   return ranges;
 }
@@ -222,7 +234,7 @@ function renderCard({root, workDir, index, heading, beat, footer, seconds, outpu
     return placed;
   });
   const blocks = [
-    {text: heading, size: 14, color: '#9FB3C8', y: 24},
+    {text: wrap(heading, 40), size: 14, color: '#9FB3C8', y: 24},
     {text: prompt, size: 18, color: 'white', y: promptY},
   ];
   const quote = beat.text ?? beat.theirs ?? '';
@@ -294,7 +306,11 @@ function concat(parts, output) {
 
 function main() {
   const root = rootFromScript();
-  const spec = JSON.parse(fs.readFileSync(path.resolve(root, valueAfter('--spec')), 'utf8'));
+  const specArgument = valueAfter('--spec');
+  if (!specArgument) {
+    throw new Error('showcase_spec_required: pass --spec demo/showcase/<name>.json');
+  }
+  const spec = JSON.parse(fs.readFileSync(path.resolve(root, specArgument), 'utf8'));
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'demo', 'recordings.json'), 'utf8'));
   const takes = spec.panels.map(panel => {
     const recording = manifest.recordings.find(item => item.id === panel.recording);
@@ -309,7 +325,16 @@ function main() {
           `showcase_take_beat_invalid:${panel.recording}:${number}:${available.length}`,
         );
       }
-      return available[number - 1];
+      const range = available[number - 1];
+      // A beat whose predecessor is not in the spec can start at the typed
+      // prompt, so the loop never shows an exchange that no card describes.
+      if (beat.startAt === 'input') {
+        if (range.inputAt === null) {
+          throw new Error(`showcase_take_beat_no_input:${panel.recording}:${number}`);
+        }
+        return [range.inputAt, range.to];
+      }
+      return [range.from, range.to];
     });
     return {panel, recording, beats};
   });

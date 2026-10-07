@@ -16,7 +16,7 @@ safe collaboration.
 ## Unacceptable conduct
 
 - Harassment, threats, stalking, discrimination, or sexual attention
-- Insults, intimidation, kept disruption, or deliberate misrepresentation
+- Insults, intimidation, repeated disruption, or deliberate misrepresentation
 - Publishing private information or credentials without permission
 - Pressuring a reporter to show an unfixed vulnerability publicly
 - Retaliation against a reporter, contributor, or reviewer

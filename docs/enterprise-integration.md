@@ -66,7 +66,7 @@ health routes. Add account and action routes in an operator-owned service or rep
 
 ## Identity and authorization
 
-Install an access-token provider during application startup. The provider receives the set
+Install an access-token provider during application startup. The provider receives the configured
 audience and returns a short-lived token. Do not store a client secret or long-lived bearer value in
 the app configuration.
 
@@ -77,7 +77,7 @@ The operator service must complete these checks.
 3. Authorize the exact resource and action.
 4. Check all request fields without trusting model output.
 5. Enforce idempotency for retries.
-6. write an audit record that excludes secrets and unnecessary customer text.
+6. Write an audit record that excludes secrets and unnecessary customer text.
 
 Airgap does not ship a generic login screen because identity flows and recovery rules differ by
 operator and industry.
@@ -95,7 +95,7 @@ See [`sync-architecture.md`](sync-architecture.md) for the byte-level protocol.
 
 ## Offline actions
 
-Only set-up state-changing tools with `offlineQueueEligible: true` enter the outbox. The app
+Only configured state-changing tools with `offlineQueueEligible: true` enter the outbox. The app
 shows a receipt, retry state, and removal control. Connectivity starts a retry, but the server still
 owns authorization and idempotency.
 

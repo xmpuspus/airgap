@@ -11,7 +11,8 @@ Nobody on this project reproduced the chats that they show.
 | `chatgenie-prompt-leak-post.jpg`  | Screenshot of a public Facebook post, reproduced in the same ChatGenie blog post. The blog gives no post URL or date. The stored copy omits the poster's name, photo, and caption.                      |
 
 The X image was scaled to 1600 pixels wide. The identity collage keeps its published size. The
-Facebook image is cropped to the chat panels.
+Facebook image is cropped to the chat panels. In the two blog images, the small user avatar next
+to the question bubble is painted over with the background color.
 
 ## Rights
 

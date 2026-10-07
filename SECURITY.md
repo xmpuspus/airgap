@@ -2,8 +2,8 @@
 
 ## Report a vulnerability privately
 
-Use [GitHub private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new).
-Do not open a public issue with exploit details, credentials, private data, or an
+Use [GitHub private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new)
+after the maintainer enables it in the repository settings. Do not open a public issue with exploit details, credentials, private data, or an
 unfixed vulnerability.
 
 Include the affected commit or version, platform, configuration mode, steps to
@@ -18,15 +18,16 @@ agree on a disclosure date after a fix or practical mitigation exists.
 ## Supported versions
 
 Airgap is pre-1.0. The project supports the default branch and the latest tagged
-minor release. Older minor releases can receive a fix when the maintainer judges
+minor release. The repository has no tag yet, so `main` is the only supported line
+until the first tag. Older minor releases can receive a fix when the maintainer judges
 the backport to be safe, but the project does not promise that support.
 
-| Version                      | Security support |
-| ---------------------------- | ---------------- |
-| `main`                       | Yes              |
-| Latest tagged minor release  | Yes              |
-| Older minor releases         | Best effort      |
-| Unmodified third-party forks | No               |
+| Version                      | Security support         |
+| ---------------------------- | ------------------------ |
+| `main`                       | Yes                      |
+| Latest tagged minor release  | Yes, after the first tag |
+| Older minor releases         | Best effort              |
+| Unmodified third-party forks | No                       |
 
 ## Security design
 
@@ -44,8 +45,8 @@ another app to the access group would allow that app to request the same stored 
 
 The public GGUF model file and bundled knowledge JSON are not encrypted. The app
 checks a downloaded model against its expected byte length and SHA-256 before
-use. Operators must decide whether their knowledge content can live in the app
-bundle or file system.
+use. Operators must decide whether the app bundle or file system can store their
+knowledge content.
 
 ### Network access
 
@@ -55,7 +56,7 @@ manifest, and cloud generation paths request a fresh token when they run.
 
 The reference server checks its bearer value with a timing-safe digest compare,
 limits request bodies to 256 KB, and applies a fixed-window per-client rate
-limit. Its rate state lives in one Node process. Put a production deployment
+limit. One Node process keeps its rate state. Put a production deployment
 behind TLS, shared rate limiting, monitoring, and an authorization layer that
 understands each account action.
 
@@ -80,8 +81,8 @@ schema and retention policy before enabling telemetry.
 - A stolen bundle-signing key can authorize malicious knowledge content.
 - A malicious model can produce unsafe or misleading text even when its file
   hash matches configuration.
-- The safety layer and local retrieval do not set up medical, financial,
-  legal, or regulatory compliance.
+- The safety layer and local retrieval do not make an app compliant with
+  medical, financial, legal, or regulatory rules.
 - A compromised backend can misuse valid action requests unless it enforces
   user authorization and idempotency.
 - Mobile backups, logs, screenshots, keyboards, and accessibility services can

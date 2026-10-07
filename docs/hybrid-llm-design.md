@@ -55,7 +55,7 @@ these checks.
 5. operating mode
 6. cloud permission
 7. current provider ability
-8. least OS version
+8. minimum OS version
 
 The provider readiness interface enforces model download permission. A
 downloadable Android model becomes unavailable to setup when policy does not
@@ -121,9 +121,11 @@ sequenceDiagram
     O-->>U: Answer, provider identity, sources
 ```
 
-This sequence limits a model to retrieved document content. An output check can
-refuse unsupported amounts or other ungrounded content. The visible answer card
-keeps source document IDs and exact provider identity.
+This sequence limits a model to retrieved document content. An output check
+rejects an unsourced amount, date, or name. When the check fails, the app shows
+the retrieved records instead of the model text, and the answer chip says that
+the model did not answer. The visible answer card keeps source document IDs and
+exact provider identity.
 
 ## Tool and action path stays separate
 

@@ -25,8 +25,9 @@ node scripts/generate-manifest.js
 npm run kb:validate
 ```
 
-All example brands, prices, locations, policies, and account responses are fictional. Replace and
-review them before any pilot.
+Seven templates use fictional brands, prices, locations, policies, and account responses. The
+`government-services` template uses dated public records with official source URLs. Replace and
+review all example content before any pilot.
 
 ## Brand and interface
 
@@ -62,8 +63,9 @@ Airgap recognizes five provider IDs.
 | `cloud`                   | Operator service with fresh authentication   |
 | `demo`                    | Deterministic local document formatter       |
 
-This configuration keeps the app offline and uses document answers if the system model is not
-available.
+This configuration keeps the app offline. It tries the downloaded model first and uses document
+answers if that model is not available. The Apple entry is an optional provider. Set its `enabled`
+value to `true` to use it on an eligible iOS 26 device.
 
 ```json
 {
@@ -72,21 +74,21 @@ available.
     "supportDomain": "banking",
     "providers": [
       {
-        "id": "apple-foundation-models",
+        "id": "llama-rn",
         "enabled": true,
         "priority": 0,
+        "platform": "all",
+        "allowModelDownload": true,
+        "allowCloudFallback": false
+      },
+      {
+        "id": "apple-foundation-models",
+        "enabled": false,
+        "priority": 10,
         "platform": "ios",
         "minimumOsVersion": "26.0",
         "locales": ["en", "en-US"],
         "allowModelDownload": false,
-        "allowCloudFallback": false
-      },
-      {
-        "id": "llama-rn",
-        "enabled": true,
-        "priority": 10,
-        "platform": "all",
-        "allowModelDownload": true,
         "allowCloudFallback": false
       },
       {

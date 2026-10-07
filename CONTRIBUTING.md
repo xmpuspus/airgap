@@ -84,7 +84,7 @@ Record from a committed application state, inspect the contact sheet and full lo
 For provider work, follow [`docs/provider-validation.md`](docs/provider-validation.md). Run the
 matching controlled scenario on a simulator or emulator, keep simulated model identities labeled
 `simulated/`, and run the target-device preflight before making a physical-provider claim. An
-unsigned iOS Simulator build checks compilation only; provider journeys need a normally signed
+unsigned iOS Simulator build checks compilation only. Provider journeys need a normally signed
 Debug build so secure storage can open.
 
 When a change affects the site or mobile interface, capture the relevant widths,
@@ -94,11 +94,13 @@ offline states.
 
 ## Knowledge and templates
 
-Keep all seven templates valid. A template change usually needs its config,
+Keep all eight templates valid. A template change usually needs its config,
 knowledge documents, journey fixtures, and fresh recording to move together.
 Run `npm run kb:validate` and the industry journey runner before submitting it.
 
 Do not use personal data or a real company account in examples or recordings.
+You can use public-office records when each record has an official source and a
+checked date.
 
 ## Pull request checklist
 

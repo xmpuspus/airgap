@@ -184,7 +184,7 @@ store disclosures. See [ML Kit terms and privacy](https://developers.google.com/
 ## Industry use depends on configuration and approval
 
 The runtime can support offline FAQs, troubleshooting, policies, locations,
-hours, eligibility guidance, and queued service requests across the seven
+hours, eligibility guidance, and queued service requests across the eight
 included industries. The examples show that the same code can load
 different brands, prompts, actions, and documents.
 
@@ -242,22 +242,24 @@ shows exact answer provenance.
 
 ## Evidence labels state the checked behavior
 
-| Evidence                  | Target                                   | Result                                                   | Unchecked behavior                                 |
-| ------------------------- | ---------------------------------------- | -------------------------------------------------------- | -------------------------------------------------- |
-| Joint and iOS GIFs        | Android 15 emulator + iOS 26.4 simulator | Readiness, UI, and cited answers                         | Physical native providers                          |
-| Fresh Android GIF         | Android 15 emulator                      | Answer, queue, Outbox, and privacy checked               | Android system AI or physical-device behavior      |
-| Eight industry GIFs       | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked | Production data, actions, approvals, or compliance |
-| iOS native compile        | Generic iOS Simulator                    | Foundation Models bridge compiles                        | Eligible physical-device runtime                   |
-| Android debug compile     | Android app, min SDK 24                  | ML Kit beta2 bridge compiles                             | Supported AICore device runtime                    |
-| iOS provider scenario     | iOS 26.4 simulator                       | Native bridge, routing, answer, provenance, and UI       | Apple model output or physical-device behavior     |
-| Android provider scenario | Android 15 emulator                      | Native bridge, routing, answer, provenance, and UI       | AICore or Gemini Nano model output                 |
-| Apple host probe          | Apple-silicon Mac, macOS 26              | Framework and environment availability                   | iPhone behavior; latest probe found AI disabled    |
+| Evidence                  | Target                                   | Result                                                     | Unchecked behavior                                 |
+| ------------------------- | ---------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------- |
+| Joint and iOS GIFs        | Android 15 emulator + iOS 26.4 simulator | Readiness, UI, and cited answers                           | Physical native providers                          |
+| Fresh Android GIF         | Android 15 emulator                      | Answer, queue, Outbox, and privacy checked                 | Android system AI or physical-device behavior      |
+| Eight industry GIFs       | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked   | Production data, actions, approvals, or compliance |
+| iOS native compile        | Generic iOS Simulator                    | Foundation Models bridge compiles                          | Eligible physical-device runtime                   |
+| Android debug compile     | Android app, min SDK 24                  | ML Kit beta2 bridge compiles                               | Supported AICore device runtime                    |
+| iOS provider scenario     | iOS 26.4 simulator                       | Native bridge, routing, answer, provenance, and UI         | Apple model output or physical-device behavior     |
+| Android provider scenario | Android 15 emulator                      | Native bridge, routing, answer, provenance, and UI         | AICore or Gemini Nano model output                 |
+| Gemma 4 E2B takes         | Android 15 emulator                      | Ten, six, and five prompts answered by the on-device model | Phone speed, repeated runs, or production data     |
+| Apple host probe          | Apple-silicon Mac, macOS 26              | Framework and environment availability                     | iPhone behavior; AI must be enabled by the owner   |
 
-Every kept GIF records source commit, provider ID, model identity, device,
+Every kept app GIF records source commit, provider ID, model identity, device,
 operating system, evidence class, capture command, dimensions, duration, byte
-size, public playback speed, and loop review. Label simulator and emulator footage
+size, public playback speed, and loop review. `demo/kb-studio.gif` is a terminal
+recording of the KB Studio tool and has no manifest entry. Label simulator and emulator footage
 by its actual target, never as a physical device. Run `npm run recordings:validate`
-to check all ten assets.
+to check all fifteen assets.
 
 Provider reports add a separate class for what generated the answer:
 `deterministic-runtime`, `simulated-provider`, `host-native-model`, `virtual-device-model`, or
@@ -275,7 +277,7 @@ host probe, physical-device preflight, and optional downloaded-model placement.
 - Apple and Android system model output can change after operating-system or
   model updates. Prompt and retrieval evaluation must run against each supported
   device and model identity.
-- The downloaded model is about 2.4 GB. Its latency, memory use, and answer
+- The downloaded model is about 2.45 GB (2.28 GiB). Its latency, memory use, and answer
   quality are device-dependent.
 - The reference server uses an in-memory rate limiter. Production deployments
   need durable controls, monitoring, TLS termination, and real business systems.
@@ -305,7 +307,8 @@ host probe, physical-device preflight, and optional downloaded-model placement.
 
 Use [GitHub Issues](https://github.com/xmpuspus/airgap/issues) for reproducible
 bugs and scoped feature requests. Report vulnerabilities through
-[private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new).
+[private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new)
+after the maintainer enables it in the repository settings.
 
 ## License
 

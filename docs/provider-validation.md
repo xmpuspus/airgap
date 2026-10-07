@@ -119,8 +119,8 @@ npm run providers:validate -- tmp/provider-validation/apple-host-probe-<timestam
 ```
 
 An unavailable probe is a valid environment observation, not proof of model generation. The latest
-maintainer check on 2026-08-13 loaded the framework on an Apple-silicon Mac but returned
-`appleIntelligenceNotEnabled`. Enabling Apple Intelligence is a manual owner action in System
+maintainer check on 2026-10-07 is the simulator run above, and the Apple-silicon Mac host answered
+the same prompt. An earlier check on 2026-08-13 returned `appleIntelligenceNotEnabled`. Enabling Apple Intelligence is a manual owner action in System
 Settings. Airgap does not change it.
 
 After the owner enables Apple Intelligence and the probe reports availability, run the three
