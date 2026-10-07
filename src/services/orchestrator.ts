@@ -1,4 +1,4 @@
-import {searchKB} from './searchService';
+import {matchesKnowledgeKeyword, searchKB} from './searchService';
 import {routeGeneration, generationAvailable, getMode} from './llmRouter';
 import {offlineQueue} from './offlineQueue';
 import {connectivityService} from './connectivityService';
@@ -352,9 +352,11 @@ async function processMessageInner(
     }
   }
 
-  // 5. Determine search query — expand if this is a follow-up
+  // 5. Determine search query — expand if this is a follow-up.
+  // A question that equals a record keyword is a new topic even when short,
+  // so "sino ka" after another topic still gets the identity record.
   let searchQuery = text;
-  const followUp = isFollowUp(text, conversationHistory);
+  const followUp = !matchesKnowledgeKeyword(text) && isFollowUp(text, conversationHistory);
   if (followUp) {
     searchQuery = expandQuery(text, conversationHistory);
   }

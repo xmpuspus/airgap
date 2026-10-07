@@ -221,3 +221,30 @@ export function getDocById(id: string): KBDocument | undefined {
 export function getAllByCategory(category: KBCategory): KBDocument[] {
   return getAllDocuments().filter(doc => doc.category === category);
 }
+
+function normalizeKeyword(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Rebuilt when the document list changes, for example after a knowledge sync.
+let keywordDocs: KBDocument[] | null = null;
+let keywordSet = new Set<string>();
+
+/**
+ * True when the whole query equals a keyword of some record. The follow-up
+ * detector treats every short question as a follow-up, so a template-defined
+ * keyword such as "sino ka" is the one signal that a short question is a new topic.
+ */
+export function matchesKnowledgeKeyword(query: string): boolean {
+  const docs = getAllDocuments();
+  if (docs !== keywordDocs) {
+    keywordDocs = docs;
+    keywordSet = new Set(docs.flatMap(doc => doc.keywords.map(normalizeKeyword)));
+  }
+  const normalized = normalizeKeyword(query);
+  return normalized.length > 0 && keywordSet.has(normalized);
+}
