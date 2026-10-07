@@ -1,6 +1,6 @@
 # create-airgap-bot
 
-Create a React Native customer support app from one of Airgap's seven industry templates. The package includes the app source, native projects, configuration schema, and knowledge files. Scaffolding does not fetch source code from GitHub.
+Create a React Native customer support app from one of Airgap's eight industry templates. The package includes the app source, native projects, configuration schema, and knowledge files. Scaffolding does not fetch source code from GitHub.
 
 ## Run the CLI with npx
 

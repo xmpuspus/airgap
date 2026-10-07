@@ -83,7 +83,7 @@ node scripts/build-readme-gif.mjs --commit <40-character-commit>
 ```
 
 The platform GIFs and the seven fictional industry GIFs use `providerId: demo` and
-`providerEvidenceClass: deterministic-runtime`. The five government services GIFs use
+`providerEvidenceClass: deterministic-runtime`. The six government services GIFs use
 `providerId: llama-rn` with Gemma 4 E2B. The provider scenario harness is debug-only and
 does not change that recorded path, so adding or extending a scenario does not by itself need a
 new GIF. Re-record when visible release behavior, the recording flow, the configured provider,

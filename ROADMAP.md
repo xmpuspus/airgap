@@ -8,7 +8,7 @@ release evidence exists.
 
 - One provider contract now covers Apple Foundation Models, Android ML Kit
   GenAI Prompt API, downloaded `llama.rn`, authenticated cloud generation, and
-  deterministic document answers. The five model recordings run Gemma 4 E2B on an Android
+  deterministic document answers. The six model recordings run Gemma 4 E2B on an Android
   emulator, and Apple Foundation Models stays an optional provider.
 - Provider resolution enforces mode, priority, platform, domain, locale, OS
   floor, model-download permission, and cloud permission.
@@ -19,7 +19,7 @@ release evidence exists.
 - Fresh Android emulator and iOS simulator footage covers the deterministic offline path through a
   cited answer without implying physical-device model evidence.
 - Recording schema v2 keeps provider, model, device, OS, evidence class, capture
-  command, playback speed, media facts, and loop review for all fifteen GIFs.
+  command, playback speed, media facts, and loop review for all sixteen GIFs.
 - Public docs use checked local links.
 - Android and iOS native bridges compile in debug builds.
 - One debug-only manifest drives 13 controlled Apple and Android provider scenarios through the

@@ -49,7 +49,7 @@ The repository includes the following parts.
 - The macOS Foundation Models probe loads the real framework. The 2026-08-13 maintainer run found
   Apple Intelligence disabled, which is an environment observation and not a passing model run.
   On 2026-10-07 the iOS 26.4 Simulator reported the model as ready and then failed every request.
-- Three government services takes run Gemma 4 E2B as a 3-bit GGUF file through `llama.rn` on an
+- Four government services takes run Gemma 4 E2B as a 3-bit GGUF file through `llama.rn` on an
   Android 15 emulator. Each take is one recorded run, pinned to its source commit.
 - Every kept app GIF records the source commit, device, OS, provider, model identity, capture
   command, duration, dimensions, byte size, public playback speed, evidence class, and loop review.

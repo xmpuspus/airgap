@@ -10,8 +10,8 @@ minor releases.
 
 - A `government-services` template with dated, sourced public records for Philippine officials,
   holidays, hotlines, and service steps, plus golden and adversarial cases that replay the
-  2026-09-21 eGovPH assistant failures. Two recordings replay six and ten prompts with Gemma 4
-  E2B on an Android emulator.
+  2026-09-21 eGovPH assistant failures. Four recordings replay ten, six, and five prompts with
+  Gemma 4 E2B on an Android emulator.
 - A comparison GIF builder that puts one card per prompt, with crops of the published
   screenshots or a note on what the beat proves, next to the recorded take, with a `showcase`
   recording kind and a `virtual-device-model` provider evidence class. A second composed GIF
@@ -23,7 +23,7 @@ minor releases.
 - `model.recordChars` and `model.generationTimeoutMs` in the configuration contract.
 - A built-in prompt probe guardrail: a request to show, repeat, or override the instructions,
   the configuration, the tools, or the model file gets a fixed refusal before any model runs. The
-  refusal does not say where any of it lives.
+  refusal does not say where any of it is stored.
 - Date and time answers from the device clock as system messages.
 - A doubt check such as "sigurado ka dyan?" repeats the last record-backed answer from the record
   store, with the same sources.
@@ -48,10 +48,26 @@ minor releases.
 - A local documentation-link check that runs in CI.
 - Recording metadata for provider, model, evidence class, capture command, and reviewed loops.
 - A reproducible GIF rebuild command with bounded public playback speed.
+- `--public-url` and `BFF_PUBLIC_URL` on the reference server for the bundle download link behind
+  an HTTPS proxy, plus a `--help` page.
+- `--take` in the industry recorder for a second take of one fixture, and `startAt` in a
+  comparison spec to begin a beat at the typed prompt.
+- `bench/RESULTS.md`, which the bench renderer rebuilds from `bench/results/`.
 
 ### Changed
 
 - Kept demo-mode provider status on the deterministic document-answer path.
+- The reference server sends 400 for a bad Host header and 503 for a health check without a
+  knowledge root instead of exiting, and rate-limits every request before the token check.
+- The prompt probe rule matches only requests aimed at the assistant's own instructions, so a
+  question about roaming rules or setup instructions gets a normal reply.
+- The grounding check compares whole numbers, so "PHP 29" no longer passes against "PHP 299".
+- The logger redacts a phone number after a plus sign and a bare `sk-` key.
+- A first message counts as a greeting only when it matches the greeting list.
+- Generic replies read the brand name and hotline from the configuration instead of the telco
+  fixture text.
+- `scripts/setup.sh` copies a template and sets brand fields. It no longer renames the native
+  projects, which broke the Kotlin package and the Xcode target.
 - Matched the model checksum and size to the current upstream Gemma 4 E2B file.
 - Turned off the Gemma 4 thinking channel, which streamed reasoning into the answer.
 - Accepted a sourced date in either word order in the grounding check.
@@ -69,6 +85,12 @@ minor releases.
   to match the provider-based runtime.
 - Rerecorded the Android, iOS, joint, and seven industry flows, all at one checked source commit.
 - Prepared version 0.2.0 across the mobile apps, root workspace, and `create-airgap-bot` package.
+
+### Removed
+
+- The internal plan documents under `docs/`, the two legacy recording shell scripts, and the
+  bench device scripts that never ran.
+- Three unused chat components, unused exports, and a hidden schema fingerprint constant.
 
 ## [0.2.0] release candidate
 

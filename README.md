@@ -242,24 +242,24 @@ shows exact answer provenance.
 
 ## Evidence labels state the checked behavior
 
-| Evidence                  | Target                                   | Result                                                     | Unchecked behavior                                 |
-| ------------------------- | ---------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------- |
-| Joint and iOS GIFs        | Android 15 emulator + iOS 26.4 simulator | Readiness, UI, and cited answers                           | Physical native providers                          |
-| Fresh Android GIF         | Android 15 emulator                      | Answer, queue, Outbox, and privacy checked                 | Android system AI or physical-device behavior      |
-| Eight industry GIFs       | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked   | Production data, actions, approvals, or compliance |
-| iOS native compile        | Generic iOS Simulator                    | Foundation Models bridge compiles                          | Eligible physical-device runtime                   |
-| Android debug compile     | Android app, min SDK 24                  | ML Kit beta2 bridge compiles                               | Supported AICore device runtime                    |
-| iOS provider scenario     | iOS 26.4 simulator                       | Native bridge, routing, answer, provenance, and UI         | Apple model output or physical-device behavior     |
-| Android provider scenario | Android 15 emulator                      | Native bridge, routing, answer, provenance, and UI         | AICore or Gemini Nano model output                 |
-| Gemma 4 E2B takes         | Android 15 emulator                      | Ten, six, and five prompts answered by the on-device model | Phone speed, repeated runs, or production data     |
-| Apple host probe          | Apple-silicon Mac, macOS 26              | Framework and environment availability                     | iPhone behavior; AI must be enabled by the owner   |
+| Evidence                  | Target                                   | Result                                                          | Unchecked behavior                                 |
+| ------------------------- | ---------------------------------------- | --------------------------------------------------------------- | -------------------------------------------------- |
+| Joint and iOS GIFs        | Android 15 emulator + iOS 26.4 simulator | Readiness, UI, and cited answers                                | Physical native providers                          |
+| Fresh Android GIF         | Android 15 emulator                      | Answer, queue, Outbox, and privacy checked                      | Android system AI or physical-device behavior      |
+| Eight industry GIFs       | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked        | Production data, actions, approvals, or compliance |
+| iOS native compile        | Generic iOS Simulator                    | Foundation Models bridge compiles                               | Eligible physical-device runtime                   |
+| Android debug compile     | Android app, min SDK 24                  | ML Kit beta2 bridge compiles                                    | Supported AICore device runtime                    |
+| iOS provider scenario     | iOS 26.4 simulator                       | Native bridge, routing, answer, provenance, and UI              | Apple model output or physical-device behavior     |
+| Android provider scenario | Android 15 emulator                      | Native bridge, routing, answer, provenance, and UI              | AICore or Gemini Nano model output                 |
+| Gemma 4 E2B takes         | Android 15 emulator                      | Four takes of ten, six, and five prompts on the on-device model | Phone speed, repeated runs, or production data     |
+| Apple host probe          | Apple-silicon Mac, macOS 26              | Framework and environment availability                          | iPhone behavior; AI must be enabled by the owner   |
 
 Every kept app GIF records source commit, provider ID, model identity, device,
 operating system, evidence class, capture command, dimensions, duration, byte
 size, public playback speed, and loop review. `demo/kb-studio.gif` is a terminal
 recording of the KB Studio tool and has no manifest entry. Label simulator and emulator footage
 by its actual target, never as a physical device. Run `npm run recordings:validate`
-to check all fifteen assets.
+to check all sixteen assets.
 
 Provider reports add a separate class for what generated the answer:
 `deterministic-runtime`, `simulated-provider`, `host-native-model`, `virtual-device-model`, or
