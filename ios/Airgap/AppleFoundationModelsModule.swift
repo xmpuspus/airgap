@@ -161,10 +161,12 @@ final class AppleFoundationModelsModule: RCTEventEmitter {
         } catch is CancellationError {
           reject("cancelled", "The inference request was cancelled", nil)
         } catch let error as LanguageModelSession.GenerationError {
+          // The case name says why, for example guardrailViolation. The
+          // localized text only says that the operation failed.
           let code = self.generationErrorCode(error)
-          reject(code, error.localizedDescription, error)
+          reject(code, "\(error.localizedDescription) [\(String(describing: error))]", error)
         } catch {
-          reject("generation_failed", error.localizedDescription, error)
+          reject("generation_failed", "\(error.localizedDescription) [\(String(describing: error))]", error)
         }
         self.removeTask(requestId)
       }

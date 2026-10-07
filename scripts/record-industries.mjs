@@ -60,6 +60,10 @@ function main() {
   const modelFile = valueAfter('--model-file');
   const flowOverride = valueAfter('--flow');
   if (modelFile && !requestedIndustry) throw new Error('recording_model_file_needs_industry');
+  // A showcase take is a longer flow for the comparison GIF. It keeps its own
+  // output name and the larger size limit of its kind.
+  const kind = valueAfter('--kind') ?? 'industry';
+  if (!['industry', 'showcase'].includes(kind)) throw new Error('recording_kind_invalid');
   const evidence = evidenceDirectory(root, sourceCommit);
   const configPath = path.join(root, 'airgap.config.json');
   const knowledgePath = path.join(root, 'src', 'knowledge');
@@ -104,13 +108,13 @@ function main() {
           '--commit',
           sourceCommit,
           '--id',
-          `industry-${slug}${suffix}`,
+          `${kind}-${slug}${suffix}`,
           '--flow',
           flowOverride ?? FLOWS[industry] ?? 'industry-android.yaml',
           '--kind',
-          'industry',
+          kind,
           '--output',
-          `demo/industry-${slug}${suffix}.gif`,
+          `demo/${kind}-${slug}${suffix}.gif`,
           '--config',
           `examples/${industry}/airgap.config.json`,
           '--quick-reply',

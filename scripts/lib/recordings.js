@@ -18,6 +18,7 @@ const REQUIRED_OUTPUTS = Object.freeze([
   'demo/airgap-demo.gif',
   'demo/airgap-demo-ios.gif',
   'demo/airgap-readme-side-by-side.gif',
+  'demo/airgap-showcase-government.gif',
   'demo/industry-airline.gif',
   'demo/industry-banking.gif',
   'demo/industry-electric.gif',
@@ -34,6 +35,7 @@ const SIZE_LIMITS = Object.freeze({
   platform: 8 * MIB,
   industry: 3 * MIB,
   joint: 8 * MIB,
+  showcase: 8 * MIB,
 });
 
 const EVIDENCE_CLASSES = Object.freeze(['emulator', 'physical-device', 'simulator']);
