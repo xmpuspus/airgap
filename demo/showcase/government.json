@@ -1,16 +1,16 @@
 {
-  "id": "showcase-government",
+  "id": "showcase-government-comparison",
   "output": "demo/airgap-showcase-government.gif",
   "title": "Published Kuya A replies, 2026-09-21, next to Kuya B on two on-device models",
   "leftHeading": "Kuya A, eGovPH app",
   "panels": [
     {
-      "recording": "showcase-government-android",
-      "label": "Kuya B, Gemma 4 E2B 3-bit, Android emulator, 8x speed"
+      "recording": "showcase-government",
+      "label": "Kuya B, Gemma 4 E2B 3-bit, Android emulator"
     },
     {
       "recording": "showcase-government-ios",
-      "label": "Kuya B, Apple on-device model, iOS Simulator, 2x speed"
+      "label": "Kuya B, Apple on-device model, iOS Simulator"
     }
   ],
   "beats": [

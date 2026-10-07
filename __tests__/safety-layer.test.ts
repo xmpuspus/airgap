@@ -134,6 +134,13 @@ describe('safetyLayer.checkGrounding', () => {
     expect(checkGrounding('A release on September 25, 2025 names him.', docs).grounded).toBe(false);
   });
 
+  test('a number before an ordinary word is not a date', () => {
+    const docs = [doc({content: 'Bring two valid IDs. Regular processing takes 10 working days.'})];
+    const answer = 'Bring 2 separate IDs and wait 10 working days, or 12 outside Metro Manila.';
+    expect(checkGrounding(answer, docs).grounded).toBe(true);
+    expect(checkGrounding('The mayor 5 years ago decided.', docs).grounded).toBe(true);
+  });
+
   test('answer with a made-up date fails grounding', () => {
     const result = checkGrounding('Your expiry is 2030-12-31, do not worry.', [
       doc({content: 'Standard SIMs expire 30 days after last load.'}),

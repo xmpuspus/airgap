@@ -287,7 +287,10 @@ function main() {
   fs.rmSync(workDir, {recursive: true, force: true});
   fs.mkdirSync(workDir, {recursive: true});
 
-  const footer = spec.panels.map(panel => panel.label).join('\n');
+  // The speed comes from the manifest, so the label cannot drift from the GIF.
+  const footer = takes
+    .map(({panel, recording}) => `${panel.label}, ${recording.playbackSpeed ?? 1}x speed`)
+    .join('\n');
   const beatVideos = [];
   spec.beats.forEach((beat, index) => {
     const panelVideos = takes.map((take, panelIndex) => {

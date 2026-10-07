@@ -202,7 +202,11 @@ export function checkConfidence(retrievedDocs: KBDocument[]): {
  * account details. Purely textual — no side effects.
  */
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-const MONTH_NAME = '(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\.?';
+// Full names and the usual short forms only. An open "sep[a-z]*" read
+// "2 separate IDs" as a date.
+const MONTH_NAME =
+  '(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?' +
+  '|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\\.?';
 // 2026-04-15, 15/04/2026, April 15, Apr. 15, 2026, 15 April 2026
 const DATE_RE = new RegExp(
   '\\b(?:(\\d{4})-(\\d{2})-(\\d{2})' +
