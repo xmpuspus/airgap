@@ -14,6 +14,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {COLORS, RADIUS, SPACING, TIMING, TYPOGRAPHY} from '../../constants/theme';
 import {getDocById} from '../../services/searchService';
 import {useSourceDrawer} from '../../hooks/useSourceDrawer';
+import {describeSourceMetadata} from './sourceMetadata';
 
 // Bottom-sheet drawer hosted once per chat screen via SourceDrawerProvider.
 // Visible state is driven by the drawer context.
@@ -59,10 +60,8 @@ export function SourceDrawer() {
     }
   }, [visible, fade, slide, screenHeight]);
 
-  const doc = useMemo(
-    () => (openDocId ? getDocById(openDocId) ?? null : null),
-    [openDocId],
-  );
+  const doc = useMemo(() => (openDocId ? getDocById(openDocId) ?? null : null), [openDocId]);
+  const sourceView = useMemo(() => (doc ? describeSourceMetadata(doc.metadata) : null), [doc]);
 
   return (
     <Modal
@@ -117,6 +116,25 @@ export function SourceDrawer() {
                 contentContainerStyle={styles.bodyContent}
                 showsVerticalScrollIndicator>
                 <Text style={styles.bodyText}>{doc.content}</Text>
+                {sourceView && (
+                  <View style={styles.sourceBlock} accessibilityLabel="Document source">
+                    <Text style={styles.sourceLabel}>Source</Text>
+                    <Text style={styles.sourceLine}>{sourceView.publisher}</Text>
+                    {sourceView.url && (
+                      <Text style={styles.sourceUrl} selectable numberOfLines={3}>
+                        {sourceView.url}
+                      </Text>
+                    )}
+                    {sourceView.checkedLabel && (
+                      <Text style={styles.sourceLine}>{sourceView.checkedLabel}</Text>
+                    )}
+                    {sourceView.reviewOverdue && (
+                      <Text style={styles.sourceWarning}>
+                        Review date passed. Check the source before you rely on it.
+                      </Text>
+                    )}
+                  </View>
+                )}
                 {doc.tags && doc.tags.length > 0 && (
                   <View style={styles.tagRow}>
                     {doc.tags.map(tag => (
@@ -132,8 +150,8 @@ export function SourceDrawer() {
             <View style={styles.fallback}>
               <Text style={styles.fallbackTitle}>Source unavailable</Text>
               <Text style={styles.fallbackBody}>
-                This source is no longer in the knowledge base. Try
-                refreshing the conversation or asking the question again.
+                This source is no longer in the knowledge base. Try refreshing the conversation or
+                asking the question again.
               </Text>
               <Pressable
                 onPress={close}
@@ -163,6 +181,21 @@ function CloseGlyph() {
 }
 
 const styles = StyleSheet.create({
+  sourceBlock: {
+    marginTop: SPACING.md,
+    paddingTop: SPACING.sm,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: COLORS.border,
+  },
+  sourceLabel: {...TYPOGRAPHY.caption, color: COLORS.text, fontWeight: '700'},
+  sourceLine: {...TYPOGRAPHY.caption, color: COLORS.textSecondary, marginTop: 2},
+  sourceUrl: {
+    ...TYPOGRAPHY.micro,
+    color: COLORS.primary,
+    fontFamily: 'monospace',
+    marginTop: 2,
+  },
+  sourceWarning: {...TYPOGRAPHY.caption, color: COLORS.warning, marginTop: SPACING.sm},
   root: {
     flex: 1,
     justifyContent: 'flex-end',
