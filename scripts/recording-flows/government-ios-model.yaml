@@ -67,7 +67,7 @@ name: Airgap government services Apple model recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible: '(?s).*instructions are public.*'
+    visible: '(?s).*internal instructions.*'
     timeout: 30000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-prompt

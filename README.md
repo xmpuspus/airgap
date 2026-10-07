@@ -292,7 +292,7 @@ host probe, physical-device preflight, and optional downloaded-model placement.
 - [`docs/sync-architecture.md`](docs/sync-architecture.md) explains signed knowledge updates
 - [`docs/tool-calling.md`](docs/tool-calling.md) explains the deterministic action boundary
 - [`docs/safety-layer.md`](docs/safety-layer.md) explains safety checks and their limits
-- [`docs/support-bot-minimum.md`](docs/support-bot-minimum.md) lists the eight controls any support bot needs before the model matters
+- [`docs/support-bot-minimum.md`](docs/support-bot-minimum.md) lists the nine controls any support bot needs before the model matters
 - [`docs/case-study-government-assistant-launch.md`](docs/case-study-government-assistant-launch.md) replays one public launch failure against those controls
 - [`docs/observability.md`](docs/observability.md) lists diagnostics, telemetry fields, and privacy limits
 - [`docs/kb-studio.md`](docs/kb-studio.md) covers local knowledge authoring and validation

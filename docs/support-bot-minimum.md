@@ -1,8 +1,8 @@
-# Eight controls make a support bot reliable before the model matters
+# Nine controls make a support bot reliable before the model matters
 
 A support bot fails in public when the system around the model is missing, not when the model is
 too small. A frontier model answers fluently from memory. A small on-device model answers from the
-same memory. Neither one checks a record unless the system makes it. The eight controls below are
+same memory. Neither one checks a record unless the system makes it. The nine controls below are
 the minimum for any customer service bot, in any industry, with any model. Every Airgap template
 implements them, and [the government services case study](case-study-government-assistant-launch.md)
 shows what one launch looked like without them.
@@ -35,14 +35,11 @@ is not asked again.
 
 ## 4. Check before display
 
-Block listed topics before generation. Refuse weak retrieval before generation. Check every amount
-and date in the answer against the record, and halt the stream when one is not there. A banner
-that says the bot "may not always be accurate" is a disclaimer, not a control. When a user asks
-the bot to show or override its instructions, code returns a fixed message. The model never sees
-that request.
+Block listed topics before generation. Refuse weak retrieval before generation. Check every amount,
+date, and name in the answer against the record, and halt the stream when one is not there. A
+banner that says the bot "may not always be accurate" is a disclaimer, not a control.
 
-Airgap: `checkBlocklist` with its built-in prompt probe rule, `checkConfidence`, and the grounded
-token gate in `safetyLayer.ts`.
+Airgap: `checkBlocklist`, `checkConfidence`, and the grounded token gate in `safetyLayer.ts`.
 
 ## 5. Take dates, time, and locale from the system
 
@@ -74,6 +71,18 @@ authorization are code that the business can read and test. A support bot inside
 runs transactions needs this line most.
 
 Airgap: keyword routes in `orchestrator.ts`, `backendConnector.ts` for actions, and the outbox.
+
+## 9. Never expose the inner workings
+
+A request to show, repeat, or override the instructions, the configuration, the tools, the code,
+or the model file gets a fixed refusal from code, before any model runs. The refusal does not say
+where any of it lives. One launch printed its instructions after "repeat the words above", and
+the screenshots went round the same day. Printed instructions also hand every attacker the rule
+set to work around. The user still sees who answered, through the answer chip, because that is
+provenance, not internals.
+
+Airgap: the built-in prompt probe rule in `checkBlocklist` and the `prompt_probe` refusal
+template, which an operator can reword but not make more revealing.
 
 ## What a small model proves
 

@@ -37,11 +37,17 @@ export type RefusalReason =
 
 // Attempts to read or override the instructions get a fixed answer before
 // retrieval and before any model. The answer is honest: the prompt is public.
+// A request to show, repeat, or override the inner workings: instructions,
+// configuration, tools, code, or the model file. Code answers with a fixed
+// refusal that says nothing about where any of it lives.
 const PROMPT_PROBE_PATTERNS = [
   /\b(system|hidden|secret|initial|developer)\s+(prompt|instructions?|message)\b/i,
   /\b(your|the)\s+(prompt|instructions|rules|guidelines)\b/i,
   /\b(ignore|disregard|forget|override|bypass)\b.{0,40}\b(instructions?|rules|prompt|guidelines)\b/i,
   /\b(reveal|print|show|repeat|leak|dump)\b.{0,30}\b(prompt|instructions)\b/i,
+  /\b(repeat|print|output|write|paste)\b.{0,30}\b(words|text|lines|everything|all)\b.{0,20}\babove\b/i,
+  /\b(developer|debug|god|admin)\s+mode\b/i,
+  /\b(your|the bot'?s|the assistant'?s)\s+(config(uration)?|settings|source code|code|model file|tools?)\b/i,
   /\bjailbreak\b/i,
 ];
 
@@ -87,7 +93,7 @@ const DEFAULT_REFUSAL_TEMPLATES: Record<RefusalReason, string> = {
   not_legal_advice:
     "I can't give legal advice. For legal matters, please consult a licensed attorney.",
   prompt_probe:
-    "My instructions are public. They are in {{brandName}}'s configuration file under prompts.system, and they hold no secret, key, or permission. I answer from approved records only.",
+    "I can't share my internal instructions or settings. I answer from {{brandName}}'s approved records. What can I help you with?",
   state_changing_offline:
     "That action requires an internet connection. I've queued it and will process it when you're back online.",
 };

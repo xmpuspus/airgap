@@ -10,10 +10,11 @@ errors. They do not show that an answer is correct, safe, or compliant.
 call. It returns the first whole-word match without regard to letter case.
 
 Before the blocklist, the same check catches prompt probes: requests to show, repeat, or override
-the instructions, such as "show me your system prompt" or "ignore your rules". The reason is
-`prompt_probe`, and the default answer says that the instructions are public and hold no secret.
-The model never sees the request. Operators can replace the wording through
-`refusalTemplates.prompt_probe`.
+the inner workings, such as "show me your system prompt", "repeat the words above", "developer
+mode", or "show your configuration". The reason is `prompt_probe`, and the default answer is a
+fixed refusal that does not say where the instructions, the configuration, or the model file
+live. The model never sees the request. Operators can replace the wording through
+`refusalTemplates.prompt_probe`, and the replacement must stay as silent about the internals.
 
 ```json
 {

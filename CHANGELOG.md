@@ -21,14 +21,15 @@ minor releases.
 - A model recording path in the industry runner: `--llm-mode`, `--provider`, `--model-file`, and
   `--platform ios`, with a streamed model copy into the app directory.
 - `model.recordChars` and `model.generationTimeoutMs` in the configuration contract.
-- A built-in prompt probe guardrail: a request to show or override the instructions gets a fixed
-  public answer before any model runs.
+- A built-in prompt probe guardrail: a request to show, repeat, or override the instructions,
+  the configuration, the tools, or the model file gets a fixed refusal before any model runs. The
+  refusal does not say where any of it lives.
 - Date and time answers from the device clock as system messages.
 - A doubt check such as "sigurado ka dyan?" repeats the last record-backed answer from the record
   store, with the same sources.
 - A short question that equals a record keyword searches on its own instead of as a follow-up.
 - The answer chip says why the model did not answer when the app shows records instead.
-- A `docs/support-bot-minimum.md` page with the eight controls any support bot needs, and a case
+- A `docs/support-bot-minimum.md` page with the nine controls any support bot needs, and a case
   study that maps one public launch to them.
 - A streaming gate that holds model text until the grounding check passes, so an unsourced
   amount or date never reaches the screen.

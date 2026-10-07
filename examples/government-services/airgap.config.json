@@ -149,7 +149,7 @@
       "not_legal_advice": "I can't give legal advice. For legal help, contact the Public Attorney's Office or a licensed lawyer. I can still explain service steps and requirements.",
       "low_confidence": "I don't have an official record for that. Check the agency's official website or call {{hotline}}.",
       "ungrounded_answer": "I can't confirm those details from my official records. Check the agency's official website or call {{hotline}}.",
-      "prompt_probe": "My instructions are public. They are in the airgap.config.json file of the open-source Airgap project, under prompts.system. They hold no password, key, or permission. I answer from official records only."
+      "prompt_probe": "I can't share my internal instructions or settings. I answer from official records about Philippine government services. Ask me about an office holder, a holiday, a hotline, a requirement, or a fee."
     }
   },
   "tools": [
