@@ -24,9 +24,21 @@ The default demo makes no model request and needs no download. It lets a new
 contributor check retrieval, citations, privacy status, and the interface before
 choosing an inference provider or connecting a backend.
 
+![Published replies of a government assistant on its launch day, next to Kuya B on Gemma 4 E2B](demo/airgap-showcase-government.gif)
+
+The left cards show the published replies of a national government app's assistant on its
+2026-09-21 launch day. The right panel shows Kuya B, the `government-services` template, on the
+same five prompts with Gemma 4 E2B as a 3-bit file on an Android 15 emulator.
+
+Each answer comes from a dated record with a source line. A challenge repeats the record. The
+time comes from the device clock. The identity comes from configuration. A prompt probe gets a
+fixed refusal from code. The
+[case study](docs/case-study-government-assistant-launch.md) gives every source and the nine
+controls behind the take.
+
 ![Airgap on the Android emulator and the iOS simulator: provider readiness, then cited offline answers](demo/airgap-readme-side-by-side.gif)
 
-This GIF combines real Android 15 emulator and iPhone 17 Pro Simulator runs from
+This second GIF combines real Android 15 emulator and iPhone 17 Pro Simulator runs from
 the same source commit. Both use the deterministic `demo` provider. The footage
 does not prove Apple Foundation Models or Android system AI on a physical device.
 Exact capture metadata is in [`demo/recordings.json`](demo/recordings.json).
