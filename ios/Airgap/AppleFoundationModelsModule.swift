@@ -60,7 +60,7 @@ final class AppleFoundationModelsModule: RCTEventEmitter {
 
     #if canImport(FoundationModels)
     if #available(iOS 26.0, *) {
-      let model = SystemLanguageModel.default
+      let model = Self.groundedModel()
       let base: [String: Any] = [
         "contextSize": model.contextSize,
         "modelIdentity": modelIdentity(),
@@ -129,7 +129,7 @@ final class AppleFoundationModelsModule: RCTEventEmitter {
       let task = Task { [weak self] in
         guard let self else { return }
         do {
-          let model = SystemLanguageModel.default
+          let model = Self.groundedModel()
           guard case .available = model.availability else {
             reject("model_not_ready", "The Apple system model is not ready", nil)
             self.removeTask(requestId)
@@ -240,6 +240,16 @@ final class AppleFoundationModelsModule: RCTEventEmitter {
       }
     }
     storeTask(task, requestId: requestId)
+  }
+  #endif
+
+  #if canImport(FoundationModels)
+  // The app only rephrases approved records, so the content-transformation
+  // guardrails apply. The default guardrails also run a sensitive-content
+  // classifier that the iOS Simulator runtime cannot load.
+  @available(iOS 26.0, *)
+  private static func groundedModel() -> SystemLanguageModel {
+    SystemLanguageModel(useCase: .general, guardrails: .permissiveContentTransformations)
   }
   #endif
 
