@@ -64,6 +64,10 @@ function main() {
   // output name and the larger size limit of its kind.
   const kind = valueAfter('--kind') ?? 'industry';
   if (!['industry', 'showcase'].includes(kind)) throw new Error('recording_kind_invalid');
+  // A second take of one kind for the same fixture gets a name of its own.
+  const takeName = valueAfter('--take');
+  if (takeName && !/^[a-z0-9-]+$/.test(takeName)) throw new Error('recording_take_invalid');
+  const takeSuffix = takeName ? `-${takeName}` : '';
   const evidence = evidenceDirectory(root, sourceCommit);
   const configPath = path.join(root, 'airgap.config.json');
   const knowledgePath = path.join(root, 'src', 'knowledge');
@@ -108,13 +112,13 @@ function main() {
           '--commit',
           sourceCommit,
           '--id',
-          `${kind}-${slug}${suffix}`,
+          `${kind}-${slug}${takeSuffix}${suffix}`,
           '--flow',
           flowOverride ?? FLOWS[industry] ?? 'industry-android.yaml',
           '--kind',
           kind,
           '--output',
-          `demo/${kind}-${slug}${suffix}.gif`,
+          `demo/${kind}-${slug}${takeSuffix}${suffix}.gif`,
           '--config',
           `examples/${industry}/airgap.config.json`,
           '--quick-reply',

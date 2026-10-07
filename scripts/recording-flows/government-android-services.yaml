@@ -1,0 +1,93 @@
+appId: ${APP_ID}
+name: Airgap government services take, service prompts, Android model
+---
+# Five service prompts: a fee, a requirements list, a holiday date, a hotline,
+# and a queued report in airplane mode. The recording script places the model
+# file first, so launchApp keeps state. Model beats wait for the typing label
+# to go away.
+- setAirplaneMode: disabled
+- launchApp
+- extendedWaitUntil:
+    visible: 'AI FOR THIS DEVICE'
+    timeout: 60000
+- scrollUntilVisible:
+    element: 'Start Chatting'
+    direction: DOWN
+    speed: 35
+    visibilityPercentage: 80
+    timeout: 240000
+- tapOn: 'Start Chatting'
+- extendedWaitUntil:
+    visible: 'Answers use local knowledge and the on-device model\.'
+    timeout: 240000
+- waitForAnimationToEnd
+- startRecording:
+    path: ${RECORDING_PATH}
+- takeScreenshot: ${SHOT_PREFIX}-chat
+# Beat 1: a fee from the fees record.
+- tapOn: 'Support question'
+- inputText: 'Magkano ang passport?'
+- hideKeyboard
+- tapOn: 'Send message'
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 300000
+- waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
+- takeScreenshot: ${SHOT_PREFIX}-fee
+# Beat 2: a requirements list.
+- tapOn: 'Support question'
+- inputText: 'What are the requirements for NBI clearance?'
+- hideKeyboard
+- tapOn: 'Send message'
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 300000
+- waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
+- takeScreenshot: ${SHOT_PREFIX}-requirements
+# Beat 3: a holiday date that only the record can supply.
+- tapOn: 'Support question'
+- inputText: 'Holiday ba ang November 30?'
+- hideKeyboard
+- tapOn: 'Send message'
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 300000
+- waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
+- takeScreenshot: ${SHOT_PREFIX}-holiday
+# Beat 4: a hotline number.
+- tapOn: 'Support question'
+- inputText: 'Hotline ng SSS?'
+- hideKeyboard
+- tapOn: 'Send message'
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 300000
+- waitForAnimationToEnd
+- assertVisible: 'Downloaded Airgap model'
+- takeScreenshot: ${SHOT_PREFIX}-hotline
+# Beat 5: offline, a report goes to the outbox without any model.
+- setAirplaneMode: enabled
+- waitForAnimationToEnd
+- tapOn: 'Support question'
+- inputText: 'Report a concern about a barangay official'
+- hideKeyboard
+- tapOn: 'Send message'
+# The tool runner queues the action offline and the reply names the tool.
+- extendedWaitUntil:
+    visible: '(?s).*Queued: Log a concern.*'
+    timeout: 60000
+- waitForAnimationToEnd
+- takeScreenshot: ${SHOT_PREFIX}-queued
+# The recorder adds no frames while the screen is still, so the finished
+# answer would show for one frame at eight times speed. A slow drag of the
+# list by two percent in the left gutter keeps frames coming for sixteen
+# seconds, two seconds in the public loop.
+- swipe:
+    start: 4%, 50%
+    end: 4%, 52%
+    duration: 16000
+- stopRecording
+- setAirplaneMode: disabled

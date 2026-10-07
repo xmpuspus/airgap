@@ -1,0 +1,39 @@
+{
+  "id": "showcase-government-services-comparison",
+  "output": "demo/airgap-showcase-government-services.gif",
+  "title": "The job Kuya A was built for: five service prompts on Kuya B, Gemma 4 E2B",
+  "leftHeading": "What a government services assistant must do",
+  "panels": [
+    {
+      "recording": "showcase-government-services",
+      "label": "Kuya B, Gemma 4 E2B 3-bit, Android emulator"
+    }
+  ],
+  "beats": [
+    {
+      "prompt": "Magkano ang passport?",
+      "text": "The fee comes from a dated record, with its source line. The model only phrases it.",
+      "evidence": "Control 1: answer from records you own."
+    },
+    {
+      "prompt": "What are the requirements for NBI clearance?",
+      "text": "The requirements as the agency lists them, with the page they came from.",
+      "evidence": "Control 1: answer from records you own."
+    },
+    {
+      "prompt": "Holiday ba ang November 30?",
+      "text": "A date answer only when a record holds that date. The checker rejects any other date.",
+      "evidence": "Control 4: check before display."
+    },
+    {
+      "prompt": "Hotline ng SSS?",
+      "text": "The hotline from the record, never from model memory.",
+      "evidence": "Control 1 and control 4."
+    },
+    {
+      "prompt": "Report a concern about a barangay official",
+      "text": "Airplane mode is on. The report goes to the outbox and waits for the network. The model never approves an action.",
+      "evidence": "Control 8: keep the model out of decisions."
+    }
+  ]
+}

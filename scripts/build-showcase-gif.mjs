@@ -223,10 +223,11 @@ function renderCard({root, workDir, index, heading, beat, footer, seconds, outpu
     {text: heading, size: 14, color: '#9FB3C8', y: 24},
     {text: prompt, size: 18, color: 'white', y: promptY},
   ];
-  if (images.length === 0) {
-    const theirs = wrap(beat.theirs, 38);
-    blocks.push({text: theirs, size: 16, color: '#FFD28A', y: y + 4});
-    y += theirs.split('\n').length * 21 + 20;
+  const quote = beat.text ?? beat.theirs ?? '';
+  if (images.length === 0 && quote) {
+    const wrapped = wrap(quote, 38);
+    blocks.push({text: wrapped, size: 16, color: '#FFD28A', y: y + 4});
+    y += wrapped.split('\n').length * 21 + 20;
   }
   blocks.push({text: wrap(beat.evidence || ' ', 44), size: 12, color: '#9FB3C8', y: y + 4});
   blocks.push({text: wrap(footer, 46), size: 11, color: '#6B7F94', y: PANEL_HEIGHT - 44});
@@ -297,12 +298,17 @@ function main() {
     const recording = manifest.recordings.find(item => item.id === panel.recording);
     if (!recording) throw new Error(`showcase_recording_missing:${panel.recording}`);
     validateRecording(recording);
-    const beats = beatRanges(latestCommandLog(root, recording));
-    if (beats.length !== spec.beats.length) {
-      throw new Error(
-        `showcase_beat_count:${panel.recording}:${beats.length}:${spec.beats.length}`,
-      );
-    }
+    // A spec beat picks a take beat by its one-based number, or by position.
+    const available = beatRanges(latestCommandLog(root, recording));
+    const beats = spec.beats.map((beat, index) => {
+      const number = beat.takeBeat ?? index + 1;
+      if (!Number.isInteger(number) || number < 1 || number > available.length) {
+        throw new Error(
+          `showcase_take_beat_invalid:${panel.recording}:${number}:${available.length}`,
+        );
+      }
+      return available[number - 1];
+    });
     return {panel, recording, beats};
   });
   const commits = [...new Set(takes.map(take => take.recording.sourceCommit))];

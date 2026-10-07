@@ -325,7 +325,7 @@ describe('recording manifest validation', () => {
     expect(() => validateManifest({schemaVersion: 2, recordings: [record()]})).toThrow(
       'recording_output_missing',
     );
-    expect(REQUIRED_OUTPUTS).toHaveLength(13);
+    expect(REQUIRED_OUTPUTS).toHaveLength(15);
     expect(sizeLimitFor('showcase')).toBe(8 * 1024 * 1024);
   });
 

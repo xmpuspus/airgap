@@ -50,6 +50,16 @@ import {
   recordToolLatency,
 } from './metrics';
 
+// A template without prompts.queued showed an empty bubble for a queued
+// action. This text stands in until the template supplies its own.
+const DEFAULT_QUEUED_REPLY =
+  'This needs a connection. I saved your request and will send it when the device is back online.\n\nQueued: {{actionLabel}}';
+
+function queuedReply(actionLabel: string): string {
+  const template = prompts.queued?.trim() ? prompts.queued : DEFAULT_QUEUED_REPLY;
+  return interpolate(template, config).replace('{{actionLabel}}', actionLabel);
+}
+
 export interface OrchestratorResponse {
   text: string;
   source: 'llm' | 'search' | 'system' | 'queue' | 'tool' | 'refusal';
@@ -204,10 +214,7 @@ async function processMessageInner(
 
     if (result.queuedActionId) {
       const actionLabel = tool.description;
-      const response =
-        (interpolate(prompts.queued ?? '', config) || '').replace('{{actionLabel}}', actionLabel) ||
-        result.summary ||
-        '';
+      const response = queuedReply(actionLabel) || result.summary || '';
       addToHistory('user', text);
       addToHistory('bot', response);
       return {
@@ -343,10 +350,7 @@ async function processMessageInner(
     if (!isOnline && actionType) {
       const action = offlineQueue.enqueue(actionType as QueuedAction['type'], text, '');
       const actionLabel = actions.find(a => a.id === actionType)?.label ?? actionType;
-      const response = interpolate(prompts.queued ?? '', config).replace(
-        '{{actionLabel}}',
-        actionLabel,
-      );
+      const response = queuedReply(actionLabel);
       addToHistory('user', text);
       addToHistory('bot', response);
       return {text: response, source: 'queue', queuedActionId: action.id};
