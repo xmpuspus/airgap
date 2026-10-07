@@ -20,19 +20,21 @@ const PROMPT = 'please send my carrier pigeon';
 
 describe('queued action reply', () => {
   const original = prompts.queued;
+  const pigeon = {
+    id: 'pigeon_post',
+    label: 'Carrier pigeon',
+    keywords: ['carrier pigeon'],
+    requiresOnline: true,
+  } as (typeof actions)[number];
 
   beforeAll(() => {
-    actions.push({
-      id: 'pigeon_post',
-      label: 'Carrier pigeon',
-      keywords: ['carrier pigeon'],
-      requiresOnline: true,
-    } as (typeof actions)[number]);
+    actions.push(pigeon);
   });
 
   beforeEach(() => clearConversationHistory());
   afterEach(() => {
     prompts.queued = original;
+    pigeon.label = 'Carrier pigeon';
   });
 
   it('falls back to a built-in text when the template has none', async () => {
@@ -51,5 +53,14 @@ describe('queued action reply', () => {
     const response = await processMessage(PROMPT);
 
     expect(response.text).toBe('Saved for later: Carrier pigeon');
+  });
+
+  it('fills every label slot and keeps a $ pattern in the label as written', async () => {
+    prompts.queued = '{{actionLabel}} / {{actionLabel}}';
+    pigeon.label = 'Pay $& now';
+
+    const response = await processMessage(PROMPT);
+
+    expect(response.text).toBe('Pay $& now / Pay $& now');
   });
 });

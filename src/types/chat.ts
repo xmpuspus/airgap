@@ -37,12 +37,4 @@ export interface QuickReply {
   value: string;
 }
 
-export interface ChatState {
-  messages: BotMessage[];
-  isTyping: boolean;
-  isModelLoaded: boolean;
-  isModelDownloaded: boolean;
-  isOnline: boolean;
-}
-
 export type {QueueRecord as QueuedAction} from '../services/actionQueueTypes';

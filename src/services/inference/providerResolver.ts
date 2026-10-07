@@ -134,6 +134,17 @@ export async function generateWithProviders(
 
   for (const provider of resolveProviderChain(providers, policy)) {
     const capabilities = await provider.getCapabilities();
+    // The chain filter knows only provider IDs; a registered provider can still run remotely.
+    if (policy.mode === 'offline-only' && capabilities.locality === 'cloud') {
+      failures.push(
+        new InferenceProviderError(
+          'provider_disabled',
+          `${provider.id} runs in the cloud`,
+          provider.id,
+        ),
+      );
+      continue;
+    }
     const entry = policy.providers.find(candidate => candidate.id === provider.id);
     if (!meetsMinimumOsVersion(capabilities.osVersion, entry?.minimumOsVersion)) {
       failures.push(

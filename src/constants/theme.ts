@@ -2,7 +2,7 @@
  * intended use of these operators; the rule's "probably a typo for &&/||"
  * heuristic does not apply.
  */
-import React, {createContext, useContext, useMemo} from 'react';
+import React, {createContext, useMemo} from 'react';
 import {useColorScheme} from 'react-native';
 import {theme as configTheme} from '../config/loader';
 import type {ThemeSection} from '../config/loader';
@@ -15,7 +15,16 @@ function hexToRgb(hex: string): {r: number; g: number; b: number} {
 }
 
 function rgbToHex(r: number, g: number, b: number): string {
-  return '#' + [r, g, b].map(c => Math.max(0, Math.min(255, Math.round(c))).toString(16).padStart(2, '0')).join('');
+  return (
+    '#' +
+    [r, g, b]
+      .map(c =>
+        Math.max(0, Math.min(255, Math.round(c)))
+          .toString(16)
+          .padStart(2, '0'),
+      )
+      .join('')
+  );
 }
 
 function adjustBrightness(hex: string, amount: number): string {
@@ -214,8 +223,8 @@ export const BUBBLE_RADIUS = {
 
 // Spacing between messages based on grouping
 export const GROUP_SPACING = {
-  grouped: 2,     // Between consecutive same-sender messages
-  ungrouped: 12,  // Between different senders or time-separated
+  grouped: 2, // Between consecutive same-sender messages
+  ungrouped: 12, // Between different senders or time-separated
 };
 
 // --- Shadow presets ---
@@ -262,15 +271,6 @@ export const TIMING = {
   springSnappy: {tension: 140, friction: 12},
 };
 
-// --- Haptic patterns (for react-native-haptic-feedback if added) ---
-
-export const HAPTIC = {
-  light: 'impactLight' as const,
-  medium: 'impactMedium' as const,
-  success: 'notificationSuccess' as const,
-  error: 'notificationError' as const,
-};
-
 // --- Theme Context ---
 
 interface ThemeContextValue {
@@ -304,8 +304,4 @@ export function ThemeProvider({children}: {children: React.ReactNode}) {
   }, [systemScheme]);
 
   return React.createElement(ThemeContext.Provider, {value}, children);
-}
-
-export function useTheme(): ThemeContextValue {
-  return useContext(ThemeContext);
 }

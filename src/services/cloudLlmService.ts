@@ -1,5 +1,3 @@
-/* eslint-disable no-bitwise -- FNV-1a hash uses ^=, >>>, etc. as
- * intended bit operations, not as && / || typos. */
 /**
  * Cloud LLM proxy — routes LLM requests through the BFF when the config
  * enables hybrid mode and the device is online.
@@ -9,8 +7,6 @@
  *     llmService, so the orchestrator can swap based on config.llm.mode.
  *   - Responses are cached by (query_hash, kbVersion) for the session to
  *     avoid double-billing repeated queries.
- *   - Every cloud call is recorded in telemetry under the toolCalls field
- *     as 'cloud_llm' so the dev panel counts it separately from local.
  *   - Network/auth errors never crash the app; callers fall back to the
  *     local llmService per config.llm.mode.
  *
@@ -28,6 +24,7 @@ import {config} from '../config/loader';
 import {logger} from './logger';
 import {connectivityService} from './connectivityService';
 import {getAccessToken} from './authProvider';
+import {fnv1a32} from '../utils/hash';
 
 interface CloudGenerateResponse {
   text: string;
@@ -38,15 +35,8 @@ interface CloudGenerateResponse {
 const cache = new Map<string, {text: string; expiresAt: number}>();
 const CACHE_TTL_MS = 30 * 60 * 1000;
 
-// FNV-1a 32-bit hash. Bitwise operators are intentional here.
 function hashKey(system: string, user: string, kbVersion: string): string {
-  const base = `${kbVersion}::${system}::${user}`;
-  let h = 0x811c9dc5;
-  for (let i = 0; i < base.length; i++) {
-    h ^= base.charCodeAt(i);
-    h = Math.imul(h, 0x01000193);
-  }
-  return (h >>> 0).toString(16);
+  return fnv1a32(`${kbVersion}::${system}::${user}`);
 }
 
 function cacheGet(key: string): string | null {
@@ -158,7 +148,8 @@ export class CloudLLMService {
   }
 }
 
-// Deferred import to break the cycle with syncService which imports from here.
+// Loaded on first use, so loading this module does not also load the sync
+// store, the knowledge index, and native storage.
 function getCurrentKbVersion(): string {
   try {
     const {getStalenessInfo} = require('./syncService') as typeof import('./syncService');

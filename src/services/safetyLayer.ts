@@ -35,16 +35,16 @@ export type RefusalReason =
   | 'prompt_probe'
   | 'state_changing_offline';
 
-// Attempts to read or override the instructions get a fixed answer before
-// retrieval and before any model. The answer is honest: the prompt is public.
 // A request to show, repeat, or override the inner workings: instructions,
-// configuration, tools, code, or the model file. Code answers with a fixed
-// refusal that says nothing about where any of it lives.
+// configuration, tools, code, or the model file. It gets a fixed refusal
+// before retrieval and before any model. The refusal says the assistant
+// cannot share its internal instructions and says nothing about where any of
+// it lives. "The rules for roaming" is a normal question, so a request to see
+// instructions or rules must point at the assistant ("your", "system").
 const PROMPT_PROBE_PATTERNS = [
   /\b(system|hidden|secret|initial|developer)\s+(prompt|instructions?|message)\b/i,
-  /\b(your|the)\s+(prompt|instructions|rules|guidelines)\b/i,
+  /\b(your|the bot'?s|the assistant'?s)\s+(prompt|instructions|rules|guidelines)\b/i,
   /\b(ignore|disregard|forget|override|bypass)\b.{0,40}\b(instructions?|rules|prompt|guidelines)\b/i,
-  /\b(reveal|print|show|repeat|leak|dump)\b.{0,30}\b(prompt|instructions)\b/i,
   /\b(repeat|print|output|write|paste)\b.{0,30}\b(words|text|lines|everything|all)\b.{0,20}\babove\b/i,
   /\b(developer|debug|god|admin)\s+mode\b/i,
   /\b(your|the bot'?s|the assistant'?s)\s+(config(uration)?|settings|source code|code|model file|tools?)\b/i,
@@ -340,30 +340,50 @@ function unsourcedNames(answer: string, known: Set<string>): string[] {
   return names;
 }
 
-export function checkGrounding(
-  answer: string,
+const NUMBER_RE = /\d+(?:\.\d+)?/g;
+
+// What the retrieved records support. A token gate builds this once, because
+// rebuilding it for every streamed word reads every record again each time.
+interface GroundingSources {
+  numbers: Set<number>;
+  dates: DateParts[];
+  known: Set<string>;
+}
+
+function groundingSources(
   retrievedDocs: KBDocument[],
-  options: GroundingOptions = {},
+  question: string | undefined,
+): GroundingSources {
+  const corpus = retrievedDocs
+    .map(d => `${d.title}\n${d.content}`)
+    .join('\n')
+    .toLowerCase();
+  return {
+    numbers: new Set((corpus.match(NUMBER_RE) ?? []).map(Number)),
+    dates: parseDates(corpus).flatMap(date => date.readings),
+    known: knownWordKeys(retrievedDocs, question),
+  };
+}
+
+function checkSources(
+  answer: string,
+  sources: GroundingSources,
 ): {grounded: boolean; issues: string[]} {
   if (!isEnabled()) {
     return {grounded: true, issues: []};
   }
   const rules = getSafetyConfig().groundingRules ?? {};
-  const corpus = retrievedDocs
-    .map(d => `${d.title}\n${d.content}`)
-    .join('\n')
-    .toLowerCase();
   const issues: string[] = [];
 
-  // Currency amounts: PHP 299, ₱299, $10, 299 pesos
+  // Currency amounts: PHP 299, ₱299, $10, 299 pesos. The number must match a
+  // whole number in the records, so "PHP 29" does not pass on "299" or "2029".
   if (rules.forbidUnsourcedAmounts !== false) {
     const currencyRe = /(?:php|\$|₱|peso[s]?|usd|eur|gbp)\s*\d+(?:\.\d+)?/gi;
     const amountsInAnswer = answer.match(currencyRe) ?? [];
     for (const raw of amountsInAnswer) {
-      // Normalize: extract the number only
-      const num = raw.match(/\d+(?:\.\d+)?/)?.[0];
+      const num = raw.match(NUMBER_RE)?.[0];
       if (!num) continue;
-      if (!corpus.includes(num)) {
+      if (!sources.numbers.has(Number(num))) {
         issues.push(`Amount "${raw}" is not present in the retrieved knowledge base`);
       }
     }
@@ -372,9 +392,8 @@ export function checkGrounding(
   // Dates: a record says 2026-09-25 and a model writes September 25, 2026.
   // Both forms become month, day, and year parts before the comparison.
   if (rules.forbidUnsourcedDates !== false) {
-    const sourced = parseDates(corpus).flatMap(date => date.readings);
     for (const {raw, readings} of parseDates(answer)) {
-      const found = readings.some(reading => sourced.some(date => sameDate(reading, date)));
+      const found = readings.some(reading => sources.dates.some(date => sameDate(reading, date)));
       if (!found) {
         issues.push(`Date "${raw}" is not present in the retrieved knowledge base`);
       }
@@ -383,13 +402,20 @@ export function checkGrounding(
 
   // Names: a model that answers from memory names someone the record does not.
   if (rules.forbidUnsourcedNames !== false) {
-    const known = knownWordKeys(retrievedDocs, options.question);
-    for (const raw of unsourcedNames(answer, known)) {
+    for (const raw of unsourcedNames(answer, sources.known)) {
       issues.push(`Name "${raw}" is not present in the retrieved knowledge base`);
     }
   }
 
   return {grounded: issues.length === 0, issues};
+}
+
+export function checkGrounding(
+  answer: string,
+  retrievedDocs: KBDocument[],
+  options: GroundingOptions = {},
+): {grounded: boolean; issues: string[]} {
+  return checkSources(answer, groundingSources(retrievedDocs, options.question));
 }
 
 /**
@@ -422,6 +448,7 @@ export function createGroundedTokenGate(
       },
     };
   }
+  const sources = groundingSources(retrievedDocs, options.question);
   return {
     onToken(token: string) {
       if (halted) return;
@@ -429,7 +456,7 @@ export function createGroundedTokenGate(
       const trailingWord = received.match(/\S*$/)?.[0] ?? '';
       const settled = received.slice(0, received.length - trailingWord.length);
       if (settled.length <= forwardedLength) return;
-      if (!checkGrounding(settled, retrievedDocs, options).grounded) {
+      if (!checkSources(settled, sources).grounded) {
         halted = true;
         logger.info('safetyLayer', 'streamed answer halted at unsourced value');
         return;
@@ -469,10 +496,8 @@ export function validateAnswer(
 
   const {grounded, issues} = checkGrounding(answer, retrievedDocs, options);
   if (!grounded) {
-    logger.warn('safetyLayer', 'Answer failed grounding check', {
-      issues,
-      answerPreview: answer.substring(0, 120),
-    });
+    // Issues only: model output can repeat what the user typed.
+    logger.warn('safetyLayer', 'Answer failed grounding check', {issues});
     return {
       allow: false,
       reason: 'ungrounded_answer',

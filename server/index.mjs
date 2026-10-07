@@ -26,7 +26,6 @@ import crypto from 'node:crypto';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// -------- argv parsing --------
 function parseArgs(argv) {
   const out = {};
   for (let i = 2; i < argv.length; i++) {
@@ -61,12 +60,42 @@ const telemetryLogPath = resolve(
   __dirname,
   args['telemetry-log'] ?? process.env.TELEMETRY_LOG ?? './telemetry.jsonl',
 );
+const publicUrl = (args['public-url'] ?? process.env.BFF_PUBLIC_URL)?.replace(/\/+$/, '');
 
-// -------- keypair handling --------
+const usage = `Usage: node server/index.mjs [options]
+
+Options:
+  --port <n>               HTTP port. Env PORT. Default 3000.
+  --kb-root <dir>          Directory with knowledge JSON. Env KB_ROOT. Default ../src/knowledge.
+  --kb-version <v>         Published knowledge version. Env KB_VERSION. Default latest file time.
+  --keypair <file>         Ed25519 keypair JSON. Env KEYPAIR. Default ./.keys/ed25519.json.
+  --model-manifest <file>  Model metadata JSON. Env MODEL_MANIFEST. Default ./model.json.
+  --telemetry-log <file>   Telemetry JSONL log. Env TELEMETRY_LOG. Default ./telemetry.jsonl.
+  --public-url <url>       Public base URL for the bundle download link. Env BFF_PUBLIC_URL.
+                           Set it behind a TLS proxy, for example https://bff.example.com.
+                           The app rejects a link with a different origin from backend.baseUrl.
+                           Default: the request origin, which is always http.
+  --help                   Print this text and exit.
+
+Relative paths resolve from the server directory.
+
+Environment:
+  BFF_AUTH_TOKEN      Required bearer token, at least 24 characters.
+  BFF_RATE_LIMIT      Requests allowed per client in one window, /healthz included. Default 60.
+  BFF_RATE_WINDOW_MS  Rate window in milliseconds. Default 60000.`;
+
 function getRawPublicKey(publicKey) {
   const keyObject = typeof publicKey === 'string' ? crypto.createPublicKey(publicKey) : publicKey;
   const jwk = keyObject.export({format: 'jwk'});
   return Buffer.from(jwk.x, 'base64url');
+}
+
+function keyIdFor(publicKeyBase64) {
+  return crypto
+    .createHash('sha256')
+    .update(Buffer.from(publicKeyBase64, 'base64'))
+    .digest('hex')
+    .slice(0, 16);
 }
 
 function ensureKeypair() {
@@ -103,7 +132,6 @@ function sign(buffer) {
     .toString('base64');
 }
 
-// -------- KB manifest construction --------
 function computeKbBundle() {
   if (!existsSync(kbRoot)) {
     throw new Error(`kb root not found: ${kbRoot}`);
@@ -125,8 +153,7 @@ function computeKbBundle() {
   const sha256 = crypto.createHash('sha256').update(bundle).digest('hex');
   const version = kbVersionOverride ?? new Date(latestMtime).toISOString();
   const signature = sign(bundle);
-  const publicKey = Buffer.from(getKeypair().publicKeyBase64, 'base64');
-  const keyId = crypto.createHash('sha256').update(publicKey).digest('hex').slice(0, 16);
+  const keyId = keyIdFor(getKeypair().publicKeyBase64);
   return {
     algorithm: 'Ed25519',
     signatureEncoding: 'base64',
@@ -146,8 +173,7 @@ function getKb() {
   return cachedKb;
 }
 
-// -------- model manifest --------
-function getModelManifest(hostHeader) {
+function getModelManifest() {
   if (existsSync(modelManifestPath)) {
     return JSON.parse(readFileSync(modelManifestPath, 'utf-8'));
   }
@@ -165,7 +191,6 @@ function getModelManifest(hostHeader) {
   };
 }
 
-// -------- http server --------
 function sendJson(res, status, body, extraHeaders = {}) {
   const raw = JSON.stringify(body);
   res.writeHead(status, {
@@ -188,7 +213,7 @@ function sendBytes(res, status, bytes, contentType, extraHeaders = {}) {
 }
 
 function readBody(req, maxBytes = 256 * 1024) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolveBody, reject) => {
     const chunks = [];
     let total = 0;
     req.on('data', c => {
@@ -200,7 +225,7 @@ function readBody(req, maxBytes = 256 * 1024) {
       }
       chunks.push(c);
     });
-    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('end', () => resolveBody(Buffer.concat(chunks)));
     req.on('error', reject);
   });
 }
@@ -214,17 +239,22 @@ function validBearer(header, expectedToken) {
   return crypto.timingSafeEqual(suppliedDigest, expectedDigest);
 }
 
-function useRateLimit(req, buckets, limit, windowMs) {
-  const now = Date.now();
-  const client = req.socket.remoteAddress ?? 'unknown';
+export function takeRateToken(client, buckets, limit, windowMs, now = Date.now()) {
+  // New buckets go to the end of the map, so the expired ones are at the front.
+  for (const [key, old] of buckets) {
+    if (old.resetAt > now) break;
+    buckets.delete(key);
+  }
+
   let bucket = buckets.get(client);
   if (!bucket || now >= bucket.resetAt) {
     bucket = {count: 0, resetAt: now + windowMs};
+    buckets.delete(client);
+    buckets.set(client, bucket);
   }
 
   const allowed = bucket.count < limit;
   if (allowed) bucket.count += 1;
-  buckets.set(client, bucket);
 
   return {
     allowed,
@@ -234,25 +264,13 @@ function useRateLimit(req, buckets, limit, windowMs) {
 }
 
 function handle(req, res, security) {
-  // Browser requests are outside this device-facing reference service.
-  if (req.headers.origin) {
-    sendJson(res, 403, {error: 'cors not allowed'});
-    return;
-  }
-
-  const url = new URL(req.url, `http://${req.headers.host ?? 'localhost'}`);
-
-  if (req.method === 'GET' && url.pathname === '/healthz') {
-    sendJson(res, 200, {ok: true, kbVersion: getKb().version});
-    return;
-  }
-
-  if (!validBearer(req.headers.authorization, security.authToken)) {
-    sendJson(res, 401, {error: 'unauthorized'}, {'WWW-Authenticate': 'Bearer'});
-    return;
-  }
-
-  const rate = useRateLimit(req, security.rateBuckets, security.rateLimit, security.rateWindowMs);
+  // Count every request, so token guesses and health checks also use the client limit.
+  const rate = takeRateToken(
+    req.socket.remoteAddress ?? 'unknown',
+    security.rateBuckets,
+    security.rateLimit,
+    security.rateWindowMs,
+  );
   const rateHeaders = {
     'RateLimit-Limit': String(security.rateLimit),
     'RateLimit-Remaining': String(rate.remaining),
@@ -271,6 +289,35 @@ function handle(req, res, security) {
     return;
   }
 
+  // Browser requests are outside this device-facing reference service.
+  if (req.headers.origin) {
+    sendJson(res, 403, {error: 'cors not allowed'});
+    return;
+  }
+
+  let url;
+  try {
+    url = new URL(req.url, `http://${req.headers.host ?? 'localhost'}`);
+  } catch {
+    sendJson(res, 400, {error: 'bad_request'});
+    return;
+  }
+
+  if (req.method === 'GET' && url.pathname === '/healthz') {
+    try {
+      sendJson(res, 200, {ok: true, kbVersion: getKb().version});
+    } catch (err) {
+      console.error('[bff] health check failed:', err);
+      sendJson(res, 503, {ok: false, error: 'kb_unavailable'});
+    }
+    return;
+  }
+
+  if (!validBearer(req.headers.authorization, security.authToken)) {
+    sendJson(res, 401, {error: 'unauthorized'}, {'WWW-Authenticate': 'Bearer'});
+    return;
+  }
+
   if (req.method === 'GET' && url.pathname === '/api/v1/sync/kb') {
     try {
       const kb = getKb();
@@ -284,7 +331,7 @@ function handle(req, res, security) {
           version: kb.version,
           sha256: kb.sha256,
           keyId: kb.keyId,
-          url: `${url.origin}/api/v1/sync/kb/download`,
+          url: `${publicUrl || url.origin}/api/v1/sync/kb/download`,
           publishedAt: new Date().toISOString(),
           signature: kb.signature,
         },
@@ -309,7 +356,7 @@ function handle(req, res, security) {
   }
 
   if (req.method === 'GET' && url.pathname === '/api/v1/sync/model') {
-    const manifest = getModelManifest(req.headers.host);
+    const manifest = getModelManifest();
     sendJson(res, 200, manifest, rateHeaders);
     return;
   }
@@ -368,14 +415,14 @@ export function createAirgapServer(options = {}) {
   return createServer((req, res) => handle(req, res, security));
 }
 
-if (resolve(process.argv[1] ?? '') === __filename) {
+const isMain = resolve(process.argv[1] ?? '') === __filename;
+
+if (isMain && args.help) {
+  console.log(usage);
+} else if (isMain) {
   const server = createAirgapServer();
   const activeKeypair = getKeypair();
-  const keyId = crypto
-    .createHash('sha256')
-    .update(Buffer.from(activeKeypair.publicKeyBase64, 'base64'))
-    .digest('hex')
-    .slice(0, 16);
+  const keyId = keyIdFor(activeKeypair.publicKeyBase64);
   console.log('[bff] raw public key for airgap.config.json backend.sync.publicKeys:');
   console.log(`[bff]   ${keyId}: ${activeKeypair.publicKeyBase64}`);
   server.listen(port, () => {

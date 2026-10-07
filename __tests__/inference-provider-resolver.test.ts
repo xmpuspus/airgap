@@ -133,6 +133,20 @@ describe('inference provider resolver', () => {
     expect(cloud.getCapabilities).not.toHaveBeenCalled();
   });
 
+  test('offline-only skips any provider that reports cloud locality', async () => {
+    const remote = fakeProvider('llama-rn', {locality: 'cloud'});
+    const local = fakeProvider('apple-foundation-models');
+
+    const result = await generateWithProviders(
+      request,
+      [remote, local],
+      policy('offline-only', ['llama-rn', 'apple-foundation-models']),
+    );
+
+    expect(result.providerId).toBe('apple-foundation-models');
+    expect(remote.generate).not.toHaveBeenCalled();
+  });
+
   test('operator policy overrides domain and user preference', () => {
     const cloud = fakeProvider('cloud');
     const local = fakeProvider('llama-rn');

@@ -57,7 +57,23 @@ const DEFAULT_QUEUED_REPLY =
 
 function queuedReply(actionLabel: string): string {
   const template = prompts.queued?.trim() ? prompts.queued : DEFAULT_QUEUED_REPLY;
-  return interpolate(template, config).replace('{{actionLabel}}', actionLabel);
+  // A replacer function keeps a "$" pattern in the label as written.
+  return interpolate(template, config).replaceAll('{{actionLabel}}', () => actionLabel);
+}
+
+// No template prompt covers a failed request, and no follow-up comes after
+// this reply, so it must not promise one.
+const UNFINISHED_REQUEST_REPLY =
+  'I could not complete that request right now. Please try again later or call {{hotline}}.';
+
+function accountActionReply(): string {
+  // hotlineLabel is optional, and an empty one would leave "()" in the text.
+  const hotline = brand.hotlineLabel ? '{{hotline}} ({{hotlineLabel}})' : '{{hotline}}';
+  return interpolate(
+    'Account changes like cancellation, disconnection, or deactivation require verification. ' +
+      `Please call ${hotline} or visit any {{brandName}} store with a valid ID to proceed.`,
+    config,
+  );
 }
 
 export interface OrchestratorResponse {
@@ -144,7 +160,7 @@ async function processMessageInner(
   const onToken = hooks.onToken;
   const text = userText.trim();
 
-  // 1. Pre-flight safety: topic blocklist. Fail-closed BEFORE search or LLM.
+  // A blocked topic is refused before search or a model can see it.
   const block = checkBlocklist(text);
   if (block.blocked && block.reason) {
     const refusalText = refusalFor(block.reason);
@@ -161,7 +177,7 @@ async function processMessageInner(
     };
   }
 
-  // 2. Handle greetings
+  // A greeting as the first message gets a welcome and quick replies, not a search.
   if (isGreeting(text) && conversationHistory.length === 0) {
     const response = `Hi there! I'm your ${brand.name} support assistant. How can I help you today?`;
     addToHistory('user', text);
@@ -173,7 +189,7 @@ async function processMessageInner(
     };
   }
 
-  // 2a. A doubt check repeats the last record-backed answer from the record
+  // A doubt check repeats the last record-backed answer from the record
   // store. The model is not asked again, so the answer cannot move. Any other
   // kind of answer clears the memory, so a doubt after a refusal gets no replay.
   const previousRecordAnswer = lastRecordAnswer;
@@ -190,7 +206,7 @@ async function processMessageInner(
     };
   }
 
-  // 2b. Date and time come from the device clock, never from a model or a record.
+  // Date and time come from the device clock, never from a model or a record.
   if (isClockQuestion(text)) {
     const clock = formatDeviceClock(new Date(), config.locale?.language ?? 'en');
     const response = `It is ${clock} on this device's clock. I have no clock of my own, and each record shows the date it was checked.`;
@@ -199,10 +215,10 @@ async function processMessageInner(
     return {text: response, source: 'system'};
   }
 
-  // 3. Tool router — config-driven keyword match. Replaces the old hardcoded
-  // switch on actionType. Tools execute against the backend, then their
-  // structured result is fed into the LLM as grounding (if LLM is loaded)
-  // or returned directly as a summary (if LLM is not loaded).
+  // Configured tools match by keyword and run against the backend. Their
+  // structured result grounds the model when one is available, or the tool
+  // summary answers directly. A query that no tool matches goes on to the
+  // action switch below.
   const tool = findToolForQuery(text);
   if (tool) {
     hooks.onToolStart?.(tool.name);
@@ -214,7 +230,7 @@ async function processMessageInner(
 
     if (result.queuedActionId) {
       const actionLabel = tool.description;
-      const response = queuedReply(actionLabel) || result.summary || '';
+      const response = queuedReply(actionLabel);
       addToHistory('user', text);
       addToHistory('bot', response);
       return {
@@ -340,9 +356,9 @@ async function processMessageInner(
     };
   }
 
-  // 4. Back-compat: older configs still use the requiresOnline + actions
-  // switch. If a config defines no tools but does define actions, this path
-  // keeps working so existing example configs remain functional.
+  // A config that defines actions but no tools still works through this path.
+  // The switch cases serve the telco fixture actions until templates define
+  // them as tools.
   if (requiresOnline(text)) {
     const isOnline = connectivityService.isOnline();
     const actionType = getOnlineActionType(text);
@@ -383,15 +399,14 @@ async function processMessageInner(
             break;
           }
           case 'account_action':
-            response =
-              'Account changes like cancellation, disconnection, or deactivation require verification. ' +
-              'Please call 211 (free from ACME mobile) or visit an ACME store with a valid ID to proceed.';
+            response = accountActionReply();
             break;
           default:
-            response = 'Let me look into that for you.';
+            response = interpolate(UNFINISHED_REQUEST_REPLY, config);
         }
-      } catch {
-        response = 'Let me look into that for you.';
+      } catch (err) {
+        logger.warn('orchestrator', 'Online action failed', {actionType, err: String(err)});
+        response = interpolate(UNFINISHED_REQUEST_REPLY, config);
       }
 
       addToHistory('user', text);
@@ -400,7 +415,7 @@ async function processMessageInner(
     }
   }
 
-  // 5. Determine search query — expand if this is a follow-up.
+  // A follow-up gets the earlier topic added, so the search can find the record.
   // A question that equals a record keyword is a new topic even when short,
   // so "sino ka" after another topic still gets the identity record.
   let searchQuery = text;
@@ -409,16 +424,15 @@ async function processMessageInner(
     searchQuery = expandQuery(text, conversationHistory);
   }
 
-  // 6. Search knowledge base
   // The depth comes from knowledge.search.topK, so a template can keep each answer to one record.
   const searchResults = searchKB(searchQuery);
 
   // If follow-up search returns nothing, try the original query
   const finalResults = searchResults.length === 0 && followUp ? searchKB(text) : searchResults;
 
-  // 7. If a local LLM, cloud LLM, or demo formatter is available, route
-  // the generation. Demo mode bypasses the model load and produces a
-  // deterministic streamed reply built from finalResults.
+  // A local model, cloud model, or the demo formatter phrases the records when
+  // one is available. Demo mode loads no model and streams a deterministic
+  // reply built from finalResults.
   let generationFailure: MessageAudit['providerFailure'];
   // A record marked verbatim answers as written. An identity statement or a
   // legal notice must not change between runs, so no model phrases it.
@@ -491,10 +505,9 @@ async function processMessageInner(
     }
   }
 
-  // 8. Fallback: format search results directly
+  // Without a model answer that passed the checks, the records answer as written.
   if (finalResults.length > 0) {
-    const formatted = formatSearchResults(finalResults);
-    const response = formatted;
+    const response = formatSearchResults(finalResults);
     addToHistory('user', text);
     addToHistory('bot', response);
     lastRecordAnswer = {text: response, docIds: finalResults.map(d => d.id)};
@@ -509,7 +522,7 @@ async function processMessageInner(
     };
   }
 
-  // 9. Nothing found — offer helpful suggestions
+  // No record matched, so the fallback prompt lists what the bot can help with.
   const response = interpolate(prompts.fallback, config);
   addToHistory('user', text);
   addToHistory('bot', response);
@@ -537,6 +550,10 @@ function addToHistory(role: 'user' | 'bot', text: string) {
   saveHistory();
 }
 
+// The dev panel counts a turn below this confidence as low confidence. It
+// does not gate answers; the safety layer has its own threshold.
+const LOW_CONFIDENCE_METRIC = 0.5;
+
 /**
  * Final polish on every orchestrator response:
  *   - Prepend the degraded-mode staleness banner if the KB has not been
@@ -555,7 +572,7 @@ function finalizeResponse(userText: string, response: OrchestratorResponse): Orc
   // In-process metrics rollup for the dev panel.
   metricsRecordTurn(response.source);
   if ((response.audit?.kbDocIds ?? []).length === 0) recordZeroHit();
-  if ((response.audit?.confidence ?? 0) < 0.5) recordLowConfidence();
+  if ((response.audit?.confidence ?? 0) < LOW_CONFIDENCE_METRIC) recordLowConfidence();
 
   const {kbVersion} = getStalenessInfo();
   try {
@@ -574,49 +591,6 @@ function finalizeResponse(userText: string, response: OrchestratorResponse): Orc
 
   return {...response, text};
 }
-
-// Known abbreviations/acronyms that are legitimate queries, not greetings
-const NOT_GREETINGS = new Set([
-  'sim',
-  'apn',
-  'bgc',
-  'lte',
-  'mms',
-  'dns',
-  'otg',
-  'qr',
-  'vpn',
-  'nfc',
-  'pin',
-  'puk',
-  'otp',
-  'faq',
-  'sos',
-  'usb',
-  'rom',
-  'ram',
-  'app',
-  'web',
-  'net',
-  'log',
-  'pay',
-  'buy',
-  'php',
-  'gb',
-  'mb',
-  'kb',
-  'mbps',
-  'ghz',
-  'mhz',
-  'bpi',
-  'bdo',
-  'atm',
-  'eip',
-  'esim',
-  'iot',
-  'sms',
-  'gps',
-]);
 
 function isGreeting(text: string): boolean {
   const greetings = [
@@ -641,9 +615,5 @@ function isGreeting(text: string): boolean {
     .toLowerCase()
     .replace(/[!.,?]/g, '')
     .trim();
-  // Short alphabetic strings could be greetings, but exclude known acronyms
-  if (lower.length <= 3 && /^[a-z]+$/.test(lower)) {
-    return !NOT_GREETINGS.has(lower);
-  }
   return greetings.includes(lower);
 }

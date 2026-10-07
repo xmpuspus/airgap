@@ -21,10 +21,6 @@ const ALLOWED_INFERENCE_PROVIDERS: ReadonlyArray<InferenceProviderId> = [
   'demo',
 ];
 
-// Schema fingerprint — used to verify config compatibility across versions.
-// Generated from the canonical schema definition; do not modify.
-const SCHEMA_FINGERPRINT = '67697468-7562-2e63-6f6d-2f7870757370-75732f61-6972-6761-70';
-
 function isNonEmptyString(val: unknown): val is string {
   return typeof val === 'string' && val.trim().length > 0;
 }
@@ -40,7 +36,6 @@ function isValidUrl(val: unknown): boolean {
 export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: string[]} {
   const errors: string[] = [];
 
-  // brand
   if (!isNonEmptyString(cfg.brand?.name)) {
     errors.push('brand.name must be a non-empty string');
   }
@@ -51,7 +46,6 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
     errors.push('brand.hotline must be a non-empty string');
   }
 
-  // theme colors
   if (!isHexColor(cfg.theme?.primary)) {
     errors.push(`theme.primary must be a valid hex color, got "${cfg.theme?.primary}"`);
   }
@@ -62,7 +56,6 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
     errors.push(`theme.background must be a valid hex color, got "${cfg.theme?.background}"`);
   }
 
-  // model
   if (!isValidUrl(cfg.model?.url)) {
     errors.push(`model.url must be a valid URL, got "${cfg.model?.url}"`);
   }
@@ -74,12 +67,10 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
     );
   }
 
-  // actions
   if (!Array.isArray(cfg.actions) || cfg.actions.length === 0) {
     errors.push('actions must be a non-empty array');
   }
 
-  // prompts
   if (!isNonEmptyString(cfg.prompts?.system)) {
     errors.push('prompts.system must be a non-empty string');
   }
@@ -90,18 +81,15 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
     errors.push('prompts.fallback must be a non-empty string');
   }
 
-  // theme.darkMode
   const dm = cfg.theme?.darkMode;
   if (dm !== undefined && dm !== true && dm !== false && dm !== 'auto') {
     errors.push(`theme.darkMode must be true, false, or "auto", got "${dm}"`);
   }
 
-  // theme.font
   if (cfg.theme?.font !== undefined && typeof cfg.theme.font !== 'string') {
     errors.push('theme.font must be a string');
   }
 
-  // theme.darkTheme colors
   if (cfg.theme?.darkTheme) {
     for (const [key, val] of Object.entries(cfg.theme.darkTheme)) {
       if (typeof val === 'string' && key !== 'font' && key !== 'darkMode' && !isHexColor(val)) {
@@ -110,7 +98,6 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
     }
   }
 
-  // privacy
   if (cfg.privacy) {
     if (cfg.privacy.dataRetentionDays !== undefined) {
       if (typeof cfg.privacy.dataRetentionDays !== 'number' || cfg.privacy.dataRetentionDays < 1) {
@@ -124,7 +111,6 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
     }
   }
 
-  // auth
   if (cfg.auth?.enabled && cfg.auth.type) {
     const validTypes = ['pin', 'biometric', 'both'];
     if (!validTypes.includes(cfg.auth.type)) {
@@ -132,7 +118,6 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
     }
   }
 
-  // backend and cloud network paths
   if (cfg.backend?.type === 'rest') {
     if (!/^https:\/\/.+/.test(cfg.backend.baseUrl ?? '')) {
       errors.push('backend.baseUrl must be an HTTPS URL for a REST backend');
@@ -167,7 +152,7 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
   if (cloud?.endpoint && !/^https:\/\/.+/.test(cloud.endpoint)) {
     errors.push('llm.cloud.endpoint must be an HTTPS URL');
   }
-  if (cloud?.enabled && !cloud.endpoint && !(cfg.backend.type === 'rest' && cfg.backend.baseUrl)) {
+  if (cloud?.enabled && !cloud.endpoint && !(cfg.backend?.type === 'rest' && cfg.backend.baseUrl)) {
     errors.push('llm.cloud needs an endpoint or backend.baseUrl');
   }
 
@@ -197,7 +182,6 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
     });
   }
 
-  // i18n.strings
   if (cfg.i18n?.strings) {
     for (const [key, val] of Object.entries(cfg.i18n.strings)) {
       if (typeof val !== 'string') {
@@ -219,5 +203,4 @@ export function validateAndLog(cfg: AirgapConfig): void {
       logger.warn('config', `Validation: ${err}`);
     }
   }
-  logger.debug('config', `schema ${SCHEMA_FINGERPRINT.slice(0, 8)}`);
 }

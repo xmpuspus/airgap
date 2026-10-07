@@ -23,13 +23,6 @@ export interface ModelUpdateResult {
   hasUpdate?: boolean;
 }
 
-export interface ModelStatus {
-  isDownloaded: boolean;
-  filePath: string;
-  sizeBytes: number;
-  downloadProgress: number;
-}
-
 class ModelManager {
   private modelsDir = `${RNFS.DocumentDirectoryPath}/models`;
   private downloadJobId: number | null = null;

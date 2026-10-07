@@ -1,4 +1,3 @@
-/* eslint-disable no-bitwise -- FNV-1a hash uses ^=, >>> as intended. */
 /**
  * Telemetry service — append-only audit trail of every orchestrator turn.
  *
@@ -8,13 +7,16 @@
  *
  * What gets logged:
  *   - timestamp (ISO)
- *   - PII-safe query hash (sha256 of the raw query, truncated to 16 hex)
+ *   - query hash (32-bit FNV-1a of the raw query, 8 hex characters)
  *   - kbVersion at the time of the turn
  *   - retrievedDocIds (already public doc IDs, no user content)
- *   - answerHash (sha256 of the final answer, truncated)
+ *   - answerHash (32-bit FNV-1a of the final answer, 8 hex characters)
  *   - confidence score from the safety layer verdict
  *   - toolCalls (tool names only)
  *   - refusalReason (if any)
+ *
+ * The hashes let analytics spot repeat queries. They are not a privacy
+ * control: a dictionary of common queries can match a 32-bit hash.
  *
  * What never gets logged:
  *   - Raw query text or answer text
@@ -27,6 +29,7 @@ import {connectivityService} from './connectivityService';
 import {logger} from './logger';
 import {getSecureStore} from './secureStorage';
 import {config} from '../config/loader';
+import {fnv1a32} from '../utils/hash';
 
 const telemetryStorage = () => getSecureStore('telemetry-buffer');
 const BUFFER_KEY = 'pendingEvents';
@@ -37,18 +40,6 @@ function analyticsEnabled(): boolean {
   // never queues telemetry events when this flag is off, so the local
   // buffer stays empty and there is nothing to flush.
   return (config as unknown as {analytics?: {enabled?: boolean}}).analytics?.enabled === true;
-}
-
-function hashQuery(input: string): string {
-  // Lightweight FNV-1a hash. We don't need cryptographic strength — we just
-  // need a stable non-reversible identifier so analytics can spot repeat
-  // queries without seeing the raw text.
-  let h = 0x811c9dc5;
-  for (let i = 0; i < input.length; i++) {
-    h ^= input.charCodeAt(i);
-    h = Math.imul(h, 0x01000193);
-  }
-  return (h >>> 0).toString(16).padStart(8, '0');
 }
 
 function loadBuffer(): TelemetryEvent[] {
@@ -83,10 +74,10 @@ export function recordTurn(params: {
   if (!analyticsEnabled()) return;
   const event: TelemetryEvent = {
     timestamp: new Date().toISOString(),
-    query: `#${hashQuery(params.query)}`,
+    query: `#${fnv1a32(params.query)}`,
     kbVersion: params.kbVersion,
     retrievedDocIds: params.retrievedDocIds,
-    answerHash: `#${hashQuery(params.answer)}`,
+    answerHash: `#${fnv1a32(params.answer)}`,
     confidence: params.confidence,
     toolCalls: params.toolCalls,
     refusalReason: params.refusalReason,
@@ -159,10 +150,6 @@ export function startTelemetryFlusher(options?: {intervalMinutes?: number}): voi
   logger.info('telemetry', 'telemetry flusher started', {
     intervalMinutes: options?.intervalMinutes ?? 10,
   });
-}
-
-export function getBufferSize(): number {
-  return loadBuffer().length;
 }
 
 export function clearBuffer(): void {

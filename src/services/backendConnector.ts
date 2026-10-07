@@ -1,3 +1,8 @@
+import {config} from '../config/loader';
+import {getAccessToken} from './authProvider';
+import type {BundleManifest} from './bundleVerifier';
+import {logger} from './logger';
+
 export interface BalanceResponse {
   balance: string;
   data: string;
@@ -133,7 +138,7 @@ export class MockBackendConnector implements BackendConnector {
 /**
  * Real REST backend connector. Pointed at a reference BFF implementation
  * (see server/README.md) but designed to talk to any backend that exposes
- * the same four routes under /api/v1/.
+ * the same eight routes under /api/v1/.
  */
 export class RestBackendConnector implements BackendConnector {
   private baseUrl: string;
@@ -266,17 +271,16 @@ export class RestBackendConnector implements BackendConnector {
 
 function buildConnectorFromConfig(): BackendConnector {
   try {
-    // Lazy import to avoid a circular dependency: config/loader imports
-    // logger, which imports safetyLayer, which imports config.
-    const {config} = require('../config/loader') as typeof import('../config/loader');
     const backend = (config as any).backend;
     if (backend?.type === 'rest' && backend?.baseUrl) {
       return new RestBackendConnector(backend.baseUrl, {
         audience: backend.auth?.audience,
       });
     }
-  } catch {
-    // fall through to mock
+  } catch (error) {
+    logger.error('backendConnector', 'configured backend failed to build, using the mock', {
+      error: (error as Error).message,
+    });
   }
   return new MockBackendConnector();
 }
@@ -290,5 +294,3 @@ export function getBackendConnector(): BackendConnector {
 export function setBackendConnector(newConnector: BackendConnector): void {
   connector = newConnector;
 }
-import {getAccessToken} from './authProvider';
-import type {BundleManifest} from './bundleVerifier';

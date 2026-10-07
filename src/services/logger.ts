@@ -17,9 +17,15 @@ type LogListener = (entry: LogEntry) => void;
 const REDACT_PATTERNS: {name: string; re: RegExp; replacement: string}[] = [
   {name: 'email', re: /[\w.+-]+@[\w-]+\.[\w.-]+/g, replacement: '[email]'},
   {name: 'phonePH', re: /\b09\d{9}\b/g, replacement: '[phone]'},
-  {name: 'phoneIntl', re: /\b\+\d{7,15}\b/g, replacement: '[phone]'},
+  // A plus sign usually follows a space, where \b does not match.
+  {name: 'phoneIntl', re: /(?<!\w)\+\d{7,15}\b/g, replacement: '[phone]'},
   {name: 'creditCard', re: /\b(?:\d[ -]?){13,19}\b/g, replacement: '[card]'},
-  {name: 'bearerToken', re: /(?:Bearer|token|sk-|api_key)[=:\s]+[A-Za-z0-9_-]{16,}/gi, replacement: '[token]'},
+  {
+    name: 'bearerToken',
+    re: /(?:Bearer|token|sk-|api_key)[=:\s]+[A-Za-z0-9_-]{16,}/gi,
+    replacement: '[token]',
+  },
+  {name: 'secretKey', re: /\bsk-[A-Za-z0-9_-]{16,}/g, replacement: '[token]'},
 ];
 
 function redact(value: string): string {

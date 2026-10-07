@@ -219,6 +219,18 @@ describe('validateConfig', () => {
     expect(validateConfig(cfg).errors).toContain('llm.cloud needs an endpoint or backend.baseUrl');
   });
 
+  test('cloud mode without a backend section reports errors instead of throwing', () => {
+    const cfg = makeValidConfig({
+      backend: undefined as any,
+      llm: {mode: 'prefer-online', cloud: {enabled: true}},
+    });
+
+    const {errors} = validateConfig(cfg);
+
+    expect(errors).toContain('llm.cloud needs an endpoint or backend.baseUrl');
+    expect(errors).toContain('backend.type must be one of [mock, rest]');
+  });
+
   test('queue retries stay within the supported range', () => {
     const cfg = makeValidConfig({queue: {maxRetries: 0}});
 

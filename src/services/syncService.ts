@@ -115,8 +115,8 @@ async function swapBundle(tmpPath: string): Promise<void> {
 
 /**
  * Read the current bundle from disk and rebuild the in-memory MiniSearch
- * index. Any parse or index-build failure throws synchronously so the caller
- * can roll back to the previous bundle (or to the compiled-in KB).
+ * index. Any read, parse, or index-build failure rejects the returned promise
+ * so the caller can roll back to the previous bundle (or to the compiled-in KB).
  */
 async function loadBundleFile(path: string, version: string | null): Promise<void> {
   const content = await RNFS.readFile(path, 'utf8');
@@ -180,9 +180,10 @@ async function rollbackBundle(): Promise<boolean> {
 }
 
 /**
- * Fetch the manifest, download and verify the bundle, and atomically swap
- * it into place. Does NOT rebuild the in-memory search index — callers
- * handle that by observing the `onSync` listener.
+ * Fetch the manifest, download and verify the bundle, atomically swap it
+ * into place, and rebuild the in-memory search index from it. If the rebuild
+ * fails, the file swap rolls back and the previous (or compiled-in) KB stays
+ * searchable.
  */
 export async function syncKnowledge(): Promise<SyncResult> {
   if (!connectivityService.isOnline()) {

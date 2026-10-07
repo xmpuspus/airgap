@@ -218,10 +218,6 @@ export function getDocById(id: string): KBDocument | undefined {
   return getDocumentById(id);
 }
 
-export function getAllByCategory(category: KBCategory): KBDocument[] {
-  return getAllDocuments().filter(doc => doc.category === category);
-}
-
 function normalizeKeyword(text: string): string {
   return text
     .toLowerCase()

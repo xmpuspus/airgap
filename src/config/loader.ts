@@ -15,8 +15,6 @@ import type {
   ProviderPolicyEntry,
 } from '../services/inference/types';
 
-// === Types matching the JSON Schema ===
-
 export interface PrivacySection {
   dataRetentionDays?: number;
   allowExport?: boolean;
@@ -247,8 +245,6 @@ export interface LocaleSection {
   region?: string;
 }
 
-// === Load and apply defaults ===
-
 function applyDefaults(raw: any): AirgapConfig {
   return {
     ...raw,
@@ -337,12 +333,10 @@ function applyDefaults(raw: any): AirgapConfig {
   };
 }
 
-// === Template interpolation ===
-
 export function interpolate(template: string, config: AirgapConfig): string {
   const featureList = config.onboarding?.features?.map(f => `- ${f}`).join('\n') ?? '';
 
-  const sizeMB = config.model.sizeMB ?? 2445;
+  const sizeMB = config.model.sizeMB!;
   const modelSize = sizeMB >= 1024 ? `~${(sizeMB / 1024).toFixed(1)} GB` : `~${sizeMB} MB`;
 
   const vars: Record<string, string> = {
@@ -360,8 +354,6 @@ export function interpolate(template: string, config: AirgapConfig): string {
   return template.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? `{{${key}}}`);
 }
 
-// === Singleton config ===
-
 export const config: AirgapConfig = applyDefaults(rawConfig);
 
 // Validate at startup — logs warnings but never throws
@@ -378,5 +370,3 @@ export const quickReplies = config.quickReplies;
 export const onboarding = config.onboarding;
 export const privacy = config.privacy!;
 export const i18nConfig = config.i18n!;
-export const analyticsConfig = config.analytics!;
-export const authConfig = config.auth!;

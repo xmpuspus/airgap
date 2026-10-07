@@ -12,9 +12,6 @@ import {createExistingProviders} from './inference/existingProviders';
 import {appleFoundationModelsProvider} from './inference/appleFoundationModelsProvider';
 import {androidAicoreProvider} from './inference/androidAicoreProvider';
 import {providerHarnessActive} from './inference/providerHarness';
-import {cloudLlmService} from './cloudLlmService';
-import {connectivityService} from './connectivityService';
-import {llmService} from './llmService';
 import {getSecureStore} from './secureStorage';
 
 export type Mode = 'offline-only' | 'prefer-online' | 'prefer-offline' | 'demo';
@@ -105,14 +102,6 @@ function activePolicy() {
     currentPlatform(),
     currentLocale(),
   );
-}
-
-export function localAvailable(): boolean {
-  return llmService.isLoaded();
-}
-
-export function cloudAvailable(): boolean {
-  return cloudLlmService.isAvailable() && connectivityService.isOnline();
 }
 
 export async function generationAvailable(): Promise<boolean> {

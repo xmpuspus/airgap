@@ -10,7 +10,6 @@ module.exports = {
     '/android/',
     '/ios/',
     '__tests__/run-',
-    '<rootDir>/.claude/',
     '<rootDir>/.worktrees/',
     '__tests__/golden/',
   ],
