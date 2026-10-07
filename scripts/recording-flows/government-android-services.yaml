@@ -36,7 +36,7 @@ name: Airgap government services take, service prompts, Android model
 # label to go away as well.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
-    timeout: 120000
+    timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-fee
@@ -50,7 +50,7 @@ name: Airgap government services take, service prompts, Android model
     timeout: 300000
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
-    timeout: 120000
+    timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-requirements
@@ -64,7 +64,7 @@ name: Airgap government services take, service prompts, Android model
     timeout: 300000
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
-    timeout: 120000
+    timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-holiday
@@ -78,7 +78,7 @@ name: Airgap government services take, service prompts, Android model
     timeout: 300000
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
-    timeout: 120000
+    timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-hotline

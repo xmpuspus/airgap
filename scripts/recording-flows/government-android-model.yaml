@@ -36,7 +36,7 @@ name: Airgap government services model recording
 # label to go away as well.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
-    timeout: 120000
+    timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-president
@@ -63,7 +63,7 @@ name: Airgap government services model recording
     timeout: 300000
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
-    timeout: 120000
+    timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-scope
@@ -114,7 +114,7 @@ name: Airgap government services model recording
     timeout: 300000
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
-    timeout: 120000
+    timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-offline-passport
