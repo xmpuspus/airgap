@@ -129,8 +129,7 @@ name: Airgap government services showcase recording, Apple model
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-passport
-# The simulator recorder drops about its last second. Two more screenshots
-# hold the finished answer on screen before the stop.
-- takeScreenshot: ${SHOT_PREFIX}-passport-settled
-- takeScreenshot: ${SHOT_PREFIX}-passport-final
+# The simulator recorder drops about its last second. A four-second pause
+# in the Maestro process holds the finished answer on screen before the stop.
+- evalScript: ${(function () { var end = Date.now() + 4000; while (Date.now() < end) {} })()}
 - stopRecording
