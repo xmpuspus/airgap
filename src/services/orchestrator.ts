@@ -1,5 +1,5 @@
 import {searchKB} from './searchService';
-import {routeGeneration, generationAvailable} from './llmRouter';
+import {routeGeneration, generationAvailable, getMode} from './llmRouter';
 import {offlineQueue} from './offlineQueue';
 import {connectivityService} from './connectivityService';
 import {requiresOnline, getOnlineActionType} from '../utils/onlineCheck';
@@ -8,6 +8,7 @@ import {
   buildUserMessage,
   formatSearchResults,
   ConversationTurn,
+  MODEL_CONTEXT_CHARS,
 } from '../utils/promptBuilder';
 import {isFollowUp, expandQuery} from '../utils/followUpDetector';
 import {config, brand, prompts, quickReplies, actions, interpolate} from '../config/loader';
@@ -212,6 +213,7 @@ async function processMessageInner(
             } as any,
           ],
           conversationHistory,
+          {contextChars: recordContextChars()},
         );
         const toolDocs = [
           {
@@ -386,7 +388,9 @@ async function processMessageInner(
     }
     try {
       const systemPrompt = getSystemPrompt();
-      const userMessage = buildUserMessage(text, finalResults, conversationHistory);
+      const userMessage = buildUserMessage(text, finalResults, conversationHistory, {
+        contextChars: recordContextChars(),
+      });
       // Stream only text that the grounding check has already passed.
       const gate = createGroundedTokenGate(finalResults, onToken);
       const llmStart = Date.now();
@@ -462,6 +466,12 @@ async function processMessageInner(
     suggestedReplies: quickReplies as QuickReply[],
     audit: {kbDocIds: [], confidence: 0},
   };
+}
+
+// Demo mode renders the record as the answer, so it gets the whole record. Model
+// modes keep the cap that small on-device contexts need.
+function recordContextChars(): number | null {
+  return getMode() === 'demo' ? null : MODEL_CONTEXT_CHARS;
 }
 
 function addToHistory(role: 'user' | 'bot', text: string) {

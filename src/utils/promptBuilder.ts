@@ -19,26 +19,35 @@ export function getSystemPrompt(): string {
  * This structure follows research on context positioning for small models:
  * important info at start and end, not middle.
  */
+// Characters of each record that a model sees. Small on-device models have a
+// short context, so the default keeps three records under about 300 tokens.
+export const MODEL_CONTEXT_CHARS = 400;
+
+export interface UserMessageOptions {
+  /** Cap per record. `null` sends the full record, which demo mode renders as the answer. */
+  contextChars?: number | null;
+}
+
 export function buildUserMessage(
   userQuery: string,
   kbResults: KBDocument[],
   conversationHistory?: ConversationTurn[],
+  options?: UserMessageOptions,
 ): string {
   const parts: string[] = [];
+  const cap = options?.contextChars === undefined ? MODEL_CONTEXT_CHARS : options.contextChars;
 
   // 1. KB context at top
   if (kbResults.length > 0) {
     const contextBlock = kbResults
-      .map(
-        doc =>
-          `[${doc.category.toUpperCase()}] ${doc.title}\n${doc.content.substring(0, 400)}`,
-      )
+      .map(doc => {
+        const body = cap === null ? doc.content : doc.content.substring(0, cap);
+        return `[${doc.category.toUpperCase()}] ${doc.title}\n${body}`;
+      })
       .join('\n\n');
     parts.push(`REFERENCE INFORMATION:\n\n${contextBlock}`);
   } else {
-    parts.push(
-      'REFERENCE INFORMATION:\nNo relevant information found in the knowledge base.',
-    );
+    parts.push('REFERENCE INFORMATION:\nNo relevant information found in the knowledge base.');
   }
 
   // 2. Conversation history (last 3 turns max, trimmed)
@@ -49,9 +58,7 @@ export function buildUserMessage(
         const label = t.role === 'user' ? 'Customer' : brand.botName;
         // Trim long bot responses to save context space
         const text =
-          t.role === 'bot' && t.text.length > 200
-            ? t.text.substring(0, 200) + '...'
-            : t.text;
+          t.role === 'bot' && t.text.length > 200 ? t.text.substring(0, 200) + '...' : t.text;
         return `${label}: ${text}`;
       })
       .join('\n');
@@ -78,16 +85,14 @@ export function formatSearchResults(kbResults: KBDocument[]): string {
   // Limit to 2 results for readability in search-only mode
   const results = kbResults.slice(0, 2);
   const sections = results.map(doc => {
-    const content =
-      doc.content.length > 200
-        ? doc.content.substring(0, 200) + '...'
-        : doc.content;
+    const content = doc.content.length > 200 ? doc.content.substring(0, 200) + '...' : doc.content;
     return `**${doc.title}**\n${content}`;
   });
 
-  const header = results.length < kbResults.length
-    ? `Here's what I found (${kbResults.length} results):\n\n`
-    : '';
+  const header =
+    results.length < kbResults.length
+      ? `Here's what I found (${kbResults.length} results):\n\n`
+      : '';
 
   return header + sections.join('\n\n');
 }

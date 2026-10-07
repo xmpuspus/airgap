@@ -15,6 +15,7 @@ import {
   getDegradedModePrefix,
 } from '../src/services/syncService';
 import {connectivityService} from '../src/services/connectivityService';
+import {config} from '../src/config/loader';
 
 describe('syncService', () => {
   test('sync skipped when offline', async () => {
@@ -39,14 +40,22 @@ describe('syncService', () => {
     expect(['never', 'fresh', 'stale', 'very_stale']).toContain(info.band);
   });
 
-  test('getDegradedModePrefix is non-empty when stale or unknown', () => {
-    const info = getStalenessInfo();
-    const prefix = getDegradedModePrefix();
-    if (info.band === 'fresh') {
-      expect(prefix).toBeNull();
-    } else {
+  test('getDegradedModePrefix is null when no sync keys are configured', () => {
+    // The default test config has backend.type='mock' and no sync block, so
+    // there is no server to be out of date with.
+    expect(getStalenessInfo().band).toBe('never');
+    expect(getDegradedModePrefix()).toBeNull();
+  });
+
+  test('getDegradedModePrefix is non-empty when sync keys exist and no sync ran', () => {
+    const backend = (config as unknown as {backend: Record<string, unknown>}).backend;
+    backend.sync = {publicKeys: {'test-key': 'MCowBQYDK2VwAyEAtest'}};
+    try {
+      const prefix = getDegradedModePrefix();
       expect(prefix).toBeTruthy();
       expect(typeof prefix).toBe('string');
+    } finally {
+      delete backend.sync;
     }
   });
 

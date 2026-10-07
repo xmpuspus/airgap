@@ -410,6 +410,9 @@ export function getKbSource(): {
  * when the KB has not been synced recently. The orchestrator uses this.
  */
 export function getDegradedModePrefix(): string | null {
+  // Without signed-bundle keys there is no server to sync with. The compiled-in
+  // records are the release, and the answer card already says "Built-in release".
+  if (Object.keys(getPinnedPublicKeys()).length === 0) return null;
   const {band, kbVersion} = getStalenessInfo();
   if (band === 'fresh') return null;
   if (band === 'stale') {
