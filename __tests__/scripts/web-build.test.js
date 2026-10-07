@@ -18,6 +18,7 @@ const VERTICALS = [
   'airline',
   'banking',
   'electric-utility',
+  'government-services',
   'healthcare',
   'insurance',
   'telco',

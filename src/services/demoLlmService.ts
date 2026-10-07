@@ -16,7 +16,7 @@ type DocLike = Pick<KBDocument, 'category' | 'title' | 'content'>;
 // preferred entry point is streamFromKb, which takes structured docs.
 export function extractReferenceBlock(userMessage: string): string | null {
   const match = userMessage.match(
-    /REFERENCE INFORMATION:\s*\n+([\s\S]*?)(?:\n\nCONVERSATION SO FAR:|\n\nBased ONLY on)/,
+    /REFERENCE INFORMATION:\s*\n+([\s\S]*?)(?:\n\nCONVERSATION SO FAR:|\n\nAnswer this customer question)/,
   );
   if (!match) return null;
   const block = match[1].trim();
@@ -50,8 +50,7 @@ export function formatReferenceAsReply(block: string): string {
   if (headers.length === 0) return block.trim();
 
   const docs: DocLike[] = headers.map((h, i) => {
-    const nextStart =
-      i + 1 < headers.length ? headers[i + 1].titleStart : block.length;
+    const nextStart = i + 1 < headers.length ? headers[i + 1].titleStart : block.length;
     const headerLine = block.slice(h.titleStart, h.titleEnd).trim();
     const headerMatch = headerLine.match(/^\[([A-Z_]+)\]\s*(.*)$/);
     return {

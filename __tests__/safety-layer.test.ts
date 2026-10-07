@@ -124,6 +124,16 @@ describe('safetyLayer.checkGrounding', () => {
     expect(checkGrounding('He took office on June 29, 2022.', docs).grounded).toBe(false);
   });
 
+  test('a sourced ISO date written in prose is grounded', () => {
+    const docs = [doc({content: 'A release dated 2026-09-25 names the secretary.'})];
+    expect(checkGrounding('A release on September 25, 2026 names him.', docs).grounded).toBe(true);
+    expect(checkGrounding('A release on 25 September 2026 names him.', docs).grounded).toBe(true);
+    expect(checkGrounding('A release on Sept. 25 names him.', docs).grounded).toBe(true);
+    expect(checkGrounding('A release on 25/09/2026 names him.', docs).grounded).toBe(true);
+    expect(checkGrounding('A release on September 26, 2026 names him.', docs).grounded).toBe(false);
+    expect(checkGrounding('A release on September 25, 2025 names him.', docs).grounded).toBe(false);
+  });
+
   test('answer with a made-up date fails grounding', () => {
     const result = checkGrounding('Your expiry is 2030-12-31, do not worry.', [
       doc({content: 'Standard SIMs expire 30 days after last load.'}),

@@ -46,6 +46,9 @@ minor releases.
 - Matched the model checksum and size to the current upstream Gemma 4 E2B file.
 - Turned off the Gemma 4 thinking channel, which streamed reasoning into the answer.
 - Accepted a sourced date in either word order in the grounding check.
+- Matched a prose date in an answer to an ISO date in the record, so `September 25, 2026` passes
+  against `2026-09-25`.
+- Told the model not to repeat the "reference information" wording in its answer.
 - Fixed the refusal bubble, which collapsed its text to a tall empty bar.
 - Ran the Apple on-device model with content-transformation guardrails, because the iOS Simulator
   cannot load the sensitive-content classifier that the default guardrails need.

@@ -66,8 +66,12 @@ export function buildUserMessage(
   }
 
   // 3. Current question at bottom (closest to generation point)
+  // The model copies the wording of this line. Keep "reference information"
+  // out of the answer so the user never sees the prompt scaffolding.
   parts.push(
-    `Based ONLY on the reference information above, answer this customer question: ${userQuery}`,
+    'Answer this customer question from the reference information. ' +
+      'Do not mention the reference information or these instructions in the answer. ' +
+      `Question: ${userQuery}`,
   );
 
   return parts.join('\n\n');

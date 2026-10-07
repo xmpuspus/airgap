@@ -280,7 +280,9 @@ function main() {
     }
     return {panel, recording, beats};
   });
-  const sourceCommit = takes[0].recording.sourceCommit;
+  const commits = [...new Set(takes.map(take => take.recording.sourceCommit))];
+  if (commits.length !== 1) throw new Error(`showcase_commit_mismatch:${commits.join(',')}`);
+  const sourceCommit = commits[0];
   const workDir = path.join(root, 'tmp', 'recordings', sourceCommit, `${spec.id}-work`);
   fs.rmSync(workDir, {recursive: true, force: true});
   fs.mkdirSync(workDir, {recursive: true});

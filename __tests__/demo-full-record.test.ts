@@ -36,6 +36,14 @@ describe('buildUserMessage record cap', () => {
     const message = buildUserMessage('q', [longDoc], undefined, {contextChars: null});
     expect(message).toContain('Source: https://example.gov.ph/page (checked 2026-10-07).');
   });
+
+  it('tells the model not to mention the reference block', () => {
+    const message = buildUserMessage('Who is the secretary?', [longDoc]);
+    const instruction = message.split('\n\n').at(-1) ?? '';
+    expect(instruction).toContain('Do not mention the reference information');
+    expect(instruction).not.toMatch(/^Based ONLY on/);
+    expect(instruction.endsWith('Who is the secretary?')).toBe(true);
+  });
 });
 
 describe('demo answers show the whole record', () => {

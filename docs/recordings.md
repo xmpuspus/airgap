@@ -1,10 +1,11 @@
 # Record release GIFs
 
-Airgap keeps thirteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
-joint README flow, nine industry recordings, and one comparison GIF. The government services
-template has two industry recordings, an Android take with the downloaded model and an iOS take
-with the Apple on-device model. The comparison GIF puts its ten-prompt takes next to published
-replies. Each GIF must come from a named target and a committed application state.
+Airgap keeps fifteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
+joint README flow, nine industry recordings, two ten-prompt takes, and one comparison GIF. The
+government services template has two industry recordings, an Android take with the downloaded
+model and an iOS take with the Apple on-device model. The comparison GIF puts the two ten-prompt
+takes next to published replies. Each GIF must come from a named target and a committed
+application state.
 
 ## Needed tools
 

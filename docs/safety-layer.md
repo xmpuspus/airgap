@@ -46,8 +46,10 @@ quality threshold.
 
 Second, `checkGrounding(answer, retrievedDocs)` looks for unsourced currency amounts and dates.
 Each currency-tagged number and each recognized date in the answer must appear in the retrieved
-text. The amount check handles currency symbols and common currency codes. The date check handles
-ISO dates, slash-form dates, and English month-and-day forms.
+text. The amount check handles currency symbols and common currency codes. The date check reads
+ISO dates, slash-form dates, and English month-and-day forms into month, day, and year parts. A
+record that says `2026-09-25` grounds an answer that says `September 25, 2026`. A different day or
+a different year fails the check.
 
 Set `safety.groundingRules.forbidUnsourcedAmounts` or
 `safety.groundingRules.forbidUnsourcedDates` to `false` only after a domain review. These regular

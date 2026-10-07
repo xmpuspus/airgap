@@ -201,6 +201,57 @@ export function checkConfidence(retrievedDocs: KBDocument[]): {
  * Catches hallucinated prices, made-up promo dates, and fabricated
  * account details. Purely textual — no side effects.
  */
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const MONTH_NAME = '(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\.?';
+// 2026-04-15, 15/04/2026, April 15, Apr. 15, 2026, 15 April 2026
+const DATE_RE = new RegExp(
+  '\\b(?:(\\d{4})-(\\d{2})-(\\d{2})' +
+    '|(\\d{1,2})/(\\d{1,2})/(\\d{2,4})' +
+    `|(${MONTH_NAME})\\s+(\\d{1,2})(?:,?\\s+(\\d{4}))?` +
+    `|(\\d{1,2})\\s+(${MONTH_NAME})(?:,?\\s+(\\d{4}))?)\\b`,
+  'gi',
+);
+
+interface DateParts {
+  month: number;
+  day: number;
+  year: number | null;
+}
+
+function monthIndex(name: string): number {
+  return MONTHS.indexOf(name.slice(0, 3).toLowerCase()) + 1;
+}
+
+// A slash date keeps both the day-first and the month-first reading.
+function parseDates(text: string): Array<{raw: string; readings: DateParts[]}> {
+  const found: Array<{raw: string; readings: DateParts[]}> = [];
+  for (const m of text.matchAll(DATE_RE)) {
+    const readings: DateParts[] = [];
+    if (m[1]) {
+      readings.push({month: Number(m[2]), day: Number(m[3]), year: Number(m[1])});
+    } else if (m[4]) {
+      const year = m[6].length === 4 ? Number(m[6]) : null;
+      readings.push({month: Number(m[4]), day: Number(m[5]), year});
+      readings.push({month: Number(m[5]), day: Number(m[4]), year});
+    } else if (m[7]) {
+      readings.push({month: monthIndex(m[7]), day: Number(m[8]), year: m[9] ? Number(m[9]) : null});
+    } else {
+      readings.push({
+        month: monthIndex(m[11]),
+        day: Number(m[10]),
+        year: m[12] ? Number(m[12]) : null,
+      });
+    }
+    found.push({raw: m[0], readings});
+  }
+  return found;
+}
+
+function sameDate(a: DateParts, b: DateParts): boolean {
+  if (a.month !== b.month || a.day !== b.day) return false;
+  return a.year === null || b.year === null || a.year === b.year;
+}
+
 export function checkGrounding(
   answer: string,
   retrievedDocs: KBDocument[],
@@ -229,16 +280,13 @@ export function checkGrounding(
     }
   }
 
-  // Dates: 2026-04-15, Apr 15, April 15, 15/04/2026
+  // Dates: a record says 2026-09-25 and a model writes September 25, 2026.
+  // Both forms become month, day, and year parts before the comparison.
   if (rules.forbidUnsourcedDates !== false) {
-    const dateRe =
-      /\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}\/\d{1,2}\/\d{2,4}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2})\b/gi;
-    const datesInAnswer = answer.match(dateRe) ?? [];
-    for (const raw of datesInAnswer) {
-      const date = raw.toLowerCase();
-      // "June 30" and "30 June" are the same sourced date in another order.
-      const swapped = date.replace(/^([a-z]+)\s+(\d{1,2})$/, '$2 $1');
-      if (!corpus.includes(date) && !corpus.includes(swapped)) {
+    const sourced = parseDates(corpus).flatMap(date => date.readings);
+    for (const {raw, readings} of parseDates(answer)) {
+      const found = readings.some(reading => sourced.some(date => sameDate(reading, date)));
+      if (!found) {
         issues.push(`Date "${raw}" is not present in the retrieved knowledge base`);
       }
     }
