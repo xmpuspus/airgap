@@ -26,7 +26,7 @@
         },
         {
           "file": "demo/showcase/sources/situation-report-2026-09-22.jpg",
-          "crop": [0, 1244, 1600, 467]
+          "crop": [0, 1244, 1600, 480]
         }
       ]
     },

@@ -29,6 +29,8 @@ const FPS = 10;
 const BACKGROUND = '0x071727';
 const FONT = '/System/Library/Fonts/Helvetica.ttc';
 const MIN_BEAT_SECONDS = 6;
+// Every beat holds its finished answer for a moment before the next card.
+const END_HOLD_SECONDS = 1.5;
 const TITLE_SECONDS = 3;
 
 function rootFromScript() {
@@ -334,10 +336,9 @@ function main() {
       });
       return output;
     });
-    const seconds = Math.max(
-      MIN_BEAT_SECONDS,
-      ...panelVideos.map(video => probeMedia(video).durationSeconds),
-    );
+    const seconds =
+      Math.max(MIN_BEAT_SECONDS, ...panelVideos.map(video => probeMedia(video).durationSeconds)) +
+      END_HOLD_SECONDS;
     const padded = panelVideos.map((video, panelIndex) => {
       const output = path.join(workDir, `beat-${index}-panel-${panelIndex}-padded.mp4`);
       padTo(video, seconds, output);
