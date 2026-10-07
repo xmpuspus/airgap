@@ -159,6 +159,9 @@ Use plain customer language in titles and keywords. Put dates, prices, eligibili
 emergency instructions in the content because the answer checker compares answer amounts and
 dates with retrieved documents.
 
+Set `metadata.verbatim` to `true` on a record that must answer as written, such as an identity
+statement or a legal notice. When that record is the top result, the app shows it without a model.
+
 Import and check content with these commands.
 
 ```bash

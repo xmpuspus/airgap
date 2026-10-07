@@ -27,7 +27,8 @@ minor releases.
 - A `docs/support-bot-minimum.md` page with the eight controls any support bot needs, and a case
   study that maps one public launch to them.
 - A streaming gate that holds model text until the grounding check passes, so an unsourced
-  amount or date never reaches the screen before the refusal.
+  amount or date never reaches the screen.
+- `metadata.verbatim` on a knowledge record, which answers as written with no model phrasing.
 - Publisher, source URL, checked date, and review status in the source drawer when a record
   carries that metadata.
 - A test that validates every example configuration at startup rules.
@@ -49,6 +50,8 @@ minor releases.
 - Matched a prose date in an answer to an ISO date in the record, so `September 25, 2026` passes
   against `2026-09-25`.
 - Told the model not to repeat the "reference information" wording in its answer.
+- Showed the retrieved records instead of a refusal when model text fails the grounding check.
+  The answer chip says that the model did not answer and quotes the unsourced value.
 - Fixed the refusal bubble, which collapsed its text to a tall empty bar.
 - Ran the Apple on-device model with content-transformation guardrails, because the iOS Simulator
   cannot load the sensitive-content classifier that the default guardrails need.

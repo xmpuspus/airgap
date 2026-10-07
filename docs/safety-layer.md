@@ -55,8 +55,11 @@ Set `safety.groundingRules.forbidUnsourcedAmounts` or
 `safety.groundingRules.forbidUnsourcedDates` to `false` only after a domain review. These regular
 expressions do not catch unsupported names, procedures, eligibility rules, or ordinary numbers.
 
-When a check fails, the orchestrator replaces the answer with the matching refusal text. The logger
-records the rejection reason and leaves out the raw rejected answer by default.
+When the grounding check fails, the orchestrator shows the retrieved records instead of the model
+text. The answer chip then says that the model did not answer and quotes the first unsourced
+amount or date. The logger records the rejection reason and leaves out the raw rejected answer by
+default. A record with `metadata.verbatim` set to `true` skips the model, so an identity statement
+or a legal notice reads the same in every run.
 
 ## Refusal text follows a fixed order
 

@@ -22,10 +22,10 @@ name: Airgap government services showcase recording, Apple model
 - takeScreenshot: ${SHOT_PREFIX}-chat
 # Beat 1: the viral prompt.
 - tapOn: 'Current president'
-# The view hierarchy is empty while the Apple model runs, so wait for the
-# answer chip or the failure label, then keep the screenshot as evidence.
+# The view hierarchy is empty while the Apple model runs, so wait for a word
+# that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(Apple on-device model|.*did not answer.*)'
+    visible: '(?s).*(Marcos|pco\.gov\.ph/photos).*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-president
@@ -55,10 +55,10 @@ name: Airgap government services showcase recording, Apple model
 - inputText: 'Who is the president of the United States?'
 - hideKeyboard
 - tapOn: 'Send message'
-# The view hierarchy is empty while the Apple model runs, so wait for the
-# answer chip or the failure label, then keep the screenshot as evidence.
+# The view hierarchy is empty while the Apple model runs, so wait for a word
+# that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(Apple on-device model|.*did not answer.*)'
+    visible: '(?s).*(another country|other country|Philippine national government|Airgap demo configuration).*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-scope
@@ -67,10 +67,9 @@ name: Airgap government services showcase recording, Apple model
 - inputText: 'Sino ka?'
 - hideKeyboard
 - tapOn: 'Send message'
-# The view hierarchy is empty while the Apple model runs, so wait for the
-# answer chip or the failure label, then keep the screenshot as evidence.
+# The identity record answers as written, so wait for its own words.
 - extendedWaitUntil:
-    visible: '(Apple on-device model|.*did not answer.*)'
+    visible: '(?s).*open-source Airgap kit.*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-identity
@@ -89,10 +88,10 @@ name: Airgap government services showcase recording, Apple model
 - inputText: 'Who is the DICT secretary?'
 - hideKeyboard
 - tapOn: 'Send message'
-# The view hierarchy is empty while the Apple model runs, so wait for the
-# answer chip or the failure label, then keep the screenshot as evidence.
+# The view hierarchy is empty while the Apple model runs, so wait for a word
+# that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(Apple on-device model|.*did not answer.*)'
+    visible: '(?s).*(Aguda|ghost-internet).*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-dict
@@ -101,10 +100,10 @@ name: Airgap government services showcase recording, Apple model
 - inputText: 'Who is the vice president?'
 - hideKeyboard
 - tapOn: 'Send message'
-# The view hierarchy is empty while the Apple model runs, so wait for the
-# answer chip or the failure label, then keep the screenshot as evidence.
+# The view hierarchy is empty while the Apple model runs, so wait for a word
+# that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(Apple on-device model|.*did not answer.*)'
+    visible: '(?s).*(Duterte|ovp\.gov\.ph).*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-vp
@@ -123,10 +122,10 @@ name: Airgap government services showcase recording, Apple model
 - inputText: 'Paano kumuha ng passport?'
 - hideKeyboard
 - tapOn: 'Send message'
-# The view hierarchy is empty while the Apple model runs, so wait for the
-# answer chip or the failure label, then keep the screenshot as evidence.
+# The view hierarchy is empty while the Apple model runs, so wait for a word
+# that only the new answer or its record can show.
 - extendedWaitUntil:
-    visible: '(Apple on-device model|.*did not answer.*)'
+    visible: '(?s).*(dfa\.gov\.ph|passport\.gov\.ph).*'
     timeout: 180000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-passport

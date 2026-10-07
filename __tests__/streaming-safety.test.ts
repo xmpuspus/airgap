@@ -1,5 +1,5 @@
 // Streamed model text must never show an unsourced amount or date, even for a
-// moment, before the final answer check replaces it with a refusal.
+// moment, before the final answer check replaces it with the record.
 
 jest.mock('react-native-fs', () => require('./helpers/rn-mocks').rnFs());
 jest.mock('react-native-mmkv', () => require('./helpers/rn-mocks').rnMmkv());
@@ -69,9 +69,20 @@ describe('streamed answers stay behind the grounding check', () => {
     const shown = forwarded.join('');
     expect(shown).not.toContain('4999');
     expect(shown).not.toContain('Jan 31');
-    expect(response.source).toBe('refusal');
-    expect(response.audit?.refusalReason).toBe('ungrounded_answer');
     expect(response.text).not.toContain('4999');
+  });
+
+  it('shows the record instead and says why the model did not answer', async () => {
+    const response = await processMessage('What is Super Surf 99?');
+
+    expect(response.source).toBe('search');
+    expect(response.text).toContain('Super Surf 99');
+    expect(response.audit?.refusalReason).toBeUndefined();
+    expect(response.audit?.providerFailure).toEqual({
+      providerId: 'llama-rn',
+      reason: 'ungrounded',
+      message: expect.stringMatching(/Amount "PHP 4999"/),
+    });
   });
 });
 

@@ -63,6 +63,7 @@ export interface OrchestratorResponse {
     groundingIssues?: string[];
     providerId?: InferenceProviderId;
     modelIdentity?: string;
+    providerFailure?: MessageAudit['providerFailure'];
   };
 }
 
@@ -414,7 +415,10 @@ async function processMessageInner(
   // the generation. Demo mode bypasses the model load and produces a
   // deterministic streamed reply built from finalResults.
   let generationFailure: MessageAudit['providerFailure'];
-  if ((await generationAvailable()) && finalResults.length > 0) {
+  // A record marked verbatim answers as written. An identity statement or a
+  // legal notice must not change between runs, so no model phrases it.
+  const verbatim = finalResults[0]?.metadata?.verbatim === true;
+  if (!verbatim && (await generationAvailable()) && finalResults.length > 0) {
     // Safety: a weak retrieval refuses before any text streams to the screen.
     const retrieval = checkConfidence(finalResults);
     if (!retrieval.confident) {
@@ -448,36 +452,26 @@ async function processMessageInner(
 
       // Safety: validate the generated answer against the retrieved KB
       const verdict = validateAnswer(response, finalResults);
-      if (!verdict.allow || gate.halted) {
-        const refusalText = verdict.refusalText ?? refusalFor('ungrounded_answer');
+      if (verdict.allow && !gate.halted) {
         addToHistory('user', text);
-        addToHistory('bot', refusalText);
+        addToHistory('bot', response);
+        lastRecordAnswer = {text: response, docIds: finalResults.map(d => d.id)};
         return {
-          text: refusalText,
-          source: 'refusal',
+          text: response,
+          source: 'llm',
           audit: {
             kbDocIds: finalResults.map(d => d.id),
             confidence: verdict.confidence,
-            refusalReason: verdict.reason,
-            groundingIssues: verdict.issues,
             providerId,
             modelIdentity,
           },
         };
       }
-
-      addToHistory('user', text);
-      addToHistory('bot', response);
-      lastRecordAnswer = {text: response, docIds: finalResults.map(d => d.id)};
-      return {
-        text: response,
-        source: 'llm',
-        audit: {
-          kbDocIds: finalResults.map(d => d.id),
-          confidence: verdict.confidence,
-          providerId,
-          modelIdentity,
-        },
+      // The records answer instead, and the chip says why the model did not.
+      generationFailure = {
+        providerId,
+        reason: 'ungrounded',
+        message: verdict.issues[0] ?? 'Streamed text failed the grounding check',
       };
     } catch (err) {
       logger.warn('orchestrator', 'LLM generation failed, falling back to search', {
