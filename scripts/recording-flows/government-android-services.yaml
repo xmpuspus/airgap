@@ -3,8 +3,8 @@ name: Airgap government services take, service prompts, Android model
 ---
 # Five service prompts: a fee, a requirements list, a holiday date, a hotline,
 # and a queued report in airplane mode. The recording script places the model
-# file first, so launchApp keeps state. Model beats wait for the typing label
-# to go away.
+# file first, so launchApp keeps state. Model beats wait for a word that only
+# the finished answer shows: its source line.
 - setAirplaneMode: disabled
 - launchApp
 - extendedWaitUntil:
@@ -30,7 +30,7 @@ name: Airgap government services take, service prompts, Android model
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    notVisible: '.* is thinking\.\.\.'
+    visible: '(?s).*passport-faqs.*'
     timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
@@ -41,7 +41,7 @@ name: Airgap government services take, service prompts, Android model
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    notVisible: '.* is thinking\.\.\.'
+    visible: '(?s).*nbi\.gov\.ph.*'
     timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
@@ -52,7 +52,7 @@ name: Airgap government services take, service prompts, Android model
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    notVisible: '.* is thinking\.\.\.'
+    visible: '(?s).*pco\.gov\.ph/news_releases.*'
     timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
@@ -63,7 +63,7 @@ name: Airgap government services take, service prompts, Android model
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    notVisible: '.* is thinking\.\.\.'
+    visible: '(?s).*sss\.gov\.ph.*'
     timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'

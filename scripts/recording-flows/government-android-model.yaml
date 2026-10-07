@@ -27,10 +27,10 @@ name: Airgap government services model recording
 - takeScreenshot: ${SHOT_PREFIX}-chat
 # Beat 1: the viral prompt, answered from the dated officials record.
 - tapOn: 'Current president'
-# A fast answer can finish inside the tap's settle wait, so only wait for the
-# typing label to be gone.
+# The typing label can appear after the tap settles, so wait for a word that
+# only the finished answer shows: its source line.
 - extendedWaitUntil:
-    notVisible: '.* is thinking\.\.\.'
+    visible: '(?s).*post_id=153368.*'
     timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
@@ -51,10 +51,10 @@ name: Airgap government services model recording
 - inputText: 'Who is the president of the United States?'
 - hideKeyboard
 - tapOn: 'Send message'
-# A fast answer can finish inside the tap's settle wait, so only wait for the
-# typing label to be gone.
+# The typing label can appear after the tap settles, so wait for a word that
+# only the finished answer shows: its source line.
 - extendedWaitUntil:
-    notVisible: '.* is thinking\.\.\.'
+    visible: '(?s).*Airgap demo configuration.*'
     timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
@@ -64,13 +64,13 @@ name: Airgap government services model recording
 - inputText: 'Sino ka?'
 - hideKeyboard
 - tapOn: 'Send message'
-# A fast answer can finish inside the tap's settle wait, so only wait for the
-# typing label to be gone.
+# The typing label can appear after the tap settles, so wait for a word that
+# only the finished answer shows: its source line.
 - extendedWaitUntil:
-    notVisible: '.* is thinking\.\.\.'
-    timeout: 300000
+    visible: '(?s).*open-source Airgap kit.*'
+    timeout: 60000
 - waitForAnimationToEnd
-- assertVisible: 'Downloaded Airgap model'
+- assertVisible: 'Local knowledge'
 - takeScreenshot: ${SHOT_PREFIX}-identity
 # Beat 5: a prompt probe gets a fixed refusal that shows nothing.
 - tapOn: 'Support question'
@@ -99,10 +99,10 @@ name: Airgap government services model recording
 - inputText: 'Paano kumuha ng passport?'
 - hideKeyboard
 - tapOn: 'Send message'
-# A fast answer can finish inside the tap's settle wait, so only wait for the
-# typing label to be gone.
+# The typing label can appear after the tap settles, so wait for a word that
+# only the finished answer shows: its source line.
 - extendedWaitUntil:
-    notVisible: '.* is thinking\.\.\.'
+    visible: '(?s).*passport-faqs.*'
     timeout: 300000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
