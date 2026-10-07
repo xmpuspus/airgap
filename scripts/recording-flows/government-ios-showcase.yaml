@@ -36,14 +36,11 @@ name: Airgap government services showcase recording, Apple model
 - inputText: 'sigurado ka dyan?'
 - hideKeyboard
 - tapOn: 'Send message'
+# Code repeats the last record-backed answer at once, so no model wait here.
 - extendedWaitUntil:
-    visible: '.* is thinking\.\.\.'
-    timeout: 15000
-- extendedWaitUntil:
-    notVisible: '.* is thinking\.\.\.'
-    timeout: 120000
+    visible: '(?s).*record has not changed.*'
+    timeout: 30000
 - waitForAnimationToEnd
-- assertVisible: 'Apple on-device model'
 - takeScreenshot: ${SHOT_PREFIX}-challenge
 # Beat 3: date and time come from the device clock.
 - tapOn: 'Support question'

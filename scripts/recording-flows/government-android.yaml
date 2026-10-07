@@ -36,13 +36,7 @@ name: Airgap government services replay recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible: '(?i)sigurado ka dyan.*'
-    timeout: 15000
-- extendedWaitUntil:
-    visible:
-      text: 'Document answer'
-      below:
-        text: '(?i)sigurado ka dyan.*'
+    visible: '(?s).*record has not changed.*'
     timeout: 40000
 - waitForAnimationToEnd
 - takeScreenshot: ${SHOT_PREFIX}-challenge

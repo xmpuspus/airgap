@@ -29,7 +29,8 @@ Airgap: `brand.botName`, `safety.topicBlocklist`, and a scope record in the know
 record store, not from the model's confidence. A bot that apologizes and changes its answer under
 doubt has no record behind either answer.
 
-Airgap: the follow-up detector re-runs the record search, and the prompt repeats the record.
+Airgap: code answers a doubt check with the last record-backed answer and its sources. The model
+is not asked again.
 
 ## 4. Check before display
 

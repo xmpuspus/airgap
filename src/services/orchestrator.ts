@@ -14,6 +14,7 @@ import {
 } from '../utils/promptBuilder';
 import {isFollowUp, expandQuery} from '../utils/followUpDetector';
 import {formatDeviceClock, isClockQuestion} from '../utils/deviceClock';
+import {isDoubtCheck} from '../utils/doubtCheck';
 import {
   config,
   brand,
@@ -97,9 +98,13 @@ export function getConversationHistory(): ConversationTurn[] {
   return conversationHistory;
 }
 
+// The last answer that came from records, so a doubt check can repeat it.
+let lastRecordAnswer: {text: string; docIds: string[]} | null = null;
+
 export function clearConversationHistory(): void {
   ensureHistoryLoaded();
   conversationHistory = [];
+  lastRecordAnswer = null;
   conversationStore.clear();
 }
 
@@ -153,6 +158,23 @@ async function processMessageInner(
       text: response,
       source: 'system',
       suggestedReplies: quickReplies as QuickReply[],
+    };
+  }
+
+  // 2a. A doubt check repeats the last record-backed answer from the record
+  // store. The model is not asked again, so the answer cannot move. Any other
+  // kind of answer clears the memory, so a doubt after a refusal gets no replay.
+  const previousRecordAnswer = lastRecordAnswer;
+  lastRecordAnswer = null;
+  if (isDoubtCheck(text) && previousRecordAnswer) {
+    const response = `Yes. The record has not changed:\n\n${previousRecordAnswer.text}`;
+    addToHistory('user', text);
+    addToHistory('bot', response);
+    lastRecordAnswer = previousRecordAnswer;
+    return {
+      text: response,
+      source: 'search',
+      audit: {kbDocIds: previousRecordAnswer.docIds, confidence: 1},
     };
   }
 
@@ -446,6 +468,7 @@ async function processMessageInner(
 
       addToHistory('user', text);
       addToHistory('bot', response);
+      lastRecordAnswer = {text: response, docIds: finalResults.map(d => d.id)};
       return {
         text: response,
         source: 'llm',
@@ -474,6 +497,7 @@ async function processMessageInner(
     const response = formatted;
     addToHistory('user', text);
     addToHistory('bot', response);
+    lastRecordAnswer = {text: response, docIds: finalResults.map(d => d.id)};
     return {
       text: response,
       source: 'search',
