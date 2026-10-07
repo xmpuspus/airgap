@@ -150,6 +150,8 @@ export class LLMService {
       logger.info('LLM', `Generated in ${elapsed}ms`, {
         tokens: result.text.split(/\s+/).length,
         elapsed,
+        // Prompt and token rates from the runtime, for device benchmarks.
+        timings: result.timings,
       });
 
       return result.text;

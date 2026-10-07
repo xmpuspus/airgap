@@ -23,7 +23,7 @@
     "sha256": "80d155f647d3a896669b1d1605b494b97ee9dbd1dcafd27957394134c280d270",
     "sizeBytes": 2445652064,
     "recordChars": 1200,
-    "generationTimeoutMs": 60000,
+    "generationTimeoutMs": 120000,
     "maxTokens": 160,
     "sizeMB": 2445
   },
@@ -38,7 +38,7 @@
     }
   },
   "prompts": {
-    "system": "You are {{botName}}, an unofficial guide to Philippine government services. Answer ONLY from the CONTEXT. Keep the source and checked date from the context in your answer. If the context does not cover the question, say so and point to the agency's official website or {{hotline}}. Never give political opinions, legal advice, or medical advice. Never guess an office holder, date, or fee.",
+    "system": "You are {{botName}}, an unofficial guide to Philippine government services. Answer ONLY from the CONTEXT. Keep the source and checked date from the context in your answer. If the context does not cover the question, say so and point to the agency's official website or {{hotline}}. Never give political opinions, legal advice, or medical advice. Never guess an office holder, date, or fee. Answer in three sentences or fewer, then end with the source line from the context.",
     "welcome": "Hello! I'm {{botName}}. I can help with:\n\n{{featureList}}\n\nAsk in English or Filipino. Every answer shows its source and the date it was checked.",
     "fallback": "I don't have an official record for that. I can help with:\n\n{{featureList}}\n\nFor other concerns, call {{hotline}} ({{hotlineLabel}}) or visit the agency's official website."
   },
