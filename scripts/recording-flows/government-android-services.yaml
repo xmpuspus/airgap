@@ -32,6 +32,11 @@ name: Airgap government services take, service prompts, Android model
 - extendedWaitUntil:
     visible: '(?s).*passport-faqs.*'
     timeout: 300000
+# The source line streams before the answer ends, so wait for the typing
+# label to go away as well.
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 120000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-fee
@@ -43,6 +48,9 @@ name: Airgap government services take, service prompts, Android model
 - extendedWaitUntil:
     visible: '(?s).*nbi\.gov\.ph.*'
     timeout: 300000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 120000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-requirements
@@ -54,6 +62,9 @@ name: Airgap government services take, service prompts, Android model
 - extendedWaitUntil:
     visible: '(?s).*pco\.gov\.ph/news_releases.*'
     timeout: 300000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 120000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-holiday
@@ -65,6 +76,9 @@ name: Airgap government services take, service prompts, Android model
 - extendedWaitUntil:
     visible: '(?s).*sss\.gov\.ph.*'
     timeout: 300000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 120000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-hotline

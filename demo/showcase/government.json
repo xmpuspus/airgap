@@ -74,7 +74,7 @@
       "images": [
         {
           "file": "demo/showcase/sources/chatgenie-prompt-leak-post.jpg",
-          "crop": [441, 205, 423, 370]
+          "crop": [441, 205, 423, 375]
         }
       ]
     }

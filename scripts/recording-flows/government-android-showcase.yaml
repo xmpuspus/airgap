@@ -31,6 +31,11 @@ name: Airgap government services showcase recording, Android model
 - extendedWaitUntil:
     visible: '(?s).*post_id=153368.*'
     timeout: 300000
+# The source line streams before the answer ends, so wait for the typing
+# label to go away as well.
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 120000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-president
@@ -65,6 +70,9 @@ name: Airgap government services showcase recording, Android model
 - extendedWaitUntil:
     visible: '(?s).*Airgap demo configuration.*'
     timeout: 300000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 120000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-scope
@@ -101,6 +109,9 @@ name: Airgap government services showcase recording, Android model
 - extendedWaitUntil:
     visible: '(?s).*ghost-internet-projects.*'
     timeout: 300000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 120000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-dict
@@ -114,6 +125,9 @@ name: Airgap government services showcase recording, Android model
 - extendedWaitUntil:
     visible: '(?s).*ovp\.gov\.ph/category.*'
     timeout: 300000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 120000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-vp
@@ -148,6 +162,9 @@ name: Airgap government services showcase recording, Android model
 - extendedWaitUntil:
     visible: '(?s).*passport-faqs.*'
     timeout: 300000
+- extendedWaitUntil:
+    notVisible: '.* is thinking\.\.\.'
+    timeout: 120000
 - waitForAnimationToEnd
 - assertVisible: 'Downloaded Airgap model'
 - takeScreenshot: ${SHOT_PREFIX}-offline-passport
