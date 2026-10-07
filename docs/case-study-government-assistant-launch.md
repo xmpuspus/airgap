@@ -69,9 +69,10 @@ takes use the same records, the same prompt, and the same checks. The model phra
 never chooses the record, the tool, or the refusal.
 
 [`demo/airgap-showcase-government.gif`](../demo/airgap-showcase-government.gif) puts the
-ten-prompt take next to one quote card per prompt. Each card quotes the published reply and says
-where the quote came from. Three prompts have a published reply. The other seven cards say so,
-because nobody on this project reproduced the production chat. The six-prompt take in
+ten-prompt take next to one card per prompt. Five cards show crops of the published screenshots
+in [`demo/showcase/sources/`](../demo/showcase/sources/README.md), with the news banner, and say
+where each came from. The other five cards say that no reply was published, because nobody on
+this project reproduced the production chat. The six-prompt take in
 [`demo/industry-government.gif`](../demo/industry-government.gif) shows beats 1, 2, 4, 5, 6,
 and 10.
 

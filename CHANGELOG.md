@@ -12,8 +12,9 @@ minor releases.
   holidays, hotlines, and service steps, plus golden and adversarial cases that replay the
   2026-09-21 eGovPH assistant failures. Two recordings replay six and ten prompts with Gemma 4
   E2B on an Android emulator.
-- A comparison GIF builder that puts one quote card per published reply next to the recorded
-  takes, with a `showcase` recording kind and a `virtual-device-model` provider evidence class.
+- A comparison GIF builder that puts one card per prompt, with crops of the published
+  screenshots or the quoted reply, next to the recorded take, with a `showcase` recording kind
+  and a `virtual-device-model` provider evidence class.
 - A model recording path in the industry runner: `--llm-mode`, `--provider`, `--model-file`, and
   `--platform ios`, with a streamed model copy into the app directory.
 - `model.recordChars` and `model.generationTimeoutMs` in the configuration contract.

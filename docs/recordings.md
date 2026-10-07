@@ -159,8 +159,9 @@ The rebuild resets `loopReviewed` to `false`. Inspect the new public loops befor
 
 The comparison needs one ten-prompt take per panel in the spec. Record it with `--kind showcase`
 and the ten-prompt flow, then build the comparison from the spec. The left card of each beat
-quotes a published reply and says where it came from. Nothing on the left is a recording of
-another app. The builder prints each panel's playback speed from the manifest.
+shows crops of the published screenshots in `demo/showcase/sources/`, or the quoted reply when
+no screenshot exists, and says where the evidence came from. Nothing on the left is a recording
+of another app. The builder prints each panel's playback speed from the manifest.
 
 ```bash
 node scripts/record-industries.mjs \

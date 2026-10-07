@@ -159,8 +159,18 @@ function annotateText(text) {
   return text.replace(/%/g, '%%').replace(/^@/, ' @');
 }
 
-function renderTextImage({width, height, blocks, output}) {
+const CARD_INNER = CARD_WIDTH - 36;
+
+// Each image is a crop of a published screenshot, scaled to the card width
+// with a one-pixel border, placed at its top edge y.
+function renderTextImage({width, height, blocks, images = [], output}) {
   const args = ['-size', `${width}x${height}`, `xc:#${BACKGROUND.slice(2)}`, '-font', FONT];
+  for (const image of images) {
+    const [x, y, w, h] = image.crop;
+    args.push('(', image.file, '-crop', `${w}x${h}+${x}+${y}`, '+repage');
+    args.push('-resize', `${CARD_INNER - 2}x`, '-bordercolor', '#2A3B52', '-border', '1', ')');
+    args.push('-geometry', `+18+${image.y}`, '-composite');
+  }
   args.push('-interline-spacing', '5');
   for (const block of blocks) {
     args.push('-fill', block.color, '-pointsize', String(block.size));
@@ -168,6 +178,11 @@ function renderTextImage({width, height, blocks, output}) {
   }
   args.push(output);
   run('magick', args);
+}
+
+function imageHeight(crop) {
+  const [, , w, h] = crop;
+  return Math.round(((CARD_INNER - 2) * h) / w) + 2;
 }
 
 function imageToVideo({image, seconds, output}) {
@@ -193,25 +208,30 @@ function imageToVideo({image, seconds, output}) {
   ]);
 }
 
-function renderCard({workDir, index, heading, beat, footer, seconds, output}) {
+// A beat with published screenshots shows their crops in place of the quote.
+// A beat without one shows the quote text, or the note that none exists.
+function renderCard({root, workDir, index, heading, beat, footer, seconds, output}) {
   const prompt = wrap(`"${beat.prompt}"`, 34);
-  const theirs = wrap(beat.theirs, 38);
   const promptY = 60;
-  const theirsY = promptY + prompt.split('\n').length * 23 + 18;
-  const evidenceY = theirsY + theirs.split('\n').length * 21 + 16;
-  const image = path.join(workDir, `card-${index}.png`);
-  renderTextImage({
-    width: CARD_WIDTH,
-    height: PANEL_HEIGHT,
-    blocks: [
-      {text: heading, size: 14, color: '#9FB3C8', y: 24},
-      {text: prompt, size: 18, color: 'white', y: promptY},
-      {text: theirs, size: 16, color: '#FFD28A', y: theirsY},
-      {text: wrap(beat.evidence || ' ', 44), size: 12, color: '#9FB3C8', y: evidenceY},
-      {text: wrap(footer, 46), size: 11, color: '#6B7F94', y: PANEL_HEIGHT - 70},
-    ],
-    output: image,
+  let y = promptY + prompt.split('\n').length * 23 + 14;
+  const images = (beat.images ?? []).map(image => {
+    const placed = {file: path.resolve(root, image.file), crop: image.crop, y};
+    y += imageHeight(image.crop) + 8;
+    return placed;
   });
+  const blocks = [
+    {text: heading, size: 14, color: '#9FB3C8', y: 24},
+    {text: prompt, size: 18, color: 'white', y: promptY},
+  ];
+  if (images.length === 0) {
+    const theirs = wrap(beat.theirs, 38);
+    blocks.push({text: theirs, size: 16, color: '#FFD28A', y: y + 4});
+    y += theirs.split('\n').length * 21 + 20;
+  }
+  blocks.push({text: wrap(beat.evidence || ' ', 44), size: 12, color: '#9FB3C8', y: y + 4});
+  blocks.push({text: wrap(footer, 46), size: 11, color: '#6B7F94', y: PANEL_HEIGHT - 44});
+  const image = path.join(workDir, `card-${index}.png`);
+  renderTextImage({width: CARD_WIDTH, height: PANEL_HEIGHT, blocks, images, output: image});
   imageToVideo({image, seconds, output});
 }
 
@@ -318,7 +338,16 @@ function main() {
       return output;
     });
     const card = path.join(workDir, `beat-${index}-card.mp4`);
-    renderCard({workDir, index, heading: spec.leftHeading, beat, footer, seconds, output: card});
+    renderCard({
+      root,
+      workDir,
+      index,
+      heading: spec.leftHeading,
+      beat,
+      footer,
+      seconds,
+      output: card,
+    });
     const composed = path.join(workDir, `beat-${index}.mp4`);
     stack([card, ...padded], composed);
     beatVideos.push(composed);
