@@ -86,8 +86,10 @@ name: Airgap government services Apple model recording
 # The simulator recorder loses its last few dozen captured frames at the
 # stop, and a still screen adds no frames. A slow four-second drag of the
 # list by two percent keeps frames coming, so the finished answer stays in.
+# The drag starts in the left gutter: a long hold on a bubble opens the
+# copy action, which logs a deprecation warning toast.
 - swipe:
-    start: 50%, 50%
-    end: 50%, 52%
+    start: 4%, 50%
+    end: 4%, 52%
     duration: 4000
 - stopRecording
