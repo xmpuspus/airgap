@@ -38,7 +38,7 @@
       "images": [
         {
           "file": "demo/showcase/sources/situation-report-2026-09-22.jpg",
-          "crop": [800, 244, 767, 567]
+          "crop": [800, 244, 767, 600]
         }
       ]
     },
@@ -74,7 +74,7 @@
       "images": [
         {
           "file": "demo/showcase/sources/chatgenie-prompt-leak-post.jpg",
-          "crop": [441, 205, 423, 378]
+          "crop": [441, 205, 423, 370]
         }
       ]
     }

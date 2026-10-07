@@ -27,7 +27,9 @@ One checked recording replays the six prompts listed below with a real on-device
 [Android emulator take](../../demo/industry-government.gif) runs the downloaded Gemma 4 E2B file.
 It does not prove phone speed. The manifest in `demo/recordings.json` records the model.
 A second GIF, [`airgap-showcase-government.gif`](../../demo/airgap-showcase-government.gif), puts
-a ten-prompt take next to the published replies of the 2026-09-21 launch.
+a ten-prompt take next to the published replies of the 2026-09-21 launch. A third,
+[`airgap-showcase-government-services.gif`](../../demo/airgap-showcase-government-services.gif),
+shows a fee, a requirements list, a holiday date, a hotline, and a report queued in airplane mode.
 
 ## Public records instead of fiction
 

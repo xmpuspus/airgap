@@ -1,10 +1,11 @@
 # Record release GIFs
 
-Airgap keeps thirteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
-joint README flow, eight industry recordings, one ten-prompt take, and one comparison GIF. The
-government services recordings run the downloaded Gemma 4 model on an Android emulator. The
-comparison GIF puts the ten-prompt take next to published replies. Each GIF must come from a
-named target and a committed application state.
+Airgap keeps fifteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
+joint README flow, eight industry recordings, a ten-prompt take, a five-prompt service take, and
+two composed GIFs with a card per beat. The government services recordings run the downloaded
+Gemma 4 model on an Android emulator. One composed GIF puts the ten-prompt take next to
+published replies. The other labels each service prompt with the control it proves. Each GIF
+must come from a named target and a committed application state.
 
 ## Needed tools
 
@@ -176,6 +177,25 @@ node scripts/record-industries.mjs \
   --model-file models/gemma-4-e2b-it-q3ks.gguf
 
 node scripts/build-showcase-gif.mjs --spec demo/showcase/government.json
+```
+
+A spec beat can pick a take beat by its one-based `takeBeat` number, so a spec can skip beats.
+The service take uses `--take services` for its own output name and the five-prompt flow.
+
+```bash
+node scripts/record-industries.mjs \
+  --device emulator-5554 \
+  --commit <40-character-commit> \
+  --industry government-services \
+  --kind showcase \
+  --take services \
+  --flow government-android-services.yaml \
+  --llm-mode offline-only \
+  --provider llama-rn \
+  --model-identity gemma-4-e2b-it-q3ks.gguf \
+  --model-file models/gemma-4-e2b-it-q3ks.gguf
+
+node scripts/build-showcase-gif.mjs --spec demo/showcase/government-services.json
 ```
 
 ## Inspect every output

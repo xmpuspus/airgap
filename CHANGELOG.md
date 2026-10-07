@@ -13,8 +13,11 @@ minor releases.
   2026-09-21 eGovPH assistant failures. Two recordings replay six and ten prompts with Gemma 4
   E2B on an Android emulator.
 - A comparison GIF builder that puts one card per prompt, with crops of the published
-  screenshots or the quoted reply, next to the recorded take, with a `showcase` recording kind
-  and a `virtual-device-model` provider evidence class.
+  screenshots or a note on what the beat proves, next to the recorded take, with a `showcase`
+  recording kind and a `virtual-device-model` provider evidence class. A second composed GIF
+  shows five service prompts: a fee, a requirements list, a holiday date, a hotline, and a report
+  queued in airplane mode.
+- A built-in reply for a queued action when the template defines no `prompts.queued` text.
 - A model recording path in the industry runner: `--llm-mode`, `--provider`, `--model-file`, and
   `--platform ios`, with a streamed model copy into the app directory.
 - `model.recordChars` and `model.generationTimeoutMs` in the configuration contract.

@@ -68,11 +68,17 @@ The takes run Gemma 4 E2B as a 3-bit GGUF file through `llama.rn` on an Android 
 takes use the same records, the same prompt, and the same checks. The model phrases the record. It
 never chooses the record, the tool, or the refusal.
 
-[`demo/airgap-showcase-government.gif`](../demo/airgap-showcase-government.gif) puts the
-ten-prompt take next to one card per prompt. Five cards show crops of the published screenshots
-in [`demo/showcase/sources/`](../demo/showcase/sources/README.md), with the news banner, and say
-where each came from. The other five cards say that no reply was published, because nobody on
-this project reproduced the production chat. The six-prompt take in
+[`demo/airgap-showcase-government.gif`](../demo/airgap-showcase-government.gif) puts five beats
+of the ten-prompt take next to crops of the published screenshots in
+[`demo/showcase/sources/`](../demo/showcase/sources/README.md), with the news banner, and says
+where each came from. The five prompts with no published reply stay out of that GIF, because
+nobody on this project reproduced the production chat.
+
+[`demo/airgap-showcase-government-services.gif`](../demo/airgap-showcase-government-services.gif)
+shows the job the assistant was built for: a passport fee, the NBI clearance requirements, the
+Bonifacio Day date, the SSS hotline, and a concern report queued in airplane mode. Each card says
+which control the beat proves. Every answer carries its source line, and the queued report goes
+to the outbox without any model. The six-prompt take in
 [`demo/industry-government.gif`](../demo/industry-government.gif) shows beats 1, 2, 4, 5, 6,
 and 10.
 
