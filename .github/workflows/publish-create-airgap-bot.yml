@@ -27,7 +27,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: ../..
+        # A step-level path is relative to the workspace root, not to the
+        # job default above.
+        working-directory: .
 
       - name: Type check
         run: npx tsc --noEmit
@@ -40,7 +42,9 @@ jobs:
 
       - name: Test packed offline scaffold
         run: npm run cli:pack:test
-        working-directory: ../..
+        # A step-level path is relative to the workspace root, not to the
+        # job default above.
+        working-directory: .
 
       - name: Conflict check
         env:
