@@ -82,6 +82,46 @@ Compile Apple Foundation Models support with Xcode 26 or newer. The
 app still deploys to iOS 15.1 and reports the Apple provider as unavailable on
 older or ineligible devices.
 
+## The minimum architecture for a public-facing support bot
+
+The diagram below is the whole request path for one user message. Code owns every
+control point. The model only phrases retrieved records. The nine controls behind it
+are in [`docs/support-bot-minimum.md`](docs/support-bot-minimum.md).
+
+```text
+INPUTS
+  Config (JSON)     brand, bot identity, scope, provider policy, blocklist,
+                    refusal templates
+  Knowledge store   dated records {as_of, content, keywords, source_url},
+                    signed and versioned bundles
+
+REQUEST PIPELINE  (per user message, in this order)
+  1. Guardrails           blocklist + prompt-probe rules -> fixed refusal,
+     (code)               no inference
+  2. Deterministic        greeting; "sigurado ka dyan?" -> replay the last
+     intents (code)       record-backed answer; date/time -> system clock;
+                          action phrases -> keyword router
+  3. Retrieval (local)    BM25 over the knowledge store -> top-k dated records
+  4. Verbatim records     identity and scope records render as written,
+                          model skipped
+  5. Provider chain       policy picks one: on-device model (Gemma 4 E2B)
+     (model phrases only) | demo formatter | optional cloud
+                          prompt = rules + retrieved records + question
+  6. Output validation    every amount, date, and name in the answer must
+     (code, before render) exist in the records; streamed tokens are gated;
+                          on a miss -> show the record and say why
+  7. Provenance           provider, model file, knowledge version, and
+                          sources shown on the answer
+
+ACTIONS  (the model never decides)
+  keyword router -> REST backend connector | offline outbox with
+  idempotency keys and receipts
+
+EVIDENCE  (on every change)
+  golden + adversarial prompt sets per template, run in CI
+  recordings pinned to their source commit; manifest validated in CI
+```
+
 ## One answer pipeline, five providers
 
 Airgap routes every model-made answer through the same provider contract. Before each
