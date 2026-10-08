@@ -87,6 +87,13 @@ older or ineligible devices.
 The diagram below is the whole request path for one user message. Code owns every
 control point. The model only phrases retrieved records. The nine controls behind it
 are in [`docs/support-bot-minimum.md`](docs/support-bot-minimum.md).
+[`docs/diagrams/build_minimum_support_bot.py`](docs/diagrams/build_minimum_support_bot.py)
+writes the draw.io source and the PNG.
+
+![Request path of the minimum public-facing support bot: inputs, the seven pipeline stages, the actions lane, and the evidence lane](docs/diagrams/minimum-support-bot.png)
+
+<details>
+<summary>Text version of the diagram</summary>
 
 ```text
 INPUTS
