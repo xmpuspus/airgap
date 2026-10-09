@@ -28,6 +28,7 @@
   "package-lock.json",
   "web/lab.html",
   "web/lab.css",
+  "web/styles.css",
   "web/lab.js",
   "web/public-core.js",
   "web/data/public-service.json",

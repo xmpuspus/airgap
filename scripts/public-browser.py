@@ -192,7 +192,7 @@ def qa(browser, base, pack):
         expect(page.locator("#workspace")).to_be_visible()
         served_hashes = page.evaluate("""async () => {
           const result = {};
-          const files = ['lab.html','lab.js','lab.css',
+          const files = ['lab.html','lab.js','lab.css','styles.css',
                          'public-core.js','data/public-service.json'];
           for (const file of files) {
             const response = await fetch(file, {cache:'no-store'});
@@ -490,18 +490,27 @@ def capture(browser, base, pack, source_commit, committed_files):
             )
             retrieved = model_row("retrieved-model")
             controlled = model_row("application-controls")
+            rows = {
+                row["variant"]: row
+                for row in pack["experiment"]["rows"]
+                if row["questionId"] == "nbi" and row["repetition"] == 1
+            }
+            retrieved_stop = rows["retrieved-model"]["stopReason"]
+            controlled_stop = rows["application-controls"]["stopReason"]
             page.locator(retrieved + " > summary").click()
             beat(
-                "Recorded NBI model response stopped at maxTokens",
+                f"Recorded NBI model response; stop reason {retrieved_stop}",
                 retrieved + " .raw-output",
             )
             page.locator(controlled + " > summary").click()
             beat(
-                "Recorded controlled NBI response also stopped at maxTokens",
+                f"Recorded controlled NBI response; stop reason {controlled_stop}",
                 controlled + " .raw-output",
             )
             beat(
-                "Application replaced the incomplete output with the source record",
+                "Application used the complete source-record fallback"
+                if rows["application-controls"]["fallback"]
+                else "Application accepted the model output",
                 controlled + " .displayed-answer",
             )
         else:
@@ -671,8 +680,8 @@ def capture(browser, base, pack, source_commit, committed_files):
         ),
         "model-controls": (
             "Model Controls",
-            "Shows recorded NBI outputs that reached the token limit, "
-            "then the complete source-record fallback.",
+            "Compares actual recorded NBI model outputs "
+            "with the answer the application displays.",
         ),
         "demo-kit": (
             "Demo Kit",

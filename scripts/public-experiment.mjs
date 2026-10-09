@@ -260,7 +260,13 @@ export async function runExperiment(modelPath) {
   fs.writeFileSync(path.join(rawDir, 'report.json'), bytes, {flag: 'wx'});
   const failed = report.rows.some(row => row.error);
   status(failed ? 'failed' : 'complete', report.rows.length, {reportSha256: sha256(bytes)});
-  if (!failed) fs.writeFileSync(output, bytes);
+  if (!failed) {
+    // A same-directory rename leaves the previous public report intact until
+    // the complete replacement is written. The immutable run copy stays above.
+    const pending = path.join(path.dirname(output), `.experiment-${runId}.json`);
+    fs.writeFileSync(pending, bytes, {flag: 'wx'});
+    fs.renameSync(pending, output);
+  }
   return report;
 }
 
