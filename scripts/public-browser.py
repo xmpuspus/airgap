@@ -5,6 +5,7 @@ import functools
 import hashlib
 import http.server
 import importlib.metadata
+import importlib.util
 import json
 import pathlib
 import platform
@@ -22,6 +23,11 @@ from public_media import FEATURES, prepare_release, promote_release
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "tmp/public-showcase/browser"
 RAW = ROOT / "tmp/recordings/public-service"
+check_spec = importlib.util.spec_from_file_location(
+    "public_browser_checks", ROOT / "__tests__/public_browser_checks.py"
+)
+browser_checks = importlib.util.module_from_spec(check_spec)
+check_spec.loader.exec_module(browser_checks)
 
 
 def digest(file):
@@ -182,12 +188,14 @@ def qa(browser, base, pack):
         "viewports": [],
     }
     for width, height in [(1280, 900), (390, 844)]:
+        recovery = browser_checks.check_loading_recovery(browser, width, height, pack)
         context = browser.new_context(
             viewport={"width": width, "height": height}, accept_downloads=True
         )
         page = context.new_page()
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
+        landing = browser_checks.check_landing(page, base, width, pack)
         page.goto(base + "/lab.html", wait_until="networkidle")
         expect(page.locator("#workspace")).to_be_visible()
         served_hashes = page.evaluate("""async () => {
@@ -274,6 +282,7 @@ def qa(browser, base, pack):
         page.locator("#ask-form button[type=submit]").click()
         expect(page.locator("#route")).to_contain_text("clarification")
         page.locator("[data-view=workbench]").click()
+        browser_checks.check_historical_dates(page)
         page.locator("#check-impact").click()
         expect(page.locator("#impact-results li")).to_have_count(3)
         require(
@@ -359,6 +368,8 @@ def qa(browser, base, pack):
             {
                 "width": width,
                 "height": height,
+                "loadingRecovery": recovery,
+                "landing": landing,
                 "servedFiles": served_hashes,
                 "sequentialCases": rows,
                 "replays": 2,

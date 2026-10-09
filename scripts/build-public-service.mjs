@@ -12,6 +12,7 @@ import {
   sha256,
   readJson,
 } from './public-service.mjs';
+import {syncPublicSiteAssets} from './public-site-assets.mjs';
 
 const checkOnly = process.argv.includes('--check');
 function emit(file, contents) {
@@ -60,6 +61,7 @@ emit(
   'web/data/public-service.json',
   prettier.format(JSON.stringify(pack), {...formatting, parser: 'json'}),
 );
+if (!checkOnly) syncPublicSiteAssets();
 process.stdout.write(
   `${checkOnly ? 'Verified' : 'Built'} shared core, ${records.length} service records, ${
     historical.length

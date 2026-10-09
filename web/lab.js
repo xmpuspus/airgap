@@ -319,12 +319,14 @@ async function load() {
     $('revision-comparison').replaceChildren(
       ...pack.historical.map(record => {
         const div = node('div', '');
+        const dates = [`Source document dated ${record.metadata.documentDatedAt}`];
+        if (record.metadata.proclamationSignedAt)
+          dates.push(`Proclamation signed ${record.metadata.proclamationSignedAt}`);
+        if (record.metadata.proclamationIssuedAt)
+          dates.push(`Proclamation issued ${record.metadata.proclamationIssuedAt}`);
         div.append(
           node('h3', record.title),
-          node(
-            'p',
-            `Published ${record.metadata.publishedAt} · observance ${record.metadata.value}`,
-          ),
+          node('p', `${dates.join(' · ')} · observance ${record.metadata.value}`),
           node('blockquote', record.metadata.excerpt),
           node(
             'p',

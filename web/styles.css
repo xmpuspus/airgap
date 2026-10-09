@@ -619,6 +619,20 @@ h3 {
   margin-top: 8px;
 }
 
+#public-service code {
+  overflow-wrap: anywhere;
+}
+
+#public-service pre {
+  max-width: 100%;
+  padding: 18px;
+  border-radius: var(--radius-sm);
+  background: var(--navy-950);
+  color: #d7e8f5;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
 .cta {
   padding-block: 60px;
   background: var(--cyan-800);

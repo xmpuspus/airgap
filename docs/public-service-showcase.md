@@ -61,7 +61,7 @@ Current records have a maintainer review deadline of 2026-11-09. After that
 date, the real clock causes a refusal until a maintainer fetches and reviews
 the sources again. The project sets this review date. The 2026 holiday record
 expires at year end. Historical records need an explicit year and stay outside
-live service answers.
+responses about current services.
 
 ## Apply the actual 2024 holiday amendment
 
@@ -72,8 +72,12 @@ follow-up.
 
 The original source is full Proclamation 368, attached to the Customs memo on
 PDF pages 2–4. Page 3 lists 21 August 2024. The proclamation was signed on 11
-October 2023. The replacement source is BIR Circular 102-2024, dated 16 August 2024. Its one page reports that Proclamation 665, issued on 15 August, moved
+October 2023. The covering Customs memo is dated 2 January 2024.
+
+The replacement source is BIR Circular 102-2024, dated 16 August 2024. Its one page reports that Proclamation 665, issued on 15 August, moved
 the date to 23 August 2024. The circular has no proclamation attachment.
+The workbench labels signing, issue and document dates separately. The archived
+documents do not give their web publication dates.
 
 Both government PDFs are archived with separate unedited OCR text, page
 references, and hashes. The workbench changes loaded records. It does not
@@ -163,6 +167,21 @@ in order with concurrency 1. It repeats replay, asks a free-form question and
 doubt, applies and rolls back the historical source, and reads downloaded bytes.
 The scripts do not intercept network responses or replace providers.
 
+Recovery checks serve copies of the actual site with the source-pack file absent.
+The static server returns HTTP 404. The browser checks the error and retries
+while the file is still missing, then retries after the exact pack bytes are
+restored. The recovered page must answer a real question. These are authored
+filesystem faults, not government source changes. Temporary site copies are
+removed when the check exits.
+
+`npm run public:qa` writes `tmp/public-showcase/browser/qa.json` with the observed
+HTTP statuses, recovered pack hash and PNG screenshots encoded as Base64 under each
+viewport's `loadingRecovery.screenshots` and `landing.screenshot` fields. Decode
+the `base64` bytes as PNG and compare their SHA-256 with `sha256` before visual
+inspection. Keeping these images in that report preserves the declared QA output
+paths. The six normal lab screenshots and eight downloaded JSON files keep
+their existing paths. Automated assertions do not replace visual inspection.
+
 Raw WebM files, screenshots, downloads, and contact sheets stay ignored under
 `tmp/recordings/public-service` and `tmp/public-showcase`. The
 [capture index](../demo/public-service/README.md) lists derived GIF and MP4 paths.
@@ -204,7 +223,8 @@ npm run recordings:validate
 recomputed judgments, fallback decisions, and recording identities. Missing
 experiments or unreviewed recordings fail. `public:qa` checks that generated
 files are current, starts the site, and writes screenshots and downloaded JSON
-under ignored `tmp`. It does not build or replace release assets.
+under ignored `tmp`. It copies the saved media into the ignored site-assets
+directory, but it does not rebuild or replace the reviewed demo recordings.
 `public:capture` and `public:demo` replace recordings and need a new review.
 Their screenshots still need independent inspection.
 

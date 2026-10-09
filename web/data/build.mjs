@@ -18,6 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {syncPublicSiteAssets} from '../../scripts/public-site-assets.mjs';
 
 const KNOWN_VERTICALS = [
   'airline',
@@ -63,6 +64,13 @@ function defaultRoot() {
 
 function readJson(p) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+
+function writeJsonIfChanged(file, value) {
+  const contents = JSON.stringify(value, null, 2) + '\n';
+  if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== contents) {
+    fs.writeFileSync(file, contents);
+  }
 }
 
 function summarizeKnowledge(kbDir) {
@@ -153,7 +161,7 @@ function main() {
   const manifest = {release: packageJson.version, verticals: []};
   for (const vertical of KNOWN_VERTICALS) {
     const data = buildVertical(root, vertical);
-    fs.writeFileSync(path.join(outDir, `${vertical}.json`), JSON.stringify(data, null, 2) + '\n');
+    writeJsonIfChanged(path.join(outDir, `${vertical}.json`), data);
     manifest.verticals.push({
       vertical,
       label: data.label,
@@ -162,11 +170,12 @@ function main() {
       kbDocs: data.knowledge.totalDocs,
     });
   }
-  fs.writeFileSync(path.join(outDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+  writeJsonIfChanged(path.join(outDir, 'manifest.json'), manifest);
   const copiedGifs = copyGifs(root);
+  const publicAssets = syncPublicSiteAssets(root, {required: !args.root});
   // eslint-disable-next-line no-console
   console.log(
-    `[web] wrote ${KNOWN_VERTICALS.length} vertical files + manifest to ${outDir}; copied ${copiedGifs} GIFs to assets/gifs/`,
+    `[web] built ${KNOWN_VERTICALS.length} vertical files + manifest in ${outDir}; copied ${copiedGifs} existing GIFs and ${publicAssets.length} public-service files`,
   );
 }
 

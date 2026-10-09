@@ -1,4 +1,8 @@
-# Local replay, model and browser checks pass
+# Checks recorded for the reviewed capture source
+
+This table describes the reviewed capture source below. It is not a current-source
+acceptance receipt. The October 9 review corrections to historical date labels and
+browser recovery coverage require a new capture and independent visual inspection.
 
 The reviewed capture source is `fc909287c2bacd4a5f9e6642c877c61f75d28e21`.
 The core is SHA-256 `1633ec0bfc058932d6e43bb78a5c2967ddd80d99f2c8616531b796dee95531cd`.
@@ -12,11 +16,11 @@ Its [independent review](experiment-review.md) covers every displayed answer and
 | Core and CLI tests                                 | PASS: 11 tests, including incomplete evidence and both historical source orders                                |
 | Capture recovery tests                             | PASS: four tests using real media bytes and filesystem operations                                              |
 | Industry runner                                    | PASS: 77 checks across eight templates                                                                         |
-| Jest                                               | PASS: 63 suites, 589 tests                                                                                     |
+| Jest                                               | PASS at the capture source; run `npm test -- --runInBand` for current totals                                   |
 | Types, ESLint and formatting                       | PASS                                                                                                           |
 | Knowledge validation and local documentation links | PASS                                                                                                           |
 | `public:verify`                                    | PASS: source bytes, 54 experiment rows, timings, decisions and five reviewed captures                          |
-| `recordings:validate`                              | PASS: 16 release recordings, including the five new browser clips                                              |
+| `recordings:validate`                              | PASS: 16 existing release recordings plus five public-service browser clips                                    |
 | Browser QA                                         | PASS: all 21 cases at both widths, two replays, free-form and doubt, source apply and rollback, JSON downloads |
 | Visual review                                      | PASS: six screenshots and all five full GIF loops                                                              |
 
@@ -62,10 +66,12 @@ It does not measure general model quality, phone performance or Gemma 4 behavior
 The pinned runner cannot load the supplied Gemma 4 architecture. There was no fresh
 native-device run. Existing native recordings keep their separate identities.
 
-The historical revision pair is tested in both orders. A current expired-predecessor
-and fresh-successor pair was not fetched, so that transition has no empirical test here.
-No dates or clocks were invented to fill that gap. Current records have real review
-deadlines and need source review before those deadlines expire.
+The historical revision pair is tested in both orders. The real 2025 Proclamation 727
+calendar now tests refusal after its annual scope ends. The same test adds the checked
+2026 Proclamation 1006 record and verifies selection in either order. Its catalogue
+rollover metadata is authored application configuration, not a claim of legal amendment.
+All 13 core tests passed with the real clock on 2026-10-09. Current records need source
+review before their maintainer deadlines expire.
 
 The frozen checker remains SHA-256
 `36058f62e6b496d4a186e044ef7760afde1744bde88d04f5c022a4af36aed5ec`.

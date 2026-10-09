@@ -53,8 +53,6 @@ jobs:
         run: |
           node web/data/build.mjs
           npm run public:build
-          mkdir -p web/demos/public-service
-          cp demo/public-service/*.gif demo/public-service/*.mp4 web/demos/public-service/
 
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5

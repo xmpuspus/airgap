@@ -93,9 +93,101 @@
       <section class="trust-bar" aria-label="Project facts">
         <div class="container trust-grid">
           <p><strong>MIT</strong><span>licensed</span></p>
-          <p><strong>7</strong><span>industry templates</span></p>
+          <p><strong>8</strong><span>industry templates</span></p>
           <p><strong>Android + iOS</strong><span>React Native targets</span></p>
           <p><strong>Ed25519</strong><span>Signed knowledge updates</span></p>
+        </div>
+      </section>
+
+      <section class="section" id="public-service">
+        <div class="container boundary-grid">
+          <div class="section-heading">
+            <p class="eyebrow">Philippine public-service tools</p>
+            <h2>Ask a question. Check what answered.</h2>
+            <p>
+              Try six dated public-service records and 21 maintainer-authored cases in the
+              <a href="lab.html">Evidence Lab</a>. Live questions use the same deterministic core as
+              the CLI and government mobile path. Model results are separately labeled recorded host
+              runs. No agency transactions are connected.
+            </p>
+            <h3>First run and replay</h3>
+            <p>From a checkout, use Node 22.18 or newer and Python 3:</p>
+            <pre><code>npm ci
+node scripts/public-service.mjs replay --json
+npm run public:build
+python3 -m http.server --bind 127.0.0.1 --directory web 8080</code></pre>
+            <p>Open <code>http://127.0.0.1:8080/lab.html</code>.</p>
+            <p>
+              Read the
+              <a href="https://github.com/xmpuspus/airgap/blob/main/docs/public-service-showcase.md"
+                >setup, evidence and contribution guide</a
+              >
+              for source dates, measured limits and how to add a sourced case.
+            </p>
+            <h3>Reproduce all five recordings</h3>
+            <pre><code>npm run public:demo -- --model /path/to/local-gemma-3.gguf</code></pre>
+            <p>
+              Requires committed source, FFmpeg and a compatible local model. The kit checks
+              dependencies, runs the experiment and exports actual browser GIFs and MP4s. Review
+              each full loop before sharing it. No API key is required.
+            </p>
+          </div>
+          <div class="boundary-cards">
+            <article data-feature="replay-pack">
+              <h3>PH Public-Service Replay Pack</h3>
+              <p>
+                Run all 21 cases in order, including the 15 government golden queries. Check
+                answers, routes and exact source hashes. Prompts are authored tests, not citizen
+                reports.
+              </p>
+              <a href="assets/gifs/public-service/replay-pack.gif">Watch replay GIF</a>
+              ·
+              <a href="assets/gifs/public-service/replay-pack.mp4">Replay MP4</a>
+            </article>
+            <article data-feature="evidence-lab">
+              <h3>Break Kuya B: Evidence Lab</h3>
+              <p>
+                Type a question, ask a doubt follow-up, inspect the source excerpt and download
+                reusable case JSON. Unsupported details refuse; agency requests report unavailable.
+              </p>
+              <a href="lab.html">Try the lab</a> ·
+              <a href="assets/gifs/public-service/evidence-lab.gif">Watch lab GIF</a>
+              ·
+              <a href="assets/gifs/public-service/evidence-lab.mp4">Lab MP4</a>
+            </article>
+            <article data-feature="source-workbench">
+              <h3>Source Update Workbench</h3>
+              <p>
+                Compare the real 2024 Ninoy Aquino Day amendment, review its authorities, apply it
+                locally and roll back. Historical records cannot answer current holiday questions.
+              </p>
+              <a href="assets/gifs/public-service/source-workbench.gif">Watch source update GIF</a>
+              ·
+              <a href="assets/gifs/public-service/source-workbench.mp4">Source update MP4</a>
+            </article>
+            <article data-feature="model-controls">
+              <h3>Model and Controls Experiment</h3>
+              <p>
+                Inspect all 54 recorded results from six questions and three repetitions per
+                variant. The Gemma 3 CPU host run made 36 model calls; all 18 controlled answers
+                fell back to records. Measurements cover this CPU host and these six questions.
+              </p>
+              <a href="assets/gifs/public-service/model-controls.gif">Watch model results GIF</a>
+              ·
+              <a href="assets/gifs/public-service/model-controls.mp4">Model results MP4</a>
+            </article>
+            <article data-feature="demo-kit">
+              <h3>Reproducible Demo Kit</h3>
+              <p>
+                Run setup, replay, local inference, browser checks and capture with one command.
+                Export five GIFs and MP4s with source, code, model and timing evidence. Raw footage
+                stays local.
+              </p>
+              <a href="assets/gifs/public-service/demo-kit.gif">Watch demo kit GIF</a>
+              ·
+              <a href="assets/gifs/public-service/demo-kit.mp4">Demo kit MP4</a>
+            </article>
+          </div>
         </div>
       </section>
 

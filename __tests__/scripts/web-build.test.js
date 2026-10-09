@@ -6,10 +6,14 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const {createHash} = require('node:crypto');
 const {execFileSync} = require('node:child_process');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const SCRIPT = path.join(ROOT, 'web', 'data', 'build.mjs');
+const PUBLIC_BUILD = path.join(ROOT, 'scripts', 'build-public-service.mjs');
+const PUBLIC_RECORDINGS = path.join(ROOT, 'demo', 'public-service', 'recordings.json');
+const PUBLIC_SITE_MEDIA = path.join(ROOT, 'web', 'assets', 'gifs', 'public-service');
 const README = path.join(ROOT, 'README.md');
 const INDEX = path.join(ROOT, 'web', 'index.html');
 const STYLES = path.join(ROOT, 'web', 'styles.css');
@@ -69,6 +73,23 @@ describe('web/data/build.mjs', () => {
     expect(fs.readFileSync(manifestPath, 'utf8')).toBe(first);
   });
 
+  test('an unchanged build preserves generated JSON contents and timestamps', () => {
+    const files = [...VERTICALS, 'manifest'].map(v => path.join(ROOT, 'web', 'data', `${v}.json`));
+    const snapshot = () =>
+      files.map(file => {
+        const stat = fs.statSync(file, {bigint: true});
+        return {
+          contents: fs.readFileSync(file, 'utf8'),
+          mtimeNs: stat.mtimeNs,
+          ctimeNs: stat.ctimeNs,
+          inode: stat.ino,
+        };
+      });
+    const before = snapshot();
+    execFileSync('node', [SCRIPT], {cwd: ROOT, encoding: 'utf8'});
+    expect(snapshot()).toEqual(before);
+  });
+
   test('demo GIFs land in web/assets/gifs after a build', () => {
     const dir = path.join(ROOT, 'web', 'assets', 'gifs');
     const gifs = fs.existsSync(dir)
@@ -79,6 +100,40 @@ describe('web/data/build.mjs', () => {
 
   test('the primary app recording lands beside the industry recordings', () => {
     expect(fs.existsSync(path.join(ROOT, 'web', 'assets', 'gifs', 'airgap-demo.gif'))).toBe(true);
+  });
+
+  test('web and public builds copy five reviewed GIF and MP4 pairs without changing bytes', () => {
+    const recordings = JSON.parse(fs.readFileSync(PUBLIC_RECORDINGS, 'utf8')).recordings;
+    expect(recordings.map(recording => recording.feature).sort()).toEqual([
+      'demo-kit',
+      'evidence-lab',
+      'model-controls',
+      'replay-pack',
+      'source-workbench',
+    ]);
+    expect(recordings).toHaveLength(5);
+    for (const recording of recordings) {
+      for (const [pathField, hashField] of [
+        ['output', 'sha256'],
+        ['shareMp4', 'shareMp4Sha256'],
+      ]) {
+        const source = path.join(ROOT, recording[pathField]);
+        const target = path.join(PUBLIC_SITE_MEDIA, path.basename(source));
+        const sourceBytes = fs.readFileSync(source);
+        const targetBytes = fs.readFileSync(target);
+        expect(targetBytes.equals(sourceBytes)).toBe(true);
+        expect(createHash('sha256').update(targetBytes).digest('hex')).toBe(recording[hashField]);
+      }
+    }
+
+    const missingCopy = path.join(PUBLIC_SITE_MEDIA, 'replay-pack.gif');
+    fs.unlinkSync(missingCopy);
+    execFileSync('node', [PUBLIC_BUILD], {cwd: ROOT, encoding: 'utf8'});
+    expect(
+      fs
+        .readFileSync(missingCopy)
+        .equals(fs.readFileSync(path.join(ROOT, 'demo', 'public-service', 'replay-pack.gif'))),
+    ).toBe(true);
   });
 
   test('per-vertical config snippet has no marketing language', () => {

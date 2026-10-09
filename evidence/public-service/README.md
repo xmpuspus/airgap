@@ -30,6 +30,17 @@ errors elsewhere on the pages, so only the visually checked Ninoy Aquino Day exc
 enter the workbench. `python3 scripts/public-source-ocr.py` repeats extraction with Poppler
 and Tesseract; changed extraction bytes require a new hash and review before packaging.
 
+The [2025 calendar PDF](sources/boc-cmc-185-2024.pdf) contains Proclamation 727,
+signed 30 October 2024, attached to Customs Circular 185-2024 dated 14 November.
+All four pages were read from the original scan. Its separate
+[unedited OCR](sources/boc-cmc-185-2024.ocr.json) records Tesseract 5.5.1 and the PDF hash.
+The [expiry regression](../../validation/public-service-expiry.json) uses its explicit
+2025 scope to set application validity through 31 December 2025. This is an application
+policy, not a claim that the proclamation was legally repealed. With the real 2026 clock,
+that record alone refuses a current-year question. Adding the checked 2026 record with
+an authored catalogue rollover relation returns the current record in either input order.
+This regression record stays outside the six-record model corpus.
+
 [The current experiment](experiment.json) publishes all 54 measured rows. Its embedded
 criteria identify the fact checks used for that run. Model, core, corpus, runner and criteria
 hashes let the verifier reject stale results. These are host CPU measurements, not a fresh

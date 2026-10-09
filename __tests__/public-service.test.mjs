@@ -22,6 +22,24 @@ import {
 const records = loadPublicRecords();
 const versions = readJson('examples/government-services/historical-revisions.json');
 
+test('historical dates identify the signed proclamation and dated covering documents', () => {
+  const [original, amendment] = versions;
+  const customs = loadSourceArchive(original);
+  const bir = loadSourceArchive(amendment);
+  // These dates come from the archived PDFs, not their upload paths or a clock.
+  assert.match(customs.pages[3].text, /11th dayof october[\s\S]*Twenty Three/i);
+  assert.match(customs.pages[0].text, /DATE : 02 JANUARY 2024/);
+  assert.match(bir.pages[0].text, /August 16, 2024/);
+  assert.match(bir.pages[0].text, /issued on August 15, 2024/);
+  assert.equal(original.metadata.proclamationSignedAt, '2023-10-11');
+  assert.equal(original.metadata.documentDatedAt, '2024-01-02');
+  assert.equal(amendment.metadata.documentDatedAt, '2024-08-16');
+  assert.equal(amendment.metadata.proclamationIssuedAt, '2024-08-15');
+  for (const record of versions) {
+    assert.equal(record.metadata.publishedAt, undefined, 'Publication date is not established');
+  }
+});
+
 test('output gate accepts actual record text and replaces the recorded nonverbatim model outputs', () => {
   // Fixed actual execution protects the regression without inventing model text.
   const report = readJson('evidence/public-service/experiment-pre-source-review.json');
@@ -156,6 +174,41 @@ test('the actual historical successor wins in either input order', () => {
     assert.deepEqual(result.recordIds, ['historical665']);
     assert.match(result.answer, /2024-08-23/);
     assert.equal(result.sources[0].sha256, versions[1].metadata.sourceSha256);
+  }
+});
+
+test('an annual holiday source needs verification after its real calendar year', () => {
+  const expired = readJson('validation/public-service-expiry.json').record;
+  // loadSourceArchive verifies the PDF hash, OCR hash, repository-relative PDF
+  // lineage, source URL, and the unedited excerpt before this record is used.
+  const archived = loadSourceArchive(expired);
+  assert.equal(archived.sourceSha256, expired.metadata.sourceSha256);
+  assert.equal(archived.sourcePath, expired.metadata.sourcePath);
+  assert.match(
+    archived.pages[2].text,
+    /SECTION 1\. The following regular holidays and special days for the year 2025\nshall be observed in the country:/,
+  );
+
+  const oldOnly = answerPublicService('What are the regular holidays this year?', [expired]);
+  assert.equal(oldOnly.answerPath, 'refusal');
+  assert.equal(oldOnly.reason, 'needs_verification');
+
+  const approved2026 = structuredClone(records.find(record => record.id === 'hol-001'));
+  assert.ok(approved2026);
+  // This clone preserves the approved Proclamation 1006 record. The two added
+  // fields are application catalogue metadata, not a claim of legal amendment.
+  approved2026.metadata.claimKey = expired.metadata.claimKey;
+  approved2026.metadata.supersedes = expired.id;
+  approved2026.metadata.catalogueRelation =
+    'Application catalogue annual rollover. It does not state a legal amendment.';
+  for (const ordered of [
+    [expired, approved2026],
+    [approved2026, expired],
+  ]) {
+    const result = answerPublicService('What are the regular holidays this year?', ordered);
+    assert.equal(result.answerPath, 'record');
+    assert.deepEqual(result.recordIds, ['hol-001']);
+    assert.match(result.answer, /Proclamation No\. 1006/);
   }
 });
 

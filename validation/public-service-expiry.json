@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "origin": "Maintainer-authored regression record. The source facts come from the archived government PDF and unedited local OCR.",
+  "record": {
+    "id": "hol-2025-expiry",
+    "category": "holidays",
+    "title": "Regular holidays in the Philippines for 2025",
+    "content": "Proclamation No. 727 declares regular holidays and special days for 2025. Source: https://customs.gov.ph/wp-content/uploads/2024/11/2024CMC-185-2024.pdf (certified copy attached to Customs Memorandum Circular 185-2024, PDF page 3; signed 30 October 2024; checked 2026-10-09).",
+    "keywords": ["regular holidays 2025", "holidays", "regular holiday", "annual holiday calendar"],
+    "tags": ["holidays", "regular holiday", "2025"],
+    "metadata": {
+      "source": "https://customs.gov.ph/wp-content/uploads/2024/11/2024CMC-185-2024.pdf",
+      "publisher": "Bureau of Customs",
+      "asOf": "2026-10-09",
+      "reviewBy": "2026-11-09",
+      "publicEvidence": true,
+      "language": "en",
+      "translationStatus": "original",
+      "sourceTransport": "Downloaded official PDF with unedited local OCR text extraction",
+      "year": 2025,
+      "validFrom": "2025-01-01",
+      "validTo": "2025-12-31",
+      "validityBasis": "Application validity follows the proclamation's explicit calendar-year 2025 scope; this is not a legal repeal date.",
+      "claimKey": "app.catalogue.ph.regular-holidays.current",
+      "catalogueRelation": "Application catalogue annual rollover key. It does not state a legal amendment.",
+      "sourcePath": "evidence/public-service/sources/boc-cmc-185-2024.pdf",
+      "sourceSha256": "5ec4a61f27d0107b44b34b4d77905e9c2c78e0f6aa9bb1ab6e18e95a3c26208f",
+      "excerpt": "SECTION 1. The following regular holidays and special days for the year 2025\nshall be observed in the country:",
+      "sourceTextPath": "evidence/public-service/sources/boc-cmc-185-2024.ocr.json",
+      "sourceTextSha256": "6e420926368259460467681dec9d05035220649325c605748fcaab0e66323ac6",
+      "sourceClass": "Customs Memorandum Circular 185-2024 with certified Proclamation 727 copy attached on PDF pages 2-4",
+      "proclamationSignedAt": "2024-10-30",
+      "page": 3
+    }
+  }
+}
