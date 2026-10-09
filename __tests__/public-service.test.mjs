@@ -209,7 +209,23 @@ test('an annual holiday source needs verification after its real calendar year',
     assert.equal(result.answerPath, 'record');
     assert.deepEqual(result.recordIds, ['hol-001']);
     assert.match(result.answer, /Proclamation No\. 1006/);
+    const requested2025 = answerPublicService('What are the regular holidays in 2025?', ordered);
+    assert.equal(requested2025.answerPath, 'refusal');
+    assert.equal(requested2025.reason, 'needs_verification');
+    assert.deepEqual(requested2025.recordIds, [expired.id]);
+    assert.doesNotMatch(requested2025.answer, /Proclamation No\. 1006/);
+    const session = {};
+    const requested2026 = answerPublicService('regular holidays 2026', ordered, session);
+    assert.equal(requested2026.answerPath, 'record');
+    assert.deepEqual(requested2026.recordIds, ['hol-001']);
+    assert.deepEqual(answerPublicService('Are you sure?', ordered, session).recordIds, ['hol-001']);
+    const comparison = answerPublicService('regular holidays 2025 and 2026', ordered);
+    assert.equal(comparison.answerPath, 'refusal');
+    assert.deepEqual(comparison.recordIds, []);
   }
+  const missing2025 = answerPublicService('What are the regular holidays in 2025?', [approved2026]);
+  assert.equal(missing2025.answerPath, 'refusal');
+  assert.deepEqual(missing2025.recordIds, []);
 });
 
 test('another real source cannot be accepted under the planned citation', () => {

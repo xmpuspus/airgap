@@ -192,10 +192,19 @@ export function assessAnswerability(
 ): {allowed: boolean; reason: string; records: PublicRecord[]} {
   const ranked = rankPublicRecords(query, candidates);
   if (!ranked.length) return {allowed: false, reason: 'no_supported_record', records: []};
+  const requestedYears = [...new Set(query.match(/\b(?:19|20)\d{2}\b/g) ?? [])];
+  if (requestedYears.length > 1)
+    return {allowed: false, reason: 'no_supported_record', records: []};
   let first = ranked[0];
   const claimKey = first.metadata?.claimKey;
   if (claimKey) {
-    const claims = candidates.filter(r => r.metadata?.claimKey === claimKey);
+    // A newer annual calendar must not replace the year the person asked for.
+    const claims = candidates.filter(
+      r =>
+        r.metadata?.claimKey === claimKey &&
+        (!requestedYears.length || Number(r.metadata?.year) === Number(requestedYears[0])),
+    );
+    if (!claims.length) return {allowed: false, reason: 'no_supported_record', records: []};
     const active = claims.filter(r => !claims.some(other => other.metadata?.supersedes === r.id));
     if (active.length !== 1) {
       return {allowed: false, reason: 'conflicting_sources', records: active};
