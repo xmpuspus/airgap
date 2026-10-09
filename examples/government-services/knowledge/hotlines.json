@@ -76,24 +76,28 @@
     "id": "hot-005",
     "category": "hotlines",
     "title": "SSS hotline 1455",
-    "content": "As of 2026-10-07, the SSS hotline is 1455. The official SSS website is www.sss.gov.ph. The SSS handles member contributions, benefits, and loans. The SSS website says regular payment of contributions is essential to qualify for benefits and loans. The page shows no separate contact center number. Source: https://www.sss.gov.ph/ (checked 2026-10-07).",
+    "content": "The SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).",
     "keywords": [
       "SSS",
       "hotline ng SSS",
       "SSS hotline",
       "1455",
       "tawag SSS",
-      "SSS contribution",
-      "SSS loan",
-      "SSS benefits",
-      "social security system",
-      "pension SSS"
+      "social security system"
     ],
     "tags": ["hotlines", "social security", "sss"],
     "metadata": {
       "source": "https://www.sss.gov.ph/",
       "publisher": "Social Security System",
-      "asOf": "2026-10-07"
+      "asOf": "2026-10-09",
+      "sourcePath": "evidence/public-service/sources/sss.json",
+      "sourceSha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+      "excerpt": "SSS Hotline: 1455",
+      "reviewBy": "2026-11-09",
+      "publicEvidence": true,
+      "language": "en",
+      "translationStatus": "original",
+      "sourceTransport": "web open text extraction"
     }
   },
   {

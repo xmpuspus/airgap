@@ -96,7 +96,7 @@ export interface AirgapConfig {
   onboarding: OnboardingSection;
   quickReplies: QuickReplyItem[];
   actions: ActionItem[];
-  backend: BackendSection;
+  backend?: BackendSection;
   queue?: QueueSection;
   support: SupportChannel[];
   locale: LocaleSection;

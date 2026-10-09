@@ -1,0 +1,54 @@
+[
+  {
+    "id": "historical368",
+    "category": "holidays",
+    "title": "Ninoy Aquino Day 2024 under Proclamation 368",
+    "content": "Under the loaded historical Proclamation No. 368, Ninoy Aquino Day in 2024 was scheduled for 2024-08-21. Source: https://customs.gov.ph/wp-content/uploads/2024/01/2024-01-OCOM-MEMO.pdf (attached proclamation, PDF page 3; signed 11 October 2023; checked 2026-10-09).",
+    "keywords": ["Ninoy Aquino Day 2024", "Ninoy Aquino holiday", "2024 holiday"],
+    "tags": ["historical", "2024"],
+    "metadata": {
+      "historical": true,
+      "year": 2024,
+      "claimKey": "ph.ninoy-aquino-day.2024",
+      "value": "2024-08-21",
+      "source": "https://customs.gov.ph/wp-content/uploads/2024/01/2024-01-OCOM-MEMO.pdf",
+      "asOf": "2026-10-09",
+      "publishedAt": "2023-10-11",
+      "validTo": "2024-12-31",
+      "sourcePath": "evidence/public-service/sources/boc-ocom-memo-01-2024.pdf",
+      "sourceSha256": "25122b9ab9b32bf326a5f8f806d2da6d90546de9ecde9ff14ca4e529e8eedc1c",
+      "excerpt": "Ninoy Aquino Day - 21. August (Wednesday)",
+      "sourceTextPath": "evidence/public-service/sources/boc-ocom-memo-01-2024.ocr.json",
+      "sourceTextSha256": "9a70de3e315f9724b09a0530b3b9c1f61b7255450edffa7e2f98ce93f91e14b9",
+      "sourceClass": "Customs memo with full Proclamation 368 attached on PDF pages 2–4",
+      "page": 3
+    }
+  },
+  {
+    "id": "historical665",
+    "category": "holidays",
+    "title": "Ninoy Aquino Day 2024 amendment reported by BIR Circular 102-2024",
+    "content": "BIR Revenue Memorandum Circular 102-2024 reports that Proclamation No. 665 moved Ninoy Aquino Day in 2024 from 2024-08-21 to 2024-08-23. Source: https://bir-cdn.bir.gov.ph/BIR/pdf/RMC%20No.%20102-2024.pdf (one-page circular dated 16 August 2024, reporting the proclamation issued 15 August; checked 2026-10-09).",
+    "keywords": ["Ninoy Aquino Day 2024", "Ninoy Aquino holiday", "2024 holiday"],
+    "tags": ["historical", "2024"],
+    "metadata": {
+      "historical": true,
+      "year": 2024,
+      "claimKey": "ph.ninoy-aquino-day.2024",
+      "value": "2024-08-23",
+      "source": "https://bir-cdn.bir.gov.ph/BIR/pdf/RMC%20No.%20102-2024.pdf",
+      "asOf": "2026-10-09",
+      "publishedAt": "2024-08-16",
+      "validTo": "2024-12-31",
+      "sourcePath": "evidence/public-service/sources/bir-rmc-102-2024.pdf",
+      "sourceSha256": "c6ea58aaf786c87d52cec01cae426cceb3a0ac1b710158066fe05ba9fcb61896",
+      "excerpt": "Aquino Day from August 21, 2024 (Wednesday) to August 23, 2024 (Friday).",
+      "supersedes": "historical368",
+      "sourceTextPath": "evidence/public-service/sources/bir-rmc-102-2024.ocr.json",
+      "sourceTextSha256": "ae8232d21f45e45badb6f2fc989f76e101cf9eee3dce743c2cbe29a2e50fcef9",
+      "sourceClass": "BIR Revenue Memorandum Circular 102-2024 reporting Proclamation 665; no attachment in this one-page PDF",
+      "proclamationIssuedAt": "2024-08-15",
+      "page": 1
+    }
+  }
+]

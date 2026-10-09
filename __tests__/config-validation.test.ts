@@ -95,6 +95,18 @@ describe('validateConfig', () => {
     expect(result.errors).toContain('actions must be a non-empty array');
   });
 
+  test('government can explicitly have no actions or agency backend', () => {
+    const cfg = makeValidConfig({
+      actions: [],
+      backend: undefined,
+      llm: {supportDomain: 'government'},
+    });
+    expect(validateConfig(cfg).errors).toEqual([]);
+    cfg.llm = {supportDomain: 'telco'};
+    expect(validateConfig(cfg).errors).toContain('actions must be a non-empty array');
+    expect(validateConfig(cfg).errors).toContain('backend.type must be one of [mock, rest]');
+  });
+
   // New enterprise fields
   test('valid darkMode values accepted', () => {
     for (const dm of [true, false, 'auto']) {

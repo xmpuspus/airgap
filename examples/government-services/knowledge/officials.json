@@ -3,7 +3,7 @@
     "id": "off-001",
     "category": "officials",
     "title": "President of the Philippines",
-    "content": "As of 2026-10-07, the President of the Philippines is Ferdinand R. Marcos Jr. He took the oath of office as the 17th President on 30 June 2022. The ceremony took place at the National Museum of the Philippines in Manila. Chief Justice Alexander Gesmundo administered the oath. The Presidential Communications Office transcript of his 27 July 2026 State of the Nation Address shows him in office. Source: https://pco.gov.ph/photos/?post_id=153368 (checked 2026-10-07).",
+    "content": "The PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).",
     "keywords": [
       "president",
       "pangulo",
@@ -17,7 +17,19 @@
       "Bongbong Marcos"
     ],
     "tags": ["officials", "executive", "president"],
-    "metadata": {"source": "https://pco.gov.ph/photos/?post_id=153368", "asOf": "2026-10-07"}
+    "metadata": {
+      "source": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+      "asOf": "2026-10-09",
+      "sourcePath": "evidence/public-service/sources/president.json",
+      "sourceSha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+      "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+      "reviewBy": "2026-11-09",
+      "publicEvidence": true,
+      "searchTerms": "named July 2026 SONA transcript",
+      "language": "en",
+      "translationStatus": "original",
+      "sourceTransport": "web search text extraction"
+    }
   },
   {
     "id": "off-002",
@@ -37,7 +49,10 @@
       "Sara Duterte"
     ],
     "tags": ["officials", "executive", "vice president"],
-    "metadata": {"source": "https://www.ovp.gov.ph/category/1/press-release", "asOf": "2026-10-07"}
+    "metadata": {
+      "source": "https://www.ovp.gov.ph/category/1/press-release",
+      "asOf": "2026-10-07"
+    }
   },
   {
     "id": "off-003",

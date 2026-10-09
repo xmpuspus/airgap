@@ -75,32 +75,8 @@
       "value": "What are the regular holidays this year?"
     }
   ],
-  "actions": [
-    {
-      "id": "concern_report",
-      "label": "Report a concern",
-      "keywords": ["report a concern", "file a complaint", "magreklamo", "report an issue"],
-      "requiresOnline": true,
-      "category": "support",
-      "mockResponse": "I can log your concern for the 8888 Citizens' Complaint Center. Describe what happened and which agency is involved."
-    },
-    {
-      "id": "application_status",
-      "label": "Check application status",
-      "keywords": [
-        "status of my application",
-        "track my application",
-        "application status",
-        "status ng application ko"
-      ],
-      "requiresOnline": true,
-      "category": "account",
-      "mockResponse": "Application status needs a verified account with the agency. Open the agency's online portal or call {{hotline}}."
-    }
-  ],
-  "backend": {
-    "type": "mock"
-  },
+  "actions": [],
+  "features": {"offlineQueue": false},
   "support": [
     {
       "type": "phone",
@@ -152,31 +128,7 @@
       "prompt_probe": "I can't share my internal instructions or settings. I answer from official records about Philippine government services. Ask me about an office holder, a holiday, a hotline, a requirement, or a fee."
     }
   },
-  "tools": [
-    {
-      "name": "reportConcern",
-      "description": "Log a concern for the 8888 Citizens' Complaint Center",
-      "keywords": ["report a concern", "file a complaint", "magreklamo", "report an issue"],
-      "offlineQueueEligible": true,
-      "stateChanging": true,
-      "vertical": "government",
-      "backendMethod": "createTicket"
-    },
-    {
-      "name": "checkApplicationStatus",
-      "description": "Check the status of an application on an agency portal",
-      "keywords": [
-        "status of my application",
-        "track my application",
-        "application status",
-        "status ng application ko"
-      ],
-      "offlineQueueEligible": true,
-      "stateChanging": false,
-      "vertical": "government",
-      "backendMethod": "checkApplicationStatus"
-    }
-  ],
+  "tools": [],
   "llm": {
     "mode": "demo",
     "supportDomain": "government",

@@ -20,6 +20,7 @@
  * safety layer is a one-line change in airgap.config.json.
  */
 
+import {checkInputPolicy} from '../core/publicService';
 import type {KBDocument} from '../types/knowledge';
 import {config, brand, interpolate} from '../config/loader';
 import {t} from '../utils/i18n';
@@ -34,22 +35,6 @@ export type RefusalReason =
   | 'not_legal_advice'
   | 'prompt_probe'
   | 'state_changing_offline';
-
-// A request to show, repeat, or override the inner workings: instructions,
-// configuration, tools, code, or the model file. It gets a fixed refusal
-// before retrieval and before any model. The refusal says the assistant
-// cannot share its internal instructions and says nothing about where any of
-// it lives. "The rules for roaming" is a normal question, so a request to see
-// instructions or rules must point at the assistant ("your", "system").
-const PROMPT_PROBE_PATTERNS = [
-  /\b(system|hidden|secret|initial|developer)\s+(prompt|instructions?|message)\b/i,
-  /\b(your|the bot'?s|the assistant'?s)\s+(prompt|instructions|rules|guidelines)\b/i,
-  /\b(ignore|disregard|forget|override|bypass)\b.{0,40}\b(instructions?|rules|prompt|guidelines)\b/i,
-  /\b(repeat|print|output|write|paste)\b.{0,30}\b(words|text|lines|everything|all)\b.{0,20}\babove\b/i,
-  /\b(developer|debug|god|admin)\s+mode\b/i,
-  /\b(your|the bot'?s|the assistant'?s)\s+(config(uration)?|settings|source code|code|model file|tools?)\b/i,
-  /\bjailbreak\b/i,
-];
 
 export interface SafetyVerdict {
   allow: boolean;
@@ -125,35 +110,9 @@ export function checkBlocklist(query: string): {
   blocked: boolean;
   reason?: RefusalReason;
 } {
-  if (!isEnabled()) return {blocked: false};
-
-  if (PROMPT_PROBE_PATTERNS.some(pattern => pattern.test(query))) {
-    logger.info('safetyLayer', 'prompt probe', {});
-    return {blocked: true, reason: 'prompt_probe'};
-  }
-
-  const blocklist = getSafetyConfig().topicBlocklist ?? [];
-  if (blocklist.length === 0) return {blocked: false};
-
-  const lower = query.toLowerCase();
-  for (const entry of blocklist) {
-    // Support "reason:phrase" syntax (e.g. "not_medical_advice:prescribe me")
-    const [rawReason, phraseRaw] = entry.includes(':')
-      ? entry.split(':', 2)
-      : ['blocked_topic', entry];
-    const phrase = (phraseRaw ?? rawReason).trim().toLowerCase();
-    if (!phrase) continue;
-
-    // Word boundary match — avoids matching "prescribe" inside "prescribed"
-    const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const re = new RegExp(`(^|\\W)${escaped}(\\W|$)`, 'i');
-    if (re.test(lower)) {
-      const reason = (rawReason as RefusalReason) || 'blocked_topic';
-      logger.info('safetyLayer', 'blocklist hit', {phrase, reason});
-      return {blocked: true, reason};
-    }
-  }
-  return {blocked: false};
+  const reason = checkInputPolicy(query, getSafetyConfig()) as RefusalReason | undefined;
+  if (reason) logger.info('safetyLayer', 'input policy refusal', {reason});
+  return reason ? {blocked: true, reason} : {blocked: false};
 }
 
 /**

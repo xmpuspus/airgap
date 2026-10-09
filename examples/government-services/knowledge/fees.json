@@ -47,25 +47,30 @@
   {
     "id": "fee-011",
     "category": "fees",
-    "title": "Fees and validity for a Philippine passport",
-    "content": "As of 2026-10-07, the regular passport processing fee is PHP 950. The expedited fee is PHP 1200. The penalty for a lost or mutilated ePassport is PHP 350. A passport for an adult is valid for ten years. A passport for a person under 18 is valid for five years. Appointments are free of charge. The DFA allows rescheduling only for exceptional and emergency reasons, within 6 months of the original date. Source: https://consular.dfa.gov.ph/services/passport/passport-faqs (checked 2026-10-07).",
+    "title": "Passport fees in the DFA 2022 Citizen’s Charter",
+    "content": "The stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).",
     "keywords": [
       "passport fee",
       "magkano ang passport",
       "bayad sa passport",
-      "passport validity",
-      "gaano katagal valid ang passport",
       "expedited passport",
-      "passport price",
-      "lost passport penalty",
-      "passport reschedule"
+      "passport price"
     ],
     "tags": ["passport", "dfa", "fees"],
     "metadata": {
-      "source": "https://consular.dfa.gov.ph/services/passport/passport-faqs",
+      "source": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
       "publisher": "Department of Foreign Affairs",
-      "asOf": "2026-10-07",
-      "agency": "DFA"
+      "asOf": "2026-10-09",
+      "agency": "DFA",
+      "sourcePath": "evidence/public-service/sources/passport-fee.json",
+      "sourceSha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+      "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+      "reviewBy": "2026-11-09",
+      "publicEvidence": true,
+      "searchTerms": "regular passport fee stored DFA charter",
+      "language": "en",
+      "translationStatus": "original",
+      "sourceTransport": "web search text extraction"
     }
   }
 ]

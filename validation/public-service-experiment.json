@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "criteriaOrigin": "Maintainer-authored, checked against the linked primary-source extracts. This is a narrow fact-retention test, not a complete semantic accuracy score.",
+  "questions": [
+    {
+      "id": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "sourcePath": "evidence/public-service/sources/president.json",
+      "sourceFact": "Ferdinand R. Marcos Jr., President of the Philippines",
+      "required": ["Ferdinand", "Marcos"],
+      "affirmative": "Marcos Jr\\.?(?: as| is(?: the)?)? President|President[^.!?]*Ferdinand",
+      "forbidden": ["Biden", "Trump", "Sara Duterte is the President"]
+    },
+    {
+      "id": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "sourcePath": "evidence/public-service/sources/passport-application.json",
+      "sourceFact": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+      "required": ["passport.gov.ph", "free"],
+      "affirmative": "appointments? (?:are|is) free",
+      "forbidden": ["pay for an appointment", "fixer"]
+    },
+    {
+      "id": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "sourcePath": "evidence/public-service/sources/passport-fee.json",
+      "sourceFact": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+      "required": ["950"],
+      "affirmative": "PHP\\s*950 for a regular passport|regular passport[^.!?]*PHP\\s*950",
+      "forbidden": ["regular fee is PHP 130", "regular fee is PHP 1200"]
+    },
+    {
+      "id": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "sourcePath": "evidence/public-service/sources/nbi.json",
+      "sourceFact": "Two (2) Valid Government-issued IDs",
+      "required": ["government", "IDs"],
+      "anyOf": ["two", "2"],
+      "affirmative": "(?:two(?: \\(2\\))?|2) (?:valid )?government-issued IDs",
+      "forbidden": ["no ID", "one valid ID"]
+    },
+    {
+      "id": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "sourcePath": "evidence/public-service/sources/holidays.json",
+      "sourceFact": "Maundy Thursday  | -  | 2 April",
+      "sourceFacts": [
+        "New Year's Day  | -  | 1 January (Thursday)",
+        "Maundy Thursday  | -  | 2 April",
+        "Good Friday  | -  | 3 April",
+        "Araw ng Kagitingan  | -  | 9 April (Thursday)",
+        "Labor Day  | -  | 1 May (Friday)",
+        "Independence Day  | -  | 12 June (Friday)",
+        "National Heroes Day  | -  | 31 August (Last Monday of August)",
+        "Bonifacio Day  | -  | 30 November (Monday)",
+        "Christmas Day  | -  | 25 December (Friday)",
+        "Rizal Day  | -  | 30 December (Wednesday)"
+      ],
+      "required": [
+        "New Year's Day",
+        "2026-01-01",
+        "Maundy Thursday",
+        "2026-04-02",
+        "Good Friday",
+        "2026-04-03",
+        "Araw ng Kagitingan",
+        "2026-04-09",
+        "Labor Day",
+        "2026-05-01",
+        "Independence Day",
+        "2026-06-12",
+        "National Heroes Day",
+        "2026-08-31",
+        "Bonifacio Day",
+        "2026-11-30",
+        "Christmas Day",
+        "2026-12-25",
+        "Rizal Day",
+        "2026-12-30"
+      ],
+      "forbidden": ["2026-04-03 is Maundy"]
+    },
+    {
+      "id": "sss",
+      "query": "Hotline ng SSS?",
+      "sourcePath": "evidence/public-service/sources/sss.json",
+      "sourceFact": "SSS Hotline: 1455",
+      "required": ["1455"],
+      "affirmative": "hotline(?: is| number is|:)? 1455",
+      "forbidden": ["1456", "SSS hotline is 911"]
+    }
+  ]
+}

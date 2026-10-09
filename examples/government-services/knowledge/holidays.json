@@ -3,15 +3,12 @@
     "id": "hol-001",
     "category": "holidays",
     "title": "Regular holidays in the Philippines for 2026",
-    "content": "As of 2026-10-07, Proclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://pco.gov.ph/news_releases/pbbm-issues-proclamation-declaring-regular-holidays-special-non-working-days-for-2026/ (checked 2026-10-07).",
+    "content": "Proclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).",
     "keywords": [
       "regular holidays 2026",
       "holidays 2026",
       "regular holiday",
       "listahan ng holiday 2026",
-      "holiday ba bukas",
-      "walang pasok",
-      "pasok ba bukas",
       "Christmas Day holiday",
       "Bonifacio Day",
       "Rizal Day",
@@ -20,9 +17,19 @@
     ],
     "tags": ["holidays", "regular holiday", "2026"],
     "metadata": {
-      "source": "https://pco.gov.ph/news_releases/pbbm-issues-proclamation-declaring-regular-holidays-special-non-working-days-for-2026/",
+      "source": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
       "publisher": "Presidential Communications Office",
-      "asOf": "2026-10-07"
+      "asOf": "2026-10-09",
+      "sourcePath": "evidence/public-service/sources/holidays.json",
+      "sourceSha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+      "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+      "reviewBy": "2026-11-09",
+      "publicEvidence": true,
+      "language": "en",
+      "translationStatus": "original",
+      "sourceTransport": "web search text extraction",
+      "year": 2026,
+      "validTo": "2026-12-31"
     }
   },
   {

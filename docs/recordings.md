@@ -7,13 +7,37 @@ recordings run the downloaded Gemma 4 model on an Android emulator. One composed
 replay take next to published replies. The other labels each service prompt with the control it
 proves.
 
-Each GIF must come from a named target and a committed application state. `demo/kb-studio.gif`
+Each native GIF must come from a named target and a committed application state. `demo/kb-studio.gif`
 is a terminal recording of the KB Studio tool from `demo/kb-studio.tape`. It is not app
 evidence, so the manifest does not list it.
 
+The [public-service capture kit](public-service-showcase.md) adds five browser targets in
+`demo/public-service/`. They are separate from these sixteen historical native GIFs. The
+new manifest binds committed source and knowledge to exact file hashes. The generated model
+report and browser data pack are hashed separately. The lead commits reviewed source before
+capture, then reviews the derived media. No new native run is claimed.
+
+`npm run public:qa` checks build freshness and drives the sequential desktop/mobile journey,
+checks downloads and source updates, and writes only ignored screenshots and JSON under
+`tmp/public-showcase`. It does not create or replace release assets.
+Run `npm run public:capture` explicitly to record five browser features from the built site
+and saved model report. It writes raw WebM files under ignored `tmp/recordings/public-service`.
+All five exports must succeed in the run's staging directory before the release is replaced.
+The previous release is retained under that run; failed exports leave it unchanged.
+FFmpeg exports uncut GIF and MP4 files without generated
+frames, captions or omitted waits. Each beat records visible text, route, observation time
+and whether it shows recorded model results.
+
+Read all screenshots and watch each full loop before setting `loopReviewed: true` in the
+new manifest. `public:verify` requires all five files, matching runtime/data hashes and
+that review. The existing `recordings:validate` command also checks the new manifest when
+present, while retaining the original sixteen-recording contract. The first host captures
+exist but failed visual review for speed, mobile readability and the wrong model-result row.
+They remain unapproved and require replacement against the corrected source.
+
 ## Needed tools
 
-- Node.js 22.11 or newer
+- Node.js 22.18 or newer
 - FFmpeg and FFprobe
 - ImageMagick 7 for the text cards of the comparison GIF. The cards use the macOS font file
   `/System/Library/Fonts/Helvetica.ttc`, so the comparison build runs on macOS only.

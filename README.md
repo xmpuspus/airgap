@@ -24,13 +24,35 @@ The default demo makes no model request and needs no download. It lets a new
 contributor check retrieval, citations, privacy status, and the interface before
 choosing an inference provider or connecting a backend.
 
+## Try the public-service Evidence Lab
+
+The [local browser lab](web/lab.html) and CLI share the government mobile answer core.
+They replay 21 authored cases, show exact source excerpts and hashes, and apply a real
+historical holiday amendment. A separate tab exposes all outputs from the six-question,
+three-repetition host-model comparison. Live browser questions call no model or agency.
+
+```bash
+npm ci
+node scripts/public-service.mjs replay --json
+npm run public:build
+python3 -m http.server --bind 127.0.0.1 --directory web 8080
+```
+
+Use Node 22.18 or newer; open `http://127.0.0.1:8080/lab.html`.
+The [reproduction guide](docs/public-service-showcase.md) covers first run, source review,
+model limits and contributions. The [capture index](demo/public-service/README.md) records
+the five new GIF/MP4 targets. The first host captures need replacement after visual review;
+the older native GIFs below do not verify this new UI.
+
 ![Published replies of a government assistant on its launch day, next to Kuya B on Gemma 4 E2B](demo/airgap-showcase-government.gif)
 
 The left cards show the published replies of a national government app's assistant on its
 2026-09-21 launch day. The right panel shows Kuya B, the `government-services` template, on the
-same five prompts with Gemma 4 E2B as a 3-bit file on an Android 15 emulator.
+same five prompts on an Android 15 emulator configured with a 3-bit Gemma 4 E2B file.
+The first answer uses the model; the challenge, clock, identity and refusal are code paths.
 
-Each answer comes from a dated record with a source line. A challenge repeats the record. The
+The president answer comes from a dated record with a source line. In this older take, a
+challenge repeats that answer. The
 time comes from the device clock. The identity comes from configuration. A prompt probe gets a
 fixed refusal from code. The
 [case study](docs/case-study-government-assistant-launch.md) gives every source and the nine
@@ -124,8 +146,9 @@ ACTIONS  (the model never decides)
   keyword router -> REST backend connector | offline outbox with
   idempotency keys and receipts
 
-EVIDENCE  (on every change)
-  golden + adversarial prompt sets per template, run in CI
+EVIDENCE
+  template fixtures and retrieval assertions in CI
+  public-service CLI executes government answer/route assertions in CI
   recordings pinned to their source commit; manifest validated in CI
 ```
 

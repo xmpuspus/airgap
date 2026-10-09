@@ -1,0 +1,2178 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-09T03:55:52.695Z",
+  "provider": "node-llama-cpp",
+  "providerVersion": "3.18.1",
+  "evidenceClass": "host-native-model",
+  "model": {
+    "filename": "hf_bartowski_google_gemma-3-1b-it-Q4_K_M.gguf",
+    "sha256": "12bf0fff8815d5f73a3c9b586bd8fee8e7b248c935de70dec367679873d0f29d",
+    "sizeBytes": 806058496
+  },
+  "host": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "release": "25.5.0",
+    "cpu": "Apple M5"
+  },
+  "settings": {
+    "contextSize": 2048,
+    "maxTokens": 160,
+    "temperature": 0,
+    "seed": 42
+  },
+  "compute": "CPU",
+  "contextPolicy": "One context, chat history reset before every generation; warm prompt cache may affect timing",
+  "modelLoadMs": 550.360125,
+  "corpusSha256": "e1fab7f87b658b7e3a3ad63f875d1387fde3e9129c37c1e9190a5e61576c75b4",
+  "coreSha256": "c35783fa2eb9a8116f576de51b7199e751e48b629d8dbbf59f138af1f67c164a",
+  "criteriaSha256": "7e76bf81d0bf01996cee37945a305068a79452dd91d7a3172cc62c718795b82c",
+  "repetitions": 3,
+  "rows": [
+    {
+      "questionId": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "repetition": 1,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
+      "rawOutput": null,
+      "answer": "The PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).",
+      "recordIds": ["off-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/president.json",
+          "sha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+          "recordId": "off-001",
+          "url": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+          "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.9986249999999472,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "repetition": 1,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
+      "rawOutput": "Ferdinand R. Marcos Jr.",
+      "answer": "Ferdinand R. Marcos Jr.",
+      "recordIds": ["off-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/president.json",
+          "sha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+          "recordId": "off-001",
+          "url": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+          "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 406.04429099999993,
+      "elapsedMs": 518.553791,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "repetition": 1,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
+      "rawOutput": "Ferdinand R. Marcos Jr. is the president named in the July 2026 SONA transcript.\n",
+      "answer": "The PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).",
+      "recordIds": ["off-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/president.json",
+          "sha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+          "recordId": "off-001",
+          "url": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+          "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 16.108999999999924,
+      "elapsedMs": 407.98266699999976,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "repetition": 1,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nBook a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).\n\nQUESTION: Paano kumuha ng passport appointment?",
+      "rawOutput": null,
+      "answer": "Book a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).",
+      "recordIds": ["svc-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-application.json",
+          "sha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+          "recordId": "svc-011",
+          "url": "https://passport.gov.ph/sites/site",
+          "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.13999999999987267,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "repetition": 1,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nBook a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).\n\nQUESTION: Paano kumuha ng passport appointment?",
+      "rawOutput": "According to the provided text, you can book a Philippine passport appointment only at the website: **https://passport.gov.ph.**\n\nIt also states that appointments are free.\n\nTherefore, the answer is: **Book a Philippine passport appointment only at https://passport.gov.ph.**\n",
+      "answer": "According to the provided text, you can book a Philippine passport appointment only at the website: **https://passport.gov.ph.**\n\nIt also states that appointments are free.\n\nTherefore, the answer is: **Book a Philippine passport appointment only at https://passport.gov.ph.**\n",
+      "recordIds": ["svc-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-application.json",
+          "sha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+          "recordId": "svc-011",
+          "url": "https://passport.gov.ph/sites/site",
+          "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 257.55670800000007,
+      "elapsedMs": 1366.3138750000003,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "repetition": 1,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nBook a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).\n\nQUESTION: Paano kumuha ng passport appointment?",
+      "rawOutput": "According to the provided text, you can book a Philippine passport appointment only at the website: **https://passport.gov.ph.**\n\nIt also states that appointments are free.\n\nYou need to check the DFA requirements before attending the appointment.\n",
+      "answer": "Book a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).",
+      "recordIds": ["svc-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-application.json",
+          "sha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+          "recordId": "svc-011",
+          "url": "https://passport.gov.ph/sites/site",
+          "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 40.63841700000012,
+      "elapsedMs": 1033.843625,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "repetition": 1,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nThe stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).\n\nQUESTION: Magkano ang regular passport fee in the stored DFA charter?",
+      "rawOutput": null,
+      "answer": "The stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).",
+      "recordIds": ["fee-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-fee.json",
+          "sha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+          "recordId": "fee-011",
+          "url": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
+          "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.18758300000081363,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "repetition": 1,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nThe stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).\n\nQUESTION: Magkano ang regular passport fee in the stored DFA charter?",
+      "rawOutput": "According to the DFA Citizen’s Charter, the regular passport application fee is PHP 950.\n",
+      "answer": "According to the DFA Citizen’s Charter, the regular passport application fee is PHP 950.\n",
+      "recordIds": ["fee-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-fee.json",
+          "sha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+          "recordId": "fee-011",
+          "url": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
+          "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 450.6967909999994,
+      "elapsedMs": 923.325041,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "repetition": 1,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nThe stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).\n\nQUESTION: Magkano ang regular passport fee in the stored DFA charter?",
+      "rawOutput": "According to the DFA Citizen’s Charter, the regular passport application fee is PHP 950.\n",
+      "answer": "The stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).",
+      "recordIds": ["fee-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-fee.json",
+          "sha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+          "recordId": "fee-011",
+          "url": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
+          "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 21.750625000000582,
+      "elapsedMs": 504.03779099999974,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "repetition": 1,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nTwo valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).\n\nQUESTION: NBI clearance requirements, ano kailangan?",
+      "rawOutput": null,
+      "answer": "Two valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).",
+      "recordIds": ["req-002"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/nbi.json",
+          "sha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+          "recordId": "req-002",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "excerpt": "Two (2) Valid Government-issued IDs",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.24766699999963748,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "repetition": 1,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nTwo valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).\n\nQUESTION: NBI clearance requirements, ano kailangan?",
+      "rawOutput": "Okay, based on the information from the NBI website (https://nbi.gov.ph/how-to-apply-nbi-clearance/), here's a breakdown of the NBI clearance requirements:\n\n**Core Requirements:**\n\n*   **Two Valid Government-Issued IDs:** You need two original, unexpired government-issued IDs. These IDs must be presented for verification.\n*   **Reference Number or QR Code:** You'll need a reference number or QR code provided by the NBI.\n*   **Proof of Payment:** You must provide proof of payment for the NBI clearance fee.\n\n**Important Notes & Clarifications (Based on the source):**\n\n*   **Original Documents:**  The IDs must be original. Photocopies or duplicates",
+      "answer": "Okay, based on the information from the NBI website (https://nbi.gov.ph/how-to-apply-nbi-clearance/), here's a breakdown of the NBI clearance requirements:\n\n**Core Requirements:**\n\n*   **Two Valid Government-Issued IDs:** You need two original, unexpired government-issued IDs. These IDs must be presented for verification.\n*   **Reference Number or QR Code:** You'll need a reference number or QR code provided by the NBI.\n*   **Proof of Payment:** You must provide proof of payment for the NBI clearance fee.\n\n**Important Notes & Clarifications (Based on the source):**\n\n*   **Original Documents:**  The IDs must be original. Photocopies or duplicates",
+      "recordIds": ["req-002"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/nbi.json",
+          "sha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+          "recordId": "req-002",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "excerpt": "Two (2) Valid Government-issued IDs",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 384.1662499999993,
+      "elapsedMs": 3839.365916999999,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "repetition": 1,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nTwo valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).\n\nQUESTION: NBI clearance requirements, ano kailangan?",
+      "rawOutput": "Okay, based on the information from the NBI website (https://nbi.gov.ph/how-to-apply-nbi-clearance/), here's a breakdown of the NBI clearance requirements:\n\n**Requirements:**\n\n*   **Two Valid Government-Issued IDs:** You need two original, unexpired government-issued IDs. These IDs must be presented for verification.\n*   **Reference Number or QR Code:** You'll need a reference number or QR code provided by the NBI.\n*   **Proof of Payment:** You must provide proof of payment for the NBI clearance fee.\n\n**Important Note:** The website emphasizes the importance of original IDs and their validity.\n\n---\n\n**Disclaimer:** *I am an AI Chatbot and not a",
+      "answer": "Two valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).",
+      "recordIds": ["req-002"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/nbi.json",
+          "sha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+          "recordId": "req-002",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "excerpt": "Two (2) Valid Government-issued IDs",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 33.85770799999955,
+      "elapsedMs": 4459.632,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "repetition": 1,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nProclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).\n\nQUESTION: What are the regular holidays in 2026?",
+      "rawOutput": null,
+      "answer": "Proclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).",
+      "recordIds": ["hol-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/holidays.json",
+          "sha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+          "recordId": "hol-001",
+          "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
+          "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.5991670000003069,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "repetition": 1,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nProclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).\n\nQUESTION: What are the regular holidays in 2026?",
+      "rawOutput": "According to the provided text, the regular holidays in 2026 are:\n\n*   New Year's Day: 2026-01-01\n*   Maundy Thursday: 2026-04-02\n*   Good Friday: 2026-04-03\n*   Araw ng Kagitingan: 2026-04-09\n*   Labor Day: 2026-05-01\n*   Independence Day: 2026-06-12\n*   National Heroes Day: 2026-08-31\n*    Bonifacio Day: 2026-11",
+      "answer": "According to the provided text, the regular holidays in 2026 are:\n\n*   New Year's Day: 2026-01-01\n*   Maundy Thursday: 2026-04-02\n*   Good Friday: 2026-04-03\n*   Araw ng Kagitingan: 2026-04-09\n*   Labor Day: 2026-05-01\n*   Independence Day: 2026-06-12\n*   National Heroes Day: 2026-08-31\n*    Bonifacio Day: 2026-11",
+      "recordIds": ["hol-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/holidays.json",
+          "sha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+          "recordId": "hol-001",
+          "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
+          "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 1570.6014999999989,
+      "elapsedMs": 6559.4610840000005,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "repetition": 1,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nProclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).\n\nQUESTION: What are the regular holidays in 2026?",
+      "rawOutput": "According to the provided text, the regular holidays in 2026 are:\n\n*   New Year's Day: 2026-01-01\n*   Maundy Thursday: 2026-04-02\n*   Good Friday: 2026-04-03\n*   Araw ng Kagitingan: 2026-04-09\n*   Labor Day: 2026-05-01\n*   Independence Day: 2026-06-12\n*   National Heroes Day: 2026-08-31\n*    Bonifacio Day: 2026-11",
+      "answer": "Proclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).",
+      "recordIds": ["hol-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/holidays.json",
+          "sha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+          "recordId": "hol-001",
+          "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
+          "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 46.538040999999794,
+      "elapsedMs": 5480.158541000001,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "sss",
+      "query": "Hotline ng SSS?",
+      "repetition": 1,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nThe SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).\n\nQUESTION: Hotline ng SSS?",
+      "rawOutput": null,
+      "answer": "The SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).",
+      "recordIds": ["hot-005"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/sss.json",
+          "sha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+          "recordId": "hot-005",
+          "url": "https://www.sss.gov.ph/",
+          "excerpt": "SSS Hotline: 1455",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.2685830000009446,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "sss",
+      "query": "Hotline ng SSS?",
+      "repetition": 1,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nThe SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).\n\nQUESTION: Hotline ng SSS?",
+      "rawOutput": "According to the SSS website, hotline 1455 is:\n\n**Hotline 1455**\n\n",
+      "answer": "According to the SSS website, hotline 1455 is:\n\n**Hotline 1455**\n\n",
+      "recordIds": ["hot-005"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/sss.json",
+          "sha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+          "recordId": "hot-005",
+          "url": "https://www.sss.gov.ph/",
+          "excerpt": "SSS Hotline: 1455",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 338.1892079999998,
+      "elapsedMs": 1263.0706250000003,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "sss",
+      "query": "Hotline ng SSS?",
+      "repetition": 1,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nThe SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).\n\nQUESTION: Hotline ng SSS?",
+      "rawOutput": "According to the SSS website, hotline 1455 is:\n\n**1455**\n",
+      "answer": "The SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).",
+      "recordIds": ["hot-005"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/sss.json",
+          "sha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+          "recordId": "hot-005",
+          "url": "https://www.sss.gov.ph/",
+          "excerpt": "SSS Hotline: 1455",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 19.912499999998545,
+      "elapsedMs": 509.12225000000035,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "repetition": 2,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
+      "rawOutput": null,
+      "answer": "The PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).",
+      "recordIds": ["off-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/president.json",
+          "sha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+          "recordId": "off-001",
+          "url": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+          "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.21183299999756855,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "repetition": 2,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
+      "rawOutput": "Ferdinand R. Marcos Jr.\n",
+      "answer": "Ferdinand R. Marcos Jr.\n",
+      "recordIds": ["off-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/president.json",
+          "sha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+          "recordId": "off-001",
+          "url": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+          "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 520.2511249999989,
+      "elapsedMs": 976.3416249999973,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "repetition": 2,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
+      "rawOutput": "Ferdinand R. Marcos Jr.\n",
+      "answer": "Ferdinand R. Marcos Jr.",
+      "recordIds": ["off-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/president.json",
+          "sha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+          "recordId": "off-001",
+          "url": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+          "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "extractive_model_answer",
+      "error": null,
+      "firstTokenMs": 16.742207999999664,
+      "elapsedMs": 437.7892909999973,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "repetition": 2,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nBook a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).\n\nQUESTION: Paano kumuha ng passport appointment?",
+      "rawOutput": null,
+      "answer": "Book a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).",
+      "recordIds": ["svc-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-application.json",
+          "sha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+          "recordId": "svc-011",
+          "url": "https://passport.gov.ph/sites/site",
+          "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.16770800000085728,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "repetition": 2,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nBook a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).\n\nQUESTION: Paano kumuha ng passport appointment?",
+      "rawOutput": "According to the provided text, you can book a Philippine passport appointment only at the website: **https://passport.gov.ph.**\n\nIt also states that appointments are free.\n\nTherefore, the answer is: **Book a Philippine passport appointment only at https://passport.gov.ph.**\n",
+      "answer": "According to the provided text, you can book a Philippine passport appointment only at the website: **https://passport.gov.ph.**\n\nIt also states that appointments are free.\n\nTherefore, the answer is: **Book a Philippine passport appointment only at https://passport.gov.ph.**\n",
+      "recordIds": ["svc-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-application.json",
+          "sha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+          "recordId": "svc-011",
+          "url": "https://passport.gov.ph/sites/site",
+          "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 320.41179199999897,
+      "elapsedMs": 1627.5987499999974,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "repetition": 2,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nBook a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).\n\nQUESTION: Paano kumuha ng passport appointment?",
+      "rawOutput": "According to the provided text, you can book a Philippine passport appointment only at the website: **https://passport.gov.ph.**\n\nIt also states that appointments are free.\n\nYou need to check the DFA requirements before attending the appointment.\n",
+      "answer": "Book a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).",
+      "recordIds": ["svc-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-application.json",
+          "sha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+          "recordId": "svc-011",
+          "url": "https://passport.gov.ph/sites/site",
+          "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 54.977209000000585,
+      "elapsedMs": 1306.7617919999975,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "repetition": 2,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nThe stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).\n\nQUESTION: Magkano ang regular passport fee in the stored DFA charter?",
+      "rawOutput": null,
+      "answer": "The stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).",
+      "recordIds": ["fee-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-fee.json",
+          "sha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+          "recordId": "fee-011",
+          "url": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
+          "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.2155410000050324,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "repetition": 2,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nThe stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).\n\nQUESTION: Magkano ang regular passport fee in the stored DFA charter?",
+      "rawOutput": "According to the DFA Citizen’s Charter, the regular passport application fee is PHP 950.\n",
+      "answer": "According to the DFA Citizen’s Charter, the regular passport application fee is PHP 950.\n",
+      "recordIds": ["fee-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-fee.json",
+          "sha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+          "recordId": "fee-011",
+          "url": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
+          "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 468.33266600000206,
+      "elapsedMs": 1337.9384580000042,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "repetition": 2,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nThe stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).\n\nQUESTION: Magkano ang regular passport fee in the stored DFA charter?",
+      "rawOutput": "According to the DFA Citizen’s Charter, the regular passport application fee is PHP 950.\n",
+      "answer": "The stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).",
+      "recordIds": ["fee-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-fee.json",
+          "sha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+          "recordId": "fee-011",
+          "url": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
+          "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 34.95895799999562,
+      "elapsedMs": 980.146332999997,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "repetition": 2,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nTwo valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).\n\nQUESTION: NBI clearance requirements, ano kailangan?",
+      "rawOutput": null,
+      "answer": "Two valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).",
+      "recordIds": ["req-002"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/nbi.json",
+          "sha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+          "recordId": "req-002",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "excerpt": "Two (2) Valid Government-issued IDs",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.18033300000388408,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "repetition": 2,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nTwo valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).\n\nQUESTION: NBI clearance requirements, ano kailangan?",
+      "rawOutput": "Okay, based on the information from the NBI website (https://nbi.gov.ph/how-to-apply-nbi-clearance/), here's a breakdown of the NBI clearance requirements:\n\n**Core Requirements:**\n\n*   **Two Valid Government-Issued IDs:** You need two original, unexpired government-issued IDs. These IDs must be presented for verification.\n*   **Reference Number or QR Code:** You'll need a reference number or QR code provided by the NBI.\n*   **Proof of Payment:** You must provide proof of payment for the NBI clearance fee.\n\n**Important Notes & Clarifications (Based on the source):**\n\n*   **Original Documents:**  The IDs must be original. Photocopies or duplicates",
+      "answer": "Okay, based on the information from the NBI website (https://nbi.gov.ph/how-to-apply-nbi-clearance/), here's a breakdown of the NBI clearance requirements:\n\n**Core Requirements:**\n\n*   **Two Valid Government-Issued IDs:** You need two original, unexpired government-issued IDs. These IDs must be presented for verification.\n*   **Reference Number or QR Code:** You'll need a reference number or QR code provided by the NBI.\n*   **Proof of Payment:** You must provide proof of payment for the NBI clearance fee.\n\n**Important Notes & Clarifications (Based on the source):**\n\n*   **Original Documents:**  The IDs must be original. Photocopies or duplicates",
+      "recordIds": ["req-002"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/nbi.json",
+          "sha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+          "recordId": "req-002",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "excerpt": "Two (2) Valid Government-issued IDs",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 1097.2710420000003,
+      "elapsedMs": 5499.706208000003,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "repetition": 2,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nTwo valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).\n\nQUESTION: NBI clearance requirements, ano kailangan?",
+      "rawOutput": "Okay, based on the information from the NBI website (https://nbi.gov.ph/how-to-apply-nbi-clearance/), here's a breakdown of the NBI clearance requirements:\n\n**Requirements:**\n\n*   **Two Valid Government-Issued IDs:** You need two original, unexpired government-issued IDs. These IDs must be presented for verification.\n*   **Reference Number or QR Code:** You'll need a reference number or QR code provided by the NBI.\n*   **Proof of Payment:** You must provide proof of payment for the NBI clearance fee.\n\n**Important Note:** The website emphasizes the importance of original IDs and their validity.\n\n---\n\n**Disclaimer:** *I am an AI Chatbot and not a",
+      "answer": "Two valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).",
+      "recordIds": ["req-002"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/nbi.json",
+          "sha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+          "recordId": "req-002",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "excerpt": "Two (2) Valid Government-issued IDs",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 27.707792000001064,
+      "elapsedMs": 3919.0761669999993,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "repetition": 2,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nProclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).\n\nQUESTION: What are the regular holidays in 2026?",
+      "rawOutput": null,
+      "answer": "Proclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).",
+      "recordIds": ["hol-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/holidays.json",
+          "sha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+          "recordId": "hol-001",
+          "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
+          "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.17308300000149757,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "repetition": 2,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nProclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).\n\nQUESTION: What are the regular holidays in 2026?",
+      "rawOutput": "According to the provided text, the regular holidays in 2026 are:\n\n*   New Year's Day: 2026-01-01\n*   Maundy Thursday: 2026-04-02\n*   Good Friday: 2026-04-03\n*   Araw ng Kagitingan: 2026-04-09\n*   Labor Day: 2026-05-01\n*   Independence Day: 2026-06-12\n*   National Heroes Day: 2026-08-31\n*    Bonifacio Day: 2026-11",
+      "answer": "According to the provided text, the regular holidays in 2026 are:\n\n*   New Year's Day: 2026-01-01\n*   Maundy Thursday: 2026-04-02\n*   Good Friday: 2026-04-03\n*   Araw ng Kagitingan: 2026-04-09\n*   Labor Day: 2026-05-01\n*   Independence Day: 2026-06-12\n*   National Heroes Day: 2026-08-31\n*    Bonifacio Day: 2026-11",
+      "recordIds": ["hol-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/holidays.json",
+          "sha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+          "recordId": "hol-001",
+          "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
+          "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 884.1947090000031,
+      "elapsedMs": 4858.156709000003,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "repetition": 2,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nProclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).\n\nQUESTION: What are the regular holidays in 2026?",
+      "rawOutput": "According to the provided text, the regular holidays in 2026 are:\n\n*   New Year's Day: 2026-01-01\n*   Maundy Thursday: 2026-04-02\n*   Good Friday: 2026-04-03\n*   Araw ng Kagitingan: 2026-04-09\n*   Labor Day: 2026-05-01\n*   Independence Day: 2026-06-12\n*   National Heroes Day: 2026-08-31\n*    Bonifacio Day: 2026-11",
+      "answer": "Proclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).",
+      "recordIds": ["hol-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/holidays.json",
+          "sha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+          "recordId": "hol-001",
+          "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
+          "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 54.037791999995534,
+      "elapsedMs": 3981.1160829999935,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "sss",
+      "query": "Hotline ng SSS?",
+      "repetition": 2,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nThe SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).\n\nQUESTION: Hotline ng SSS?",
+      "rawOutput": null,
+      "answer": "The SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).",
+      "recordIds": ["hot-005"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/sss.json",
+          "sha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+          "recordId": "hot-005",
+          "url": "https://www.sss.gov.ph/",
+          "excerpt": "SSS Hotline: 1455",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.145834000002651,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "sss",
+      "query": "Hotline ng SSS?",
+      "repetition": 2,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nThe SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).\n\nQUESTION: Hotline ng SSS?",
+      "rawOutput": "According to the SSS website, hotline 1455 is:\n\n**Hotline 1455**\n\n",
+      "answer": "According to the SSS website, hotline 1455 is:\n\n**Hotline 1455**\n\n",
+      "recordIds": ["hot-005"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/sss.json",
+          "sha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+          "recordId": "hot-005",
+          "url": "https://www.sss.gov.ph/",
+          "excerpt": "SSS Hotline: 1455",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 277.17770900000323,
+      "elapsedMs": 753.7714170000036,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "sss",
+      "query": "Hotline ng SSS?",
+      "repetition": 2,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nThe SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).\n\nQUESTION: Hotline ng SSS?",
+      "rawOutput": "According to the SSS website, hotline 1455 is:\n\n**1455**\n",
+      "answer": "The SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).",
+      "recordIds": ["hot-005"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/sss.json",
+          "sha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+          "recordId": "hot-005",
+          "url": "https://www.sss.gov.ph/",
+          "excerpt": "SSS Hotline: 1455",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 19.815083000001323,
+      "elapsedMs": 516.9305000000022,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "repetition": 3,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
+      "rawOutput": null,
+      "answer": "The PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).",
+      "recordIds": ["off-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/president.json",
+          "sha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+          "recordId": "off-001",
+          "url": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+          "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.2132080000010319,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "repetition": 3,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
+      "rawOutput": "Ferdinand R. Marcos Jr.\n",
+      "answer": "Ferdinand R. Marcos Jr.\n",
+      "recordIds": ["off-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/president.json",
+          "sha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+          "recordId": "off-001",
+          "url": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+          "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 498.09675000000425,
+      "elapsedMs": 648.0244170000005,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "president",
+      "query": "Who is the president named in the July 2026 SONA transcript?",
+      "repetition": 3,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
+      "rawOutput": "Ferdinand R. Marcos Jr.\n",
+      "answer": "Ferdinand R. Marcos Jr.",
+      "recordIds": ["off-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/president.json",
+          "sha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
+          "recordId": "off-001",
+          "url": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+          "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "extractive_model_answer",
+      "error": null,
+      "firstTokenMs": 18.174874999996973,
+      "elapsedMs": 172.48687499999505,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "repetition": 3,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nBook a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).\n\nQUESTION: Paano kumuha ng passport appointment?",
+      "rawOutput": null,
+      "answer": "Book a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).",
+      "recordIds": ["svc-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-application.json",
+          "sha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+          "recordId": "svc-011",
+          "url": "https://passport.gov.ph/sites/site",
+          "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.18374999999650754,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "repetition": 3,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nBook a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).\n\nQUESTION: Paano kumuha ng passport appointment?",
+      "rawOutput": "According to the provided text, you can book a Philippine passport appointment only at the website: **https://passport.gov.ph.**\n\nIt also states that appointments are free.\n\nTherefore, the answer is: **Book a Philippine passport appointment only at https://passport.gov.ph.**\n",
+      "answer": "According to the provided text, you can book a Philippine passport appointment only at the website: **https://passport.gov.ph.**\n\nIt also states that appointments are free.\n\nTherefore, the answer is: **Book a Philippine passport appointment only at https://passport.gov.ph.**\n",
+      "recordIds": ["svc-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-application.json",
+          "sha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+          "recordId": "svc-011",
+          "url": "https://passport.gov.ph/sites/site",
+          "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 312.4017079999976,
+      "elapsedMs": 1493.4530830000003,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-application",
+      "query": "Paano kumuha ng passport appointment?",
+      "repetition": 3,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nBook a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).\n\nQUESTION: Paano kumuha ng passport appointment?",
+      "rawOutput": "According to the provided text, you can book a Philippine passport appointment only at the website: **https://passport.gov.ph.**\n\nIt also states that appointments are free.\n\nYou need to check the DFA requirements before attending the appointment.\n",
+      "answer": "Book a Philippine passport appointment only at passport.gov.ph. Appointments are free. Check the DFA requirements for your application before attending. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).",
+      "recordIds": ["svc-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-application.json",
+          "sha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+          "recordId": "svc-011",
+          "url": "https://passport.gov.ph/sites/site",
+          "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 24.873083000005863,
+      "elapsedMs": 1432.3462500000023,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "repetition": 3,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nThe stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).\n\nQUESTION: Magkano ang regular passport fee in the stored DFA charter?",
+      "rawOutput": null,
+      "answer": "The stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).",
+      "recordIds": ["fee-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-fee.json",
+          "sha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+          "recordId": "fee-011",
+          "url": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
+          "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.12058400000387337,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "repetition": 3,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nThe stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).\n\nQUESTION: Magkano ang regular passport fee in the stored DFA charter?",
+      "rawOutput": "According to the DFA Citizen’s Charter, the regular passport application fee is PHP 950.\n",
+      "answer": "According to the DFA Citizen’s Charter, the regular passport application fee is PHP 950.\n",
+      "recordIds": ["fee-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-fee.json",
+          "sha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+          "recordId": "fee-011",
+          "url": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
+          "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 621.4398340000043,
+      "elapsedMs": 1030.6363340000025,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "passport-fee",
+      "query": "Magkano ang regular passport fee in the stored DFA charter?",
+      "repetition": 3,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nThe stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).\n\nQUESTION: Magkano ang regular passport fee in the stored DFA charter?",
+      "rawOutput": "According to the DFA Citizen’s Charter, the regular passport application fee is PHP 950.\n",
+      "answer": "The stored DFA 2022 Citizen’s Charter lists PHP 950 for a regular passport application and PHP 1,200 for expedited processing. This is a dated fee reference; confirm the current amount on the official portal before payment. Source: https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf (checked 2026-10-09).",
+      "recordIds": ["fee-011"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/passport-fee.json",
+          "sha256": "df8a1418c87796e89581ec80b801ba16e051a49e70d025ef0539c270ea772752",
+          "recordId": "fee-011",
+          "url": "https://dfa.gov.ph/images/2022/Citizens_charter/Consolidated_DFA_Citizens_Charter_2022_1st_Edition_v4.pdf",
+          "excerpt": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 24.941334000002826,
+      "elapsedMs": 495.0829589999994,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "repetition": 3,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nTwo valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).\n\nQUESTION: NBI clearance requirements, ano kailangan?",
+      "rawOutput": null,
+      "answer": "Two valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).",
+      "recordIds": ["req-002"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/nbi.json",
+          "sha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+          "recordId": "req-002",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "excerpt": "Two (2) Valid Government-issued IDs",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.20904199999495177,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "repetition": 3,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nTwo valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).\n\nQUESTION: NBI clearance requirements, ano kailangan?",
+      "rawOutput": "Okay, based on the information from the NBI website (https://nbi.gov.ph/how-to-apply-nbi-clearance/), here's a breakdown of the NBI clearance requirements:\n\n**Core Requirements:**\n\n*   **Two Valid Government-Issued IDs:** You need two original, unexpired government-issued IDs. These IDs must be presented for verification.\n*   **Reference Number or QR Code:** You'll need a reference number or QR code provided by the NBI.\n*   **Proof of Payment:** You must provide proof of payment for the NBI clearance fee.\n\n**Important Notes & Clarifications (Based on the source):**\n\n*   **Original Documents:**  The IDs must be original. Photocopies or duplicates",
+      "answer": "Okay, based on the information from the NBI website (https://nbi.gov.ph/how-to-apply-nbi-clearance/), here's a breakdown of the NBI clearance requirements:\n\n**Core Requirements:**\n\n*   **Two Valid Government-Issued IDs:** You need two original, unexpired government-issued IDs. These IDs must be presented for verification.\n*   **Reference Number or QR Code:** You'll need a reference number or QR code provided by the NBI.\n*   **Proof of Payment:** You must provide proof of payment for the NBI clearance fee.\n\n**Important Notes & Clarifications (Based on the source):**\n\n*   **Original Documents:**  The IDs must be original. Photocopies or duplicates",
+      "recordIds": ["req-002"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/nbi.json",
+          "sha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+          "recordId": "req-002",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "excerpt": "Two (2) Valid Government-issued IDs",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 424.4694589999999,
+      "elapsedMs": 4743.4282500000045,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "nbi",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "repetition": 3,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nTwo valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).\n\nQUESTION: NBI clearance requirements, ano kailangan?",
+      "rawOutput": "Okay, based on the information from the NBI website (https://nbi.gov.ph/how-to-apply-nbi-clearance/), here's a breakdown of the NBI clearance requirements:\n\n**Requirements:**\n\n*   **Two Valid Government-Issued IDs:** You need two original, unexpired government-issued IDs. These IDs must be presented for verification.\n*   **Reference Number or QR Code:** You'll need a reference number or QR code provided by the NBI.\n*   **Proof of Payment:** You must provide proof of payment for the NBI clearance fee.\n\n**Important Note:** The website emphasizes the importance of original IDs and their validity.\n\n---\n\n**Disclaimer:** *I am an AI Chatbot and not a",
+      "answer": "Two valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).",
+      "recordIds": ["req-002"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/nbi.json",
+          "sha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+          "recordId": "req-002",
+          "url": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
+          "excerpt": "Two (2) Valid Government-issued IDs",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 18.94616600000154,
+      "elapsedMs": 4343.755000000005,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "repetition": 3,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nProclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).\n\nQUESTION: What are the regular holidays in 2026?",
+      "rawOutput": null,
+      "answer": "Proclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).",
+      "recordIds": ["hol-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/holidays.json",
+          "sha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+          "recordId": "hol-001",
+          "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
+          "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 0.2257499999977881,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "repetition": 3,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nProclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).\n\nQUESTION: What are the regular holidays in 2026?",
+      "rawOutput": "According to the provided text, the regular holidays in 2026 are:\n\n*   New Year's Day: 2026-01-01\n*   Maundy Thursday: 2026-04-02\n*   Good Friday: 2026-04-03\n*   Araw ng Kagitingan: 2026-04-09\n*   Labor Day: 2026-05-01\n*   Independence Day: 2026-06-12\n*   National Heroes Day: 2026-08-31\n*    Bonifacio Day: 2026-11",
+      "answer": "According to the provided text, the regular holidays in 2026 are:\n\n*   New Year's Day: 2026-01-01\n*   Maundy Thursday: 2026-04-02\n*   Good Friday: 2026-04-03\n*   Araw ng Kagitingan: 2026-04-09\n*   Labor Day: 2026-05-01\n*   Independence Day: 2026-06-12\n*   National Heroes Day: 2026-08-31\n*    Bonifacio Day: 2026-11",
+      "recordIds": ["hol-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/holidays.json",
+          "sha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+          "recordId": "hol-001",
+          "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
+          "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 913.721292000002,
+      "elapsedMs": 4820.747375000006,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "holidays",
+      "query": "What are the regular holidays in 2026?",
+      "repetition": 3,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nProclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).\n\nQUESTION: What are the regular holidays in 2026?",
+      "rawOutput": "According to the provided text, the regular holidays in 2026 are:\n\n*   New Year's Day: 2026-01-01\n*   Maundy Thursday: 2026-04-02\n*   Good Friday: 2026-04-03\n*   Araw ng Kagitingan: 2026-04-09\n*   Labor Day: 2026-05-01\n*   Independence Day: 2026-06-12\n*   National Heroes Day: 2026-08-31\n*    Bonifacio Day: 2026-11",
+      "answer": "Proclamation No. 1006 sets ten regular holidays for 2026. New Year's Day is 2026-01-01. Maundy Thursday is 2026-04-02. Good Friday is 2026-04-03. Araw ng Kagitingan is 2026-04-09. Labor Day is 2026-05-01. Independence Day is 2026-06-12. National Heroes Day is 2026-08-31. Bonifacio Day is 2026-11-30. Christmas Day is 2026-12-25. Rizal Day is 2026-12-30. Separate proclamations cover Eid'l Fitr and Eid'l Adha. Source: https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678 (checked 2026-10-09).",
+      "recordIds": ["hol-001"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/holidays.json",
+          "sha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
+          "recordId": "hol-001",
+          "url": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
+          "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 35.853625000003376,
+      "elapsedMs": 6239.949582999994,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "sss",
+      "query": "Hotline ng SSS?",
+      "repetition": 3,
+      "variant": "record-only",
+      "prompt": "PUBLIC RECORD:\nThe SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).\n\nQUESTION: Hotline ng SSS?",
+      "rawOutput": null,
+      "answer": "The SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).",
+      "recordIds": ["hot-005"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/sss.json",
+          "sha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+          "recordId": "hot-005",
+          "url": "https://www.sss.gov.ph/",
+          "excerpt": "SSS Hotline: 1455",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": false,
+      "fallback": false,
+      "reason": "supported_record",
+      "error": null,
+      "firstTokenMs": null,
+      "elapsedMs": 1.0120420000021113,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": null
+    },
+    {
+      "questionId": "sss",
+      "query": "Hotline ng SSS?",
+      "repetition": 3,
+      "variant": "retrieved-model",
+      "prompt": "PUBLIC RECORD:\nThe SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).\n\nQUESTION: Hotline ng SSS?",
+      "rawOutput": "According to the SSS website, hotline 1455 is:\n\n**Hotline 1455**\n\n",
+      "answer": "According to the SSS website, hotline 1455 is:\n\n**Hotline 1455**\n\n",
+      "recordIds": ["hot-005"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/sss.json",
+          "sha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+          "recordId": "hot-005",
+          "url": "https://www.sss.gov.ph/",
+          "excerpt": "SSS Hotline: 1455",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": false,
+      "reason": "retrieved_model_uncontrolled",
+      "error": null,
+      "firstTokenMs": 705.7475830000039,
+      "elapsedMs": 1614.2666250000038,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    },
+    {
+      "questionId": "sss",
+      "query": "Hotline ng SSS?",
+      "repetition": 3,
+      "variant": "application-controls",
+      "prompt": "PUBLIC RECORD:\nThe SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).\n\nQUESTION: Hotline ng SSS?",
+      "rawOutput": "According to the SSS website, hotline 1455 is:\n\n**1455**\n",
+      "answer": "The SSS website lists hotline 1455. Source: https://www.sss.gov.ph/ (checked 2026-10-09).",
+      "recordIds": ["hot-005"],
+      "sources": [
+        {
+          "path": "evidence/public-service/sources/sss.json",
+          "sha256": "6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d",
+          "recordId": "hot-005",
+          "url": "https://www.sss.gov.ph/",
+          "excerpt": "SSS Hotline: 1455",
+          "asOf": "2026-10-09"
+        }
+      ],
+      "modelCalled": true,
+      "fallback": true,
+      "reason": "non_extractive_model_fallback",
+      "error": null,
+      "firstTokenMs": 21.12012500000128,
+      "elapsedMs": 760.1481669999921,
+      "judgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      },
+      "rawJudgment": {
+        "passed": true,
+        "missing": [],
+        "forbidden": [],
+        "falseRefusal": false,
+        "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+      }
+    }
+  ],
+  "criteria": {
+    "schemaVersion": 1,
+    "criteriaOrigin": "Maintainer-authored, checked against the linked primary-source extracts. This is a narrow fact-retention test, not a complete semantic accuracy score.",
+    "questions": [
+      {
+        "id": "president",
+        "query": "Who is the president named in the July 2026 SONA transcript?",
+        "sourcePath": "evidence/public-service/sources/president.json",
+        "sourceFact": "Ferdinand R. Marcos Jr., President of the Philippines",
+        "required": ["Ferdinand", "Marcos"],
+        "forbidden": ["Biden", "Trump", "Sara Duterte is the President"]
+      },
+      {
+        "id": "passport-application",
+        "query": "Paano kumuha ng passport appointment?",
+        "sourcePath": "evidence/public-service/sources/passport-application.json",
+        "sourceFact": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+        "required": ["passport.gov.ph", "free"],
+        "forbidden": ["pay for an appointment", "fixer"]
+      },
+      {
+        "id": "passport-fee",
+        "query": "Magkano ang regular passport fee in the stored DFA charter?",
+        "sourcePath": "evidence/public-service/sources/passport-fee.json",
+        "sourceFact": "<td>TOTAL REGULAR APPLICATION:</td>\n<td>PHP 950</td>",
+        "required": ["950"],
+        "forbidden": ["regular fee is PHP 130", "regular fee is PHP 1200"]
+      },
+      {
+        "id": "nbi",
+        "query": "NBI clearance requirements, ano kailangan?",
+        "sourcePath": "evidence/public-service/sources/nbi.json",
+        "sourceFact": "Two (2) Valid Government-issued IDs",
+        "required": ["government", "IDs"],
+        "anyOf": ["two", "2"],
+        "forbidden": ["no ID", "one valid ID"]
+      },
+      {
+        "id": "holidays",
+        "query": "What are the regular holidays in 2026?",
+        "sourcePath": "evidence/public-service/sources/holidays.json",
+        "sourceFact": "Maundy Thursday  | -  | 2 April",
+        "required": ["Maundy Thursday", "2026-04-02"],
+        "forbidden": ["2026-04-03 is Maundy"]
+      },
+      {
+        "id": "sss",
+        "query": "Hotline ng SSS?",
+        "sourcePath": "evidence/public-service/sources/sss.json",
+        "sourceFact": "SSS Hotline: 1455",
+        "required": ["1455"],
+        "forbidden": ["1456", "SSS hotline is 911"]
+      }
+    ]
+  },
+  "limitations": [
+    "Host Gemma 3 measurements; no phone or Gemma 4 inference claim.",
+    "Fact checks are narrow string criteria. All raw outputs need independent review.",
+    "Extractive controls can replace correct paraphrases. Every replacement is reported."
+  ],
+  "finishedAt": "2026-10-09T03:57:14.494Z",
+  "summary": {
+    "record-only": {
+      "denominator": 18,
+      "passed": 18,
+      "fallbacks": 0,
+      "falseRefusals": 0,
+      "providerErrors": 0,
+      "modelCalls": 0,
+      "p50Ms": 0.20904199999495177,
+      "p95Ms": 1.0120420000021113
+    },
+    "retrieved-model": {
+      "denominator": 18,
+      "passed": 18,
+      "fallbacks": 0,
+      "falseRefusals": 0,
+      "providerErrors": 0,
+      "modelCalls": 18,
+      "p50Ms": 1366.3138750000003,
+      "p95Ms": 6559.4610840000005
+    },
+    "application-controls": {
+      "denominator": 18,
+      "passed": 18,
+      "fallbacks": 16,
+      "falseRefusals": 0,
+      "providerErrors": 0,
+      "modelCalls": 18,
+      "p50Ms": 980.146332999997,
+      "p95Ms": 6239.949582999994
+    }
+  }
+}

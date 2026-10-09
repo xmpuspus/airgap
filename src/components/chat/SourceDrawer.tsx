@@ -128,6 +128,16 @@ export function SourceDrawer() {
                     {sourceView.checkedLabel && (
                       <Text style={styles.sourceLine}>{sourceView.checkedLabel}</Text>
                     )}
+                    {sourceView.sourceSha256 && (
+                      <Text style={styles.sourceLine} selectable>
+                        Saved source SHA-256: {sourceView.sourceSha256}
+                      </Text>
+                    )}
+                    {sourceView.sourcePath && (
+                      <Text style={styles.sourceLine} selectable>
+                        Repository path: {sourceView.sourcePath}
+                      </Text>
+                    )}
                     {sourceView.reviewOverdue && (
                       <Text style={styles.sourceWarning}>
                         Review date passed. Check the source before you rely on it.

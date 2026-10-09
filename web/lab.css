@@ -1,0 +1,273 @@
+.lab {
+  background: #f5f7fb;
+  color: #17243a;
+  font-family: system-ui, sans-serif;
+  line-height: 1.6;
+}
+.lab main {
+  max-width: 1180px;
+  margin: auto;
+  padding: 30px 24px 60px;
+}
+.lab-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 32px;
+  border-bottom: 1px solid #d5ddea;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.lab a {
+  color: #1748a0;
+}
+.wordmark {
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+}
+.lab-intro {
+  max-width: 740px;
+  margin-bottom: 26px;
+}
+.lab h1 {
+  font-size: clamp(40px, 6vw, 64px);
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+  margin: 8px 0 18px;
+}
+.lab h2 {
+  font-size: 23px;
+  line-height: 1.3;
+  margin: 8px 0 18px;
+}
+.lab h3 {
+  font-size: 16px;
+}
+.lab .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  font-weight: 750;
+  color: #455b7b;
+}
+.lab .subtle {
+  color: #52627b;
+  font-size: 13px;
+}
+.lab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.lab button {
+  border: 1px solid #c3cfdf;
+  background: white;
+  color: #193b6e;
+  padding: 10px 15px;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 14px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.lab button.primary,
+.lab button[aria-current='page'] {
+  background: #173f85;
+  color: white;
+  border-color: #173f85;
+}
+.lab button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.lab :focus-visible {
+  outline: 3px solid #bf6507;
+  outline-offset: 3px;
+}
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.panel {
+  background: white;
+  border: 1px solid #d7dfeb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  min-width: 0;
+}
+.lab label {
+  display: block;
+  font-size: 13px;
+  font-weight: 650;
+  margin: 16px 0 6px;
+}
+.lab select,
+.lab textarea,
+.lab input:not([type='checkbox']) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  padding: 12px;
+  border: 1px solid #adbdd4;
+  border-radius: 6px;
+  background: #fbfcff;
+  color: #17243a;
+  font: inherit;
+  font-size: 16px;
+}
+.lab textarea {
+  resize: vertical;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 15px 0;
+}
+#answer,
+#historical-answer {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+}
+#route {
+  font-size: 12px;
+  font-weight: 750;
+  background: #eaf1fc;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+.lab details {
+  border-top: 1px solid #e0e6ef;
+  padding: 12px 0;
+}
+.lab summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 650;
+}
+.lab blockquote {
+  margin: 12px 0;
+  padding-left: 14px;
+  border-left: 3px solid #6385be;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+.hash,
+.lab pre {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.lab pre {
+  padding: 16px;
+  background: #eef2f8;
+  border-radius: 6px;
+}
+.lab .review-label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  max-width: 260px;
+}
+.lab input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+#replay-results {
+  padding-left: 24px;
+  font-size: 13px;
+}
+#replay-results li {
+  margin: 8px 0;
+}
+.lab table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.lab td,
+.lab th {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid #dee4ed;
+}
+.experiment-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.metric-card {
+  background: #f5f7fb;
+  border: 1px solid #d7dfeb;
+  border-radius: 8px;
+  padding: 16px;
+}
+.metric-card h3 {
+  overflow-wrap: anywhere;
+}
+.metric-card dl {
+  margin: 0;
+  font-size: 14px;
+}
+.metric-card dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 0;
+}
+.metric-card dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+}
+.lab-footer {
+  padding: 25px;
+  text-align: center;
+  border-top: 1px solid #d5ddea;
+  color: #52627b;
+  font-size: 13px;
+}
+.lab [hidden] {
+  display: none !important;
+}
+.skip {
+  position: absolute;
+  top: -80px;
+  left: 12px;
+  background: white;
+  padding: 10px;
+}
+.skip:focus {
+  top: 10px;
+}
+@media (max-width: 760px) {
+  .experiment-metrics {
+    grid-template-columns: 1fr;
+  }
+  .two-columns {
+    grid-template-columns: 1fr;
+  }
+  .lab main {
+    padding: 24px 16px;
+  }
+  .panel {
+    padding: 18px;
+  }
+  .lab-header {
+    padding: 16px;
+  }
+  .lab-header span {
+    display: none;
+  }
+  .lab-nav button {
+    flex: 1 1 44%;
+  }
+}

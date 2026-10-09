@@ -269,7 +269,21 @@ export class RestBackendConnector implements BackendConnector {
   }
 }
 
+// No agency backend exists for this example. This connector never returns a
+// receipt or touches a provider, including callers outside the orchestrator.
+const agencyUnavailable = async (): Promise<never> => {
+  throw new Error('no_agency_integration');
+};
+const unavailableAgency: BackendConnector = {
+  checkBalance: agencyUnavailable,
+  changePlan: agencyUnavailable,
+  createTicket: agencyUnavailable,
+  checkOutage: agencyUnavailable,
+  executeAction: agencyUnavailable,
+};
+
 function buildConnectorFromConfig(): BackendConnector {
+  if (config.llm?.supportDomain === 'government') return unavailableAgency;
   try {
     const backend = (config as any).backend;
     if (backend?.type === 'rest' && backend?.baseUrl) {
@@ -288,6 +302,7 @@ function buildConnectorFromConfig(): BackendConnector {
 let connector: BackendConnector = buildConnectorFromConfig();
 
 export function getBackendConnector(): BackendConnector {
+  if (config.llm?.supportDomain === 'government') return unavailableAgency;
   return connector;
 }
 

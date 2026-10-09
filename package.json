@@ -6,7 +6,7 @@
   "repository": "https://github.com/xmpuspus/airgap",
   "license": "MIT",
   "engines": {
-    "node": ">=22.11.0"
+    "node": ">=22.18.0"
   },
   "keywords": [
     "air-gapped",
@@ -20,6 +20,13 @@
     "enterprise"
   ],
   "scripts": {
+    "public:replay": "node scripts/public-service.mjs replay --json",
+    "public:build": "node scripts/build-public-service.mjs",
+    "public:experiment": "node scripts/public-experiment.mjs",
+    "public:verify": "node scripts/verify-public-service.mjs",
+    "public:qa": "node scripts/public-qa.mjs",
+    "public:capture": "node scripts/public-capture.mjs",
+    "public:demo": "node scripts/public-demo.mjs",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
@@ -91,13 +98,15 @@
     "react-test-renderer": "19.2.3",
     "typescript": "5.9.3"
   },
-  "engines": {
-    "node": ">= 22.11.0"
-  },
   "workspaces": [
     "packages/*"
   ],
   "overrides": {
-    "tar": "7.5.22"
+    "tar": "7.5.22",
+    "shell-quote": "1.11.0",
+    "@simple-git/argv-parser": "2.0.1",
+    "node-llama-cpp": {
+      "simple-git": "4.0.1"
+    }
   }
 }

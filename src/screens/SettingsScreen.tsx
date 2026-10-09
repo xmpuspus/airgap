@@ -107,7 +107,7 @@ export function SettingsScreen({navigation}: Props) {
     },
     {
       label: 'Knowledge sync',
-      value: config.backend.type === 'rest' ? 'Signed downloads' : 'Built-in only',
+      value: config.backend?.type === 'rest' ? 'Signed downloads' : 'Built-in only',
     },
     {
       label: 'Telemetry',

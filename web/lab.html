@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Ask sourced Philippine public-service questions, inspect the answer path, and replay a real historical source update." />
+    <title>Break Kuya B · Airgap Evidence Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="lab.css" />
+  </head>
+  <body class="lab">
+    <a class="skip" href="#main">Skip to the lab</a>
+    <header class="lab-header">
+      <a href="index.html" class="wordmark">AIRGAP</a><span>PUBLIC-SERVICE EVIDENCE LAB</span
+      ><a href="https://github.com/xmpuspus/airgap">Source code ↗</a>
+    </header>
+    <main id="main">
+      <div class="lab-intro">
+        <p class="eyebrow">PHILIPPINE PUBLIC RECORDS / LOCAL EXECUTION</p>
+        <h1>Break Kuya B.</h1>
+        <p>Ask a question. Inspect the source. See which code answered.</p>
+        <p class="subtle">
+          An unofficial example with six dated service records. English sources stay in English. No
+          agency transactions or live model calls happen here.
+        </p>
+      </div>
+      <nav class="lab-nav" aria-label="Lab views">
+        <button data-view="ask" aria-current="page">Ask &amp; replay</button>
+        <button data-view="workbench">Source workbench</button>
+        <button data-view="experiment">Recorded model runs</button>
+        <button data-view="kit">Demo kit</button>
+      </nav>
+      <p id="load-status" role="status">Loading the public source pack…</p>
+      <button id="retry" hidden>Retry loading</button>
+      <div id="workspace" hidden>
+        <section id="view-ask" class="view" aria-labelledby="ask-heading">
+          <div class="two-columns">
+            <div class="panel">
+              <p class="eyebrow">01 / LIVE DETERMINISTIC LOGIC</p>
+              <h2 id="ask-heading">Try a public-service question</h2>
+              <label for="case">Authored regression case</label
+              ><select id="case">
+                <option value="">Write your own question</option>
+              </select>
+              <form id="ask-form">
+                <label for="question">Your question</label
+                ><textarea
+                  id="question"
+                  rows="3"
+                  maxlength="2000"
+                  placeholder="Magkano ang passport?"></textarea>
+                <div class="actions">
+                  <button type="submit" class="primary">Ask Kuya B</button
+                  ><button type="button" id="doubt">Sigurado ka dyan?</button
+                  ><button type="button" id="clear">Clear conversation</button>
+                </div>
+              </form>
+              <p class="subtle">
+                Questions run in your browser. Nothing is sent to an agency. The model results tab
+                is a separate, recorded experiment.
+              </p>
+            </div>
+            <div class="panel answer-panel">
+              <p class="eyebrow">ANSWER &amp; EVIDENCE</p>
+              <p id="route">No question yet</p>
+              <p id="answer" role="status" aria-live="polite">
+                Choose a case or enter a question to begin.
+              </p>
+              <p id="reason" class="subtle"></p>
+              <div id="sources"></div>
+              <button id="export-case" disabled>Download this case JSON</button>
+            </div>
+          </div>
+          <div class="panel">
+            <h2>Replay the full pack</h2>
+            <p>
+              All cases run in order, one at a time. Prompts and checks were written by maintainers;
+              they are not citizen reports.
+            </p>
+            <div class="actions">
+              <button id="replay" class="primary">Run all cases</button
+              ><button id="export-replay" disabled>Download replay JSON</button>
+            </div>
+            <p id="replay-status" role="status">No replay in this tab yet.</p>
+            <ol id="replay-results"></ol>
+          </div>
+        </section>
+        <section id="view-workbench" class="view" hidden aria-labelledby="workbench-heading">
+          <div class="panel">
+            <p class="eyebrow">02 / REAL HISTORICAL AMENDMENT</p>
+            <h2 id="workbench-heading">Ninoy Aquino Day, 2024</h2>
+            <p>
+              Proclamation 665 moved the observance from 21 August to 23 August 2024. These are
+              historical records. They cannot answer a current holiday question.
+            </p>
+            <p>
+              Applying a version changes this tab’s loaded records. It does not update a government
+              system or a signed mobile knowledge bundle.
+            </p>
+            <div id="revision-comparison" class="two-columns"></div>
+            <p id="affected">
+              Affected authored question: “When was Ninoy Aquino Day in 2024?” Also check a doubt
+              follow-up and a current-year question.
+            </p>
+            <button id="check-impact">Run affected question checks</button>
+            <ul id="impact-results" aria-live="polite"></ul>
+            <div class="actions">
+              <button id="load-original">Load original version</button
+              ><label class="review-label"
+                ><input type="checkbox" id="reviewed" /> I reviewed the authority, dates, excerpts
+                and hashes</label
+              ><button id="apply" disabled>Apply amendment locally</button
+              ><button id="rollback" disabled>Roll back to original</button>
+            </div>
+            <p id="revision-status" role="status">No historical version loaded.</p>
+            <form id="historical-form">
+              <label for="historical-question">Historical question</label
+              ><input id="historical-question" value="When was Ninoy Aquino Day in 2024?" /><button
+                class="primary">
+                Ask the loaded version
+              </button>
+            </form>
+            <p id="historical-answer" role="status">Load a version first.</p>
+            <p id="historical-route" class="subtle"></p>
+          </div>
+        </section>
+        <section id="view-experiment" class="view" hidden aria-labelledby="experiment-heading">
+          <div class="panel">
+            <p class="eyebrow">03 / RECORDED RESULTS ONLY</p>
+            <h2 id="experiment-heading">Where did the model help?</h2>
+            <p>
+              Same local model, settings and source corpus across three repetitions. Record-only
+              answers are the baseline. The two model lanes share the same prompt; the application
+              lane then checks the output. Lane order alternates. Generations are separate, so
+              differences do not establish a causal accuracy gain.
+            </p>
+            <p id="experiment-status" role="status">No results loaded.</p>
+            <div id="experiment-summary"></div>
+            <p class="subtle">
+              Scores check named facts and phrases. They do not prove that every sentence is
+              correct. Expand each output to inspect it. Extractive controls can discard correct
+              paraphrases.
+            </p>
+            <div id="experiment-outputs"></div>
+            <button id="export-experiment" disabled>Download every output</button>
+          </div>
+        </section>
+        <section id="view-kit" class="view" hidden aria-labelledby="kit-heading">
+          <div class="panel">
+            <p class="eyebrow">04 / REPRODUCE THE RUN</p>
+            <h2 id="kit-heading">Take the evidence with you</h2>
+            <p>
+              The kit builds the site, executes the replay and model experiment, drives the real
+              browser journey, and exports five browser recordings. Raw captures stay local under
+              tmp/recordings.
+            </p>
+            <pre><code>npm run public:demo -- --model /path/to/gemma-3.gguf</code></pre>
+            <p>
+              Requires Node 22.18 or newer, Python 3, Playwright 1.58.0, Chromium, FFmpeg and a
+              local model. No API key is used.
+            </p>
+            <button id="export-pack">Download public source pack</button>
+            <p id="identity" class="hash"></p>
+            <p class="subtle">
+              Service snapshots are text extracted from fetched public pages; their hashes identify
+              saved extracts. Historical source hashes identify the archived government PDFs, with
+              separate OCR text and page references. Re-fetch and review before relying on a source
+              that needs a new check.
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="lab-footer">
+      Airgap · Public records, visible decisions · <a href="index.html">Back to the project</a>
+    </footer>
+    <script type="module" src="lab.js"></script>
+  </body>
+</html>

@@ -175,13 +175,13 @@
       },
       {
         "query": "report a concern about a city hall cashier",
-        "expect": "tool",
-        "tool": "reportConcern"
+        "expect": "unavailable",
+        "reason": "no_agency_integration"
       },
       {
         "query": "track my application for a business permit",
-        "expect": "tool",
-        "tool": "checkApplicationStatus"
+        "expect": "unavailable",
+        "reason": "no_agency_integration"
       },
       {"query": "what is the capital of France", "expect": "fallback_or_refusal"},
       {

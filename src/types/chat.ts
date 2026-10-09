@@ -9,6 +9,10 @@ export interface MessageAudit {
   confidence?: number;
   toolName?: string;
   refusalReason?: string;
+  /** Shared public-service decision, including unavailable integrations. */
+  responseReason?: string;
+  answerPath?: import('../core/publicService').PublicAnswer['answerPath'];
+  sources?: import('../core/publicService').PublicSource[];
   groundingIssues?: string[];
   providerId?: import('../services/inference/types').InferenceProviderId;
   modelIdentity?: string;

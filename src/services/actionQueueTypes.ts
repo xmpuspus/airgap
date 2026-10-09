@@ -17,7 +17,7 @@ export interface QueueRecord {
   completedAt?: number;
   status: QueueStatus;
   retryCount: number;
-  errorCode?: 'backend_error';
+  errorCode?: 'backend_error' | 'no_agency_integration';
   errorMessage?: string;
   chatMessageId: string;
 }

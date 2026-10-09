@@ -67,7 +67,10 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
     );
   }
 
-  if (!Array.isArray(cfg.actions) || cfg.actions.length === 0) {
+  if (
+    !Array.isArray(cfg.actions) ||
+    (cfg.actions.length === 0 && cfg.llm?.supportDomain !== 'government')
+  ) {
     errors.push('actions must be a non-empty array');
   }
 
@@ -136,7 +139,10 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
       }
     }
   }
-  if (!['mock', 'rest'].includes(cfg.backend?.type)) {
+  if (
+    !(cfg.llm?.supportDomain === 'government' && cfg.backend === undefined) &&
+    !['mock', 'rest'].includes(cfg.backend?.type ?? '')
+  ) {
     errors.push('backend.type must be one of [mock, rest]');
   }
   if (

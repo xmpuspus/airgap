@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: 22.11
+          node-version: 22.18
           cache: npm
       - run: npm ci
       - run: npm run format:check
@@ -31,6 +31,16 @@ jobs:
       - run: npx tsc --noEmit
       - run: npm test -- --runInBand --coverage
       - run: npm run journeys
+      - run: npm run public:replay
+      - run: node --test __tests__/public-service.test.mjs
+      - name: Install real browser prerequisites
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/tmp/public-showcase/browser-cache
+        run: |
+          python3 -m venv tmp/public-showcase/python
+          tmp/public-showcase/python/bin/pip install -r scripts/public-requirements.txt
+          tmp/public-showcase/python/bin/python -m playwright install --with-deps chromium
+      - run: npm run public:qa
       - run: npm run kb:validate
       - run: npm run server:test
       - run: npm run signing:test
@@ -38,6 +48,7 @@ jobs:
       - run: npm run cli:pack:test
       - run: npm run security:direct
       - run: sudo apt-get update && sudo apt-get install --yes ffmpeg
+      - run: npm run public:verify
       - run: npm run recordings:validate
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -50,7 +61,7 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: 22.11
+          node-version: 22.18
           cache: npm
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
         with:
@@ -69,7 +80,7 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: 22.11
+          node-version: 22.18
           cache: npm
       - run: npm ci
       - run: bundle install

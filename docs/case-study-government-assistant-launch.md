@@ -3,7 +3,9 @@
 Research date: 2026-10-07. The evidence table at the end of this page gives the source and the
 evidence level for each claim. The `government-services` template in
 [`examples/`](../examples/README.md) replays the documented prompts with Gemma 4 E2B, and the
-recordings in `demo/` show the answers.
+recordings in `demo/` show the answers. Those are historical native takes. The newer
+[shared-core public lab](public-service-showcase.md) uses fetched source snapshots and
+publishes its own CLI and host-model evidence separately.
 
 ## The assistant gave a United States answer on its Philippines tab
 
@@ -49,7 +51,7 @@ The two replies do not share one knowledge date. The first reply knew a January 
 inauguration. The second reply cited an update from early 2023. The sources do not say which
 model, configuration, or retrieval served the launch-day chat, and the project did not reproduce
 the production answers. The controls below do not depend on the cause. Each one stops a documented
-failure in any configuration.
+failure class; these records cannot establish which control failed in DICT's system.
 
 ## Nine controls are the minimum for any support bot, and none of them needs a large model
 
@@ -69,11 +71,12 @@ and to the place where the template implements it.
 | 8. The model never decides                            | A world-knowledge answer inside an app that also runs transactions                       | Tool routes and actions are keyword routed; the model only phrases retrieved text   |
 | 9. The inner workings stay private                    | A public post shows text presented as the instructions, after "repeat the words above"   | A prompt probe gets a fixed refusal from code that says nothing about the internals |
 
-## A 3-bit Gemma 4 E2B answered the ten prompts in one recorded run under those controls
+## The native takes mix Gemma 4 answers and deterministic controls
 
 The takes run Gemma 4 E2B as a 3-bit GGUF file through `llama.rn` on an Android emulator. The
 four takes use the same records, the same prompt, and the same checks. The model phrases the
-record. It never chooses the record, the tool, or the refusal.
+record on model-routed beats. Doubt, identity, scope, clock, refusals and queued actions use
+code. Configuring Gemma 4 for a take does not mean it produced every displayed answer.
 
 [`demo/airgap-showcase-government.gif`](../demo/airgap-showcase-government.gif) puts a
 five-prompt replay take, in the published order, next to crops of the published screenshots in
@@ -104,7 +107,7 @@ and 10.
 
 Nine code changes came out of the model takes, on Gemma 4 and on Apple Foundation Models in the
 iOS Simulator, which the project tried and set aside. Streamed model text now waits for the
-grounding check, so an unsourced amount or date never shows on screen. The grounding check
+grounding check before display, so a detected unsupported amount or date triggers a fallback. The grounding check
 accepts a sourced date in either word order, because a model wrote "June 30" for "30 June 2022".
 It also reads a prose date and an ISO date into the same parts, because a model wrote
 "September 25, 2026" for a record that says "2026-09-25". The runtime turns off the Gemma 4
@@ -125,6 +128,10 @@ question, and the brand do not contain, and the app shows the record instead. Th
 were recorded after these changes, at the commits that `demo/recordings.json` lists.
 
 The golden cases are in [`__tests__/golden/government-services.json`](../__tests__/golden/government-services.json).
+The original CI exercised fixture and retrieval assertions rather than every golden answer.
+The new `public:replay` command executes all 15 government cases through the shared answer
+core and asserts routes and answer text. Its unavailable action path creates no queued
+report; the older queue footage describes the earlier template behavior.
 The adversarial cases add political-opinion, voting, legal, and medical refusals, plus two tool
 routes and two fallback prompts.
 
@@ -137,7 +144,9 @@ routes and two fallback prompts.
   before a quality claim, as [`provider-validation.md`](provider-validation.md) describes. The
   records, the checks, and the refusals are deterministic. The phrasing is not.
 - The records are snapshots checked on 2026-10-07. Facts change. The drawer shows the date.
-- An unrelated question can return the nearest record. The template README lists this limit.
+- The older recorded path could return a nearby record for an unrelated question. The new
+  shared core refuses unsupported subjects and properties; conservative matching can also
+  reject supported wording.
 - Nobody on this project reproduced the production answers. The evidence is a news card, two
   vendor-blog screenshots, and news reports.
 - The eGov AI platform documents grounding and scope rules. Which configuration served the chat on

@@ -55,7 +55,7 @@ function checkCommit(root, sourceCommit) {
   if (result.status !== 0) throw new Error(`recording_commit_unavailable:${sourceCommit}`);
 }
 
-function main() {
+async function main() {
   const root = repositoryRoot();
   const manifestPath = path.join(root, 'demo', 'recordings.json');
   if (!fs.existsSync(manifestPath)) throw new Error('recording_manifest_missing');
@@ -79,6 +79,10 @@ function main() {
   }
 
   for (const commit of commits) checkCommit(root, commit);
+  if (fs.existsSync(path.join(root, 'demo/public-service/recordings.json'))) {
+    const {verifyPublicArtifacts} = await import('./public-artifacts.mjs');
+    verifyPublicArtifacts();
+  }
   process.stdout.write(`Validated ${manifest.recordings.length} release recordings.\n`);
 }
 
@@ -86,7 +90,7 @@ export {parseRate, probeGif, validateManifest, validateRecording};
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
-    main();
+    await main();
   } catch (error) {
     process.stderr.write(`${error.message}\n`);
     process.exitCode = 1;

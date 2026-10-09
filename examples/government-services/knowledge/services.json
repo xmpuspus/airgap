@@ -50,27 +50,33 @@
   {
     "id": "svc-011",
     "category": "services",
-    "title": "How to apply for a Philippine passport",
-    "content": "As of 2026-10-07, you book a passport appointment at passport.gov.ph. Appointments are free of charge. The DFA says appointments not made through passport.gov.ph are not legitimate appointments. 1. Book a site and date at passport.gov.ph. 2. Bring the documents listed on the DFA requirements page at consular.dfa.gov.ph. 3. Go to the site on your date for data capture. 4. Claim the passport on the release date, or send a representative with an authorization letter or a Special Power of Attorney. Regular processing takes 10 working days in Metro Manila and 12 outside it. Expedited processing takes 5 and 7 working days. The DFA cancels a passport not claimed within one year of its release. Source: https://consular.dfa.gov.ph/services/passport/passport-faqs (checked 2026-10-07).",
+    "title": "Official Philippine passport appointment portal",
+    "content": "Book a Philippine passport appointment only at passport.gov.ph. Appointments are free. Source: https://passport.gov.ph/sites/site (checked 2026-10-09).",
     "keywords": [
       "passport",
       "pasaporte",
       "paano kumuha ng passport",
       "passport application",
       "DFA appointment",
-      "renew passport",
       "passport steps",
       "how to get a passport",
       "passport.gov.ph",
-      "mag-apply ng passport",
-      "passport processing time"
+      "mag-apply ng passport"
     ],
     "tags": ["passport", "dfa", "travel"],
     "metadata": {
-      "source": "https://consular.dfa.gov.ph/services/passport/passport-faqs",
+      "source": "https://passport.gov.ph/sites/site",
       "publisher": "Department of Foreign Affairs",
-      "asOf": "2026-10-07",
-      "agency": "DFA"
+      "asOf": "2026-10-09",
+      "agency": "DFA",
+      "sourcePath": "evidence/public-service/sources/passport-application.json",
+      "sourceSha256": "aba34f2a978ec9c0bf0e8d49ee662c1192b1f5a01dec750bbbd6caededa43eef",
+      "excerpt": "PASSPORT APPOINTMENTS ARE FREE AND SHOULD ONLY BE MADE VIA HTTPS://PASSPORT.GOV.PH.",
+      "reviewBy": "2026-11-09",
+      "publicEvidence": true,
+      "language": "en",
+      "translationStatus": "original",
+      "sourceTransport": "web search text extraction"
     }
   }
 ]

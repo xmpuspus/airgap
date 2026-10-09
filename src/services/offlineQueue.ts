@@ -16,6 +16,7 @@ function mockResponseFor(actionType: string): string {
 }
 
 async function executeQueuedAction(action: QueueRecord): Promise<string> {
+  if (config.llm?.supportDomain === 'government') throw new Error('no_agency_integration');
   const backend = getBackendConnector();
   const options = {idempotencyKey: action.id};
   switch (action.type) {
@@ -76,6 +77,7 @@ class OfflineQueueService {
     chatMessageId: string,
     toolName?: string,
   ): QueuedAction {
+    if (config.llm?.supportDomain === 'government') throw new Error('no_agency_integration');
     const action: QueuedAction = {
       id: uuidv4(),
       type,
@@ -113,8 +115,11 @@ class OfflineQueueService {
       } catch (error) {
         action.status = 'failed';
         action.retryCount += 1;
-        action.errorCode = 'backend_error';
         action.errorMessage = error instanceof Error ? error.message : String(error);
+        action.errorCode =
+          action.errorMessage === 'no_agency_integration'
+            ? 'no_agency_integration'
+            : 'backend_error';
         logger.warn('offlineQueue', 'backend execution failed', {
           type: action.type,
           retryCount: action.retryCount,
@@ -136,6 +141,7 @@ class OfflineQueueService {
     const queue = this.getQueue();
     const action = queue.find(record => record.id === id);
     if (!action) throw new Error('queue_record_not_found');
+    if (action.errorCode === 'no_agency_integration') throw new Error('no_agency_integration');
     const maxRetries = (config as any).queue?.maxRetries ?? 3;
     if (action.retryCount >= maxRetries) throw new Error('queue_retry_limit');
     action.status = 'pending';

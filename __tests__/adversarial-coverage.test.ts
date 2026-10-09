@@ -11,6 +11,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import {answerPublicService} from '../src/core/publicService';
 
 interface Case {
   query: string;
@@ -35,6 +36,18 @@ for (const vertical of Object.keys(fixture.verticals)) {
 }
 
 describe('adversarial coverage', () => {
+  test('government action requests execute unavailable without a receipt or queue', () => {
+    const cases = fixture.verticals['government-services'].filter(c => c.expect === 'unavailable');
+    expect(cases).toHaveLength(2);
+    for (const c of cases) {
+      const actual = answerPublicService(c.query, []);
+      expect(actual.answerPath).toBe('unavailable');
+      expect(actual.reason).toBe(c.reason);
+      expect(actual.answer).toContain('No request was sent or queued');
+      expect(actual.answer).toContain('no receipt was created');
+      expect(actual.modelCalled).toBe(false);
+    }
+  });
   test('every vertical has at least 10 seeded cases', () => {
     for (const [_vertical, cases] of Object.entries(fixture.verticals)) {
       expect(cases.length).toBeGreaterThanOrEqual(10);

@@ -7,6 +7,7 @@
 
 import {readFileSync, existsSync} from 'fs';
 import path from 'path';
+import {answerPublicService} from '../src/core/publicService';
 
 const REPO_ROOT = path.join(__dirname, '..');
 const VERTICALS = [
@@ -31,6 +32,7 @@ interface GoldenCase {
   mustInclude?: string[];
   expectTool?: string;
   expectRefusal?: string;
+  expectPath?: string;
 }
 
 interface GoldenFile {
@@ -89,6 +91,22 @@ describe('per-vertical golden coverage', () => {
           expect(resolved?.name).toBe(c.expectTool);
         }
       });
+
+      if (vertical === 'government-services') {
+        test('both agency requests execute the unavailable path without model or sources', () => {
+          const cases = golden.cases.filter(c => c.expectPath === 'unavailable');
+          expect(cases).toHaveLength(2);
+          expect(tools).toEqual([]);
+          for (const c of cases) {
+            const actual = answerPublicService(c.query, []);
+            expect(actual.answerPath).toBe('unavailable');
+            expect(actual.reason).toBe('no_agency_integration');
+            expect(actual.modelCalled).toBe(false);
+            expect(actual.sources).toEqual([]);
+            for (const phrase of c.mustInclude ?? []) expect(actual.answer).toContain(phrase);
+          }
+        });
+      }
     });
   }
 });

@@ -3,7 +3,7 @@
     "id": "req-002",
     "category": "requirements",
     "title": "Requirements for an NBI clearance",
-    "content": "As of 2026-10-07, you bring three items to the NBI branch. 1. Your printed or digital reference number or QR code. 2. Your proof of payment or receipt. 3. Two valid government-issued IDs. The page gives these examples of IDs: passport, driver's license, national ID, UMID, postal ID, or a PSA birth certificate. Staff take your digital photo, fingerprints, and electronic signature at the branch. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-07).",
+    "content": "Two valid government-issued IDs are listed for an NBI clearance branch visit, along with your reference number or QR code and proof of payment. The source says the IDs must be original and not expired. Source: https://nbi.gov.ph/how-to-apply-nbi-clearance/ (checked 2026-10-09).",
     "keywords": [
       "NBI requirements",
       "requirements sa NBI",
@@ -17,8 +17,16 @@
     "metadata": {
       "source": "https://nbi.gov.ph/how-to-apply-nbi-clearance/",
       "publisher": "National Bureau of Investigation",
-      "asOf": "2026-10-07",
-      "agency": "NBI"
+      "asOf": "2026-10-09",
+      "agency": "NBI",
+      "sourcePath": "evidence/public-service/sources/nbi.json",
+      "sourceSha256": "1d10d4d4e4c6b9fa7879f3ef34e7be117fd2bc272495b52fc2b024bba118279a",
+      "excerpt": "Two (2) Valid Government-issued IDs",
+      "reviewBy": "2026-11-09",
+      "publicEvidence": true,
+      "language": "en",
+      "translationStatus": "original",
+      "sourceTransport": "web open text extraction"
     }
   },
   {

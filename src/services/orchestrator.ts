@@ -16,6 +16,14 @@ import {
 import {isFollowUp, expandQuery} from '../utils/followUpDetector';
 import {formatDeviceClock, isClockQuestion} from '../utils/deviceClock';
 import {isDoubtCheck} from '../utils/doubtCheck';
+import {getAllDocuments} from '../knowledge';
+import {
+  answerPublicService,
+  controlPublicModelOutput,
+  isPublicClockQuestion,
+  type InputPolicy,
+  type PublicSession,
+} from '../core/publicService';
 import {
   config,
   brand,
@@ -85,6 +93,9 @@ export interface OrchestratorResponse {
   audit?: {
     kbDocIds: string[];
     confidence: number;
+    responseReason?: MessageAudit['responseReason'];
+    answerPath?: MessageAudit['answerPath'];
+    sources?: MessageAudit['sources'];
     toolName?: string;
     refusalReason?: string;
     groundingIssues?: string[];
@@ -128,11 +139,13 @@ export function getConversationHistory(): ConversationTurn[] {
 
 // The last answer that came from records, so a doubt check can repeat it.
 let lastRecordAnswer: {text: string; docIds: string[]} | null = null;
+let publicSession: PublicSession = {};
 
 export function clearConversationHistory(): void {
   ensureHistoryLoaded();
   conversationHistory = [];
   lastRecordAnswer = null;
+  publicSession = {};
   conversationStore.clear();
 }
 
@@ -160,19 +173,100 @@ async function processMessageInner(
   const onToken = hooks.onToken;
   const text = userText.trim();
 
-  // A blocked topic is refused before search or a model can see it.
+  // Configured safety applies before every domain's retrieval or provider.
   const block = checkBlocklist(text);
   if (block.blocked && block.reason) {
+    publicSession = {};
+    lastRecordAnswer = null;
     const refusalText = refusalFor(block.reason);
     addToHistory('user', text);
     addToHistory('bot', refusalText);
     return {
       text: refusalText,
       source: 'refusal',
+      audit: {kbDocIds: [], confidence: 0, refusalReason: block.reason},
+    };
+  }
+
+  // Government examples have no agency integration. The shared core decides
+  // answerability, freshness, doubt and tool unavailability before any provider.
+  if (config.llm?.supportDomain === 'government') {
+    if (isGreeting(text) && conversationHistory.length === 0) {
+      const response = `Hi there! I'm your ${brand.name} support assistant. How can I help you today?`;
+      publicSession = {};
+      lastRecordAnswer = null;
+      addToHistory('user', text);
+      addToHistory('bot', response);
+      return {text: response, source: 'system', suggestedReplies: quickReplies as QuickReply[]};
+    }
+    if (isPublicClockQuestion(text)) {
+      const clock = formatDeviceClock(new Date(), config.locale?.language ?? 'en');
+      const response = `It is ${clock} on this device's clock. I have no clock of my own, and each record shows the date it was checked.`;
+      publicSession = {};
+      lastRecordAnswer = null;
+      addToHistory('user', text);
+      addToHistory('bot', response);
+      return {text: response, source: 'system'};
+    }
+    const records = getAllDocuments();
+    const planned = answerPublicService(
+      text,
+      records,
+      publicSession,
+      (config as typeof config & {safety?: InputPolicy}).safety,
+    );
+    let reply = planned.answer;
+    let source: OrchestratorResponse['source'] =
+      planned.answerPath === 'record'
+        ? 'search'
+        : planned.answerPath === 'refusal'
+        ? 'refusal'
+        : 'system';
+    let providerFailure: MessageAudit['providerFailure'];
+    let providerId: InferenceProviderId | undefined;
+    let modelIdentity: string | undefined;
+    const selected = records.filter(record => planned.recordIds.includes(record.id));
+    if (
+      planned.answerPath === 'record' &&
+      planned.reason === 'supported_record' &&
+      getMode() !== 'demo' &&
+      (await generationAvailable())
+    ) {
+      try {
+        const generated = await routeGeneration(
+          'Return the complete supplied public record, verbatim, to answer the question. Do not add facts.',
+          buildUserMessage(text, selected, conversationHistory, {
+            contextChars: recordContextChars(),
+          }),
+        );
+        providerId = generated.providerId;
+        modelIdentity = generated.modelIdentity;
+        const controlled = controlPublicModelOutput(generated.text, planned, selected);
+        reply = controlled.answer;
+        if (controlled.fallback) {
+          providerFailure = {providerId, reason: 'ungrounded', message: controlled.reason};
+        } else {
+          source = 'llm';
+        }
+      } catch (err) {
+        providerFailure = {reason: 'generation_failed', message: String(err)};
+      }
+    }
+    onToken?.(reply);
+    addToHistory('user', text);
+    addToHistory('bot', reply);
+    return {
+      text: reply,
+      source,
       audit: {
-        kbDocIds: [],
-        confidence: 0,
-        refusalReason: block.reason,
+        kbDocIds: planned.recordIds,
+        sources: planned.sources,
+        answerPath: planned.answerPath,
+        responseReason: planned.reason,
+        confidence: planned.answerPath === 'record' ? 1 : 0,
+        ...(planned.answerPath === 'refusal' ? {refusalReason: planned.reason} : {}),
+        ...(providerFailure ? {providerFailure} : {}),
+        ...(providerId ? {providerId, modelIdentity} : {}),
       },
     };
   }

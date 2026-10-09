@@ -19,6 +19,7 @@
 
 import {readFileSync} from 'fs';
 import path from 'path';
+import {answerPublicService} from '../src/core/publicService';
 
 const REPO_ROOT = path.join(__dirname, '..');
 const VERTICALS = [
@@ -91,8 +92,9 @@ describe('tool router and safety blocklist coverage by vertical', () => {
       const tools = cfg.tools ?? [];
       const blocklist = cfg.safety?.topicBlocklist ?? [];
 
-      test('has at least one tool defined', () => {
-        expect(tools.length).toBeGreaterThanOrEqual(1);
+      test('has tools only when an integration is configured', () => {
+        if (vertical === 'government-services') expect(tools).toEqual([]);
+        else expect(tools.length).toBeGreaterThanOrEqual(1);
       });
 
       test('every tool keyword resolves back to that tool', () => {
@@ -221,10 +223,22 @@ describe('vertical-specific natural language coverage', () => {
   };
 
   for (const vertical of VERTICALS) {
-    test(`${vertical}: at least 10 NL phrases route to tools`, () => {
+    test(`${vertical}: authored action phrases follow the configured availability`, () => {
       const cfg = loadExample(vertical);
       const tools = cfg.tools ?? [];
       const phrases = cases[vertical];
+      if (vertical === 'government-services') {
+        expect(phrases).toHaveLength(10);
+        for (const phrase of phrases) {
+          expect(findTool(phrase, tools)).toBeNull();
+          const actual = answerPublicService(phrase, []);
+          expect(actual.answerPath).toBe('unavailable');
+          expect(actual.reason).toBe('no_agency_integration');
+          expect(actual.modelCalled).toBe(false);
+          expect(actual.recordIds).toEqual([]);
+        }
+        return;
+      }
       let hits = 0;
       const misses: string[] = [];
       for (const phrase of phrases) {

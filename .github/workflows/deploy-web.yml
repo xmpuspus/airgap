@@ -8,6 +8,17 @@ on:
       - 'examples/**/airgap.config.json'
       - 'examples/**/knowledge/**'
       - 'demo/industry-*.gif'
+      - 'demo/public-service/**'
+      - 'src/core/**'
+      - 'src/services/orchestrator.ts'
+      - 'scripts/public-*'
+      - 'scripts/build-public-service.mjs'
+      - 'scripts/verify-public-service.mjs'
+      - 'validation/public-service-*'
+      - 'evidence/public-service/**'
+      - 'examples/government-services/historical-revisions.json'
+      - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
 
@@ -30,10 +41,20 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: '22'
+          node-version: '22.18'
+          cache: npm
+
+      - run: npm ci
+      - run: sudo apt-get update && sudo apt-get install --yes ffmpeg
+      - name: Verify public lab and reviewed recordings
+        run: npm run public:verify
 
       - name: Build static site
-        run: node web/data/build.mjs
+        run: |
+          node web/data/build.mjs
+          npm run public:build
+          mkdir -p web/demos/public-service
+          cp demo/public-service/*.gif demo/public-service/*.mp4 web/demos/public-service/
 
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5

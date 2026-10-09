@@ -66,6 +66,7 @@ export interface ToolResult {
 }
 
 function getTools(): ToolDefinition[] {
+  if (config.llm?.supportDomain === 'government') return [];
   return (config as unknown as {tools?: ToolDefinition[]}).tools ?? [];
 }
 
@@ -96,6 +97,14 @@ export function findToolForQuery(query: string): ToolDefinition | null {
  * instead and return a queuedActionId.
  */
 export async function executeTool(tool: ToolDefinition, query: string): Promise<ToolResult> {
+  if (config.llm?.supportDomain === 'government') {
+    return {
+      toolName: tool.name,
+      ok: false,
+      error: 'no_agency_integration',
+      summary: 'Unavailable: no agency integration exists. No request was sent or queued.',
+    };
+  }
   const online = connectivityService.isOnline();
 
   if (!online && tool.offlineQueueEligible !== false && tool.stateChanging) {

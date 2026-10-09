@@ -5,6 +5,14 @@ import {COLORS, SPACING, RADIUS, TYPOGRAPHY} from '../../constants/theme';
 
 export function getActionReceiptView(record: QueueRecord) {
   const title = (record.toolName ?? record.type).replaceAll('_', ' ');
+  if (record.status === 'failed' && record.errorCode === 'no_agency_integration') {
+    return {
+      title,
+      statusLabel: 'Unavailable',
+      detail: 'No agency integration is connected. This request was not submitted.',
+      actions: ['Remove'],
+    };
+  }
   const status = {
     pending: ['Pending', 'This action will run when the service is available.'],
     processing: ['Retrying', 'The service is processing this action.'],
@@ -39,13 +47,15 @@ export function ActionReceipt({
       <Text style={styles.detail}>{view.detail}</Text>
       {failed && (
         <View style={styles.actions}>
-          <Pressable
-            style={styles.retry}
-            onPress={() => onRetry?.(record.id)}
-            accessibilityLabel="Retry action"
-            accessibilityRole="button">
-            <Text style={styles.retryText}>Retry</Text>
-          </Pressable>
+          {view.actions.includes('Retry') && (
+            <Pressable
+              style={styles.retry}
+              onPress={() => onRetry?.(record.id)}
+              accessibilityLabel="Retry action"
+              accessibilityRole="button">
+              <Text style={styles.retryText}>Retry</Text>
+            </Pressable>
+          )}
           <Pressable
             style={styles.remove}
             onPress={() => onRemove?.(record.id)}

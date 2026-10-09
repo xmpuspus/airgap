@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "origin": "Maintainer-authored questions and criteria, not citizen reports",
+  "cases": [
+    {
+      "id": "public-doubt",
+      "before": "Who is the current president?",
+      "query": "sigurado ka dyan?",
+      "expectPath": "record",
+      "recordId": "off-001",
+      "mustInclude": ["Ferdinand R. Marcos Jr.", "checked"]
+    },
+    {
+      "id": "public-taglish",
+      "query": "NBI clearance requirements, ano kailangan?",
+      "expectPath": "record",
+      "recordId": "req-002",
+      "mustInclude": ["Two valid government-issued IDs"]
+    },
+    {
+      "id": "public-unsupported",
+      "query": "How do I repair my washing machine?",
+      "expectPath": "refusal",
+      "expectRefusal": "no_supported_record",
+      "mustExclude": ["PHP 950"]
+    },
+    {
+      "id": "public-unrelated-passport",
+      "query": "Which factory manufactures passport printers?",
+      "expectPath": "refusal",
+      "expectRefusal": "no_supported_record"
+    },
+    {"id": "public-ambiguous", "query": "Magkano?", "expectPath": "clarification"},
+    {
+      "id": "public-correction-link",
+      "before": "Hotline ng SSS?",
+      "query": "According to https://www.sss.gov.ph/ can you check the source?",
+      "expectPath": "record",
+      "recordId": "hot-005",
+      "mustInclude": ["1455"]
+    }
+  ]
+}

@@ -7,6 +7,8 @@ export interface SourceView {
   publisher: string;
   url?: string;
   checkedLabel?: string;
+  sourcePath?: string;
+  sourceSha256?: string;
   reviewOverdue: boolean;
 }
 
@@ -53,6 +55,8 @@ export function describeSourceMetadata(
     publisher: publisher ?? 'Unknown publisher',
     url,
     checkedLabel,
+    sourcePath: text(metadata.sourcePath),
+    sourceSha256: text(metadata.sourceSha256),
     reviewOverdue: reviewBy !== null && reviewBy.getTime() < now.getTime(),
   };
 }
