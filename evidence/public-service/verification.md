@@ -1,35 +1,41 @@
-# Checks recorded for the reviewed capture source
+# The local checks pass at the recorded source
 
-This table describes the reviewed capture source below. It is not a current-source
-acceptance receipt. The October 9 review corrections to historical date labels and
-browser recovery coverage require a new capture and independent visual inspection.
+The final capture source is `f8c2411da69a0b64bb43a02384a6836e592b6393`.
+The core is SHA-256 `c9a825df630040722a8417d26b32e2a7acf938a5f4416ac08b7d39c527f41550`.
+The released model report is SHA-256
+`f158fd1e6cf3942f3635435b654da54c7055a28d46114560b42ef74424235e53`.
+The [independent model review](experiment-review.md) covers all 54 displayed answers
+and 36 raw outputs. All 18 controlled answers use the source-record fallback.
 
-The reviewed capture source is `fc909287c2bacd4a5f9e6642c877c61f75d28e21`.
-The core is SHA-256 `1633ec0bfc058932d6e43bb78a5c2967ddd80d99f2c8616531b796dee95531cd`.
-The final model report is SHA-256
-`f7ef2b355b088ae9d785549b7337966fa4828a4628d16b73ed45c92bfd1be86c`.
-Its [independent review](experiment-review.md) covers every displayed answer and raw output.
+| Check                                              | Result on 2026-10-09                                                                                                    |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Frozen replay entrypoint                           | PASS, 21 cases including all 15 original government queries                                                             |
+| Core and CLI tests                                 | PASS, 13 tests including explicit years, expiry and both source orders                                                  |
+| Capture recovery tests                             | PASS, four tests using real media and filesystem operations                                                             |
+| Jest                                               | PASS, run `npm test -- --runInBand` for current totals                                                                  |
+| Types, ESLint and formatting                       | PASS                                                                                                                    |
+| Knowledge validation and local documentation links | PASS                                                                                                                    |
+| Browser QA                                         | PASS, all cases, repeat replay, free-form and doubt, apply and rollback, downloads, failure and recovery at both widths |
+| `public:verify`                                    | PASS, source bytes, all 54 experiment rows, timing, controls and five reviewed captures                                 |
+| `recordings:validate`                              | PASS, 16 existing release recordings                                                                                    |
+| Visual inspection                                  | PASS, 18 current desktop/mobile screenshots and all five final GIF loops                                                |
 
-| Check                                              | Observed result on 2026-10-09                                                                                  |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Frozen replay entrypoint                           | PASS: 21 cases, including all 15 original government queries                                                   |
-| Core and CLI tests                                 | PASS: 11 tests, including incomplete evidence and both historical source orders                                |
-| Capture recovery tests                             | PASS: four tests using real media bytes and filesystem operations                                              |
-| Industry runner                                    | PASS: 77 checks across eight templates                                                                         |
-| Jest                                               | PASS at the capture source; run `npm test -- --runInBand` for current totals                                   |
-| Types, ESLint and formatting                       | PASS                                                                                                           |
-| Knowledge validation and local documentation links | PASS                                                                                                           |
-| `public:verify`                                    | PASS: source bytes, 54 experiment rows, timings, decisions and five reviewed captures                          |
-| `recordings:validate`                              | PASS: 16 existing release recordings plus five public-service browser clips                                    |
-| Browser QA                                         | PASS: all 21 cases at both widths, two replays, free-form and doubt, source apply and rollback, JSON downloads |
-| Visual review                                      | PASS: six screenshots and all five full GIF loops                                                              |
+The full regression run passed 595 tests in 64 suites. Browser QA finished at
+07:24:06 UTC after the final captures. Both viewport sizes fetched the ten new
+GIF/MP4 files and nine existing site GIFs with matching source hashes.
 
-The full `public:demo` command completed replay, 36 real model generations, site build,
-browser QA and five captures. Its model report used source commit
-`ce12f1e19ec042b8a3f48c042fe661c4780bfe16`.
-The final capture-only run used the source above and the same checked report.
-It records the workbench's state before its first answer and validates every beat before
-publishing the files. The [visual review](visual-review.md) lists the final media hashes.
+The final `public:capture` process completed with exit 0. Its complete process
+capture has SHA-256 `d685b9ff433126e9132962ff4c76b7114718dd04e309d4f6a0946e6350017ddf`.
+The full `public:demo` command then passed in a separate checkout at the same source.
+That [independent reproduction](reproduction-review.md) includes 36 new model
+generations and a final browser pass against its newly captured media.
+It reused installed dependencies and the existing CPU binding.
+
+The released model report comes from the actual run against
+`a8f688f99148e00123a708ba0940638214511f3d`. Later packaging changes leave its
+core, corpus, runner, criteria and policy hashes unchanged. The final capture uses
+that reviewed report. The separate reproduction has its own report and media.
+The [visual review](visual-review.md) gives the exact released GIF hashes.
 
 Government requests cannot create mock transactions. New queue requests are rejected.
 Stored requests fail with `no_agency_integration`, display “Unavailable,” and offer only
@@ -52,7 +58,7 @@ The parser patch addresses the
 Read-only API checks passed, and the updated graph loaded the local CPU model and
 completed all 36 generations.
 
-The full audit reports 63 dependency entries: 0 critical, 56 high and 7 moderate.
+The 9 October audit reports 63 dependency entries: 0 critical, 56 high and 7 moderate.
 Excluding development dependencies gives 41: 0 critical, 34 high and 7 moderate.
 The audit counts entries without testing exploitability. The static lab imports local code
 and data. High and moderate advisories still apply to the wider React Native and development tree.
@@ -68,7 +74,10 @@ native-device run. Existing native recordings keep their separate identities.
 
 The historical revision pair is tested in both orders. The real 2025 Proclamation 727
 calendar now tests refusal after its annual scope ends. The same test adds the checked
-2026 Proclamation 1006 record and verifies selection in either order. Its catalogue
+2026 Proclamation 1006 record and checks the selected record in either order. An explicit
+2025 query must still refuse the expired record. It cannot borrow the 2026 answer.
+
+Its catalogue
 rollover metadata is authored application configuration, not a claim of legal amendment.
 All 13 core tests passed with the real clock on 2026-10-09. Current records need source
 review before their maintainer deadlines expire.

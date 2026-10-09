@@ -38,7 +38,7 @@ npm run public:build
 python3 -m http.server --bind 127.0.0.1 --directory web 8080
 ```
 
-Use Node 22.18 or newer; open `http://127.0.0.1:8080/lab.html`.
+Use Node 22.18 or newer. Open `http://127.0.0.1:8080/lab.html`.
 The [reproduction guide](docs/public-service-showcase.md) covers first run, source review,
 model limits and contributions. Each feature includes a GIF and MP4 derived from a real browser recording.
 The [capture index](demo/public-service/README.md) links all five and their source hashes.
@@ -53,9 +53,10 @@ The [capture index](demo/public-service/README.md) links all five and their sour
 
 ![A real historical holiday change applied and rolled back in the Source Workbench](demo/public-service/source-workbench.gif)
 
-The local model produced 12 incomplete responses in 36 calls. Every controlled answer
-used a complete source record. Twelve of those fallbacks replaced already acceptable
-model wording. [Read every output and the independent review](evidence/public-service/experiment-review.md).
+The local model reached its token limit in 12 of 36 calls. All 18 controlled answers
+used the complete source record instead of the model's wording. The fact checks also
+rejected correct short names and passed incomplete NBI replies.
+[Read every output and the independent review](evidence/public-service/experiment-review.md).
 These are CPU host measurements with Gemma 3. The older native recordings below have
 their own source and model identities.
 
@@ -64,7 +65,7 @@ their own source and model identities.
 The left cards show the published replies of a national government app's assistant on its
 2026-09-21 launch day. The right panel shows Kuya B, the `government-services` template, on the
 same five prompts on an Android 15 emulator configured with a 3-bit Gemma 4 E2B file.
-The first answer uses the model; the challenge, clock, identity and refusal are code paths.
+The first answer uses the model. The challenge, clock, identity and refusal are code paths.
 
 The president answer comes from a dated record with a source line. In this older take, a
 challenge repeats that answer. The

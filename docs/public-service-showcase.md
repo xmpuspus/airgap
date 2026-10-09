@@ -115,7 +115,7 @@ prose. The gate checks whole-record matches. It cannot check facts semantically.
 the question, prompt, raw model text, displayed answer, source hashes, fallback
 flag, first-token time, elapsed time, stop reason, and authored fact judgments.
 Token-limit stops are separate from fact checks. The
-[criteria](../validation/public-service-experiment.json) cite independent source text.
+[criteria](../validation/public-service-experiment.json) point to the saved source text.
 
 Each execution writes a unique directory under `tmp/public-showcase/model-runs/`.
 It has append-only rows and a status file. A crash leaves its rows and an
@@ -127,8 +127,10 @@ you make a quality claim. Earlier failed and pre-review runs stay in the evidenc
 directory.
 
 The [independent review](../evidence/public-service/experiment-review.md) accounts
-for two valid short answers marked wrong and six token-limit stops per model lane.
-All 18 controlled answers fell back to records. Its timing table shows the measured
+for two valid retrieved-model short answers marked wrong and six token-limit stops
+per model lane. The NBI outputs pass the narrow phrase checks despite truncation and
+wording absent from the supplied prompt. All 18 controlled answers fell back to records.
+Its timing table shows the measured
 CPU host and model. This experiment makes no phone or Gemma 4 performance claim.
 The pinned runner cannot load the supplied Gemma 4 architecture.
 
@@ -174,7 +176,7 @@ restored. The recovered page must answer a real question. These are authored
 filesystem faults, not government source changes. Temporary site copies are
 removed when the check exits.
 
-`npm run public:qa` writes `tmp/public-showcase/browser/qa.json` with the observed
+`npm run public:qa` writes `tmp/public-showcase/browser/qa.json` with the recorded
 HTTP statuses, recovered pack hash and PNG screenshots encoded as Base64 under each
 viewport's `loadingRecovery.screenshots` and `landing.screenshot` fields. Decode
 the `base64` bytes as PNG and compare their SHA-256 with `sha256` before visual
@@ -192,7 +194,10 @@ command, the separately hashed model report, and the browser pack.
 To capture again using the existing model report, run `npm run public:capture`
 after `npm run public:build`. Source must already be committed. All five captures
 and ten media exports are staged in the ignored run directory. The scripts check
-them before publication.
+them before replacing the local release files. Both capture commands prepare the
+complete static site and run browser QA again after the new media is copied. The
+final QA report checks the ten new GIF/MP4 hashes and all nine existing site GIFs
+over HTTP, at both desktop and mobile widths.
 
 The earlier release stays in the run's `previous` directory. Failed exports leave
 the release unchanged and keep the failed run. A promotion error restores the

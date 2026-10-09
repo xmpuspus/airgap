@@ -1,6 +1,8 @@
 # Actual public-service browser captures
 
-All five clips passed full-loop and screenshot inspection. The [visual review](../../evidence/public-service/visual-review.md) records the exact reviewed hashes and method.
+Each clip records the actual browser app. All five full loops passed visual inspection.
+The [visual review](../../evidence/public-service/visual-review.md) lists exact hashes,
+source commit and the desktop/mobile checks. Each new capture needs a new review.
 
 | Feature          | What the clip shows                                                                  | GIF                         | MP4                         |
 | ---------------- | ------------------------------------------------------------------------------------ | --------------------------- | --------------------------- |
@@ -11,4 +13,4 @@ All five clips passed full-loop and screenshot inspection. The [visual review](.
 | Demo Kit         | Shows the reproduction command, code identity, and exported source pack.             | [GIF](demo-kit.gif)         | [MP4](demo-kit.mp4)         |
 
 [Manifest](recordings.json) records hashes, recorded steps and uncut edit ranges.
-Raw footage stays in ignored capture directories. These clips show browser execution.
+Raw footage stays local and outside Git. No native run is implied.
