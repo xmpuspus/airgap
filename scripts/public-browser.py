@@ -417,6 +417,9 @@ def capture(browser, base, pack, source_commit, committed_files):
                 if active in ["ask", "workbench"]
                 else active
             )
+            # Impact checks can run before an answer is displayed in this view.
+            # Record that observed empty state explicitly, without inventing a route.
+            route = route or "no_displayed_answer"
             beats.append(
                 {
                     "label": label,
@@ -532,6 +535,16 @@ def capture(browser, base, pack, source_commit, committed_files):
         raw_file = pathlib.Path(video.path())
         media = probe(raw_file)
         duration = float(media["format"]["duration"])
+        require(
+            all(
+                0 <= item["observedAtSeconds"] <= duration + 1
+                and item["visibleText"]
+                and item["route"]
+                and item["modelCalledDuringCapture"] is False
+                for item in beats
+            ),
+            f"Incomplete observed beat metadata: {feature}",
+        )
         target = staged / f"{feature}.gif"
         mp4 = target.with_suffix(".mp4")
         subprocess.run(
