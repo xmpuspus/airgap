@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const {createHash} = require('node:crypto');
 
 const root = path.resolve(__dirname, '../..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
@@ -51,5 +52,24 @@ describe('public showcase entry points', () => {
     expect(row).toBeDefined();
     expect(row).toContain('npm test -- --runInBand');
     expect(row).not.toMatch(/\d+ (?:tests|suites)/);
+  });
+
+  test('the recording guide reflects the reviewed replacement media and links their evidence', () => {
+    const guide = read('docs/recordings.md').split('## Needed tools')[0];
+    const manifest = JSON.parse(read('demo/public-service/recordings.json'));
+    const review = read('evidence/public-service/visual-review.md');
+    expect(manifest.recordings).toHaveLength(5);
+    for (const recording of manifest.recordings) {
+      const digest = createHash('sha256')
+        .update(fs.readFileSync(path.join(root, recording.output)))
+        .digest('hex');
+      expect(recording.loopReviewed).toBe(true);
+      expect(digest).toBe(recording.sha256);
+      expect(review).toContain(digest);
+    }
+    expect(guide).not.toMatch(/remain unapproved|require replacement/i);
+    expect(guide).toContain('(../demo/public-service/recordings.json)');
+    expect(guide).toContain('(../evidence/public-service/visual-review.md)');
+    expect(guide).toContain('(../evidence/public-service/reproduction-review.md)');
   });
 });

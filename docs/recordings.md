@@ -32,8 +32,12 @@ Read all screenshots and watch each full loop before setting `loopReviewed: true
 new manifest. `public:verify` requires all five files, matching runtime/data hashes and
 that review. The existing `recordings:validate` command also checks the new manifest when
 present, while retaining the original sixteen-recording contract. The first host captures
-exist but failed visual review for speed, mobile readability and the wrong model-result row.
-They remain unapproved and require replacement against the corrected source.
+failed visual review for speed, mobile readability and the wrong model-result row. They were
+replaced. The [current manifest](../demo/public-service/recordings.json) identifies the five
+replacement GIFs, and their [visual review](../evidence/public-service/visual-review.md) records
+the inspected loops and approved hashes. The [independent reproduction](../evidence/public-service/reproduction-review.md)
+records the full demo command run in a separate checkout. Its outputs remain separate from
+the reviewed release media.
 
 ## Needed tools
 
