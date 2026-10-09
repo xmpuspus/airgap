@@ -128,12 +128,21 @@ describe('web/data/build.mjs', () => {
 
     const missingCopy = path.join(PUBLIC_SITE_MEDIA, 'replay-pack.gif');
     fs.unlinkSync(missingCopy);
+    const siteImages = ['airgap-demo.gif', 'industry-airline.gif'];
+    for (const file of siteImages) fs.unlinkSync(path.join(ROOT, 'web/assets/gifs', file));
     execFileSync('node', [PUBLIC_BUILD], {cwd: ROOT, encoding: 'utf8'});
     expect(
       fs
         .readFileSync(missingCopy)
         .equals(fs.readFileSync(path.join(ROOT, 'demo', 'public-service', 'replay-pack.gif'))),
     ).toBe(true);
+    for (const file of siteImages) {
+      expect(
+        fs
+          .readFileSync(path.join(ROOT, 'web/assets/gifs', file))
+          .equals(fs.readFileSync(path.join(ROOT, 'demo', file))),
+      ).toBe(true);
+    }
   });
 
   test('per-vertical config snippet has no marketing language', () => {

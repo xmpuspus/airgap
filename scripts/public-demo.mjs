@@ -25,6 +25,7 @@ run(process.execPath, ['scripts/public-experiment.mjs', '--model', model]);
 run(process.execPath, ['scripts/build-public-service.mjs']);
 run(runtime.python, ['-B', 'scripts/public-browser.py', '--capture'], runtime.env);
 syncPublicSiteAssets();
+run(process.execPath, ['scripts/public-qa.mjs']);
 process.stdout.write(
   'Captured all five features. Inspect the screenshots and full loops before approving derived media.\n',
 );

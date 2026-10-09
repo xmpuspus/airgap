@@ -4,8 +4,8 @@
 // Inputs:
 //   examples/<vertical>/airgap.config.json
 //   examples/<vertical>/knowledge/*.json
-//   demo/industry-<vertical>.gif (referenced by path; not copied here,
-//     deploy workflow places them into web/assets/gifs/ at deploy time)
+//   demo/industry-<vertical>.gif and demo/airgap-demo.gif (copied byte for byte)
+//   demo/public-service/recordings.json and its GIF/MP4 files (hash checked and copied)
 //
 // Output: web/data/<vertical>.json, a small JSON object the client app.js
 // reads to render the brand block, theme swatches, condensed config

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import {execFileSync} from 'node:child_process';
 import ts from 'typescript';
 import prettier from 'prettier';
 import {
@@ -12,7 +13,6 @@ import {
   sha256,
   readJson,
 } from './public-service.mjs';
-import {syncPublicSiteAssets} from './public-site-assets.mjs';
 
 const checkOnly = process.argv.includes('--check');
 function emit(file, contents) {
@@ -61,7 +61,8 @@ emit(
   'web/data/public-service.json',
   prettier.format(JSON.stringify(pack), {...formatting, parser: 'json'}),
 );
-if (!checkOnly) syncPublicSiteAssets();
+if (!checkOnly)
+  execFileSync(process.execPath, [path.join(root, 'web/data/build.mjs')], {stdio: 'inherit'});
 process.stdout.write(
   `${checkOnly ? 'Verified' : 'Built'} shared core, ${records.length} service records, ${
     historical.length

@@ -144,6 +144,24 @@ def check_landing(page, base, width, pack):
     manifest = page.request.get(base + "/data/manifest.json")
     assert manifest.ok
     count = len(manifest.json()["verticals"])
+    site_images = {"assets/gifs/airgap-demo.gif"}
+    for vertical in manifest.json()["verticals"]:
+        data = page.request.get(base + f"/data/{vertical['vertical']}.json")
+        assert data.ok
+        site_images.add(data.json()["gif"])
+    assert len(site_images) == count + 1
+    served_site_images = []
+    for href in sorted(site_images):
+        source_bytes = (ROOT / "demo" / pathlib.Path(href).name).read_bytes()
+        image_response = page.request.get(f"{base}/{href}")
+        assert image_response.status == 200, href
+        source_hash = hashlib.sha256(source_bytes).hexdigest()
+        assert hashlib.sha256(image_response.body()).hexdigest() == source_hash
+        served_site_images.append({"href": href, "sha256": source_hash})
+    for image_element in page.locator("img").all():
+        assert image_element.evaluate(
+            "image => image.complete && image.naturalWidth > 0"
+        ), image_element.get_attribute("src")
     expect(
         page.locator(".trust-grid p")
         .filter(has_text="industry templates")
@@ -210,5 +228,6 @@ def check_landing(page, base, width, pack):
         "templateCount": count,
         "featureCount": 5,
         "servedMedia": served_media,
+        "servedSiteImages": served_site_images,
         "screenshot": image,
     }

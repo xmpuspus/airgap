@@ -11,6 +11,8 @@ import {syncPublicSiteAssets} from './public-site-assets.mjs';
 requireCommittedCaptureSource();
 mediaRuntime();
 run(process.execPath, ['scripts/build-public-service.mjs', '--check']);
+run(process.execPath, ['web/data/build.mjs']);
 const runtime = browserRuntime();
 run(runtime.python, ['-B', 'scripts/public-browser.py', '--capture'], runtime.env);
 syncPublicSiteAssets();
+run(process.execPath, ['scripts/public-qa.mjs']);
