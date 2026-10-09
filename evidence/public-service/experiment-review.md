@@ -3,12 +3,14 @@
 An independent read-only agent inspected all 54 displayed rows, all 36 raw model outputs
 and the saved primary-source extracts. The reviewed report is
 [experiment.json](experiment.json), SHA-256
-`b493a8ee43f039d01f9265c17e114d6c9c8bb4dc463692eafbcea92e952999ab`.
-Its embedded hashes matched the files inspected for that run. Subsequent evidence-validation
-and clock-routing fixes changed the core. This review remains tied to the report hash above;
-a new execution and independent review are required for the changed core.
-This is a new CPU execution, finished 2026-10-09T04:46:25.602Z. The previous report is
-preserved as [experiment-before-policy-review.json](experiment-before-policy-review.json).
+`f7ef2b355b088ae9d785549b7337966fa4828a4628d16b73ed45c92bfd1be86c`.
+Its embedded core, runner, criteria, policy and source hashes match the checked files.
+This CPU execution finished on 2026-10-09 at 05:28:37.410 UTC, after source commit
+`ce12f1e19ec042b8a3f48c042fe661c4780bfe16`. The report embeds file hashes. The commit
+is a separate repository observation.
+
+Earlier reports stay in Git history and the
+archived experiment files. None were relabeled as this execution.
 
 | Variant              | Authored fact checks | Model calls | Fallbacks | Raw token-limit stops | False refusals |
 | -------------------- | -------------------- | ----------- | --------- | --------------------- | -------------- |
@@ -18,21 +20,27 @@ preserved as [experiment-before-policy-review.json](experiment-before-policy-rev
 
 All 18 controlled answers came from deterministic fallback. The model contributed no
 accepted final wording. The baseline already supplied the complete records without inference.
-The two model lanes made separate generations; their timing differences do not isolate the
+
+Twelve fallbacks replaced acceptable model answers. Six repaired incomplete answers.
+Across all 36 raw generations, independent reading found 24 acceptable and 12 incomplete.
+The two model lanes made separate generations. Their timing differences do not isolate the
 effect of controls.
 
-## The fact score misses both valid short answers and incomplete prose
+## Fact checks rejected correct names and accepted incomplete NBI text
 
 The retrieved president answers in repetitions 2 and 3 say only “Ferdinand R. Marcos Jr.”.
 That correctly answers the “Who” question. The authored affirmative-claim expression rejects
 those two valid short answers. All three controlled raw president outputs have the same
-conservative false negative. The original scores remain published rather than changing
+conservative false negative. The original scores stay published rather than changing
 the criteria after seeing the outputs.
 
 Every NBI and holiday generation hit the 160-token limit in both model lanes. NBI outputs
-retain the required facts but stop at “Photocopies or duplicates” or an unfinished disclaimer.
+keep the needed facts but stop at “Photocopies or duplicates” or an unfinished disclaimer.
 The holiday outputs stop during the Bonifacio date and omit Christmas and Rizal Day. Their
-real stop reason is `maxTokens`; the other 12 generations per model lane end with `eogToken`.
+real stop reason is `maxTokens`. The other 12 generations per model lane end with `eogToken`.
+
+The 160-token limit is part of this test configuration. These results do not predict
+behavior with a larger output budget.
 
 | Question             | Retrieved output, three repetitions                       | Controlled display, three repetitions   |
 | -------------------- | --------------------------------------------------------- | --------------------------------------- |
@@ -52,13 +60,15 @@ outputs. This small, sourced question set does not measure open-domain answer qu
 
 | Variant              | p50 elapsed ms | p95 elapsed ms |
 | -------------------- | -------------- | -------------- |
-| Record-only          | 0.258          | 12.513         |
-| Retrieved model      | 750.698        | 3,847.697      |
-| Application controls | 1,248.735      | 4,416.884      |
+| Record-only          | 0.169          | 2.079          |
+| Retrieved model      | 638.509        | 2,733.886      |
+| Application controls | 703.740        | 2,663.885      |
+
+With 18 observations per variant, the nearest-rank p95 is the maximum observation.
 
 The measurements use an Apple M5 host, Darwin arm64, CPU execution and
 `hf_bartowski_google_gemma-3-1b-it-Q4_K_M.gguf`, 806,058,496 bytes, SHA-256
 `12bf0fff8815d5f73a3c9b586bd8fee8e7b248c935de70dec367679873d0f29d`.
-The model is hashed before use. A shared context resets chat history between generations;
-warm prompt caching may still affect timings. Neither these numbers nor this review prove
+The model is hashed before use. A shared context resets chat history between generations.
+Warm prompt caching may still affect timings. Neither these numbers nor this review prove
 a phone run, Gemma 4 performance or browser rendering.

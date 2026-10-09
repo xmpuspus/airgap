@@ -28,14 +28,14 @@ and source hashes. Questions run locally after static files load. Source links
 use the network.
 
 The replay runs 15 original government golden cases and six authored cases in
-sequence. It checks answers and routes. Maintainers wrote these prompts. They
+sequence. It compares each answer and route with its saved expectation. Maintainers wrote these prompts. They
 do not record citizen conversations. `gov-6` checks a prompt-probe refusal
 without revealing a configuration filename.
 
 ## Six service records use saved public source text
 
 The [source archives](../evidence/public-service/README.md) store fetched text from
-NBI, SSS, DFA, PCO, and the Supreme Court E-Library. Their hashes identify the
+NBI, SSS, DFA, PCO, and the Supreme Court E-Library. The scripts hash the
 exact saved JSON bytes. The fetch tool extracted the text. These files do not
 preserve original HTML or PDF bytes. You do not need third-party screenshots to
 reuse the cases.
@@ -66,7 +66,7 @@ live service answers.
 ## Apply the actual 2024 holiday amendment
 
 In Source workbench, compare the two authorities and run the affected-question
-checks. Load the original. Ask when Ninoy Aquino Day was observed in 2024.
+checks. Load the original. Ask for the date of Ninoy Aquino Day in 2024.
 Review the change, apply it locally, ask again, then roll back and ask a doubt
 follow-up.
 

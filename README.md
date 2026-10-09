@@ -40,9 +40,24 @@ python3 -m http.server --bind 127.0.0.1 --directory web 8080
 
 Use Node 22.18 or newer; open `http://127.0.0.1:8080/lab.html`.
 The [reproduction guide](docs/public-service-showcase.md) covers first run, source review,
-model limits and contributions. The [capture index](demo/public-service/README.md) records
-the five new GIF/MP4 targets. The first host captures need replacement after visual review;
-the older native GIFs below do not verify this new UI.
+model limits and contributions. Each feature includes a GIF and MP4 derived from a real browser recording.
+The [capture index](demo/public-service/README.md) links all five and their source hashes.
+
+| Feature          | What you can try                                                       | Demo                                            |
+| ---------------- | ---------------------------------------------------------------------- | ----------------------------------------------- |
+| Replay Pack      | Run all 21 authored questions and inspect failures, routes and sources | [GIF](demo/public-service/replay-pack.gif)      |
+| Evidence Lab     | Ask a question, challenge the answer and download its evidence         | [GIF](demo/public-service/evidence-lab.gif)     |
+| Source Workbench | Apply the real 2024 holiday amendment, then roll it back               | [GIF](demo/public-service/source-workbench.gif) |
+| Model Controls   | Compare raw local-model text with the answer the application displays  | [GIF](demo/public-service/model-controls.gif)   |
+| Demo Kit         | Reproduce the experiment, browser checks and all five recordings       | [GIF](demo/public-service/demo-kit.gif)         |
+
+![A real historical holiday change applied and rolled back in the Source Workbench](demo/public-service/source-workbench.gif)
+
+The local model produced 12 incomplete responses in 36 calls. Every controlled answer
+used a complete source record. Twelve of those fallbacks replaced already acceptable
+model wording. [Read every output and the independent review](evidence/public-service/experiment-review.md).
+These are CPU host measurements with Gemma 3. The older native recordings below have
+their own source and model identities.
 
 ![Published replies of a government assistant on its launch day, next to Kuya B on Gemma 4 E2B](demo/airgap-showcase-government.gif)
 
@@ -70,7 +85,7 @@ the deterministic public GIFs.
 
 ## Get the first offline answer
 
-Install Node.js 22.11 or newer, JDK 17, and Android SDK 36. Then run these
+Install Node.js 22.18 or newer, JDK 17, and Android SDK 36. Then run these
 commands.
 
 ```bash

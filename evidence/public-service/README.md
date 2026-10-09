@@ -23,7 +23,7 @@ with Proclamation 368 attached on pages 2–4, and the one-page
 proclamation was signed on 11 October 2023. The circular is dated 16 August 2024.
 The old search-extracted archives above are retained as research evidence.
 
-PDF hashes identify exact downloaded bytes supplied by the task owner. Separate `.ocr.json`
+PDF hashes identify exact bytes downloaded from the government URLs. Separate `.ocr.json`
 files contain unedited OCR, page numbers, PDF hashes and tool identity. An independent
 agent read all three proclamation pages and the circular image. OCR has transcription
 errors elsewhere on the pages, so only the visually checked Ninoy Aquino Day excerpts
@@ -52,18 +52,16 @@ record but predates collection of actual generation stop reasons. Both are retai
 `experiment.json` is the current comparison. Its token-limit counts are separate from fact
 checks because a truncated response can contain all the required words.
 
-Browser screenshots and raw videos stay under ignored `tmp/` paths. The controller's host
-ran the previous browser journey and made five actual GIF/MP4 pairs. Independent inspection
-of six screenshots and five contact sheets found unreadable mobile results, clips too short
-to read, and a mislabeled model row. Those captures remain unapproved. The corrected source
-requires a fresh host journey and explicit capture; this worker's localhost bind is denied.
-See the [visual findings](visual-review.md) and [current check record](verification.md).
+Browser screenshots and raw videos stay under ignored `tmp/` paths. Each capture uses
+committed source, measured browser output and uncut video. The
+[visual review](visual-review.md) records screenshot and full-loop inspection. The
+[check record](verification.md) lists the commands and their observed results.
 
 The model emitted tokenizer warnings about `</s>` and special end-of-generation IDs, plus
-a swap-information warning. Those warnings remain in the local run log. A fresh dependency
-audit could not run through the sandbox's DNS restriction; no dependency-security claim is
-made from this run.
+a swap-information warning. Those warnings stay in the local run log.
 
-The intake audit previously reported 42 production dependency entries with advisories:
-1 critical, 34 high and 7 moderate. That earlier count was not refreshed here, and did not
-establish reachability or exploitability. These additions do not resolve those advisories.
+After narrow overrides for shell-quote, simple-git and its argument parser, the
+2026-10-09 dependency audit reports 63 entries: 0 critical, 56 high and 7 moderate.
+Excluding development dependencies leaves 41 entries: 0 critical, 34 high and 7 moderate.
+The counts do not establish exploitability. The lab uses static local JavaScript and data.
+The wider React Native and development dependency tree still has unresolved advisories.
