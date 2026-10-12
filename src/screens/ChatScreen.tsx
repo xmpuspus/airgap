@@ -35,6 +35,8 @@ import {useReducedMotion} from '../hooks/useReducedMotion';
 import {shouldShowSuggestedReplies} from './chatState';
 import {useInferenceProviders} from '../hooks/useInferenceProviders';
 import {isSystemProvider, providerDisplayName} from '../services/inference/providerPresentation';
+import {brand} from '../config/loader';
+import {chatErrorReply, chatKeyboardBehavior} from '../utils/appChrome';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -149,6 +151,17 @@ export function ChatScreen(_props: Props) {
   } = useChat();
   const {isOnline} = useConnectivity();
   const insets = useSafeAreaInsets();
+  // The keyboard reports its top in window coordinates, but the avoiding view
+  // measures itself from below the header. The view's own window top closes
+  // that gap on Android. iOS keeps its tested offset.
+  // The avoiding view calls onLayout after an await, when the event target is
+  // already gone, so a wrapper view takes the measurement.
+  const [keyboardOffset, setKeyboardOffset] = useState(Platform.OS === 'ios' ? 90 : 0);
+  const screenRef = useRef<View>(null);
+  const handleScreenLayout = useCallback(() => {
+    if (Platform.OS === 'ios') return;
+    screenRef.current?.measureInWindow((_x, y) => setKeyboardOffset(y));
+  }, []);
   const streamTextRef = useRef('');
   const flatListRef = useRef<FlatList>(null);
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -229,11 +242,9 @@ export function ChatScreen(_props: Props) {
           audit: response.audit,
         });
       } catch {
-        finalizeStreamingMessage(
-          streamingMsgId,
-          'Sorry, something went wrong. Please try again or call 211 for assistance.',
-          {source: 'system'},
-        );
+        finalizeStreamingMessage(streamingMsgId, chatErrorReply(brand.hotline), {
+          source: 'system',
+        });
       } finally {
         setTyping(false);
         setRunningTool(null);
@@ -327,87 +338,89 @@ export function ChatScreen(_props: Props) {
   }, []);
 
   return (
-    <KeyboardAvoidingView
-      style={styles.screen}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}>
-      <OperatingState
-        mode={getMode()}
-        isOnline={isOnline}
-        localReady={modelReady || llmService.isLoaded()}
-        cloudReady={getMode() === 'prefer-online' && isOnline}
-        systemProviderName={
-          readySystemProvider ? providerDisplayName(readySystemProvider.providerId) : undefined
-        }
-      />
-      <FlatList
-        ref={flatListRef}
-        data={chatItems}
-        renderItem={renderItem}
-        keyExtractor={item => (isSeparator(item) ? item.key : String(item._id))}
-        inverted
-        contentContainerStyle={styles.messageList}
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="interactive"
-        onScroll={handleScroll}
-        scrollEventThrottle={100}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            tintColor={COLORS.textSecondary}
-          />
-        }
-        ListHeaderComponent={
-          <View style={styles.listHeader}>
-            {isTyping && <TypingIndicator />}
-            {runningTool && (
-              <View
-                style={styles.toolRunningPill}
-                accessibilityLiveRegion="polite"
-                accessibilityLabel={`Running ${runningTool}`}>
-                <View style={styles.toolRunningDot} />
-                <Text style={styles.toolRunningText} numberOfLines={1}>
-                  Running {runningTool}...
-                </Text>
-              </View>
-            )}
-            {shouldShowSuggestedReplies({hasUserMessage, isTyping, suggestedReplies}) && (
-              <QuickReplies replies={suggestedReplies ?? []} onPress={handleQuickReply} />
-            )}
-          </View>
-        }
-        ListFooterComponent={
-          !hasUserMessage ? <EmptyState onQuickReply={handleQuickReply} /> : null
-        }
-      />
+    <View ref={screenRef} style={styles.screen} collapsable={false} onLayout={handleScreenLayout}>
+      <KeyboardAvoidingView
+        style={styles.screen}
+        behavior={chatKeyboardBehavior(Platform.OS)}
+        keyboardVerticalOffset={keyboardOffset}>
+        <OperatingState
+          mode={getMode()}
+          isOnline={isOnline}
+          localReady={modelReady || llmService.isLoaded()}
+          cloudReady={getMode() === 'prefer-online' && isOnline}
+          systemProviderName={
+            readySystemProvider ? providerDisplayName(readySystemProvider.providerId) : undefined
+          }
+        />
+        <FlatList
+          ref={flatListRef}
+          data={chatItems}
+          renderItem={renderItem}
+          keyExtractor={item => (isSeparator(item) ? item.key : String(item._id))}
+          inverted
+          contentContainerStyle={styles.messageList}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="interactive"
+          onScroll={handleScroll}
+          scrollEventThrottle={100}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              tintColor={COLORS.textSecondary}
+            />
+          }
+          ListHeaderComponent={
+            <View style={styles.listHeader}>
+              {isTyping && <TypingIndicator />}
+              {runningTool && (
+                <View
+                  style={styles.toolRunningPill}
+                  accessibilityLiveRegion="polite"
+                  accessibilityLabel={`Running ${runningTool}`}>
+                  <View style={styles.toolRunningDot} />
+                  <Text style={styles.toolRunningText} numberOfLines={1}>
+                    Running {runningTool}...
+                  </Text>
+                </View>
+              )}
+              {shouldShowSuggestedReplies({hasUserMessage, isTyping, suggestedReplies}) && (
+                <QuickReplies replies={suggestedReplies ?? []} onPress={handleQuickReply} />
+              )}
+            </View>
+          }
+          ListFooterComponent={
+            !hasUserMessage ? <EmptyState onQuickReply={handleQuickReply} /> : null
+          }
+        />
 
-      <Animated.View
-        style={[
-          styles.scrollFab,
-          {
-            opacity: scrollButtonOpacity,
-            transform: [{scale: scrollButtonScale}],
-            bottom: 72 + (insets.bottom || SPACING.sm),
-          },
-        ]}
-        pointerEvents={showScrollButton ? 'auto' : 'none'}>
-        <TouchableOpacity
-          style={styles.scrollFabButton}
-          onPress={scrollToBottom}
-          activeOpacity={0.7}
-          accessibilityLabel="Scroll to bottom"
-          accessibilityRole="button">
-          <View style={styles.scrollChevron}>
-            <View style={styles.chevronLeft} />
-            <View style={styles.chevronRight} />
-          </View>
-        </TouchableOpacity>
-      </Animated.View>
+        <Animated.View
+          style={[
+            styles.scrollFab,
+            {
+              opacity: scrollButtonOpacity,
+              transform: [{scale: scrollButtonScale}],
+              bottom: 72 + (insets.bottom || SPACING.sm),
+            },
+          ]}
+          pointerEvents={showScrollButton ? 'auto' : 'none'}>
+          <TouchableOpacity
+            style={styles.scrollFabButton}
+            onPress={scrollToBottom}
+            activeOpacity={0.7}
+            accessibilityLabel="Scroll to bottom"
+            accessibilityRole="button">
+            <View style={styles.scrollChevron}>
+              <View style={styles.chevronLeft} />
+              <View style={styles.chevronRight} />
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
 
-      <InputToolbar onSend={handleSend} />
-      <SourceDrawer />
-    </KeyboardAvoidingView>
+        <InputToolbar onSend={handleSend} />
+        <SourceDrawer />
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 

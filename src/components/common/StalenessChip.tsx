@@ -17,21 +17,20 @@
  */
 
 import React, {useEffect, useMemo, useRef, useState, useCallback} from 'react';
-import {
-  Alert,
-  Animated,
-  Pressable,
-  StyleSheet,
-  Text,
-} from 'react-native';
+import {Alert, Animated, Pressable, StyleSheet, Text} from 'react-native';
 import {COLORS, SPACING, TYPOGRAPHY} from '../../constants/theme';
 import {
   getStalenessInfo,
   getKbSource,
+  isSyncConfigured,
   syncKnowledge,
   onSync,
 } from '../../services/syncService';
 import {t} from '../../utils/i18n';
+import {recordsStatusLabel} from '../../utils/appChrome';
+
+// Built-in records are neither fresh nor stale, so their dot is neutral.
+const BUILT_IN_DOT = 'rgba(255,255,255,0.7)';
 
 type Band = 'fresh' | 'stale' | 'very_stale' | 'never';
 
@@ -111,15 +110,17 @@ export function StalenessChip() {
   }, [syncing, pulse]);
 
   const band = info.band as Band;
-  const dotColor = bandColor(band);
-  const label = useMemo(() => bandLabel(band, info.ageMs), [band, info.ageMs]);
+  const syncConfigured = isSyncConfigured();
+  const dotColor = syncConfigured ? bandColor(band) : BUILT_IN_DOT;
+  const label = useMemo(
+    () => recordsStatusLabel(syncConfigured, bandLabel(band, info.ageMs)),
+    [syncConfigured, band, info.ageMs],
+  );
 
   const handlePress = useCallback(() => {
     const {source, bundleVersion} = getKbSource();
     const lines: string[] = [];
-    lines.push(
-      t('staleness.status', 'Status') + ': ' + label,
-    );
+    lines.push(t('staleness.status', 'Status') + ': ' + label);
     lines.push(
       t('staleness.source', 'Source') +
         ': ' +
@@ -136,31 +137,33 @@ export function StalenessChip() {
       );
     }
     if (info.lastError) {
-      lines.push(
-        t('staleness.lastError', 'Last error') + ': ' + info.lastError,
-      );
+      lines.push(t('staleness.lastError', 'Last error') + ': ' + info.lastError);
     }
 
+    // Without an update server, "Sync now" could only fail.
+    const close = {text: t('common.close', 'Close'), style: 'cancel' as const};
     Alert.alert(
       t('staleness.title', 'Knowledge base'),
       lines.join('\n'),
-      [
-        {text: t('common.close', 'Close'), style: 'cancel'},
-        {
-          text: t('staleness.syncNow', 'Sync now'),
-          onPress: async () => {
-            setSyncing(true);
-            try {
-              await syncKnowledge();
-            } finally {
-              setSyncing(false);
-              refresh();
-            }
-          },
-        },
-      ],
+      syncConfigured
+        ? [
+            close,
+            {
+              text: t('staleness.syncNow', 'Sync now'),
+              onPress: async () => {
+                setSyncing(true);
+                try {
+                  await syncKnowledge();
+                } finally {
+                  setSyncing(false);
+                  refresh();
+                }
+              },
+            },
+          ]
+        : [close],
     );
-  }, [info.lastSyncAt, info.lastError, label, refresh]);
+  }, [info.lastSyncAt, info.lastError, label, refresh, syncConfigured]);
 
   return (
     <Pressable

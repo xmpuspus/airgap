@@ -123,9 +123,9 @@ sequenceDiagram
 
 This sequence limits a model to retrieved document content. An output check
 rejects an unsourced amount, date, or name. When the check fails, the app shows
-the retrieved records instead of the model text, and the answer chip says that
-the model did not answer. The visible answer card keeps source document IDs and
-exact provider identity.
+the retrieved records instead of the model text, and the answer card says why
+the model text did not show. The visible answer card keeps the record source,
+its checked date, and the exact model identity.
 
 ## Tool and action path stays separate
 

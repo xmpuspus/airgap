@@ -11,6 +11,8 @@ import {hasAccessTokenProvider} from '../services/authProvider';
 import {useReducedMotion} from '../hooks/useReducedMotion';
 import {useInferenceProviders} from '../hooks/useInferenceProviders';
 import {ProviderSetupCard} from '../components/onboarding/ProviderSetupCard';
+import {isSyncConfigured} from '../services/syncService';
+import {formatModelSize, howThisWorksDefaults} from '../utils/appChrome';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -26,16 +28,11 @@ const ONBOARDING_FEATURES = onboarding?.features ?? [];
 const ONBOARDING_TITLE = interpolate(onboarding?.title ?? 'Welcome to {{botName}}', config);
 const ONBOARDING_SUBTITLE = interpolate(onboarding?.subtitle ?? '{{tagline}}', config);
 
-// "How this works" capability bullets — operator-overridable via
-// onboarding.extraFeatures. Defaults explain the three pillars of the
-// product so a cold reviewer understands sync + hybrid LLM + safety
-// before they even open the chat.
-const EXTRA_FEATURES: string[] = (onboarding as unknown as {extraFeatures?: string[]})
-  ?.extraFeatures ?? [
-  'Encrypted conversations stay on this device',
-  'Syncs the knowledge base from the cloud when you are online',
-  'Cloud answers stay off until an operator sets up access',
-];
+// "How this works" capability bullets, overridable via onboarding.extraFeatures.
+// The defaults promise record updates only when an update server is set up.
+const EXTRA_FEATURES: string[] =
+  (onboarding as unknown as {extraFeatures?: string[]})?.extraFeatures ??
+  howThisWorksDefaults(isSyncConfigured());
 
 const FEATURE_ICONS = [
   {shape: 'star', color: '#D97706'},
@@ -266,10 +263,7 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
         ))}
         <View style={styles.capabilityDivider} />
         <Text style={styles.languageNotice}>
-          {t(
-            'languageNotice',
-            'Knowledge base is currently English-only. Operator translations welcome.',
-          )}
+          {t('languageNotice', 'The records are in English.')}
         </Text>
       </Animated.View>
 
@@ -324,7 +318,7 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
           <Text style={styles.pathEyebrow}>PATH 1</Text>
           <Text style={styles.pathTitle}>Try Offline Demo</Text>
           <Text style={styles.pathDetail}>
-            Uses built-in sample answers. It needs no network or model download.
+            Shows the built-in records as written. It needs no network or model download.
           </Text>
           <TouchableOpacity
             style={styles.demoButton}
@@ -384,11 +378,6 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
       </Animated.View>
     </ScrollView>
   );
-}
-
-function formatModelSize(sizeBytes?: number): string {
-  if (!sizeBytes) return 'size not set';
-  return `${(sizeBytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
 }
 
 export default OnboardingScreen;

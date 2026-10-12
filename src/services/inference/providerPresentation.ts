@@ -47,6 +47,8 @@ const REASON_DETAILS: Record<ProviderFailureReason, string> = {
 
 export function providerReasonDetail(capabilities: InferenceCapabilities): string {
   if (capabilities.reason) return REASON_DETAILS[capabilities.reason];
+  // The document provider generates nothing. It shows the matched record.
+  if (capabilities.providerId === 'demo') return 'Answers show the stored records as written.';
   if (capabilities.state === 'available') {
     return capabilities.locality === 'local'
       ? 'Answers are generated on this device.'

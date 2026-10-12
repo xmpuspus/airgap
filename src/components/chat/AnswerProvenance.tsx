@@ -11,6 +11,16 @@ export interface ProvenanceInput {
   providerId?: InferenceProviderId;
   modelIdentity?: string;
   providerFailure?: {providerId?: InferenceProviderId; reason: string; message: string};
+  responseReason?: string;
+  /** Publisher and checked date of the first cited record with a dated public source. */
+  recordSource?: {publisher: string; checkedLabel?: string};
+}
+
+export interface ProvenanceView {
+  sourceLabel: string;
+  factLabel?: string;
+  modelLabel?: string;
+  failureLabel?: string;
 }
 
 const SOURCE_LABELS: Record<string, string> = {
@@ -30,25 +40,53 @@ const PROVIDER_LABELS: Record<InferenceProviderId, string> = {
   demo: 'Document answer',
 };
 
-export function getProvenanceView(input: ProvenanceInput) {
+// App answers carry no record. The card says where the text came from instead
+// of "0 sources".
+const SYSTEM_FACTS: Record<string, string> = {
+  device_clock: "Date and time from this phone's clock",
+  identity: 'Set in the app, not taken from a record',
+};
+
+// The user sees why the model text did not show, in words a citizen reads.
+function failureText(failure: NonNullable<ProvenanceInput['providerFailure']>, count: number) {
+  const model = failure.providerId ? PROVIDER_LABELS[failure.providerId] : 'The model';
+  const shown =
+    count === 1 ? 'The record is shown as written.' : 'The records are shown as written.';
+  if (failure.reason === 'not_exact_copy') {
+    return `${model} ran, but its reply was not an exact copy of the record. ${shown}`;
+  }
+  if (failure.reason === 'ungrounded') {
+    return `${model} ran, but its reply had a detail that is not in the records. ${shown}`;
+  }
+  if (/timed out/i.test(failure.message)) return `${model} did not finish in time. ${shown}`;
+  const detail = failure.message.replace(/^Error:\s*/, '').replace(/[.\s]+$/, '');
+  return `${model} did not answer: ${detail}. ${shown}`;
+}
+
+export function getProvenanceView(input: ProvenanceInput): ProvenanceView {
   const count = input.docIds?.filter(id => !id.startsWith('tool:')).length ?? 0;
+  const source = input.source ?? 'system';
+  let factLabel: string | undefined;
+  if (input.recordSource) {
+    factLabel = [input.recordSource.publisher, input.recordSource.checkedLabel]
+      .filter(Boolean)
+      .join(' · ');
+  } else if (count > 0) {
+    factLabel = `${count} local ${count === 1 ? 'record' : 'records'}${
+      input.kbVersion ? ` · v${input.kbVersion}` : ''
+    }`;
+  } else if (source === 'system' && input.responseReason) {
+    factLabel = SYSTEM_FACTS[input.responseReason];
+  }
   return {
     sourceLabel:
-      (input.source === 'llm' && input.providerId
+      (source === 'llm' && input.providerId
         ? PROVIDER_LABELS[input.providerId]
-        : SOURCE_LABELS[input.source ?? 'system']) ?? 'App guidance',
-    versionLabel: input.kbVersion ? `v${input.kbVersion}` : 'Built-in release',
-    sourceCountLabel: `${count} ${count === 1 ? 'source' : 'sources'}`,
-    ...(input.modelIdentity ? {modelLabel: input.modelIdentity} : {}),
-    // The user sees why the model did not answer, not only that records did.
+        : SOURCE_LABELS[source]) ?? 'App guidance',
+    ...(factLabel ? {factLabel} : {}),
+    ...(input.modelIdentity ? {modelLabel: `Model: ${input.modelIdentity}`} : {}),
     ...(input.providerFailure
-      ? {
-          failureLabel: `${
-            input.providerFailure.providerId
-              ? PROVIDER_LABELS[input.providerFailure.providerId]
-              : 'The model'
-          } did not answer (${input.providerFailure.reason}): ${input.providerFailure.message}`,
-        }
+      ? {failureLabel: failureText(input.providerFailure, Math.max(count, 1))}
       : {}),
   };
 }
@@ -60,11 +98,9 @@ export function AnswerProvenance(props: ProvenanceInput) {
       <View style={styles.marker} />
       <View style={styles.content}>
         <Text style={styles.source}>{view.sourceLabel}</Text>
-        <Text style={styles.fact}>
-          {view.versionLabel} · {view.sourceCountLabel}
-        </Text>
-        {'modelLabel' in view && <Text style={styles.model}>{view.modelLabel}</Text>}
-        {'failureLabel' in view && <Text style={styles.model}>{view.failureLabel}</Text>}
+        {view.factLabel && <Text style={styles.fact}>{view.factLabel}</Text>}
+        {view.failureLabel && <Text style={styles.model}>{view.failureLabel}</Text>}
+        {view.modelLabel && <Text style={styles.model}>{view.modelLabel}</Text>}
       </View>
     </View>
   );
@@ -80,13 +116,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   marker: {width: 4, backgroundColor: '#0E7490'},
-  content: {paddingHorizontal: SPACING.md, paddingVertical: SPACING.sm},
+  content: {flexShrink: 1, paddingHorizontal: SPACING.md, paddingVertical: SPACING.sm},
   source: {...TYPOGRAPHY.caption, color: '#0B1F33', fontWeight: '700'},
-  fact: {
-    ...TYPOGRAPHY.micro,
-    color: COLORS.textSecondary,
-    fontFamily: 'monospace',
-    marginTop: 2,
-  },
+  fact: {...TYPOGRAPHY.micro, color: '#0B1F33', marginTop: 2},
   model: {...TYPOGRAPHY.micro, color: COLORS.textSecondary, marginTop: 2},
 });

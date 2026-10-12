@@ -22,7 +22,7 @@ export function getOperatingStateView(input: OperatingStateInput): {
   if (input.mode === 'demo') {
     return {
       label: 'Demo',
-      detail: 'Built-in sample answers. No network or model download.',
+      detail: 'Answers show the built-in records as written. No network or model download.',
       tone: 'neutral',
     };
   }

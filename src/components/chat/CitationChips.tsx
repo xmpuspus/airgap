@@ -53,10 +53,7 @@ export function layoutCitations(
 
 export function CitationChips({docIds}: Props) {
   const {open} = useSourceDrawer();
-  const layout = useMemo(
-    () => layoutCitations(resolveCitations(docIds, getDocById)),
-    [docIds],
-  );
+  const layout = useMemo(() => layoutCitations(resolveCitations(docIds, getDocById)), [docIds]);
   const {visible, overflowCount, firstOverflowId} = layout;
   if (visible.length === 0) return null;
 
@@ -99,7 +96,7 @@ function CitationChip({docId, category, title, onPress}: ChipProps) {
             {category}
           </Text>
           <Text style={styles.chipSeparator}>{' › '}</Text>
-          <Text numberOfLines={1} style={styles.chipTitle}>
+          <Text numberOfLines={3} style={styles.chipTitle}>
             {title}
           </Text>
         </View>
@@ -140,16 +137,19 @@ const styles = StyleSheet.create({
     gap: SPACING.xs,
     marginTop: SPACING.xs,
   },
+  // A record title such as "Secretary of the Department of Information and
+  // Communications Technology" wraps to more lines instead of losing its end.
   chip: {
-    height: 28,
-    paddingHorizontal: SPACING.sm,
-    borderRadius: RADIUS.full,
+    minHeight: 28,
+    paddingHorizontal: SPACING.sm + 2,
+    paddingVertical: 4,
+    borderRadius: RADIUS.md,
     backgroundColor: COLORS.surface,
     borderWidth: 1,
     borderColor: COLORS.border,
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: 220,
+    maxWidth: '100%',
   },
   chipPressed: {
     opacity: 0.7,

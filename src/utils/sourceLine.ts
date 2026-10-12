@@ -10,6 +10,24 @@ export function sourceLineFor(doc: KBDocument | undefined): string | null {
   return `Source: ${source}${checked}.`;
 }
 
+// The answer card shows the publisher and checked date of each cited record, so
+// the bubble drops the same "Source: <url> (checked <date>)." sentence instead
+// of wrapping a long link mid-word. A link that no cited record carries stays.
+export function stripSourceSentences(text: string, urls: string[]): string {
+  let shown = text;
+  for (const url of urls) {
+    const escaped = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    shown = shown.replace(
+      new RegExp(
+        `[ \\t]*Source:\\s*${escaped}(?:\\s*\\(checked \\d{4}-\\d{2}-\\d{2}\\))?\\.?`,
+        'g',
+      ),
+      '',
+    );
+  }
+  return shown.replace(/[ \t]+$/gm, '').trim();
+}
+
 export function ensureSourceLine(answer: string, doc: KBDocument | undefined): string {
   const line = sourceLineFor(doc);
   if (!line) return answer;

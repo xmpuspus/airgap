@@ -13,6 +13,7 @@ import {
   syncKnowledge,
   getStalenessInfo,
   getDegradedModePrefix,
+  isSyncConfigured,
 } from '../src/services/syncService';
 import {connectivityService} from '../src/services/connectivityService';
 import {config} from '../src/config/loader';
@@ -54,6 +55,17 @@ describe('syncService', () => {
       const prefix = getDegradedModePrefix();
       expect(prefix).toBeTruthy();
       expect(typeof prefix).toBe('string');
+    } finally {
+      delete backend.sync;
+    }
+  });
+
+  test('isSyncConfigured follows the signed-bundle keys', () => {
+    expect(isSyncConfigured()).toBe(false);
+    const backend = (config as unknown as {backend: Record<string, unknown>}).backend;
+    backend.sync = {publicKeys: {'test-key': 'MCowBQYDK2VwAyEAtest'}};
+    try {
+      expect(isSyncConfigured()).toBe(true);
     } finally {
       delete backend.sync;
     }

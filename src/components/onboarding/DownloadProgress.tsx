@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Animated} from 'react-native';
 import {COLORS, SPACING, RADIUS, SHADOWS, TYPOGRAPHY, TIMING} from '../../constants/theme';
 import {config, onboarding, interpolate} from '../../config/loader';
+import {formatMegabytes} from '../../utils/appChrome';
 
 interface DownloadProgressProps {
   onSkip?: () => void;
@@ -13,10 +14,7 @@ interface DownloadProgressProps {
   startDownload: () => Promise<void>;
 }
 
-function formatSize(mb: number): string {
-  if (mb >= 1024) return `${(mb / 1024).toFixed(1)} GB`;
-  return `${mb} MB`;
-}
+const formatSize = formatMegabytes;
 
 export function DownloadProgress({
   onSkip: _onSkip,
@@ -105,8 +103,7 @@ export function DownloadProgress({
   if (isDownloaded) {
     return (
       <View style={styles.container}>
-        <Animated.View
-          style={[styles.completeIcon, {transform: [{scale: checkScale}]}]}>
+        <Animated.View style={[styles.completeIcon, {transform: [{scale: checkScale}]}]}>
           <View style={styles.checkShape} />
         </Animated.View>
         <Text style={styles.completeText}>AI model ready</Text>
@@ -137,9 +134,7 @@ export function DownloadProgress({
             <Text style={styles.progressText}>
               {downloadedSize} / {totalSize}
             </Text>
-            <Text style={styles.progressPercent}>
-              {Math.round(progress * 100)}%
-            </Text>
+            <Text style={styles.progressPercent}>{Math.round(progress * 100)}%</Text>
           </View>
           <Text style={styles.hint}>
             {speedMBps !== null
@@ -164,8 +159,7 @@ export function DownloadProgress({
             activeOpacity={0.8}>
             <Text style={styles.downloadButtonText}>
               {interpolate(
-                onboarding?.downloadPrompt ??
-                  'Download AI Assistant (~{{modelSize}})',
+                onboarding?.downloadPrompt ?? 'Download AI Assistant (~{{modelSize}})',
                 config,
               )}
             </Text>

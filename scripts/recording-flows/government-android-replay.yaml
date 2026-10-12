@@ -29,13 +29,12 @@ name: Airgap government services replay take, seven captured prompts, Android mo
 - takeScreenshot: ${SHOT_PREFIX}-chat
 # Beat 1: the president question.
 - tapOn: 'Current president'
-# The typing label can appear after the tap settles, so wait for a word that
-# only the finished answer shows: its source line.
+# The typing label can appear after the tap settles, so wait for a line that
+# only the finished answer shows: the source card's checked date.
 - extendedWaitUntil:
-    visible: '(?s).*checked 2026-10-09.*'
+    visible: '(?s).*Checked 2026-10-09.*'
     timeout: 300000
-# The source line streams before the answer ends, so wait for the typing
-# label to go away as well.
+# Wait for the typing label to go away as well.
 - extendedWaitUntil:
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000

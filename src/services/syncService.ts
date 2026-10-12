@@ -56,6 +56,11 @@ function getPinnedPublicKeys(): Readonly<Record<string, string>> {
   return backend?.sync?.publicKeys ?? {};
 }
 
+// Without signed-bundle keys there is no server to sync with.
+export function isSyncConfigured(): boolean {
+  return Object.keys(getPinnedPublicKeys()).length > 0;
+}
+
 export async function fetchManifest(): Promise<KbManifest> {
   if (!getBackendBase()) throw new Error('backend.baseUrl not configured');
   const connector = getBackendConnector();

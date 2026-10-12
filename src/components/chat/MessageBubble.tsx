@@ -25,21 +25,16 @@ import type {BotMessage} from '../../types/chat';
 import {CitationChips} from './CitationChips';
 import {AnswerProvenance} from './AnswerProvenance';
 import {ActionReceipt} from './ActionReceipt';
+import {describeSourceMetadata} from './sourceMetadata';
+import {refusalLabelFor} from './messagePresentation';
 import {offlineQueue} from '../../services/offlineQueue';
 import type {QueueRecord} from '../../services/actionQueueTypes';
 import {getStalenessInfo} from '../../services/syncService';
+import {getDocById} from '../../services/searchService';
+import {stripSourceSentences} from '../../utils/sourceLine';
 import {useReducedMotion} from '../../hooks/useReducedMotion';
 
 const AVATAR_SIZE = 32;
-
-const SOURCE_LABELS: Record<string, string> = {
-  llm: 'AI',
-  search: 'Knowledge',
-  queue: 'Queued',
-  tool: 'Action',
-  refusal: 'Disclaimer',
-  system: '',
-};
 
 const SOURCE_COLORS: Record<string, string> = {
   llm: COLORS.primary,
@@ -104,16 +99,23 @@ function StreamingCursor() {
 
 type FeedbackValue = 'up' | 'down' | null;
 
-function SourceBadge({source}: {source: string}) {
-  const label = SOURCE_LABELS[source];
-  const color = SOURCE_COLORS[source];
-  if (!label || !color) return null;
-  return (
-    <View style={[styles.sourcePill, {backgroundColor: color + '14'}]}>
-      <View style={[styles.sourceDot, {backgroundColor: color}]} />
-      <Text style={[styles.sourcePillText, {color}]}>{label}</Text>
-    </View>
-  );
+// The cited records' dated public source, read once per message. The card shows
+// the publisher and checked date, and the bubble drops the matching link.
+function citedSources(docIds: string[] | undefined) {
+  const docs = (docIds ?? [])
+    .filter(id => !id.startsWith('tool:'))
+    .map(id => getDocById(id))
+    .filter((doc): doc is NonNullable<typeof doc> => doc !== undefined);
+  const urls = docs
+    .map(doc => doc.metadata?.source)
+    .filter((url): url is string => typeof url === 'string' && url.length > 0);
+  const view = docs
+    .map(doc => describeSourceMetadata(doc.metadata))
+    .find(described => described?.url && described.checkedLabel);
+  return {
+    urls,
+    recordSource: view ? {publisher: view.publisher, checkedLabel: view.checkedLabel} : undefined,
+  };
 }
 
 function FeedbackButtons({messageId}: {messageId: string | number}) {
@@ -153,11 +155,11 @@ function FeedbackButtons({messageId}: {messageId: string | number}) {
           style={[styles.feedbackButton, feedback === 'up' && styles.feedbackButtonActive]}
           activeOpacity={0.6}
           accessibilityLabel="Helpful"
-          accessibilityRole="button">
-          <View style={[styles.thumbIcon, feedback === 'up' && styles.thumbIconActive]}>
-            <View style={styles.thumbUp} />
-            <View style={styles.thumbPalm} />
-          </View>
+          accessibilityRole="button"
+          accessibilityState={{selected: feedback === 'up'}}>
+          <Text style={[styles.feedbackText, feedback === 'up' && styles.feedbackTextActive]}>
+            Helpful
+          </Text>
         </TouchableOpacity>
       </Animated.View>
       <Animated.View style={{transform: [{scale: scaleDown}]}}>
@@ -167,16 +169,11 @@ function FeedbackButtons({messageId}: {messageId: string | number}) {
           style={[styles.feedbackButton, feedback === 'down' && styles.feedbackButtonActive]}
           activeOpacity={0.6}
           accessibilityLabel="Not helpful"
-          accessibilityRole="button">
-          <View
-            style={[
-              styles.thumbIcon,
-              styles.thumbIconDown,
-              feedback === 'down' && styles.thumbIconActive,
-            ]}>
-            <View style={styles.thumbUp} />
-            <View style={styles.thumbPalm} />
-          </View>
+          accessibilityRole="button"
+          accessibilityState={{selected: feedback === 'down'}}>
+          <Text style={[styles.feedbackText, feedback === 'down' && styles.feedbackTextActive]}>
+            Not helpful
+          </Text>
         </TouchableOpacity>
       </Animated.View>
     </View>
@@ -247,17 +244,6 @@ function renderInline(text: string, baseStyle: any): React.ReactNode {
   });
 }
 
-function ShieldGlyph({color}: {color: string}) {
-  return (
-    <View style={styles.shieldContainer} accessible={false}>
-      <View style={[styles.shieldTop, {borderBottomColor: color + '33'}]} />
-      <View style={[styles.shieldBody, {backgroundColor: color + '22', borderColor: color}]}>
-        <View style={[styles.shieldTick, {backgroundColor: color}]} />
-      </View>
-    </View>
-  );
-}
-
 function ToolPill({toolName, color}: {toolName: string; color: string}) {
   return (
     <View style={[styles.toolPill, {backgroundColor: color + '14', borderColor: color + '55'}]}>
@@ -297,15 +283,23 @@ export function MessageBubble({
       : null,
   );
   const source = message.source;
-  const sourceLabel = source ? SOURCE_LABELS[source] : undefined;
   const isStreaming = message.isStreaming === true;
   const isRefusal = source === 'refusal';
   const isTool = source === 'tool';
   const showFeedback = isBot && !isStreaming && source !== 'system' && !isRefusal;
-  const showSource = sourceLabel && sourceLabel.length > 0 && !isRefusal && !isTool;
   const isLastOrStandalone = position === 'last' || position === 'standalone';
-  const showFooter =
-    isLastOrStandalone && (showFeedback || showSource || (showTimestamp && !isStreaming));
+  const showFooter = isLastOrStandalone && (showFeedback || (showTimestamp && !isStreaming));
+  const docIds = message.audit?.kbDocIds;
+  // A refusal that still shows a record, such as a motive question, keeps the
+  // record's source card and chip.
+  const showProvenance =
+    isBot && isLastOrStandalone && !isStreaming && (!isRefusal || (docIds?.length ?? 0) > 0);
+  const cited = useMemo(() => citedSources(docIds), [docIds]);
+  const displayText =
+    showProvenance && cited.recordSource
+      ? stripSourceSentences(message.text, cited.urls)
+      : message.text;
+  const refusalLabel = refusalLabelFor(message.audit?.refusalReason);
 
   const radii = getBubbleRadii(isBot, position);
 
@@ -379,6 +373,10 @@ export function MessageBubble({
       ? GROUP_SPACING.grouped
       : GROUP_SPACING.ungrouped;
 
+  // Before the first token the typing row says the bot is working. An empty
+  // bubble next to it would only repeat that.
+  if (isBot && isStreaming && message.text.length === 0) return null;
+
   return (
     <Animated.View
       style={[
@@ -407,11 +405,12 @@ export function MessageBubble({
                 },
               ]}
               accessibilityRole="text"
-              accessibilityLabel={`Disclaimer: ${message.text}`}>
-              <ShieldGlyph color={refusalColor} />
+              accessibilityLabel={`${refusalLabel}: ${displayText}`}>
               <View style={styles.refusalColumn}>
-                <Text style={[styles.refusalLabel, {color: refusalColor}]}>DISCLAIMER</Text>
-                <FormattedText text={message.text} isBot={true} />
+                <Text style={[styles.refusalLabel, {color: refusalColor}]}>
+                  {refusalLabel.toUpperCase()}
+                </Text>
+                <FormattedText text={displayText} isBot={true} />
               </View>
               <Animated.View
                 style={[styles.flashOverlay, {opacity: flashAnim, backgroundColor: '#FFFFFF'}]}
@@ -421,7 +420,7 @@ export function MessageBubble({
           ) : (
             <View
               style={[styles.bubble, isBot ? styles.botBubble : styles.userBubble, bubbleStyle]}>
-              <FormattedText text={message.text} isBot={isBot} />
+              <FormattedText text={displayText} isBot={isBot} />
               {isStreaming && <StreamingCursor />}
               <Animated.View
                 style={[
@@ -441,17 +440,19 @@ export function MessageBubble({
           )}
         </Pressable>
 
-        {isBot && isLastOrStandalone && !isStreaming && !isRefusal && (
+        {showProvenance && (
           <>
             <AnswerProvenance
-              source={message.source}
+              source={isRefusal ? 'search' : message.source}
               kbVersion={getStalenessInfo().kbVersion}
-              docIds={message.audit?.kbDocIds}
+              docIds={docIds}
               providerId={message.audit?.providerId}
               modelIdentity={message.audit?.modelIdentity}
               providerFailure={message.audit?.providerFailure}
+              responseReason={message.audit?.responseReason}
+              recordSource={cited.recordSource}
             />
-            <CitationChips docIds={message.audit?.kbDocIds} />
+            <CitationChips docIds={docIds} />
           </>
         )}
 
@@ -469,8 +470,11 @@ export function MessageBubble({
         {showFooter && (
           <View style={[styles.footer, isBot ? styles.footerLeft : styles.footerRight]}>
             {showFeedback && <FeedbackButtons messageId={message._id} />}
-            {showSource && source && <SourceBadge source={source} />}
-            {showTimestamp && !isStreaming && <Text style={styles.timestamp}>{timestamp}</Text>}
+            {showTimestamp && !isStreaming && (
+              <Text style={styles.timestamp} numberOfLines={1}>
+                {timestamp}
+              </Text>
+            )}
           </View>
         )}
       </View>
@@ -593,65 +597,30 @@ const styles = StyleSheet.create({
   footerRight: {
     justifyContent: 'flex-end',
   },
-  sourcePill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: SPACING.sm + 2,
-    paddingVertical: 3,
-    borderRadius: RADIUS.full,
-    gap: 5,
-  },
-  sourceDot: {
-    width: 5,
-    height: 5,
-    borderRadius: 2.5,
-  },
-  sourcePillText: {
-    ...TYPOGRAPHY.micro,
-  },
   feedbackRow: {
     flexDirection: 'row',
-    gap: SPACING['2xs'],
+    gap: SPACING.xs,
   },
   feedbackButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    minHeight: 32,
+    paddingHorizontal: SPACING.sm + 2,
+    borderRadius: RADIUS.full,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: COLORS.border,
     alignItems: 'center',
     justifyContent: 'center',
   },
   feedbackButtonActive: {
     backgroundColor: COLORS.primary + '12',
+    borderColor: COLORS.primary,
   },
-  thumbIcon: {
-    width: 18,
-    height: 18,
-    opacity: 0.4,
+  feedbackText: {
+    ...TYPOGRAPHY.micro,
+    color: COLORS.textSecondary,
+    fontWeight: '600',
   },
-  thumbIconDown: {
-    transform: [{rotate: '180deg'}],
-  },
-  thumbIconActive: {
-    opacity: 0.85,
-  },
-  thumbUp: {
-    width: 10,
-    height: 8,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    backgroundColor: COLORS.primary,
-    position: 'absolute',
-    top: 0,
-    left: 4,
-  },
-  thumbPalm: {
-    width: 15,
-    height: 7,
-    borderRadius: 2.5,
-    backgroundColor: COLORS.primary,
-    position: 'absolute',
-    bottom: 0,
-    left: 1.5,
+  feedbackTextActive: {
+    color: COLORS.primary,
   },
   timestamp: {
     ...TYPOGRAPHY.micro,
@@ -676,42 +645,12 @@ const styles = StyleSheet.create({
     // flex: 1 collapses to zero width inside a content-sized row, which hid
     // the refusal text behind a tall empty bar.
     flexShrink: 1,
-    marginLeft: SPACING.sm + 2,
   },
   refusalLabel: {
     ...TYPOGRAPHY.micro,
     letterSpacing: 0.8,
     marginBottom: 4,
     fontWeight: '700',
-  },
-  shieldContainer: {
-    width: 20,
-    height: 24,
-    alignItems: 'center',
-    marginTop: 2,
-  },
-  shieldTop: {
-    width: 0,
-    height: 0,
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
-    borderBottomWidth: 6,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-  },
-  shieldBody: {
-    width: 20,
-    height: 17,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    borderWidth: 1.5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  shieldTick: {
-    width: 8,
-    height: 2,
-    borderRadius: 1,
   },
   toolPill: {
     flexDirection: 'row',

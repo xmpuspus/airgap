@@ -6,7 +6,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {COLORS, SPACING, TYPOGRAPHY, ThemeProvider} from './constants/theme';
-import {brand} from './config/loader';
+import {brand, features} from './config/loader';
+import {showsOutbox} from './utils/appChrome';
 import {connectivityService} from './services/connectivityService';
 import {
   startSyncScheduler,
@@ -60,17 +61,21 @@ function HeaderTitle() {
   );
 }
 
-function SettingsButton({onPress}: {onPress: () => void}) {
+// A circle with a dot read as a radio button, so the button says what it opens.
+function SettingsButton({onPress, compact}: {onPress: () => void; compact: boolean}) {
   return (
     <TouchableOpacity
       onPress={onPress}
       hitSlop={{top: 12, bottom: 12, left: 12, right: 12}}
       accessibilityLabel="Open settings"
       accessibilityRole="button"
-      style={headerStyles.settingsButton}>
-      <View style={headerStyles.gearOuter}>
-        <View style={headerStyles.gearInner} />
-      </View>
+      style={[headerStyles.outboxButton, compact && headerStyles.outboxButtonCompact]}>
+      <Text
+        style={headerStyles.outboxText}
+        numberOfLines={1}
+        maxFontSizeMultiplier={compact ? 1 : undefined}>
+        Settings
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -81,19 +86,21 @@ function HeaderActions({onOutbox, onSettings}: {onOutbox: () => void; onSettings
 
   return (
     <View style={[headerStyles.actions, compact && headerStyles.actionsCompact]}>
-      <TouchableOpacity
-        style={[headerStyles.outboxButton, compact && headerStyles.outboxButtonCompact]}
-        onPress={onOutbox}
-        accessibilityLabel="Open Outbox"
-        accessibilityRole="button">
-        <Text
-          style={headerStyles.outboxText}
-          numberOfLines={1}
-          maxFontSizeMultiplier={compact ? 1 : undefined}>
-          Outbox
-        </Text>
-      </TouchableOpacity>
-      <SettingsButton onPress={onSettings} />
+      {showsOutbox(features) && (
+        <TouchableOpacity
+          style={[headerStyles.outboxButton, compact && headerStyles.outboxButtonCompact]}
+          onPress={onOutbox}
+          accessibilityLabel="Open Outbox"
+          accessibilityRole="button">
+          <Text
+            style={headerStyles.outboxText}
+            numberOfLines={1}
+            maxFontSizeMultiplier={compact ? 1 : undefined}>
+            Outbox
+          </Text>
+        </TouchableOpacity>
+      )}
+      <SettingsButton onPress={onSettings} compact={compact} />
     </View>
   );
 }
@@ -281,24 +288,5 @@ const headerStyles = StyleSheet.create({
     height: 8,
     backgroundColor: 'rgba(255,255,255,0.25)',
     marginHorizontal: 6,
-  },
-  settingsButton: {
-    padding: SPACING.xs,
-  },
-  gearOuter: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: COLORS.textInverse,
-    alignItems: 'center',
-    justifyContent: 'center',
-    opacity: 0.9,
-  },
-  gearInner: {
-    width: 7,
-    height: 7,
-    borderRadius: 3.5,
-    backgroundColor: COLORS.textInverse,
   },
 });
