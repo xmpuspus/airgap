@@ -168,9 +168,16 @@ def assert_readable(page, width):
 
 
 def qa(browser, base, pack):
+    golden = json.loads(
+        (ROOT / "__tests__/golden/government-services.json").read_text("utf-8")
+    )["cases"]
+    authored = json.loads(
+        (ROOT / "validation/public-service-cases.json").read_text("utf-8")
+    )["cases"]
     require(
-        len(pack["cases"]) == 21,
-        "Expected all 15 government cases plus six additional authored cases",
+        len(pack["cases"]) == len(golden) + len(authored),
+        f"Expected all {len(golden)} government cases "
+        f"plus {len(authored)} additional authored cases",
     )
     report = {
         "schemaVersion": 1,
