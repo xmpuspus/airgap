@@ -64,9 +64,11 @@ assert.equal(
 );
 assert.match(report.model.sha256, /^[a-f0-9]{64}$/);
 assert.ok(report.model.sizeBytes > 100000000);
-assert.equal(report.rows.length, 54);
 assert.equal(report.repetitions, 3);
 assert.deepEqual(report.criteria, readJson('validation/public-service-experiment.json'));
+// Every question runs three variants for each repetition.
+const expectedRows = report.criteria.questions.length * report.repetitions * 3;
+assert.equal(report.rows.length, expectedRows);
 assert.deepEqual(report.settings, {contextSize: 2048, maxTokens: 160, temperature: 0, seed: 42});
 for (const question of report.criteria.questions) {
   for (const fact of [question.sourceFact, ...(question.sourceFacts ?? [])])
@@ -113,7 +115,7 @@ for (const [variant, summary] of Object.entries(report.summary)) {
   assert.equal(summary.p95Ms, timings[Math.ceil(timings.length * 0.95) - 1]);
 }
 process.stdout.write(
-  'CLI, exact source bytes, all 54 experiment rows, timings and control decisions verified. Checking five required captures next.\n',
+  `CLI, exact source bytes, all ${expectedRows} experiment rows, timings and control decisions verified. Checking five required captures next.\n`,
 );
 verifyPublicArtifacts();
 process.stdout.write(

@@ -320,7 +320,8 @@ def qa(browser, base, pack):
         assert_readable(page, width)
         page.locator("[data-view=experiment]").click()
         require(
-            pack["experiment"] is not None and len(pack["experiment"]["rows"]) >= 54,
+            pack["experiment"] is not None
+            and len(pack["experiment"]["rows"]) >= expected_experiment_rows(pack),
             "Model experiment NOT RUN",
         )
         expect(page.locator("#experiment-outputs > details")).to_have_count(
@@ -395,10 +396,19 @@ def qa(browser, base, pack):
     return report
 
 
+def expected_experiment_rows(pack):
+    # Every question runs three variants for each repetition.
+    criteria = pack["experiment"]["criteria"] if pack["experiment"] else None
+    if not criteria:
+        return 0
+    return len(criteria["questions"]) * pack["experiment"]["repetitions"] * 3
+
+
 def capture(browser, base, pack, source_commit, committed_files):
+    expected = expected_experiment_rows(pack)
     require(
-        pack["experiment"] is not None and len(pack["experiment"]["rows"]) == 54,
-        "Model experiment NOT RUN; capture requires all 54 rows",
+        pack["experiment"] is not None and len(pack["experiment"]["rows"]) == expected,
+        f"Model experiment NOT RUN; capture requires all {expected} rows",
     )
     recordings = []
     run_id = (
