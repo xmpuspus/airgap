@@ -31,6 +31,24 @@ test('falls back to the host name when no publisher is given', () => {
   });
 });
 
+test('counts days on the device calendar, not the UTC one', () => {
+  // 17:35 UTC on 12 October is 01:35 on 13 October in Manila (UTC+8).
+  const lateUtc = new Date('2026-10-12T17:35:00Z');
+  const manila = 8 * 60;
+  expect(
+    describeSourceMetadata({source: 'https://pco.gov.ph/a', asOf: '2026-10-12'}, lateUtc, manila)
+      ?.checkedLabel,
+  ).toBe('Checked 2026-10-12, 1 day ago');
+  expect(
+    describeSourceMetadata({source: 'https://pco.gov.ph/a', asOf: '2026-10-09'}, lateUtc, manila)
+      ?.checkedLabel,
+  ).toBe('Checked 2026-10-09, 4 days ago');
+  expect(
+    describeSourceMetadata({source: 'https://pco.gov.ph/a', asOf: '2026-10-12'}, lateUtc, 0)
+      ?.checkedLabel,
+  ).toBe('Checked 2026-10-12, today');
+});
+
 test('flags a snapshot whose review date has passed', () => {
   expect(
     describeSourceMetadata(

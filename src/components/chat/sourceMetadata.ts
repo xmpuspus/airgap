@@ -32,9 +32,12 @@ function hostOf(url: string): string | null {
   }
 }
 
+// The age counts days on the device calendar. At 01:35 in Manila, a record
+// checked the day before reads "1 day ago", not the UTC "today".
 export function describeSourceMetadata(
   metadata: Record<string, unknown> | undefined,
   now: Date = new Date(),
+  utcOffsetMinutes: number = -now.getTimezoneOffset(),
 ): SourceView | null {
   if (!metadata) return null;
   const url = text(metadata.source);
@@ -44,7 +47,8 @@ export function describeSourceMetadata(
 
   let checkedLabel: string | undefined;
   if (checked) {
-    const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    const local = new Date(now.getTime() + utcOffsetMinutes * 60_000);
+    const today = Date.UTC(local.getUTCFullYear(), local.getUTCMonth(), local.getUTCDate());
     const days = Math.max(0, Math.round((today - checked.getTime()) / DAY_MS));
     const age = days === 0 ? 'today' : days === 1 ? '1 day ago' : `${days} days ago`;
     checkedLabel = `Checked ${String(metadata.asOf)}, ${age}`;
