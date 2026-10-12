@@ -25,7 +25,7 @@ import {
 import {buildUserMessage} from '../src/utils/promptBuilder';
 import type {KBDocument} from '../src/types/knowledge';
 import {clearConversationHistory, processMessage} from '../src/services/orchestrator';
-import {config} from '../src/config/loader';
+import {brand, config} from '../src/config/loader';
 import type {SafetyConfig} from '../src/services/safetyLayer';
 import {replaceKnowledgeFromBundle, revertToCompiledKnowledge} from '../src/knowledge';
 import {getBackendConnector} from '../src/services/backendConnector';
@@ -250,8 +250,22 @@ describe('government entrypoint input policy and unavailable actions', () => {
   it('keeps first-message greeting and quick replies', async () => {
     const response = await processMessage('hello');
     expect(response.source).toBe('system');
-    expect(response.text).toContain('support assistant');
+    expect(response.text).toContain(brand.botName);
+    expect(response.text).not.toContain('support assistant');
     expect(response.suggestedReplies?.length).toBeGreaterThan(0);
+  });
+  it('greets a later hello instead of reporting a missing record', async () => {
+    await processMessage('Who is the current president?');
+    const response = await processMessage('hi');
+    expect(response.source).toBe('system');
+    expect(response.audit?.refusalReason).toBeUndefined();
+    expect(response.text).toContain(brand.botName);
+    expect(response.suggestedReplies?.length).toBeGreaterThan(0);
+  });
+  it('marks a clock answer so the answer card can name the device clock', async () => {
+    const response = await processMessage('What date and time now?');
+    expect(response.audit?.responseReason).toBe('device_clock');
+    expect(response.audit?.kbDocIds).toEqual([]);
   });
   it.each([
     'What time is it?',

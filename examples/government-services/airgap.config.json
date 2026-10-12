@@ -46,12 +46,12 @@
     "title": "Hi, I'm {{botName}}",
     "subtitle": "Your guide to Philippine government services",
     "features": [
-      "Passport, NBI clearance, and PSA certificate steps",
-      "SSS, PhilHealth, Pag-IBIG, BIR, and LTO steps",
-      "Requirements and official fees",
-      "Current national officials and holidays",
-      "Agency hotlines and websites",
-      "English or Filipino questions, answers with sources"
+      "Who the President is",
+      "The DICT Secretary's resignation",
+      "The Palace statement on alleged ghost internet projects",
+      "Passport fees and the appointment website",
+      "NBI clearance requirements",
+      "The 2026 regular holidays and the SSS hotline"
     ],
     "downloadPrompt": "Download AI model ({{modelSize}})",
     "skipLabel": "Skip for now",
@@ -63,7 +63,7 @@
       "value": "Who is the current president?"
     },
     {
-      "title": "Passport steps",
+      "title": "Passport appointment",
       "value": "Paano kumuha ng passport?"
     },
     {

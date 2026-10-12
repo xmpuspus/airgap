@@ -19,6 +19,7 @@
     "tags": ["officials", "executive", "president"],
     "metadata": {
       "source": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+      "publisher": "Presidential Communications Office",
       "asOf": "2026-10-09",
       "sourcePath": "evidence/public-service/sources/president.json",
       "sourceSha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
@@ -151,6 +152,7 @@
     "tags": ["officials", "executive", "dict"],
     "metadata": {
       "source": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+      "publisher": "Presidential Communications Office",
       "asOf": "2026-10-12",
       "sourcePath": "evidence/public-service/sources/dict-cabinet-change.json",
       "sourceSha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
@@ -184,6 +186,7 @@
     "tags": ["officials", "executive", "dict", "statement"],
     "metadata": {
       "source": "https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/",
+      "publisher": "Presidential Communications Office",
       "asOf": "2026-10-12",
       "sourcePath": "evidence/public-service/sources/ghost-internet.json",
       "sourceSha256": "22c89de12f5f08ace571568c20cc5547b7cc75a7795e6074de3fee29e6dee89e",

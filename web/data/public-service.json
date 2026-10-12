@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "origin": "Maintainer-authored prompts and criteria; factual text comes from the linked primary sources",
   "coreSha256": "851bc26af7925a71e8da7c135b9e0203313cf961f9ac2e18a73fca5538859b9a",
-  "corpusSha256": "5b8ba6a95973413bdc6bcfd1f225eeb9060074ca6275f13870c6370f9135317b",
+  "corpusSha256": "f3a729fbea0f193c9ee3e06bd8ff49843335522495eb162f9109615d8ebd94a9",
   "records": [
     {
       "id": "fee-011",
@@ -116,6 +116,7 @@
         "sourcePath": "evidence/public-service/sources/president.json",
         "sourceSha256": "354a787606b9a3aeb95ded92369b46a63791336ffc6b31776eccba68d4c92651",
         "source": "https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/",
+        "publisher": "Presidential Communications Office",
         "asOf": "2026-10-09",
         "excerpt": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines",
         "reviewBy": "2026-11-09",
@@ -156,6 +157,7 @@
         "sourcePath": "evidence/public-service/sources/dict-cabinet-change.json",
         "sourceSha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
         "source": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+        "publisher": "Presidential Communications Office",
         "asOf": "2026-10-12",
         "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
         "reviewBy": "2026-11-09",
@@ -189,6 +191,7 @@
         "sourcePath": "evidence/public-service/sources/ghost-internet.json",
         "sourceSha256": "22c89de12f5f08ace571568c20cc5547b7cc75a7795e6074de3fee29e6dee89e",
         "source": "https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/",
+        "publisher": "Presidential Communications Office",
         "asOf": "2026-10-12",
         "excerpt": "The Office of the Ombudsman is investigating an alleged “ghost internet” scheme involving DICT projects, including claims involving non-operational or “ghost” internet sites and the delivery of substandard equipment and services.",
         "reviewBy": "2026-11-09",

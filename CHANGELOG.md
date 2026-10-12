@@ -91,6 +91,25 @@ minor releases.
   to match the provider-based runtime.
 - Rerecorded the Android, iOS, joint, and seven industry flows, all at one checked source commit.
 - Prepared version 0.2.0 across the mobile apps, root workspace, and `create-airgap-bot` package.
+- Moved the record's `Source: <link> (checked <date>)` sentence out of the answer bubble. The
+  answer card shows the publisher and the checked date, and the source drawer keeps the full link.
+- Replaced "Built-in release · 0 sources" with the record source, a local record count, or where
+  an app answer came from, such as the device clock.
+- Said in plain words why the model text did not show: an inexact copy of the record, a detail
+  not in the records, or a time-out. The card labels the model file as "Model:".
+- Labeled refusal cards by what happened ("Record only", "No record", "Not answered") instead of
+  "Disclaimer". A motive question keeps the record's source card and chip.
+- Wrapped long record titles in the source chip instead of cutting them off.
+- Replaced the grey thumb shapes with "Helpful" and "Not helpful" buttons, and removed the
+  duplicate source pill under each answer.
+- Showed "Built-in records" in the header when the template has no update server, hid Outbox
+  when the offline queue is off, and labeled the settings button with text.
+- Kept the chat input above the keyboard on Android 15, which draws apps edge to edge.
+- Gave the template hotline in the chat error reply instead of a fixed telco number.
+- Rewrote demo and onboarding copy that called the records sample answers or promised sync
+  without an update server, and gave the model size in one unit.
+- Listed only the eight sourced government topics in the welcome card, renamed the passport quick
+  reply to match its record, and greeted a later "hi" with the bot's own name.
 
 ### Removed
 

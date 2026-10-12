@@ -191,8 +191,12 @@ async function processMessageInner(
   // Government examples have no agency integration. The shared core decides
   // answerability, freshness, doubt and tool unavailability before any provider.
   if (config.llm?.supportDomain === 'government') {
-    if (isGreeting(text) && conversationHistory.length === 0) {
-      const response = `Hi there! I'm your ${brand.name} support assistant. How can I help you today?`;
+    // A greeting at any point gets the bot's own name and the topics, not a
+    // missing-record reply.
+    if (isGreeting(text)) {
+      const response = /^(thanks|thank you)$/i.test(text.replace(/[!.,?]/g, '').trim())
+        ? 'You are welcome. Ask another question any time.'
+        : `Hello! I'm ${brand.botName}. Pick a topic below or type your question.`;
       publicSession = {};
       lastRecordAnswer = null;
       addToHistory('user', text);
@@ -206,7 +210,11 @@ async function processMessageInner(
       lastRecordAnswer = null;
       addToHistory('user', text);
       addToHistory('bot', response);
-      return {text: response, source: 'system'};
+      return {
+        text: response,
+        source: 'system',
+        audit: {kbDocIds: [], confidence: 0, responseReason: 'device_clock'},
+      };
     }
     const records = getAllDocuments();
     const planned = answerPublicService(
@@ -243,17 +251,22 @@ async function processMessageInner(
         modelIdentity = generated.modelIdentity;
         const controlled = controlPublicModelOutput(generated.text, planned, selected);
         reply = controlled.answer;
+        // The strict gate in the core keeps the record unless the model copied
+        // it exactly. The answer card says which happened.
         if (controlled.fallback) {
           providerFailure = {
             providerId,
-            reason: 'ungrounded',
-            message: 'the model text was not the record, so the record shows',
+            reason: 'not_exact_copy',
+            message: 'the model reply was not an exact copy of the record',
           };
         } else {
           source = 'llm';
         }
       } catch (err) {
-        providerFailure = {reason: 'generation_failed', message: String(err)};
+        providerFailure =
+          err instanceof InferenceProviderError
+            ? {providerId: err.providerId, reason: err.reason, message: err.message}
+            : {reason: 'generation_failed', message: String(err)};
       }
     }
     onToken?.(reply);

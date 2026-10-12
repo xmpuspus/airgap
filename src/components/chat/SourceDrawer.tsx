@@ -15,6 +15,7 @@ import {COLORS, RADIUS, SPACING, TIMING, TYPOGRAPHY} from '../../constants/theme
 import {getDocById} from '../../services/searchService';
 import {useSourceDrawer} from '../../hooks/useSourceDrawer';
 import {describeSourceMetadata} from './sourceMetadata';
+import {stripSourceSentences} from '../../utils/sourceLine';
 
 // Bottom-sheet drawer hosted once per chat screen via SourceDrawerProvider.
 // Visible state is driven by the drawer context.
@@ -115,43 +116,42 @@ export function SourceDrawer() {
                 style={styles.body}
                 contentContainerStyle={styles.bodyContent}
                 showsVerticalScrollIndicator>
-                <Text style={styles.bodyText}>{doc.content}</Text>
+                {/* The Source block below gives the link once, in full. */}
+                <Text style={styles.bodyText}>
+                  {sourceView?.url
+                    ? stripSourceSentences(doc.content, [sourceView.url])
+                    : doc.content}
+                </Text>
                 {sourceView && (
                   <View style={styles.sourceBlock} accessibilityLabel="Document source">
                     <Text style={styles.sourceLabel}>Source</Text>
                     <Text style={styles.sourceLine}>{sourceView.publisher}</Text>
                     {sourceView.url && (
-                      <Text style={styles.sourceUrl} selectable numberOfLines={3}>
+                      <Text style={styles.sourceUrl} selectable>
                         {sourceView.url}
                       </Text>
                     )}
                     {sourceView.checkedLabel && (
                       <Text style={styles.sourceLine}>{sourceView.checkedLabel}</Text>
                     )}
-                    {sourceView.sourceSha256 && (
-                      <Text style={styles.sourceLine} selectable>
-                        Saved source SHA-256: {sourceView.sourceSha256}
-                      </Text>
-                    )}
-                    {sourceView.sourcePath && (
-                      <Text style={styles.sourceLine} selectable>
-                        Repository path: {sourceView.sourcePath}
-                      </Text>
-                    )}
                     {sourceView.reviewOverdue && (
                       <Text style={styles.sourceWarning}>
                         Review date passed. Check the source before you rely on it.
                       </Text>
                     )}
-                  </View>
-                )}
-                {doc.tags && doc.tags.length > 0 && (
-                  <View style={styles.tagRow}>
-                    {doc.tags.map(tag => (
-                      <View key={tag} style={styles.tag}>
-                        <Text style={styles.tagText}>{tag}</Text>
-                      </View>
-                    ))}
+                    {(sourceView.sourceSha256 || sourceView.sourcePath) && (
+                      <Text style={styles.reviewerLabel}>For reviewers: saved copy</Text>
+                    )}
+                    {sourceView.sourcePath && (
+                      <Text style={styles.reviewerLine} selectable>
+                        {sourceView.sourcePath}
+                      </Text>
+                    )}
+                    {sourceView.sourceSha256 && (
+                      <Text style={styles.reviewerLine} selectable>
+                        SHA-256 {sourceView.sourceSha256}
+                      </Text>
+                    )}
                   </View>
                 )}
               </ScrollView>
@@ -206,6 +206,8 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   sourceWarning: {...TYPOGRAPHY.caption, color: COLORS.warning, marginTop: SPACING.sm},
+  reviewerLabel: {...TYPOGRAPHY.micro, color: COLORS.textSecondary, marginTop: SPACING.md},
+  reviewerLine: {...TYPOGRAPHY.micro, color: COLORS.textSecondary, marginTop: 2},
   root: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -266,22 +268,6 @@ const styles = StyleSheet.create({
   bodyText: {
     ...TYPOGRAPHY.body,
     color: COLORS.text,
-  },
-  tagRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: SPACING.xs,
-    marginTop: SPACING.lg,
-  },
-  tag: {
-    paddingHorizontal: SPACING.sm,
-    paddingVertical: 2,
-    borderRadius: RADIUS.full,
-    backgroundColor: COLORS.botBubble,
-  },
-  tagText: {
-    ...TYPOGRAPHY.micro,
-    color: COLORS.textSecondary,
   },
   fallback: {
     paddingVertical: SPACING.lg,
