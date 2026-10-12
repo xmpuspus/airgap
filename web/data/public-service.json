@@ -606,8 +606,8 @@
   ],
   "experiment": {
     "schemaVersion": 1,
-    "runId": "2026-10-12T17-46-30.407Z-97980b16-4b13-43ab-83cb-52268eec4288",
-    "startedAt": "2026-10-12T17:46:31.122Z",
+    "runId": "2026-10-12T23-39-08.544Z-efcb15dc-7489-4f4d-aa42-e3f6276bd261",
+    "startedAt": "2026-10-12T23:39:09.281Z",
     "provider": "node-llama-cpp",
     "providerVersion": "3.18.1",
     "evidenceClass": "host-native-model",
@@ -621,7 +621,7 @@
     "compute": "CPU",
     "runOrder": "Record baseline first; model lane order alternates by question index plus repetition, 9 pairs in each order",
     "contextPolicy": "One context, chat history reset before every generation; warm prompt cache may affect timing",
-    "modelLoadMs": 466.95858299999986,
+    "modelLoadMs": 479.40999999999997,
     "corpusSha256": "5d69d4aa28c3196635efef792586cd3a7fef10cbb0b7742a6f15335857f21847",
     "coreSha256": "851bc26af7925a71e8da7c135b9e0203313cf961f9ac2e18a73fca5538859b9a",
     "runnerSha256": "9a028f9654b1186277b696d6098e480a4680378ab142cefbbaa2d01ba302e3b1",
@@ -655,7 +655,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 2.3775419999999485,
+        "elapsedMs": 2.4181250000001455,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -690,8 +690,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 356.99366699999996,
-        "elapsedMs": 502.85333400000013,
+        "firstTokenMs": 291.49429199999986,
+        "elapsedMs": 400.85141699999986,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -732,8 +732,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 14.253541999999925,
-        "elapsedMs": 334.73062500000015,
+        "firstTokenMs": 20.224666999999954,
+        "elapsedMs": 353.09749999999985,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -775,7 +775,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.17491599999993923,
+        "elapsedMs": 0.14400000000000546,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -810,8 +810,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 177.89174999999977,
-        "elapsedMs": 690.337,
+        "firstTokenMs": 165.10558300000002,
+        "elapsedMs": 657.0843749999999,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -852,8 +852,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 13.27816699999994,
-        "elapsedMs": 717.7309999999998,
+        "firstTokenMs": 13.25079199999982,
+        "elapsedMs": 699.50025,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -895,7 +895,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.18683399999963513,
+        "elapsedMs": 0.17341699999997218,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -930,8 +930,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 292.75895799999944,
-        "elapsedMs": 558.3640829999995,
+        "firstTokenMs": 252.1059580000001,
+        "elapsedMs": 511.7040830000001,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -972,8 +972,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 13.583458999999493,
-        "elapsedMs": 281.64137500000015,
+        "firstTokenMs": 13.277207999999973,
+        "elapsedMs": 270.9799579999999,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1015,7 +1015,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.16862500000024738,
+        "elapsedMs": 0.15566599999965547,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1050,8 +1050,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 220.7217499999997,
-        "elapsedMs": 2676.897667,
+        "firstTokenMs": 188.4194579999994,
+        "elapsedMs": 2091.4254999999994,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1092,8 +1092,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 16.651166999999987,
-        "elapsedMs": 2263.132917,
+        "firstTokenMs": 14.024416000000201,
+        "elapsedMs": 1885.0402080000003,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1135,7 +1135,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.18045799999890733,
+        "elapsedMs": 0.1569580000004862,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1170,8 +1170,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 527.2242079999996,
-        "elapsedMs": 2559.993208,
+        "firstTokenMs": 419.78166599999895,
+        "elapsedMs": 2325.603665999999,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1212,8 +1212,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 13.973916000000827,
-        "elapsedMs": 2555.839041000001,
+        "firstTokenMs": 14.402374999999665,
+        "elapsedMs": 1930.58,
         "judgment": {
           "passed": false,
           "missing": ["2026-11-30", "Christmas Day", "2026-12-25", "Rizal Day", "2026-12-30"],
@@ -1255,7 +1255,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.17320900000049733,
+        "elapsedMs": 0.1453750000000582,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1290,8 +1290,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 263.79291699999885,
-        "elapsedMs": 665.3073749999985,
+        "firstTokenMs": 140.72925000000032,
+        "elapsedMs": 447.060958,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1332,8 +1332,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 14.299457999999504,
-        "elapsedMs": 306.8718749999989,
+        "firstTokenMs": 12.756124999999884,
+        "elapsedMs": 293.87162499999977,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1375,7 +1375,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.1770409999990079,
+        "elapsedMs": 0.146708000000217,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1410,8 +1410,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 281.00045800000044,
-        "elapsedMs": 697.9206250000007,
+        "firstTokenMs": 213.4975830000003,
+        "elapsedMs": 601.8209169999991,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1452,8 +1452,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 14.828000000001339,
-        "elapsedMs": 406.8769160000011,
+        "firstTokenMs": 14.087665999999444,
+        "elapsedMs": 391.71508299999914,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1495,7 +1495,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.1641250000029686,
+        "elapsedMs": 0.1580419999991136,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1530,8 +1530,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 288.8577080000032,
-        "elapsedMs": 386.023250000002,
+        "firstTokenMs": 237.8492499999993,
+        "elapsedMs": 332.0137909999994,
         "judgment": {
           "passed": false,
           "missing": ["affirmative sourced claim"],
@@ -1572,8 +1572,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 13.157082999998238,
-        "elapsedMs": 316.96545799999876,
+        "firstTokenMs": 13.078290999999808,
+        "elapsedMs": 308.63787500000035,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1615,7 +1615,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.14633300000059535,
+        "elapsedMs": 0.12058400000023539,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1650,8 +1650,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 167.8497920000009,
-        "elapsedMs": 676.4422919999997,
+        "firstTokenMs": 144.8406249999989,
+        "elapsedMs": 629.2781249999989,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1692,8 +1692,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 14.60320800000045,
-        "elapsedMs": 735.4975000000013,
+        "firstTokenMs": 12.932708000000275,
+        "elapsedMs": 696.1919170000001,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1735,7 +1735,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.15816700000141282,
+        "elapsedMs": 0.17150000000037835,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1770,8 +1770,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 306.09725000000253,
-        "elapsedMs": 580.2029170000023,
+        "firstTokenMs": 236.1374999999989,
+        "elapsedMs": 496.60399999999936,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1812,8 +1812,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 14.611415999999736,
-        "elapsedMs": 386.1047080000026,
+        "firstTokenMs": 13.593125000003056,
+        "elapsedMs": 273.757708000001,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1855,7 +1855,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.15499999999883585,
+        "elapsedMs": 0.15329100000235485,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1890,8 +1890,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 296.5095000000001,
-        "elapsedMs": 2889.158707999999,
+        "firstTokenMs": 178.03662500000064,
+        "elapsedMs": 2078.5190000000002,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1932,8 +1932,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 14.690290999998979,
-        "elapsedMs": 2008.1152079999993,
+        "firstTokenMs": 13.784916000000521,
+        "elapsedMs": 1898.7380410000005,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1975,7 +1975,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.19158299999980954,
+        "elapsedMs": 0.14412499999889405,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2010,8 +2010,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 531.111958999998,
-        "elapsedMs": 2861.4536249999983,
+        "firstTokenMs": 413.33854099999735,
+        "elapsedMs": 2366.254499999999,
         "judgment": {
           "passed": false,
           "missing": ["2026-11-30", "Christmas Day", "2026-12-25", "Rizal Day", "2026-12-30"],
@@ -2052,8 +2052,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 15.153375000001688,
-        "elapsedMs": 2491.8248749999984,
+        "firstTokenMs": 14.125457999998616,
+        "elapsedMs": 1938.187582999999,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2095,7 +2095,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.18070799999986775,
+        "elapsedMs": 0.1282920000012382,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2130,8 +2130,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 165.20566600000166,
-        "elapsedMs": 486.5692080000008,
+        "firstTokenMs": 135.96462500000052,
+        "elapsedMs": 445.9089590000003,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2172,8 +2172,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 13.836957999999868,
-        "elapsedMs": 294.8422920000012,
+        "firstTokenMs": 12.741417000001093,
+        "elapsedMs": 286.1461249999993,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2215,7 +2215,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.15799999999944703,
+        "elapsedMs": 0.12637499999982538,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2250,8 +2250,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 264.16420899999866,
-        "elapsedMs": 674.1027500000018,
+        "firstTokenMs": 206.5248329999995,
+        "elapsedMs": 597.8059170000015,
         "judgment": {
           "passed": false,
           "missing": ["affirmative sourced claim"],
@@ -2292,8 +2292,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 13.627333000000363,
-        "elapsedMs": 404.47137499999735,
+        "firstTokenMs": 13.38575000000128,
+        "elapsedMs": 392.34070900000006,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2335,7 +2335,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.1648749999985739,
+        "elapsedMs": 0.12895800000114832,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2370,8 +2370,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 311.4703750000008,
-        "elapsedMs": 416.7122500000005,
+        "firstTokenMs": 239.73845900000015,
+        "elapsedMs": 334.6670840000006,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2412,8 +2412,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 14.043249999998807,
-        "elapsedMs": 341.78437499999563,
+        "firstTokenMs": 13.040624999997817,
+        "elapsedMs": 310.4865409999984,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2455,7 +2455,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.20529200000601122,
+        "elapsedMs": 0.13741600000139442,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2490,8 +2490,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 305.3137499999939,
-        "elapsedMs": 1014.1396659999955,
+        "firstTokenMs": 142.23287499999788,
+        "elapsedMs": 629.1789999999964,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2532,8 +2532,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 15.096166000002995,
-        "elapsedMs": 1015.7576250000056,
+        "firstTokenMs": 13.267041999999492,
+        "elapsedMs": 701.4082499999968,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2575,7 +2575,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.1905830000032438,
+        "elapsedMs": 0.1389999999992142,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2610,8 +2610,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 382.36149999999907,
-        "elapsedMs": 716.1967920000025,
+        "firstTokenMs": 237.390333000003,
+        "elapsedMs": 498.9466250000005,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2652,8 +2652,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 18.484917000001587,
-        "elapsedMs": 381.440042000002,
+        "firstTokenMs": 13.392958999997063,
+        "elapsedMs": 280.0682089999973,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2695,7 +2695,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.20041700000001583,
+        "elapsedMs": 0.21154200000091805,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2730,8 +2730,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 235.16233300000022,
-        "elapsedMs": 2242.942833000001,
+        "firstTokenMs": 177.28966600000058,
+        "elapsedMs": 2069.6556249999994,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2772,8 +2772,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 13.748959000004106,
-        "elapsedMs": 2181.670917000003,
+        "firstTokenMs": 13.187458000000333,
+        "elapsedMs": 1893.456041999998,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2815,7 +2815,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.18987500000366708,
+        "elapsedMs": 0.18004199999995762,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2850,8 +2850,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 730.2064580000006,
-        "elapsedMs": 3107.7270409999983,
+        "firstTokenMs": 432.5675420000043,
+        "elapsedMs": 2352.469250000002,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2892,8 +2892,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 16.1351250000007,
-        "elapsedMs": 1984.9387080000015,
+        "firstTokenMs": 13.82625000000553,
+        "elapsedMs": 1956.237583000002,
         "judgment": {
           "passed": false,
           "missing": ["2026-11-30", "Christmas Day", "2026-12-25", "Rizal Day", "2026-12-30"],
@@ -2935,7 +2935,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.1805000000022119,
+        "elapsedMs": 0.15045800000370946,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2970,8 +2970,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 172.3550000000032,
-        "elapsedMs": 492.9462500000009,
+        "firstTokenMs": 135.984209000002,
+        "elapsedMs": 445.85399999999936,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -3012,8 +3012,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 12.519958000004408,
-        "elapsedMs": 298.57283299999835,
+        "firstTokenMs": 15.638917000003858,
+        "elapsedMs": 291.33716699999786,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -3055,7 +3055,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.16020800000114832,
+        "elapsedMs": 0.13670799999817973,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -3090,8 +3090,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 273.5957920000001,
-        "elapsedMs": 844.7534999999989,
+        "firstTokenMs": 213.3417910000062,
+        "elapsedMs": 604.0275830000028,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -3132,8 +3132,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 19.625749999999243,
-        "elapsedMs": 615.9593750000058,
+        "firstTokenMs": 13.162040999995952,
+        "elapsedMs": 390.4177079999936,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -3266,7 +3266,7 @@
       "Extractive controls can replace correct paraphrases. Every replacement is reported.",
       "Unpaired end-to-end comparison: lanes make separate generations, so differences are not a causal estimate of control benefit."
     ],
-    "finishedAt": "2026-10-12T17:47:18.028Z",
+    "finishedAt": "2026-10-12T23:39:47.735Z",
     "summary": {
       "record-only": {
         "denominator": 21,
@@ -3276,8 +3276,8 @@
         "providerErrors": 0,
         "modelCalls": 0,
         "tokenLimitStops": 0,
-        "p50Ms": 0.1770409999990079,
-        "p95Ms": 0.20529200000601122
+        "p50Ms": 0.146708000000217,
+        "p95Ms": 0.21154200000091805
       },
       "retrieved-model": {
         "denominator": 21,
@@ -3287,8 +3287,8 @@
         "providerErrors": 0,
         "modelCalls": 21,
         "tokenLimitStops": 6,
-        "p50Ms": 665.3073749999985,
-        "p95Ms": 2676.897667
+        "p50Ms": 496.60399999999936,
+        "p95Ms": 2091.4254999999994
       },
       "application-controls": {
         "denominator": 21,
@@ -3298,8 +3298,8 @@
         "providerErrors": 0,
         "modelCalls": 21,
         "tokenLimitStops": 6,
-        "p50Ms": 697.9206250000007,
-        "p95Ms": 2889.158707999999
+        "p50Ms": 601.8209169999991,
+        "p95Ms": 2325.603665999999
       }
     }
   }
