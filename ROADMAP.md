@@ -15,7 +15,7 @@ release evidence exists.
 - Onboarding explains ready, downloadable, downloading, and unavailable states.
 - Settings shows exact provider order, readiness, OS, model identity, and policy
   status.
-- Answer cards and audit records keep provider and model identity.
+- Answer cards keep the answer source, and audit records keep provider and model identity.
 - Fresh Android emulator and iOS simulator footage covers the deterministic offline path through a
   cited answer without implying physical-device model evidence.
 - Recording schema v2 keeps provider, model, device, OS, evidence class, capture

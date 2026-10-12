@@ -64,8 +64,10 @@ Airgap: `__tests__/golden/`, `__tests__/golden/adversarial.json`, and `demo/reco
 
 ## 7. Show the user who answered
 
-Each answer shows the provider, the model identity, the knowledge version, and the source count.
-The bot still answers from records when the device is offline, and the header says so.
+Each answer shows its source. The card under a model reply shows the model. The card under a
+record shows the record's publisher and checked date. The message audit keeps the model identity
+and the knowledge version. The bot still answers from records when the device is offline, and the
+header says so.
 
 Airgap: the answer chip, the source drawer, and the operating state header.
 

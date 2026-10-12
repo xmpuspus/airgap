@@ -450,9 +450,6 @@ export function MessageBubble({
               kbVersion={getStalenessInfo().kbVersion}
               docIds={docIds}
               providerId={message.audit?.providerId}
-              modelIdentity={message.audit?.modelIdentity}
-              providerFailure={message.audit?.providerFailure}
-              responseReason={message.audit?.responseReason}
               recordSource={cited.recordSource}
             />
             <CitationChips docIds={docIds} />

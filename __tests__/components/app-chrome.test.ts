@@ -4,6 +4,7 @@ import {
   formatMegabytes,
   formatModelSize,
   howThisWorksDefaults,
+  installDetail,
   recordsStatusLabel,
   showsOutbox,
 } from '../../src/utils/appChrome';
@@ -36,6 +37,12 @@ describe('onboarding', () => {
     expect(formatMegabytes(2445)).toBe('2.4 GB');
     expect(formatMegabytes(600)).toBe('600 MB');
     expect(formatModelSize(undefined)).toBe('size not set');
+  });
+
+  test('describes the model download without a file name or hash', () => {
+    const text = installDetail(2445652064);
+    expect(text).toBe('Downloads the on-device AI model (2.4 GB) and checks the file before use.');
+    expect(text).not.toMatch(/gguf|SHA/i);
   });
 
   test('uses the same unit in the download prompt', () => {

@@ -12,7 +12,7 @@ import {useReducedMotion} from '../hooks/useReducedMotion';
 import {useInferenceProviders} from '../hooks/useInferenceProviders';
 import {ProviderSetupCard} from '../components/onboarding/ProviderSetupCard';
 import {isSyncConfigured} from '../services/syncService';
-import {formatModelSize, howThisWorksDefaults} from '../utils/appChrome';
+import {howThisWorksDefaults, installDetail} from '../utils/appChrome';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -332,10 +332,7 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
         <View style={styles.pathCard}>
           <Text style={styles.pathEyebrow}>PATH 2</Text>
           <Text style={styles.pathTitle}>Install Local AI</Text>
-          <Text style={styles.pathDetail}>
-            Downloads {modelConfig.filename} ({formatModelSize(modelConfig.sizeBytes)}). Airgap
-            checks the exact byte length and SHA-256 before use.
-          </Text>
+          <Text style={styles.pathDetail}>{installDetail(modelConfig.sizeBytes)}</Text>
           <DownloadProgress
             onSkip={goToChat}
             onComplete={goToChat}

@@ -123,9 +123,9 @@ sequenceDiagram
 
 This sequence limits a model to retrieved document content. An output check
 rejects an unsourced amount, date, or name. When the check fails, the app shows
-the retrieved records instead of the model text, and the answer card says why
-the model text did not show. The visible answer card keeps the record source,
-its checked date, and the exact model identity.
+the retrieved records instead of the model text. The answer card shows the
+record source and its checked date. The message audit keeps the reason and the
+exact model identity.
 
 ## Tool and action path stays separate
 

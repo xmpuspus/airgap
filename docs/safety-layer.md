@@ -64,8 +64,8 @@ Set `safety.groundingRules.forbidUnsourcedAmounts`, `forbidUnsourcedDates`, or
 unsupported procedures, eligibility rules, lowercase names, or ordinary numbers.
 
 When the grounding check fails, the orchestrator shows the retrieved records instead of the model
-text. The answer card then says that the model reply had a detail that is not in the records.
-The message audit keeps the first unsourced amount, date, or name in `providerFailure.message`.
+text. The answer card shows only the record source. The message audit keeps the reason and the
+first unsourced amount, date, or name in `providerFailure`.
 The logger records the rejection reason and leaves out the raw rejected answer by default. A record with `metadata.verbatim` set to `true` skips the model, so an identity statement
 or a legal notice reads the same in every run. After the checks pass, the orchestrator appends
 the top record's `metadata.source` line when the model text does not contain it.

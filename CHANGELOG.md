@@ -28,7 +28,7 @@ minor releases.
 - A doubt check such as "sigurado ka dyan?" repeats the last record-backed answer from the record
   store, with the same sources.
 - A short question that equals a record keyword searches on its own instead of as a follow-up.
-- The answer chip says why the model did not answer when the app shows records instead.
+- The message audit records why the model did not answer when the app shows records instead.
 - A `docs/support-bot-minimum.md` page with the nine controls any support bot needs, and a case
   study that maps one public launch to them.
 - A streaming gate that holds model text until the grounding check passes, so an unsourced
@@ -84,7 +84,7 @@ minor releases.
   against `2026-09-25`.
 - Told the model not to repeat the "reference information" wording in its answer.
 - Showed the retrieved records instead of a refusal when model text fails the grounding check.
-  The answer card says why the model text did not show.
+  The message audit keeps the reason.
 - Showed whole records on the no-model path. The 200-character cut dropped every source line.
 - Fixed the refusal bubble, which collapsed its text to a tall empty bar.
 - Ran the Apple on-device model with content-transformation guardrails, because the iOS Simulator
@@ -96,10 +96,11 @@ minor releases.
 - Prepared version 0.2.0 across the mobile apps, root workspace, and `create-airgap-bot` package.
 - Moved the record's `Source: <link> (checked <date>)` sentence out of the answer bubble. The
   answer card shows the publisher and the checked date, and the source drawer keeps the full link.
-- Replaced "Built-in release · 0 sources" with the record source, a local record count, or where
-  an app answer came from, such as the device clock.
-- Said in plain words why the model text did not show: an inexact copy of the record, a detail
-  not in the records, or a time-out. The card labels the model file as "Model:".
+- Replaced "Built-in release · 0 sources" with the record source or a local record count.
+- Kept the answer card to the answer source and the record's checked date. The card no longer
+  shows why a model reply was not used, or the model file. The message audit keeps both.
+- Removed the saved-copy path and hash from the source drawer, and the model file name and hash
+  from the install card. The records keep them for reviewers.
 - Labeled refusal cards by what happened ("Record only", "No record", "Not answered") instead of
   "Disclaimer". A motive question keeps the record's source card and chip.
 - Wrapped long record titles in the source chip instead of cutting them off.

@@ -1,14 +1,13 @@
 // Turns document metadata into the lines the source drawer shows: who
 // published the record, where it is, when the snapshot was checked, and
-// whether its review date has passed. Pure function, so it is unit tested
-// without rendering.
+// whether its review date has passed. The saved-copy path and hash stay in
+// the record for reviewers and do not show in the app. Pure function, so it
+// is unit tested without rendering.
 
 export interface SourceView {
   publisher: string;
   url?: string;
   checkedLabel?: string;
-  sourcePath?: string;
-  sourceSha256?: string;
   reviewOverdue: boolean;
 }
 
@@ -59,8 +58,6 @@ export function describeSourceMetadata(
     publisher: publisher ?? 'Unknown publisher',
     url,
     checkedLabel,
-    sourcePath: text(metadata.sourcePath),
-    sourceSha256: text(metadata.sourceSha256),
     reviewOverdue: reviewBy !== null && reviewBy.getTime() < now.getTime(),
   };
 }

@@ -49,6 +49,20 @@ test('counts days on the device calendar, not the UTC one', () => {
   ).toBe('Checked 2026-10-12, today');
 });
 
+test('leaves the saved-copy path and hash out of the drawer view', () => {
+  const view = describeSourceMetadata(
+    {
+      source: 'https://pco.gov.ph/a',
+      asOf: '2026-10-12',
+      sourcePath: 'evidence/public-service/sources/president.json',
+      sourceSha256: 'a'.repeat(64),
+    },
+    now,
+  );
+  expect(view).not.toHaveProperty('sourcePath');
+  expect(view).not.toHaveProperty('sourceSha256');
+});
+
 test('flags a snapshot whose review date has passed', () => {
   expect(
     describeSourceMetadata(

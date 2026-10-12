@@ -66,8 +66,8 @@ The left cards show replies of a national government app's assistant: five publi
 2026-09-21 launch day and two from screenshots of 2026-10-12. The right panel shows Kuya B, the
 `government-services` template, on the same seven prompts on an Android 15 emulator configured
 with a 3-bit Gemma 4 E2B file. The president and Palace statement questions go to the model.
-The app shows the record unless the model copies it exactly, and the answer card says which
-happened. The challenge, clock, identity, refusal and resignation answers are code paths.
+The app shows the record unless the model copies it exactly. The challenge, clock, identity,
+refusal and resignation answers are code paths.
 
 The president answer comes from a dated record. Its card gives the publisher and the checked
 date. A challenge re-reads that record. The time comes from the device clock. The identity

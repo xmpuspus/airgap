@@ -1,75 +1,21 @@
 import {getProvenanceView} from '../../src/components/chat/AnswerProvenance';
 
-test('says why the model did not answer when the app fell back to records', () => {
-  const view = getProvenanceView({
-    source: 'search',
-    docIds: ['off-001'],
-    providerFailure: {
-      providerId: 'apple-foundation-models',
-      reason: 'generation_failed',
-      message: 'The Apple system model does not support this locale',
-    },
-  });
-  expect(view.sourceLabel).toBe('Local knowledge');
-  expect(view.failureLabel).toBe(
-    'Apple on-device model did not answer: The Apple system model does not support this locale. The record is shown as written.',
-  );
-});
-
-test('says in plain words when the model reply was not an exact copy of the record', () => {
-  const view = getProvenanceView({
-    source: 'search',
-    docIds: ['off-001'],
-    providerFailure: {
-      providerId: 'llama-rn',
-      reason: 'not_exact_copy',
-      message: 'the model text was not the record, so the record shows',
-    },
-  });
-  expect(view.failureLabel).toBe(
-    'Downloaded Airgap model ran, but its reply was not an exact copy of the record. The record is shown as written.',
-  );
-  expect(view.failureLabel).not.toContain('ungrounded');
-});
-
-test('says when the model ran out of time', () => {
-  const view = getProvenanceView({
-    source: 'search',
-    docIds: ['off-009'],
-    providerFailure: {
-      reason: 'generation_failed',
-      message: 'Error: Generation timed out after 240s',
-    },
-  });
-  expect(view.failureLabel).toBe(
-    'The model did not finish in time. The record is shown as written.',
-  );
-});
-
-test('names the unsourced detail check for a general model answer', () => {
-  const view = getProvenanceView({
-    source: 'search',
-    docIds: ['plan-1', 'plan-2'],
-    providerFailure: {providerId: 'llama-rn', reason: 'ungrounded', message: 'Amount "PHP 4999"'},
-  });
-  expect(view.failureLabel).toBe(
-    'Downloaded Airgap model ran, but its reply had a detail that is not in the records. The records are shown as written.',
-  );
-});
-
-test('shows the publisher and checked date of a dated public record', () => {
+// The card tells a citizen where the answer came from. Why a model reply was
+// not used stays in the message audit, not on the card.
+test('shows only the record source when the model ran but the record shows', () => {
   expect(
     getProvenanceView({
       source: 'search',
       docIds: ['off-001'],
+      providerId: 'llama-rn',
       recordSource: {
         publisher: 'Presidential Communications Office',
-        checkedLabel: 'Checked 2026-10-09, 3 days ago',
+        checkedLabel: 'Checked 2026-10-09, 4 days ago',
       },
     }),
   ).toEqual({
     sourceLabel: 'Local knowledge',
-    factLabel: 'Presidential Communications Office · Checked 2026-10-09, 3 days ago',
+    factLabel: 'Presidential Communications Office · Checked 2026-10-09, 4 days ago',
   });
 });
 
@@ -86,18 +32,8 @@ test('counts local records and names a synced version', () => {
   });
 });
 
-test('shows no source count for app guidance', () => {
-  expect(getProvenanceView({source: 'system', docIds: []})).toEqual({
-    sourceLabel: 'App guidance',
-  });
-  expect(getProvenanceView({source: 'system', responseReason: 'device_clock'})).toEqual({
-    sourceLabel: 'App guidance',
-    factLabel: "Date and time from this phone's clock",
-  });
-  expect(getProvenanceView({source: 'system', responseReason: 'identity'})).toEqual({
-    sourceLabel: 'App guidance',
-    factLabel: 'Set in the app, not taken from a record',
-  });
+test('labels an app answer with no extra explanation', () => {
+  expect(getProvenanceView({source: 'system', docIds: []})).toEqual({sourceLabel: 'App guidance'});
 });
 
 test.each([
@@ -106,12 +42,6 @@ test.each([
   ['llama-rn', 'Downloaded Airgap model'],
   ['cloud', 'Cloud model'],
   ['demo', 'Document answer'],
-] as const)('names the %s provider in answer details', (providerId, sourceLabel) => {
-  expect(
-    getProvenanceView({
-      source: 'llm',
-      providerId,
-      modelIdentity: `${providerId}-model`,
-    }),
-  ).toMatchObject({sourceLabel, modelLabel: `Model: ${providerId}-model`});
+] as const)('names the %s provider when it wrote the answer', (providerId, sourceLabel) => {
+  expect(getProvenanceView({source: 'llm', providerId})).toEqual({sourceLabel});
 });

@@ -139,19 +139,6 @@ export function SourceDrawer() {
                         Review date passed. Check the source before you rely on it.
                       </Text>
                     )}
-                    {(sourceView.sourceSha256 || sourceView.sourcePath) && (
-                      <Text style={styles.reviewerLabel}>For reviewers: saved copy</Text>
-                    )}
-                    {sourceView.sourcePath && (
-                      <Text style={styles.reviewerLine} selectable>
-                        {sourceView.sourcePath}
-                      </Text>
-                    )}
-                    {sourceView.sourceSha256 && (
-                      <Text style={styles.reviewerLine} selectable>
-                        SHA-256 {sourceView.sourceSha256}
-                      </Text>
-                    )}
                   </View>
                 )}
               </ScrollView>
@@ -206,8 +193,6 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   sourceWarning: {...TYPOGRAPHY.caption, color: COLORS.warning, marginTop: SPACING.sm},
-  reviewerLabel: {...TYPOGRAPHY.micro, color: COLORS.textSecondary, marginTop: SPACING.md},
-  reviewerLine: {...TYPOGRAPHY.micro, color: COLORS.textSecondary, marginTop: 2},
   root: {
     flex: 1,
     justifyContent: 'flex-end',

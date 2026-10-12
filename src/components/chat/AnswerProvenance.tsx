@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import type {BotMessage} from '../../types/chat';
-import {COLORS, SPACING, RADIUS, TYPOGRAPHY} from '../../constants/theme';
+import {SPACING, RADIUS, TYPOGRAPHY} from '../../constants/theme';
 import type {InferenceProviderId} from '../../services/inference/types';
 
 export interface ProvenanceInput {
@@ -9,9 +9,6 @@ export interface ProvenanceInput {
   kbVersion?: string | null;
   docIds?: string[];
   providerId?: InferenceProviderId;
-  modelIdentity?: string;
-  providerFailure?: {providerId?: InferenceProviderId; reason: string; message: string};
-  responseReason?: string;
   /** Publisher and checked date of the first cited record with a dated public source. */
   recordSource?: {publisher: string; checkedLabel?: string};
 }
@@ -19,8 +16,6 @@ export interface ProvenanceInput {
 export interface ProvenanceView {
   sourceLabel: string;
   factLabel?: string;
-  modelLabel?: string;
-  failureLabel?: string;
 }
 
 const SOURCE_LABELS: Record<string, string> = {
@@ -40,29 +35,8 @@ const PROVIDER_LABELS: Record<InferenceProviderId, string> = {
   demo: 'Document answer',
 };
 
-// App answers carry no record. The card says where the text came from instead
-// of "0 sources".
-const SYSTEM_FACTS: Record<string, string> = {
-  device_clock: "Date and time from this phone's clock",
-  identity: 'Set in the app, not taken from a record',
-};
-
-// The user sees why the model text did not show, in words a citizen reads.
-function failureText(failure: NonNullable<ProvenanceInput['providerFailure']>, count: number) {
-  const model = failure.providerId ? PROVIDER_LABELS[failure.providerId] : 'The model';
-  const shown =
-    count === 1 ? 'The record is shown as written.' : 'The records are shown as written.';
-  if (failure.reason === 'not_exact_copy') {
-    return `${model} ran, but its reply was not an exact copy of the record. ${shown}`;
-  }
-  if (failure.reason === 'ungrounded') {
-    return `${model} ran, but its reply had a detail that is not in the records. ${shown}`;
-  }
-  if (/timed out/i.test(failure.message)) return `${model} did not finish in time. ${shown}`;
-  const detail = failure.message.replace(/^Error:\s*/, '').replace(/[.\s]+$/, '');
-  return `${model} did not answer: ${detail}. ${shown}`;
-}
-
+// The card says where the answer came from and nothing about how the app chose
+// it. Why a model reply was not used stays in the message audit.
 export function getProvenanceView(input: ProvenanceInput): ProvenanceView {
   const count = input.docIds?.filter(id => !id.startsWith('tool:')).length ?? 0;
   const source = input.source ?? 'system';
@@ -75,8 +49,6 @@ export function getProvenanceView(input: ProvenanceInput): ProvenanceView {
     factLabel = `${count} local ${count === 1 ? 'record' : 'records'}${
       input.kbVersion ? ` · v${input.kbVersion}` : ''
     }`;
-  } else if (source === 'system' && input.responseReason) {
-    factLabel = SYSTEM_FACTS[input.responseReason];
   }
   return {
     sourceLabel:
@@ -84,10 +56,6 @@ export function getProvenanceView(input: ProvenanceInput): ProvenanceView {
         ? PROVIDER_LABELS[input.providerId]
         : SOURCE_LABELS[source]) ?? 'App guidance',
     ...(factLabel ? {factLabel} : {}),
-    ...(input.modelIdentity ? {modelLabel: `Model: ${input.modelIdentity}`} : {}),
-    ...(input.providerFailure
-      ? {failureLabel: failureText(input.providerFailure, Math.max(count, 1))}
-      : {}),
   };
 }
 
@@ -99,8 +67,6 @@ export function AnswerProvenance(props: ProvenanceInput) {
       <View style={styles.content}>
         <Text style={styles.source}>{view.sourceLabel}</Text>
         {view.factLabel && <Text style={styles.fact}>{view.factLabel}</Text>}
-        {view.failureLabel && <Text style={styles.model}>{view.failureLabel}</Text>}
-        {view.modelLabel && <Text style={styles.model}>{view.modelLabel}</Text>}
       </View>
     </View>
   );
@@ -119,5 +85,4 @@ const styles = StyleSheet.create({
   content: {flexShrink: 1, paddingHorizontal: SPACING.md, paddingVertical: SPACING.sm},
   source: {...TYPOGRAPHY.caption, color: '#0B1F33', fontWeight: '700'},
   fact: {...TYPOGRAPHY.micro, color: '#0B1F33', marginTop: 2},
-  model: {...TYPOGRAPHY.micro, color: COLORS.textSecondary, marginTop: 2},
 });

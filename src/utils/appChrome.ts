@@ -28,6 +28,13 @@ export function formatModelSize(sizeBytes?: number): string {
   return `${(sizeBytes / 1e9).toFixed(1)} GB`;
 }
 
+// The install card says what the download is, without a file name or hash.
+export function installDetail(sizeBytes?: number): string {
+  return `Downloads the on-device AI model (${formatModelSize(
+    sizeBytes,
+  )}) and checks the file before use.`;
+}
+
 export function formatMegabytes(mb: number): string {
   if (mb >= 1000) return `${(mb / 1000).toFixed(1)} GB`;
   return `${mb} MB`;
