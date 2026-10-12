@@ -8,6 +8,7 @@ import {
   showsOutbox,
 } from '../../src/utils/appChrome';
 import {providerReasonDetail} from '../../src/services/inference/providerPresentation';
+import {config, interpolate} from '../../src/config/loader';
 
 describe('header', () => {
   test('names built-in records when no update server is set up', () => {
@@ -35,6 +36,13 @@ describe('onboarding', () => {
     expect(formatMegabytes(2445)).toBe('2.4 GB');
     expect(formatMegabytes(600)).toBe('600 MB');
     expect(formatModelSize(undefined)).toBe('size not set');
+  });
+
+  test('uses the same unit in the download prompt', () => {
+    const sized = (sizeMB: number) => ({...config, model: {...config.model, sizeMB}});
+    expect(interpolate('{{modelSize}}', sized(2445))).toBe('~2.4 GB');
+    expect(interpolate('{{modelSize}}', sized(1020))).toBe('~1.0 GB');
+    expect(interpolate('{{modelSize}}', sized(600))).toBe('~600 MB');
   });
 });
 

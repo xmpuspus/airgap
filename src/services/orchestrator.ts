@@ -194,8 +194,14 @@ async function processMessageInner(
     // A greeting at any point gets the bot's own name and the topics, not a
     // missing-record reply.
     if (isGreeting(text)) {
-      const response = /^(thanks|thank you)$/i.test(text.replace(/[!.,?]/g, '').trim())
+      const word = text
+        .replace(/[!.,?]/g, '')
+        .trim()
+        .toLowerCase();
+      const response = ['thanks', 'thank you'].includes(word)
         ? 'You are welcome. Ask another question any time.'
+        : ['bye', 'goodbye'].includes(word)
+        ? 'Goodbye. Ask again any time.'
         : `Hello! I'm ${brand.botName}. Pick a topic below or type your question.`;
       publicSession = {};
       lastRecordAnswer = null;

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "origin": "Maintainer-authored prompts and criteria; factual text comes from the linked primary sources",
   "coreSha256": "851bc26af7925a71e8da7c135b9e0203313cf961f9ac2e18a73fca5538859b9a",
-  "corpusSha256": "f3a729fbea0f193c9ee3e06bd8ff49843335522495eb162f9109615d8ebd94a9",
+  "corpusSha256": "5d69d4aa28c3196635efef792586cd3a7fef10cbb0b7742a6f15335857f21847",
   "records": [
     {
       "id": "fee-011",
@@ -54,7 +54,7 @@
         "sourcePath": "evidence/public-service/sources/holidays.json",
         "sourceSha256": "47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8",
         "source": "https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/7/99678",
-        "publisher": "Presidential Communications Office",
+        "publisher": "Supreme Court E-Library",
         "asOf": "2026-10-09",
         "excerpt": "A. Regular Holidays  | \n |  \nNew Year's Day  | -  | 1 January (Thursday)\nMaundy Thursday  | -  | 2 April\nGood Friday  | -  | 3 April\nAraw ng Kagitingan  | -  | 9 April (Thursday)\nLabor Day  | -  | 1 May (Friday)\nIndependence Day  | -  | 12 June (Friday)\nNational Heroes Day  | -  | 31 August (Last Monday of August)\nBonifacio Day  | -  | 30 November (Monday)\nChristmas Day  | -  | 25 December (Friday)\nRizal Day  | -  | 30 December (Wednesday)",
         "reviewBy": "2026-11-09",

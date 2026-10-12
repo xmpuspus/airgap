@@ -262,6 +262,13 @@ describe('government entrypoint input policy and unavailable actions', () => {
     expect(response.text).toContain(brand.botName);
     expect(response.suggestedReplies?.length).toBeGreaterThan(0);
   });
+  it.each(['bye', 'goodbye'])('says goodbye to %s instead of hello', async text => {
+    await processMessage('Who is the current president?');
+    const response = await processMessage(text);
+    expect(response.source).toBe('system');
+    expect(response.text).not.toContain('Hello');
+    expect(response.text).toContain('Goodbye');
+  });
   it('marks a clock answer so the answer card can name the device clock', async () => {
     const response = await processMessage('What date and time now?');
     expect(response.audit?.responseReason).toBe('device_clock');

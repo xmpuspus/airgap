@@ -41,5 +41,13 @@ test('every sourced record names its publisher for the answer card', () => {
 test('the passport quick reply names what its record gives', () => {
   const passport = cfg.quickReplies.find((reply: {value: string}) => /passport/i.test(reply.value));
   const answer = answerPublicService(passport.value, records, {}, cfg.safety);
-  if (answer.recordIds.includes('svc-011')) expect(passport.title).not.toMatch(/steps/i);
+  // svc-011 is the appointment site, not a list of steps.
+  expect(answer.recordIds).toEqual(['svc-011']);
+  expect(passport.title).not.toMatch(/steps/i);
+});
+
+test('each sourced record names the site its link opens', () => {
+  const holidays = sourced.find(record => record.id === 'hol-001');
+  expect(String(holidays?.metadata?.source)).toContain('elibrary.judiciary.gov.ph');
+  expect(holidays?.metadata?.publisher).toBe('Supreme Court E-Library');
 });

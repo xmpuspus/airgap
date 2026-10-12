@@ -26,7 +26,7 @@ import {CitationChips} from './CitationChips';
 import {AnswerProvenance} from './AnswerProvenance';
 import {ActionReceipt} from './ActionReceipt';
 import {describeSourceMetadata} from './sourceMetadata';
-import {refusalLabelFor} from './messagePresentation';
+import {refusalLabelFor, showsRecordCard} from './messagePresentation';
 import {offlineQueue} from '../../services/offlineQueue';
 import type {QueueRecord} from '../../services/actionQueueTypes';
 import {getStalenessInfo} from '../../services/syncService';
@@ -293,7 +293,10 @@ export function MessageBubble({
   // A refusal that still shows a record, such as a motive question, keeps the
   // record's source card and chip.
   const showProvenance =
-    isBot && isLastOrStandalone && !isStreaming && (!isRefusal || (docIds?.length ?? 0) > 0);
+    isBot &&
+    isLastOrStandalone &&
+    !isStreaming &&
+    showsRecordCard(source, message.audit?.refusalReason, docIds);
   const cited = useMemo(() => citedSources(docIds), [docIds]);
   const displayText =
     showProvenance && cited.recordSource

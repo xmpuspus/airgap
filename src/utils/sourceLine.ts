@@ -17,9 +17,10 @@ export function stripSourceSentences(text: string, urls: string[]): string {
   let shown = text;
   for (const url of urls) {
     const escaped = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // The lookahead stops a cited link from matching the start of a longer one.
     shown = shown.replace(
       new RegExp(
-        `[ \\t]*Source:\\s*${escaped}(?:\\s*\\(checked \\d{4}-\\d{2}-\\d{2}\\))?\\.?`,
+        `[ \\t]*Source:\\s*${escaped}(?=[\\s(]|\\.(?:\\s|$)|$)(?:\\s*\\(checked \\d{4}-\\d{2}-\\d{2}\\))?\\.?`,
         'g',
       ),
       '',

@@ -14,3 +14,22 @@ const REFUSAL_LABELS: Record<string, string> = {
 export function refusalLabelFor(reason: string | undefined): string {
   return (reason && REFUSAL_LABELS[reason]) ?? 'Not answered';
 }
+
+// Refusals that still put a record in front of the reader. A weak-retrieval
+// "No record" card or a tool check must not show a record source card.
+const RECORD_REFUSALS = new Set([
+  'no_commentary',
+  'needs_verification',
+  'conflicting_sources',
+  'historical_only',
+]);
+
+export function showsRecordCard(
+  source: string | undefined,
+  refusalReason: string | undefined,
+  docIds: string[] | undefined,
+): boolean {
+  if (source !== 'refusal') return true;
+  const records = (docIds ?? []).filter(id => !id.startsWith('tool:'));
+  return records.length > 0 && RECORD_REFUSALS.has(refusalReason ?? '');
+}

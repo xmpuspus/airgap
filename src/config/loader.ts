@@ -337,7 +337,8 @@ export function interpolate(template: string, config: AirgapConfig): string {
   const featureList = config.onboarding?.features?.map(f => `- ${f}`).join('\n') ?? '';
 
   const sizeMB = config.model.sizeMB!;
-  const modelSize = sizeMB >= 1024 ? `~${(sizeMB / 1024).toFixed(1)} GB` : `~${sizeMB} MB`;
+  // Decimal gigabytes, as in the onboarding download and progress cards.
+  const modelSize = sizeMB >= 1000 ? `~${(sizeMB / 1000).toFixed(1)} GB` : `~${sizeMB} MB`;
 
   const vars: Record<string, string> = {
     botName: config.brand.botName,

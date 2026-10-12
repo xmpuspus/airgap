@@ -1,4 +1,4 @@
-import {refusalLabelFor} from '../../src/components/chat/messagePresentation';
+import {refusalLabelFor, showsRecordCard} from '../../src/components/chat/messagePresentation';
 import {stripSourceSentences} from '../../src/utils/sourceLine';
 
 const PRESIDENT_URL =
@@ -23,6 +23,31 @@ describe('stripSourceSentences', () => {
   test('keeps a link that no cited record carries', () => {
     const text = 'Book only at the site. Source: https://example.org/other (checked 2026-10-09).';
     expect(stripSourceSentences(text, [PRESIDENT_URL])).toBe(text);
+  });
+
+  test('keeps a longer link that starts with a cited link', () => {
+    const text = 'See the form. Source: https://example.org/form-2 (checked 2026-10-09).';
+    expect(stripSourceSentences(text, ['https://example.org/form'])).toBe(text);
+  });
+});
+
+describe('showsRecordCard', () => {
+  test('shows the card on every answer that is not a refusal', () => {
+    expect(showsRecordCard('search', undefined, ['off-001'])).toBe(true);
+    expect(showsRecordCard('system', undefined, [])).toBe(true);
+  });
+
+  test('shows the card on a refusal only when it still shows a record', () => {
+    expect(showsRecordCard('refusal', 'no_commentary', ['off-006'])).toBe(true);
+    expect(showsRecordCard('refusal', 'needs_verification', ['hol-001'])).toBe(true);
+    expect(showsRecordCard('refusal', 'no_commentary', [])).toBe(false);
+    expect(showsRecordCard('refusal', 'low_confidence', ['plan-1', 'plan-2'])).toBe(false);
+    expect(showsRecordCard('refusal', 'prompt_probe', [])).toBe(false);
+  });
+
+  test('ignores a tool result id, which is not a record', () => {
+    expect(showsRecordCard('refusal', 'ungrounded_answer', ['tool:check_balance'])).toBe(false);
+    expect(showsRecordCard('refusal', 'no_commentary', ['tool:check_balance'])).toBe(false);
   });
 });
 
