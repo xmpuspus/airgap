@@ -38,6 +38,23 @@
       "expectPath": "record",
       "recordId": "hot-005",
       "mustInclude": ["1455"]
+    },
+    {
+      "id": "public-motive-taglish",
+      "query": "Bakit nag-resign si Sec Aguda?",
+      "expectPath": "refusal",
+      "expectRefusal": "no_commentary",
+      "recordId": "off-006",
+      "mustInclude": ["accepted the resignation", "gives no reason"],
+      "mustExclude": ["Discord", "Ombudsman"]
+    },
+    {
+      "id": "public-doubt-after-motive",
+      "before": "Why did the DICT Secretary resign?",
+      "query": "sigurado ka dyan?",
+      "expectPath": "record",
+      "recordId": "off-006",
+      "mustInclude": ["checked the loaded source again", "accepted the resignation"]
     }
   ]
 }

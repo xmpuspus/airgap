@@ -27,8 +27,8 @@ choosing an inference provider or connecting a backend.
 ## Try the public-service Evidence Lab
 
 The [local browser lab](web/lab.html) and CLI share the government mobile answer core.
-They replay 21 authored cases, show exact source excerpts and hashes, and apply a real
-historical holiday amendment. A separate tab exposes all outputs from the six-question,
+They replay 26 authored cases, show exact source excerpts and hashes, and apply a real
+historical holiday amendment. A separate tab exposes all outputs from the seven-question,
 three-repetition host-model comparison. Live browser questions call no model or agency.
 
 ```bash
@@ -45,7 +45,7 @@ The [capture index](demo/public-service/README.md) links all five and their sour
 
 | Feature          | What you can try                                                       | Demo                                            |
 | ---------------- | ---------------------------------------------------------------------- | ----------------------------------------------- |
-| Replay Pack      | Run all 21 authored questions and inspect failures, routes and sources | [GIF](demo/public-service/replay-pack.gif)      |
+| Replay Pack      | Run all 26 authored questions and inspect failures, routes and sources | [GIF](demo/public-service/replay-pack.gif)      |
 | Evidence Lab     | Ask a question, challenge the answer and download its evidence         | [GIF](demo/public-service/evidence-lab.gif)     |
 | Source Workbench | Apply the real 2024 holiday amendment, then roll it back               | [GIF](demo/public-service/source-workbench.gif) |
 | Model Controls   | Compare raw local-model text with the answer the application displays  | [GIF](demo/public-service/model-controls.gif)   |

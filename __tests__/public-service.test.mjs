@@ -263,6 +263,61 @@ test('historical records cannot answer current-service questions', () => {
   assert.equal(assessAnswerability('Ninoy Aquino Day', versions).allowed, false);
 });
 
+test('motive and allegation questions get the dated record and no narrative', () => {
+  const policy = loadPublicPolicy();
+  const session = {};
+  const motive = answerPublicService(
+    'Why did the DICT Secretary resign?',
+    records,
+    session,
+    policy,
+  );
+  assert.equal(motive.answerPath, 'refusal');
+  assert.equal(motive.reason, 'no_commentary');
+  assert.deepEqual(motive.recordIds, ['off-006']);
+  assert.equal(motive.sources.length, 1);
+  assert.match(motive.answer, /^I don't explain reasons/);
+  assert.match(motive.answer, /accepted the resignation/);
+  assert.doesNotMatch(motive.answer, /Discord|Ombudsman/);
+  // The stored query keeps the event words, so a doubt re-reads the same record.
+  const doubt = answerPublicService('sigurado ka dyan?', records, session, policy);
+  assert.equal(doubt.answerPath, 'record');
+  assert.deepEqual(doubt.recordIds, ['off-006']);
+  for (const query of [
+    'Is Aguda corrupt?',
+    'What are the allegations against Secretary Aguda?',
+    'Bakit nag-resign si Sec Aguda?',
+  ]) {
+    const answer = answerPublicService(query, records, {}, policy);
+    assert.equal(answer.reason, 'no_commentary', query);
+    assert.deepEqual(answer.recordIds, ['off-006'], query);
+  }
+  // Without a subject record the refusal carries no record and no source.
+  const unknown = answerPublicService('Why was the mayor fired?', records, {}, policy);
+  assert.equal(unknown.reason, 'no_commentary');
+  assert.deepEqual(unknown.recordIds, []);
+  assert.deepEqual(unknown.sources, []);
+  assert.equal(unknown.answer, policy.refusalTemplates.no_commentary);
+  assert.match(
+    answerPublicService('Is Aguda corrupt?', records).answer,
+    /^I don't explain reasons, motives or allegations/,
+  );
+  // A factual event question and a request for the statement are record answers.
+  const event = answerPublicService('Did the DICT secretary resign?', records);
+  assert.equal(event.answerPath, 'record');
+  assert.deepEqual(event.recordIds, ['off-006']);
+  const statement = answerPublicService(
+    'Give more information on “ghost internet” scheme',
+    records,
+  );
+  assert.equal(statement.answerPath, 'record');
+  assert.deepEqual(statement.recordIds, ['off-009']);
+  assert.match(statement.answer, /names no contractor/);
+  // A reason question about a service is not commentary about an official.
+  const fee = answerPublicService('What is the reason for the passport fee?', records);
+  assert.equal(fee.reason, 'no_supported_record');
+});
+
 test('bare pressure and unreviewed URLs do not replace source facts', () => {
   const session = {};
   answerPublicService('Hotline ng SSS?', records, session);

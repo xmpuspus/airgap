@@ -22,7 +22,12 @@ The bot's name, what it covers, and what it refuses are settings that the busine
 are not hopes written into a prompt. A question outside the scope gets a scope answer, not a
 world-knowledge answer.
 
-Airgap: `brand.botName`, `safety.topicBlocklist`, and a scope record in the knowledge set.
+A question about why an official left office, or about allegations against one, is outside the
+scope of a service bot. The bot shows the dated record it has and adds no reasons. After one
+launch, the assistant explained a Cabinet resignation and listed allegations, with no source.
+
+Airgap: `brand.botName`, `safety.topicBlocklist`, a scope record in the knowledge set, and the
+`no_commentary` route in the shared core with its refusal template.
 
 ## 3. Make a challenge return the same record
 

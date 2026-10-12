@@ -1,7 +1,7 @@
 # Airgap government services example
 
 Kuya B is a sample bot name. No government agency runs this template.
-The current public path answers from six dated records with saved official source text.
+The current public path answers from eight dated records with saved official source text.
 It shares answerability, doubt and freshness checks with the browser and CLI.
 Start with the [public-service guide](../../docs/public-service-showcase.md).
 
@@ -48,7 +48,7 @@ agency integration and does not reproduce the old queued-report demonstration.
 The other seven templates use fictional data. This template copies public facts from official
 Philippine pages: the Presidential Communications Office, the Office of the Vice President, the
 DFA passport FAQ, the NBI, the SSS, the BIR, PSAHelpline, and a DILG regional page. The current
-six-record pack has exact saved source paths and hashes. Other historical template records
+eight-record pack has exact saved source paths and hashes. Other historical template records
 are stored for compatibility and are excluded from these public answers.
 
 On 2026-10-07 the DFA requirements page and the PSA, PhilHealth, LTO, PhilSys, Pag-IBIG, and
@@ -60,8 +60,12 @@ The quick replies and the golden cases replay the launch-week failures of a nati
 assistant in September 2026. The documented prompts were "Who is the current president?" and the
 Filipino challenge "sigurado ka dyan?". Here both prompts return the same dated officials record.
 A question about another country refuses with the jurisdiction limit. Identity comes from
-code; a prompt probe returns a fixed refusal. The cases are in
+code. A prompt probe returns a fixed refusal. The cases are in
 `__tests__/golden/government-services.json`.
+
+Two prompts from 2026-10-12 screenshots complete the set. A question about why the DICT Secretary
+resigned gets a fixed refusal and the dated Palace record, with no reasons. A request for more on
+the "ghost internet" scheme gets the Palace release of 2026-09-25 with its link.
 
 ## Known limits
 

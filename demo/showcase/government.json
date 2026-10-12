@@ -1,8 +1,8 @@
 {
   "id": "showcase-government-comparison",
   "output": "demo/airgap-showcase-government.gif",
-  "title": "Published Kuya A replies, September 2026, next to Kuya B on Gemma 4 E2B",
-  "leftHeading": "Kuya A, eGovPH app, as published",
+  "title": "Kuya A replies, September and October 2026, next to Kuya B on Gemma 4 E2B",
+  "leftHeading": "Kuya A, eGovPH app, as captured",
   "panels": [
     {
       "recording": "showcase-government-replay",
@@ -75,6 +75,42 @@
         {
           "file": "demo/showcase/sources/chatgenie-prompt-leak-post.jpg",
           "crop": [455, 55, 409, 359]
+        }
+      ]
+    },
+    {
+      "takeBeat": 6,
+      "prompt": "Why did the DICT Secretary resign?",
+      "theirs": "The assistant states that the Secretary resigned, names who confirmed it, then lists reasons for the resignation and allegations under investigation. No source, no date.",
+      "evidence": "Screenshot by Xavier Puspus, 2026-10-12, Philippines tab. A PCO release of 2026-10-11 confirms the resignation and gives no reason.",
+      "images": [
+        {
+          "file": "demo/showcase/sources/egovph-2026-10-12-resignation-1.jpg",
+          "crop": [400, 600, 505, 130]
+        },
+        {
+          "file": "demo/showcase/sources/egovph-2026-10-12-resignation-1.jpg",
+          "crop": [135, 745, 760, 397]
+        }
+      ]
+    },
+    {
+      "takeBeat": 7,
+      "prompt": "Give more information on \"ghost internet\" scheme",
+      "theirs": "The assistant explains the alleged scheme in its own words, in three headed sections, and ends with no source.",
+      "evidence": "Screenshots by Xavier Puspus, 2026-10-12. Kuya B shows the Palace release of 2026-09-25 with its link, and nothing more.",
+      "images": [
+        {
+          "file": "demo/showcase/sources/egovph-2026-10-12-ghost-internet-1.jpg",
+          "crop": [195, 600, 710, 130]
+        },
+        {
+          "file": "demo/showcase/sources/egovph-2026-10-12-ghost-internet-1.jpg",
+          "crop": [135, 745, 760, 370]
+        },
+        {
+          "file": "demo/showcase/sources/egovph-2026-10-12-ghost-internet-2.jpg",
+          "crop": [135, 1400, 760, 240]
         }
       ]
     }

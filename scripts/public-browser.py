@@ -692,7 +692,7 @@ def capture(browser, base, pack, source_commit, committed_files):
     descriptions = {
         "replay-pack": (
             "Replay Pack",
-            "Runs 21 authored checks in order, with no model call.",
+            f"Runs {len(pack['cases'])} authored checks in order, with no model call.",
         ),
         "evidence-lab": (
             "Evidence Lab",

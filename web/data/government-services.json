@@ -19,13 +19,13 @@
     "region": "PH"
   },
   "knowledge": {
-    "totalDocs": 37,
+    "totalDocs": 38,
     "categories": {
       "faq": 11,
       "fees": 3,
       "holidays": 4,
       "hotlines": 6,
-      "officials": 8,
+      "officials": 9,
       "requirements": 2,
       "services": 3
     }

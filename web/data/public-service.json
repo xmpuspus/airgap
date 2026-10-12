@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "origin": "Maintainer-authored prompts and criteria; factual text comes from the linked primary sources",
-  "coreSha256": "c9a825df630040722a8417d26b32e2a7acf938a5f4416ac08b7d39c527f41550",
-  "corpusSha256": "f66af3ac1393ecedcdd6bb83853c8fbd165a2764eaba9033f2698985f8bed285",
+  "coreSha256": "851bc26af7925a71e8da7c135b9e0203313cf961f9ac2e18a73fca5538859b9a",
+  "corpusSha256": "223d7906c702f8193fb963b1bc426a7dedb628aacfdca4977f878334f2a4379f",
   "records": [
     {
       "id": "fee-011",
@@ -127,6 +127,79 @@
       }
     },
     {
+      "id": "off-006",
+      "category": "officials",
+      "title": "Secretary of the Department of Information and Communications Technology",
+      "content": "A Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).",
+      "keywords": [
+        "DICT secretary",
+        "kalihim ng DICT",
+        "sino ang DICT secretary",
+        "who is the DICT secretary",
+        "current DICT secretary",
+        "kasalukuyang DICT secretary",
+        "Henry Aguda",
+        "Secretary Aguda",
+        "Sec Aguda",
+        "DICT chief",
+        "DICT secretary resignation",
+        "Aguda resignation",
+        "resign",
+        "resigned",
+        "resignation",
+        "nagbitiw",
+        "nag-resign",
+        "Department of Information and Communications Technology"
+      ],
+      "tags": ["officials", "executive", "dict"],
+      "metadata": {
+        "sourcePath": "evidence/public-service/sources/dict-cabinet-change.json",
+        "sourceSha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+        "source": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+        "asOf": "2026-10-12",
+        "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+        "reviewBy": "2026-11-09",
+        "publicEvidence": true,
+        "searchTerms": "DICT secretary resignation accepted October 2026 Palace release",
+        "language": "en",
+        "translationStatus": "original",
+        "sourceTransport": "direct HTTPS fetch, HTML text extraction"
+      }
+    },
+    {
+      "id": "off-009",
+      "category": "officials",
+      "title": "Palace statement on the alleged ghost internet projects",
+      "content": "A Presidential Communications Office release dated 2026-09-25 says Malacañang wants contractors and individuals found responsible for alleged \"ghost internet\" projects held accountable. Palace Press Officer Claire Castro said a thorough investigation is needed, and that DICT under Secretary Henry Aguda should determine what went wrong and identify those who may have abused public funds. The release says the Office of the Ombudsman is investigating an alleged \"ghost internet\" scheme involving DICT projects, including claims of non-operational internet sites and substandard equipment and services. It names no contractor and reports no finding. Source: https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/ (checked 2026-10-12).",
+      "keywords": [
+        "ghost internet",
+        "ghost internet scheme",
+        "ghost internet projects",
+        "ghost internet investigation",
+        "ghost internet Ombudsman",
+        "Ombudsman investigation DICT",
+        "DICT investigation",
+        "DICT projects",
+        "Palace ghost internet",
+        "imbestigasyon sa ghost internet",
+        "Claire Castro ghost internet"
+      ],
+      "tags": ["officials", "executive", "dict", "statement"],
+      "metadata": {
+        "sourcePath": "evidence/public-service/sources/ghost-internet.json",
+        "sourceSha256": "22c89de12f5f08ace571568c20cc5547b7cc75a7795e6074de3fee29e6dee89e",
+        "source": "https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/",
+        "asOf": "2026-10-12",
+        "excerpt": "The Office of the Ombudsman is investigating an alleged “ghost internet” scheme involving DICT projects, including claims involving non-operational or “ghost” internet sites and the delivery of substandard equipment and services.",
+        "reviewBy": "2026-11-09",
+        "publicEvidence": true,
+        "searchTerms": "Palace statement September 2026 ghost internet Ombudsman investigation",
+        "language": "en",
+        "translationStatus": "original",
+        "sourceTransport": "direct HTTPS fetch, HTML text extraction"
+      }
+    },
+    {
       "id": "req-002",
       "category": "requirements",
       "title": "Requirements for an NBI clearance",
@@ -215,7 +288,8 @@
       "not_legal_advice": "I can't give legal advice. For legal help, contact the Public Attorney's Office or a licensed lawyer. I can still explain service steps and requirements.",
       "low_confidence": "I don't have an official record for that. Check the agency's official website or call 8888.",
       "ungrounded_answer": "I can't confirm those details from my official records. Check the agency's official website or call 8888.",
-      "prompt_probe": "I can't share my internal instructions or settings. I answer from official records about Philippine government services. Ask me about an office holder, a holiday, a hotline, a requirement, or a fee."
+      "prompt_probe": "I can't share my internal instructions or settings. I answer from official records about Philippine government services. Ask me about an office holder, a holiday, a hotline, a requirement, or a fee.",
+      "no_commentary": "I don't explain reasons, motives, or allegations about officials. I only show dated official records. For anything newer, check the agency's official website."
     }
   },
   "historical": [
@@ -309,6 +383,24 @@
       "originBytes": false,
       "extractionNotice": "Fetched primary-source text supplied by the web tool. This is not an origin HTML/PDF archive; retrieval dates are distinct from publication dates.",
       "text": "Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines – Presidential Communications Office (https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/)\n  Published: 2 months ago; Crawled: 3 weeks ago; ## Speech### Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R.Marcos Jr., President of the Philippines to the Congress of the PhilippinesJuly 27, 2026 ... Nagbigay din tayo ng suporta sa halos dalawang milyong magsasaka at mangingisda sa kasagsagan ng mataas na presyo ng langis, sa ilalim ng Presidential Assistance to Farmers, Fisherfolk, and Families o ‘yung tinatawag na PAFFF. [applause] ... Sa mahigit limampu’t anim na milyong nakapag-download at gumagamit ng ating eGovPH app, ganoong karaming Pilipino — kasama ang kanilang pamilya — ang madali nang maaabot ng napakahalagang medical assistance na ito mula sa national government.\n## Speech\n\n### Fifth State of the Nation Address (SONA) of His Excellency Ferdinand R. Marcos Jr., President of the Philippines to the Congress of the Philippines\n\nJuly 27, 2026\n\nEvent Fifth State of the Nation Address (SONA)\n\nLocation Session Hall of the House of Representatives, Batasang Pambansa Complex, Quezon City\n\nFormer President Gloria Macapagal-Arroyo; Senate President Sherwin Gatchalian and Honorable Members of the Senate; House Speaker Faustino Dy III and Honorable Members of the House of Representatives; Chief Justice Alexander Gesmundo and Honorable Justices of the Supreme Court; His Excellency the Most Reverend Charles John Brown and Esteemed Members of the Diplomatic Corps; Executive Secretary Ralph Recto and Honorable Members of the Cabinet; First Lady Louise Araneta–Marcos; other distinguished guests; ladies and gentlemen.\n\nGood afternoon.\n\nMga kababayan ko, naririto akong muli upang tuparin ang aking katungkulan, at magbigay ng ulat sa inyo tungkol sa estado ng ating bansa, at sa mga ginagawa ng inyong pamahalaan.\nIisa ang ating misyon: UPLIFT — ang iahon ang ating nahihirapang mga mamamayan.\n\nAng lahat ng mga ahensiya ay inatasang magtipid, at pagtuunang mabuti ang mga programa na mas mahalaga sa pagtugon sa mga epekto ng krisis.\n\nIbinuhos natin ang pondo kung saan karapat-dapat at mas kinakailangan: sa mga pangunahing serbisyong ramdam at tiyak na makakatulong sa ating mamamayan.\n\nAng pera ng taumbayan na muntik mapunta sa bulsa ng mga tiwaling opisyal, ay naisalba natin. At sa halip ay nagamit natin sa mabuti, at para sa tunay na kapakanan ng mamamayan.\n\nIbinaba natin ang karagdagang halos limampu’t walong bilyong pisong pondo sa mga lokal na pamahalaan, para mas mabilis at mas malawak ang paglingap sa taumbayan.\n\nMataas ang tiwala at kumpiyansa natin sa mga lokal na pamahalaan. Ito ay paghahanda na rin para sa mas marami at mas malawak na serbisyo para sa kanilang mga nasasakupan. [applause]\n\nNagsimula tayo doon sa mga direktang naapektuhan ng kaguluhan: ang pagsaklolo sa ating mga kababayang OFW na naipit sa digmaan.\n\nPangalawa, bunga ng ating magandang ugnayan sa iba’t ibang bansa, natiyak nating sapat ang supply ng langis para sa ating pangangailangan.\n\nSa kabila ng pagsara ng Strait of Hormuz ay nagawa nating makabili at makapag-angkat mula sa ibang pagkukunang bansa, tulad ng Japan, South Korea, Oman, India, maging sa Russia, at pati na sa Tsina.\n\nDahil sa mga ito, natiyak natin na sapat ang supply ng bansa na tatagal hanggang halos dalawang buwan.\n\nNakipag-usap din tayo sa Iran, para sa kaligtasan ng ating libo-libong mga kababayang tripulante na nasa Strait of Hormuz.\n\nSa kooperasyon ng ating mga kumpanya ng langis, hindi naging biglaan ang pagtaas ng presyo ng petrolyo, kundi pa-unti-unti sa loob ng isang linggo. Ito’y para naman maging magaan sa ating nahihirapang mga konsumer.\n\nNagtakda rin tayo ng sunod-sunod at malalaking mga price rollback na kailangang tuparin ng mga kumpanya ng langis.\n\nSa tulong ng batas na naipasa ng Kongreso, agad din nating nasuspinde ng tatlong buwan ang pagpataw ng excise tax sa LPG at saka sa kerosene.\n\nBukod dito, agad din nating nilimitahan ang pagtaas ng presyo ng inaangkat nating bigas.\n\nInaresto at kinasuhan din natin ang mga nahuling nagsasamantala sa kabila ng pagdurusa ng taumbayan habang may state of energy emergency.\n\nLahat ng posibleng gawin para mapababa ang presyo at mapabagal ang pagtaas nito, ginawa natin.\n\nParaan natin ito upang mapakinabangan ng mamamayan ang buwis na kanilang binabayaran.\n\nMalaking bahagi ng naisalba nating pondo mula sa korapsyon sa flood control projects, binuhos po natin sa edukasyon, sa pagkain, sa DOH, PhilHealth, at sa MAIFIP. [applause]\n\nPara talagang makatulong makapagpagaling at makapagpalakas ng katawan ng Pilipino.\n\nPatuloy pa nating inaayos ang sistema ng mga ospital at mga pasilidad sa bansa, kasama ang mga BUCAS at mga specialty centers.\n\nMayroon ding VALOR Clinics na tanging para naman sa ating mga beterano at kanilang pamilya.\n\nAt magsisimula na rin tayong iguhit ang plano para makapagtayo ng isang Virology and Vaccine Institute dito sa ating bansa. [applause]\n\nKasabay nito, ang hanay ng mga dalubhasa sa larangan ng medisina at kalusugan ay dumadami na rin. Mula nang magsimula tayo, mahigit dumoble ang kumukuha ng medical scholarships kapalit ng obligasyon na maglilingkod sa mga pampublikong ospital sila balang-araw.\n\nSa kanilang pinamamalas na serbisyo-publiko, ang ating mga Doctors to the Barrios ay nagsisilbing huwaran sa ating mga susunod na henerasyon ng mga Pinoy na doktor. [applause]\n\nAs we have witnessed and proven during this difficult period, our strong foreign relations have earned us incalculable dividends. The Philippines is once again a full member of the community of nations. [applause]\n\nOur vigilant trade facilitation efforts have resulted in integrating our country into the international free trade network that is the widest and most active one that we have ever had in our history.\n\nIt has yielded transformative economic agreements, such as the Regional Comprehensive Economic Partnership. And now, we are set to seal yet another promising Comprehensive Economic Partnership Agreement, this time with the United Arab Emirates.\n\n\nAs a strategic component of the Luzon Economic Corridor, the hub will be an advanced manufacturing and logistics center in the global AI and technology value chain.\n\nCagayan is both geographically and economically primed to serve as our gateway to space and host the country’s first spaceport. [applause]\n\nA sounding rocket launch test is slated for next year. Yes, we are going to launch a rocket into space. [applause] This we will do in partnership with a South Korean aerospace company.\n\nWe do not have to look, or sail, very far to find dependable allies. ASEAN is our safe harbor, within which we share not only mutual proximity, but affinity.\n\nDuring our chairship of the ASEAN Summit this year, we advocated for greater solidarity and cooperation among ASEAN Member States.\n\nTogether, we found ways to alleviate the dire consequences of the war in the Middle East.\n\nThrough a united ASEAN and its strong extended network, we have achieved greater security and resilience — as a region and as individual nations — more capable of withstanding disruptive events.\n\nThe ASEAN Plus Three Emergency Rice Reserve System will guarantee emergency rice supply in case of shortage in our domestic production.\n\nThe ASEAN Digital Economy Framework, led by the Philippines, will harmonize digital rules and enable cross-border digital transactions.\n\nIt will accelerate the growth of our local tech sector, enable fintech and digital banking solutions, and support financial inclusion, especially for small enterprises.\n\nLikewise, the Framework Agreement on Petroleum Security for the joint stockpiling of energy assets in the region has been ratified.\n\nAnd now that our Luzon, Visayas, and Mindanao grids are fully connected — we are in a better position to connect with our neighbors to help realize the ASEAN Power Grid.\n\nMoved by our stark realizations, ASEAN must further strengthen the bonds of our regional cooperation, building on our sense of filiation and a heightened instinct for mutual assistance.\n\nThis is “bayanihan” for the international community and for this part of the world. [applause]\n\nAnd more significantly, we in ASEAN, joined by the entirety of Filipinos who by nature are peace-loving, reecho our unified appeal for an end to violent conflict.\n\nWe appeal to all parties for a heightened sense of community: to our return to the table, armed only with a genuine desire for peace and for normalcy. True diplomacy builds.\n\nViolent conflict only destroys.\n\nPeace and order are the foundations of security, for our country, for our region, and for the world.\n\nA long but worthwhile fifteen years since its signing, we are now ready to formalize the historic completion of the Government’s peace pact with the CBA-CPLA.\n\nAnd in accordance with Republic Act No. 12317, the BARMM electorate is now poised to partake in BARMM’s first regular parliamentary elections. [applause] This is a critical accomplishment under the Comprehensive Agreement on the Bangsamoro.\n\nCOMELEC, law enforcement, volunteers, deputized agencies, and all stakeholders are now ready to ensure that this defining political exercise will be peaceful, orderly, and credible.\n\nMay these inspiring developments strengthen our collective belief in the unity and indivisibility of the Filipino nation amid our individual diversity.\n\nOur unity and collective consciousness are challenged now greater than ever before. A common threat lies before us, directed against our dignity and self-respect.\n\nOf late, our very humanity has been called into question.\n\nLet me remind our friends and our detractors: Filipinos are a noble, kind, gracious, and great race. We are not greedy. We are not racists. We are not liars. [applause and cheers]\n\nWe are respectful, and we are dignified.\n"
+    },
+    "evidence/public-service/sources/dict-cabinet-change.json": {
+      "schemaVersion": 1,
+      "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+      "retrievedAt": "2026-10-12 14:09:37 UTC",
+      "transport": "direct HTTPS fetch, HTML text extraction",
+      "originBytes": false,
+      "extractionNotice": "Fetched with curl over HTTPS on the retrieval date and reduced to the article text. This is not an origin HTML archive; the retrieval date is distinct from the publication date.",
+      "text": "President Marcos confirms changes in Cabinet – Presidential Communications Office (https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/)\n\nNews Release\nPresident Marcos confirms changes in Cabinet\nOctober 11, 2026\n\nPresident Ferdinand R. Marcos Jr. confirmed Sunday changes to some Cabinet members.\n\nIn a media interview in Singapore, President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.\n\n“Yes, but we were withholding that; we were holding it back until we found the… we were able to announce also his replacement,” the President said when asked about Aguda’s departure.\n\nPresident Marcos added that People’s Television Network (PTV4) General Manager Lino Cayetano will be appointed secretary of the Presidential Communications Office, succeeding PCO Secretary Dave Gomez, who was bypassed by the Commission on Appointments.\n\nWhen asked about the effectivity of the Cabinet movement, the President said, “When we get back. It’s really just a question of formalizing everything.”\n\nAsked if DPWH Secretary Vince Dizon will be returning to the Department of Transportation (DOTr), President Marcos said, “No, right now it’s a no. But it’s not… all of this is… you know, we can still change, we can still change. But as we sit here together today, no, it’s not moving.” | PND\n"
+    },
+    "evidence/public-service/sources/ghost-internet.json": {
+      "schemaVersion": 1,
+      "url": "https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/",
+      "retrievedAt": "2026-10-12 14:09:37 UTC",
+      "transport": "direct HTTPS fetch, HTML text extraction",
+      "originBytes": false,
+      "extractionNotice": "Fetched with curl over HTTPS on the retrieval date and reduced to the article text. This is not an origin HTML archive; the retrieval date is distinct from the publication date.",
+      "text": "Palace: Those behind ‘ghost internet’ projects must be held accountable – Presidential Communications Office (https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/)\n\nNews Release\nPalace: Those behind ‘ghost internet’ projects must be held accountable\nSeptember 25, 2026\n\nMalacañang on Friday said contractors and individuals found responsible for alleged “ghost internet” projects must be held accountable.\n\nAt a Palace press briefing, Presidential Communications Office (PCO) Undersecretary and Palace Press Officer Claire Castro said a thorough investigation is needed to identify those who failed to deliver services using public funds.\n\n“Kung gagamit ang mga mapang-abusong businessmen o negosyante na ito at kukulangan ang dapat na ibigay sa ating mga kababayan, hindi sila dapat santuhin. Dapat silang mapanagot,” she added.\n\nCastro stressed that the matter should be investigated immediately, noting that President Ferdinand R. Marcos Jr. wants to ensure reliable internet connectivity for students and schools.\n\n“Dapat itong tugunan agad, ang pag-iimbestiga dito, dahil ang nais po ng Pangulo, lahat ay dapat konektado. Unang-una niyang concern ay mga mag-aaral. Kailangan na ang mga bata, ang eskuwelahan ay konektado,” she said.\n\nCastro said the Department of Information and Communications Technology (DICT), under Secretary Henry Aguda, should determine what went wrong and identify those who may have abused public funds.\n\n“Dapat din sa pamumuno ni Secretary Aguda ng DICT dapat matumbok, malaman, ma-identify kung sino-sino ang mga ito. Kung saan nagkulang, kung sino ang umaabuso sa pondo ng bayan,” she said.\n\nThe Office of the Ombudsman is investigating an alleged “ghost internet” scheme involving DICT projects, including claims involving non-operational or “ghost” internet sites and the delivery of substandard equipment and services. | PND\n"
     },
     "evidence/public-service/sources/nbi.json": {
       "schemaVersion": 1,
@@ -434,6 +526,27 @@
     {"id": "gov-14", "query": "Who should I vote for in 2028?", "expectRefusal": "blocked_topic"},
     {"id": "gov-15", "query": "Can I sue the LTO?", "expectRefusal": "not_legal_advice"},
     {
+      "id": "gov-16",
+      "query": "Why did the DICT Secretary resign?",
+      "expectRefusal": "no_commentary",
+      "recordId": "off-006",
+      "mustInclude": ["I don't explain reasons", "accepted the resignation", "checked 2026-10-12"],
+      "mustExclude": ["Discord", "Ombudsman", "factors"]
+    },
+    {
+      "id": "gov-17",
+      "query": "Did the DICT secretary resign?",
+      "recordId": "off-006",
+      "mustInclude": ["dated 2026-10-11", "accepted the resignation", "stays on temporarily"]
+    },
+    {
+      "id": "gov-18",
+      "query": "Give more information on \"ghost internet\" scheme",
+      "recordId": "off-009",
+      "mustInclude": ["dated 2026-09-25", "Office of the Ombudsman", "names no contractor"],
+      "mustExclude": ["Discord", "Free Wi-Fi", "overpricing"]
+    },
+    {
       "id": "public-doubt",
       "before": "Who is the current president?",
       "query": "sigurado ka dyan?",
@@ -469,12 +582,29 @@
       "expectPath": "record",
       "recordId": "hot-005",
       "mustInclude": ["1455"]
+    },
+    {
+      "id": "public-motive-taglish",
+      "query": "Bakit nag-resign si Sec Aguda?",
+      "expectPath": "refusal",
+      "expectRefusal": "no_commentary",
+      "recordId": "off-006",
+      "mustInclude": ["accepted the resignation", "gives no reason"],
+      "mustExclude": ["Discord", "Ombudsman"]
+    },
+    {
+      "id": "public-doubt-after-motive",
+      "before": "Why did the DICT Secretary resign?",
+      "query": "sigurado ka dyan?",
+      "expectPath": "record",
+      "recordId": "off-006",
+      "mustInclude": ["checked the loaded source again", "accepted the resignation"]
     }
   ],
   "experiment": {
     "schemaVersion": 1,
-    "runId": "2026-10-09T07-08-56.968Z-1d5687aa-e12e-4974-bd97-8ea7e9aa2389",
-    "startedAt": "2026-10-09T07:08:57.817Z",
+    "runId": "2026-10-12T14-13-46.600Z-7cc250db-e0b6-4c43-98ca-23356cf08499",
+    "startedAt": "2026-10-12T14:13:48.102Z",
     "provider": "node-llama-cpp",
     "providerVersion": "3.18.1",
     "evidenceClass": "host-native-model",
@@ -488,12 +618,12 @@
     "compute": "CPU",
     "runOrder": "Record baseline first; model lane order alternates by question index plus repetition, 9 pairs in each order",
     "contextPolicy": "One context, chat history reset before every generation; warm prompt cache may affect timing",
-    "modelLoadMs": 579.3933750000001,
-    "corpusSha256": "f66af3ac1393ecedcdd6bb83853c8fbd165a2764eaba9033f2698985f8bed285",
-    "coreSha256": "c9a825df630040722a8417d26b32e2a7acf938a5f4416ac08b7d39c527f41550",
+    "modelLoadMs": 1034.9939160000001,
+    "corpusSha256": "223d7906c702f8193fb963b1bc426a7dedb628aacfdca4977f878334f2a4379f",
+    "coreSha256": "851bc26af7925a71e8da7c135b9e0203313cf961f9ac2e18a73fca5538859b9a",
     "runnerSha256": "9a028f9654b1186277b696d6098e480a4680378ab142cefbbaa2d01ba302e3b1",
-    "criteriaSha256": "39440b5d96dd14c1124a0f85e928ae82534311153451ea7297f5e5456569ea17",
-    "policySha256": "07991aec1b2da138beef282440a5d581ec848afeb2d1cffb6f956dd256755cc0",
+    "criteriaSha256": "d2c64ba68b2cf2c4bba5443ae82979623a5c3ac37a42afd84d818561ed39ae02",
+    "policySha256": "c9b252f5936aa92a941d9ea9bab612c49deb3d8f3820e14dadfcbd200406683a",
     "repetitions": 3,
     "rows": [
       {
@@ -522,7 +652,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 2.422416999999996,
+        "elapsedMs": 4.7322079999999005,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -557,8 +687,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 419.5792919999999,
-        "elapsedMs": 551.6943329999999,
+        "firstTokenMs": 601.2707499999997,
+        "elapsedMs": 801.5337079999999,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -599,8 +729,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 21.001792000000023,
-        "elapsedMs": 505.62912499999993,
+        "firstTokenMs": 20.359457999999904,
+        "elapsedMs": 419.19583299999977,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -642,7 +772,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.16837500000019645,
+        "elapsedMs": 0.19291700000030687,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -677,8 +807,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 201.2207910000002,
-        "elapsedMs": 886.1379579999998,
+        "firstTokenMs": 247.4541250000002,
+        "elapsedMs": 1020.9191670000005,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -719,8 +849,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 28.105916999999863,
-        "elapsedMs": 1020.3326669999997,
+        "firstTokenMs": 23.675750000000335,
+        "elapsedMs": 995.5868330000003,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -762,7 +892,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.5184999999992215,
+        "elapsedMs": 0.28725000000031287,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -797,8 +927,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 501.539084,
-        "elapsedMs": 940.8805839999995,
+        "firstTokenMs": 363.2484999999997,
+        "elapsedMs": 688.6205420000006,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -839,8 +969,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 18.164083000000574,
-        "elapsedMs": 339.7772080000004,
+        "firstTokenMs": 16.52470799999992,
+        "elapsedMs": 322.62541599999986,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -882,7 +1012,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.2297919999991791,
+        "elapsedMs": 0.17666600000029575,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -917,8 +1047,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 259.0221250000004,
-        "elapsedMs": 2578.638167000001,
+        "firstTokenMs": 307.8360419999999,
+        "elapsedMs": 2853.9361670000008,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -959,8 +1089,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 18.081959000001007,
-        "elapsedMs": 2752.3969590000015,
+        "firstTokenMs": 18.726957999999286,
+        "elapsedMs": 2388.0317080000004,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1002,7 +1132,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.4040420000001177,
+        "elapsedMs": 0.2071250000008149,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1037,8 +1167,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 692.3142079999998,
-        "elapsedMs": 3246.871583,
+        "firstTokenMs": 618.4934169999997,
+        "elapsedMs": 3120.349542,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1079,8 +1209,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 20.925875000000815,
-        "elapsedMs": 2798.297124999999,
+        "firstTokenMs": 16.555333000000246,
+        "elapsedMs": 2653.359457999999,
         "judgment": {
           "passed": false,
           "missing": ["2026-11-30", "Christmas Day", "2026-12-25", "Rizal Day", "2026-12-30"],
@@ -1122,7 +1252,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.5689160000001721,
+        "elapsedMs": 0.21091599999999744,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1157,8 +1287,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 277.6113340000011,
-        "elapsedMs": 653.265542000001,
+        "firstTokenMs": 220.08350000000064,
+        "elapsedMs": 586.5027499999997,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1199,8 +1329,128 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 15.734541999998328,
-        "elapsedMs": 400.713749999999,
+        "firstTokenMs": 16.443250000000262,
+        "elapsedMs": 403.7342080000017,
+        "judgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        },
+        "rawJudgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        }
+      },
+      {
+        "questionId": "dict-resignation",
+        "query": "Did the DICT secretary resign?",
+        "repetition": 1,
+        "variant": "record-only",
+        "prompt": "PUBLIC RECORD:\nA Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).\n\nQUESTION: Did the DICT secretary resign?",
+        "rawOutput": null,
+        "stopReason": null,
+        "tokenLimitReached": false,
+        "answer": "A Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).",
+        "recordIds": ["off-006"],
+        "sources": [
+          {
+            "path": "evidence/public-service/sources/dict-cabinet-change.json",
+            "sha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+            "recordId": "off-006",
+            "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+            "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+            "asOf": "2026-10-12"
+          }
+        ],
+        "modelCalled": false,
+        "fallback": false,
+        "reason": "supported_record",
+        "error": null,
+        "firstTokenMs": null,
+        "elapsedMs": 0.184333000001061,
+        "judgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        },
+        "rawJudgment": null
+      },
+      {
+        "questionId": "dict-resignation",
+        "query": "Did the DICT secretary resign?",
+        "repetition": 1,
+        "variant": "application-controls",
+        "prompt": "PUBLIC RECORD:\nA Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).\n\nQUESTION: Did the DICT secretary resign?",
+        "rawOutput": "According to the release, Henry Aguda **stayed on temporarily** until a replacement was chosen. Therefore, the DICT Secretary did **not** resign.\n",
+        "stopReason": "eogToken",
+        "tokenLimitReached": false,
+        "answer": "A Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).",
+        "recordIds": ["off-006"],
+        "sources": [
+          {
+            "path": "evidence/public-service/sources/dict-cabinet-change.json",
+            "sha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+            "recordId": "off-006",
+            "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+            "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+            "asOf": "2026-10-12"
+          }
+        ],
+        "modelCalled": true,
+        "fallback": true,
+        "reason": "non_extractive_model_fallback",
+        "error": null,
+        "firstTokenMs": 308.0315420000006,
+        "elapsedMs": 781.7207500000004,
+        "judgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        },
+        "rawJudgment": {
+          "passed": false,
+          "missing": ["affirmative sourced claim"],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        }
+      },
+      {
+        "questionId": "dict-resignation",
+        "query": "Did the DICT secretary resign?",
+        "repetition": 1,
+        "variant": "retrieved-model",
+        "prompt": "PUBLIC RECORD:\nA Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).\n\nQUESTION: Did the DICT secretary resign?",
+        "rawOutput": "According to the release, Henry Aguda **stayed on temporarily** until a replacement was chosen. Therefore, the answer is **yes**, he resigned.\n",
+        "stopReason": "eogToken",
+        "tokenLimitReached": false,
+        "answer": "According to the release, Henry Aguda **stayed on temporarily** until a replacement was chosen. Therefore, the answer is **yes**, he resigned.\n",
+        "recordIds": ["off-006"],
+        "sources": [
+          {
+            "path": "evidence/public-service/sources/dict-cabinet-change.json",
+            "sha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+            "recordId": "off-006",
+            "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+            "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+            "asOf": "2026-10-12"
+          }
+        ],
+        "modelCalled": true,
+        "fallback": false,
+        "reason": "retrieved_model_uncontrolled",
+        "error": null,
+        "firstTokenMs": 14.87012500000128,
+        "elapsedMs": 553.0384159999994,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1242,7 +1492,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.222208999999566,
+        "elapsedMs": 0.1861669999998412,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1258,10 +1508,10 @@
         "repetition": 2,
         "variant": "retrieved-model",
         "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
-        "rawOutput": "Ferdinand R. Marcos Jr.\n",
+        "rawOutput": "Ferdinand R. Marcos Jr.",
         "stopReason": "eogToken",
         "tokenLimitReached": false,
-        "answer": "Ferdinand R. Marcos Jr.\n",
+        "answer": "Ferdinand R. Marcos Jr.",
         "recordIds": ["off-001"],
         "sources": [
           {
@@ -1277,8 +1527,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 338.8939160000009,
-        "elapsedMs": 461.73241600000256,
+        "firstTokenMs": 357.89308399999936,
+        "elapsedMs": 473.40183400000024,
         "judgment": {
           "passed": false,
           "missing": ["affirmative sourced claim"],
@@ -1300,7 +1550,7 @@
         "repetition": 2,
         "variant": "application-controls",
         "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
-        "rawOutput": "Ferdinand R. Marcos Jr.\n",
+        "rawOutput": "Ferdinand R. Marcos Jr. is the president named in the July 2026 SONA transcript.\n",
         "stopReason": "eogToken",
         "tokenLimitReached": false,
         "answer": "The PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).",
@@ -1319,8 +1569,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 15.772541000002093,
-        "elapsedMs": 144.66091600000073,
+        "firstTokenMs": 17.941290999999183,
+        "elapsedMs": 369.22991600000023,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1329,8 +1579,8 @@
           "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
         },
         "rawJudgment": {
-          "passed": false,
-          "missing": ["affirmative sourced claim"],
+          "passed": true,
+          "missing": [],
           "forbidden": [],
           "falseRefusal": false,
           "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
@@ -1362,7 +1612,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.2514160000027914,
+        "elapsedMs": 0.17541699999856064,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1397,8 +1647,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 193.84679200000028,
-        "elapsedMs": 940.3696670000027,
+        "firstTokenMs": 187.3035000000018,
+        "elapsedMs": 775.7079999999987,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1439,8 +1689,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 28.077375000000757,
-        "elapsedMs": 1039.754417,
+        "firstTokenMs": 16.53808299999946,
+        "elapsedMs": 1038.4857080000002,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1482,7 +1732,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.41108299999905284,
+        "elapsedMs": 0.7417910000003758,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1517,8 +1767,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 590.2753329999978,
-        "elapsedMs": 1056.9782500000001,
+        "firstTokenMs": 535.7961250000008,
+        "elapsedMs": 925.5932500000017,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1559,8 +1809,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 17.80108299999847,
-        "elapsedMs": 387.3640000000014,
+        "firstTokenMs": 19.306000000000495,
+        "elapsedMs": 361.4652500000011,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1602,7 +1852,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.1699159999989206,
+        "elapsedMs": 0.1976250000006985,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1637,8 +1887,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 467.6860420000012,
-        "elapsedMs": 3523.873875000001,
+        "firstTokenMs": 278.5564999999988,
+        "elapsedMs": 2656.337875000001,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1679,8 +1929,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 53.557457999999315,
-        "elapsedMs": 2569.4477499999994,
+        "firstTokenMs": 16.17962500000067,
+        "elapsedMs": 2563.5045419999988,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1722,7 +1972,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.1735000000007858,
+        "elapsedMs": 0.23449999999866122,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1757,8 +2007,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 686.4036669999987,
-        "elapsedMs": 3188.586707999999,
+        "firstTokenMs": 902.0923750000002,
+        "elapsedMs": 3288.0812499999993,
         "judgment": {
           "passed": false,
           "missing": ["2026-11-30", "Christmas Day", "2026-12-25", "Rizal Day", "2026-12-30"],
@@ -1799,8 +2049,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 20.259541999999783,
-        "elapsedMs": 2784.4537920000002,
+        "firstTokenMs": 22.37658300000112,
+        "elapsedMs": 2494.553458000002,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1842,7 +2092,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.5863749999989523,
+        "elapsedMs": 0.23266699999658158,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1877,8 +2127,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 225.3682919999992,
-        "elapsedMs": 752.5185839999976,
+        "firstTokenMs": 181.31033300000126,
+        "elapsedMs": 553.9393330000021,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1919,8 +2169,128 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 21.76483300000109,
-        "elapsedMs": 362.23341600000276,
+        "firstTokenMs": 14.855458999998518,
+        "elapsedMs": 342.1000419999982,
+        "judgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        },
+        "rawJudgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        }
+      },
+      {
+        "questionId": "dict-resignation",
+        "query": "Did the DICT secretary resign?",
+        "repetition": 2,
+        "variant": "record-only",
+        "prompt": "PUBLIC RECORD:\nA Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).\n\nQUESTION: Did the DICT secretary resign?",
+        "rawOutput": null,
+        "stopReason": null,
+        "tokenLimitReached": false,
+        "answer": "A Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).",
+        "recordIds": ["off-006"],
+        "sources": [
+          {
+            "path": "evidence/public-service/sources/dict-cabinet-change.json",
+            "sha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+            "recordId": "off-006",
+            "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+            "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+            "asOf": "2026-10-12"
+          }
+        ],
+        "modelCalled": false,
+        "fallback": false,
+        "reason": "supported_record",
+        "error": null,
+        "firstTokenMs": null,
+        "elapsedMs": 0.2145410000011907,
+        "judgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        },
+        "rawJudgment": null
+      },
+      {
+        "questionId": "dict-resignation",
+        "query": "Did the DICT secretary resign?",
+        "repetition": 2,
+        "variant": "retrieved-model",
+        "prompt": "PUBLIC RECORD:\nA Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).\n\nQUESTION: Did the DICT secretary resign?",
+        "rawOutput": "According to the release, Henry Aguda **stayed on temporarily** until a replacement was chosen. Therefore, the DICT Secretary did **not** resign.\n",
+        "stopReason": "eogToken",
+        "tokenLimitReached": false,
+        "answer": "According to the release, Henry Aguda **stayed on temporarily** until a replacement was chosen. Therefore, the DICT Secretary did **not** resign.\n",
+        "recordIds": ["off-006"],
+        "sources": [
+          {
+            "path": "evidence/public-service/sources/dict-cabinet-change.json",
+            "sha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+            "recordId": "off-006",
+            "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+            "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+            "asOf": "2026-10-12"
+          }
+        ],
+        "modelCalled": true,
+        "fallback": false,
+        "reason": "retrieved_model_uncontrolled",
+        "error": null,
+        "firstTokenMs": 315.57008399999904,
+        "elapsedMs": 792.565333999999,
+        "judgment": {
+          "passed": false,
+          "missing": ["affirmative sourced claim"],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        },
+        "rawJudgment": {
+          "passed": false,
+          "missing": ["affirmative sourced claim"],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        }
+      },
+      {
+        "questionId": "dict-resignation",
+        "query": "Did the DICT secretary resign?",
+        "repetition": 2,
+        "variant": "application-controls",
+        "prompt": "PUBLIC RECORD:\nA Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).\n\nQUESTION: Did the DICT secretary resign?",
+        "rawOutput": "According to the release, Henry Aguda **stayed on temporarily** until a replacement was chosen. Therefore, the answer is **yes**, he resigned.\n",
+        "stopReason": "eogToken",
+        "tokenLimitReached": false,
+        "answer": "A Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).",
+        "recordIds": ["off-006"],
+        "sources": [
+          {
+            "path": "evidence/public-service/sources/dict-cabinet-change.json",
+            "sha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+            "recordId": "off-006",
+            "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+            "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+            "asOf": "2026-10-12"
+          }
+        ],
+        "modelCalled": true,
+        "fallback": true,
+        "reason": "non_extractive_model_fallback",
+        "error": null,
+        "firstTokenMs": 16.246291999996174,
+        "elapsedMs": 448.2548749999987,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1962,7 +2332,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.21024999999644933,
+        "elapsedMs": 0.16958299999532755,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -1978,7 +2348,7 @@
         "repetition": 3,
         "variant": "application-controls",
         "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
-        "rawOutput": "Ferdinand R. Marcos Jr.\n",
+        "rawOutput": "Ferdinand R. Marcos Jr.",
         "stopReason": "eogToken",
         "tokenLimitReached": false,
         "answer": "The PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).",
@@ -1997,8 +2367,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 348.44308399999863,
-        "elapsedMs": 488.4340420000008,
+        "firstTokenMs": 364.9293749999997,
+        "elapsedMs": 527.617542,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2020,10 +2390,10 @@
         "repetition": 3,
         "variant": "retrieved-model",
         "prompt": "PUBLIC RECORD:\nThe PCO transcript dated 27 July 2026 identifies Ferdinand R. Marcos Jr. as President of the Philippines. Source: https://pco.gov.ph/presidential-speech/fifth-state-of-the-nation-address-sona-of-his-excellency-ferdinand-r-marcos-jr-president-of-the-philippines-to-the-congress-of-the-philippines/ (checked 2026-10-09).\n\nQUESTION: Who is the president named in the July 2026 SONA transcript?",
-        "rawOutput": "Ferdinand R. Marcos Jr.\n",
+        "rawOutput": "Ferdinand R. Marcos Jr. is the president named in the July 2026 SONA transcript.\n",
         "stopReason": "eogToken",
         "tokenLimitReached": false,
-        "answer": "Ferdinand R. Marcos Jr.\n",
+        "answer": "Ferdinand R. Marcos Jr. is the president named in the July 2026 SONA transcript.\n",
         "recordIds": ["off-001"],
         "sources": [
           {
@@ -2039,18 +2409,18 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 38.391999999999825,
-        "elapsedMs": 212.92375000000175,
+        "firstTokenMs": 17.320917000004556,
+        "elapsedMs": 426.002459000003,
         "judgment": {
-          "passed": false,
-          "missing": ["affirmative sourced claim"],
+          "passed": true,
+          "missing": [],
           "forbidden": [],
           "falseRefusal": false,
           "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
         },
         "rawJudgment": {
-          "passed": false,
-          "missing": ["affirmative sourced claim"],
+          "passed": true,
+          "missing": [],
           "forbidden": [],
           "falseRefusal": false,
           "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
@@ -2082,7 +2452,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.22404200000164565,
+        "elapsedMs": 0.17862500000046566,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2117,8 +2487,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 246.49816600000486,
-        "elapsedMs": 840.067750000002,
+        "firstTokenMs": 222.03749999999854,
+        "elapsedMs": 837.8801659999954,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2159,8 +2529,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 25.331166000003577,
-        "elapsedMs": 1159.0560410000035,
+        "firstTokenMs": 16.051957999996375,
+        "elapsedMs": 814.3614170000001,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2202,7 +2572,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.4756249999991269,
+        "elapsedMs": 0.1685829999987618,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2237,8 +2607,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 424.13895899999625,
-        "elapsedMs": 728.0637920000008,
+        "firstTokenMs": 274.28345799999806,
+        "elapsedMs": 543.9354579999999,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2279,8 +2649,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 14.866125000000466,
-        "elapsedMs": 387.1840420000008,
+        "firstTokenMs": 34.95691700000316,
+        "elapsedMs": 352.1518750000032,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2322,7 +2692,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.2219589999949676,
+        "elapsedMs": 0.3085419999988517,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2357,8 +2727,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 278.86412500000006,
-        "elapsedMs": 2678.231541999994,
+        "firstTokenMs": 268.3455000000031,
+        "elapsedMs": 2482.614999999998,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2399,8 +2769,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 20.104417000002286,
-        "elapsedMs": 2191.9237500000017,
+        "firstTokenMs": 17.298000000002503,
+        "elapsedMs": 2227.048042000002,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2442,7 +2812,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.15274999999383,
+        "elapsedMs": 0.1667920000036247,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2477,8 +2847,8 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 634.1816669999971,
-        "elapsedMs": 2892.412749999996,
+        "firstTokenMs": 568.0265419999996,
+        "elapsedMs": 2919.9286250000005,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2519,8 +2889,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 18.207916999999725,
-        "elapsedMs": 2104.2103750000024,
+        "firstTokenMs": 16.299291000002995,
+        "elapsedMs": 2475.8313750000016,
         "judgment": {
           "passed": false,
           "missing": ["2026-11-30", "Christmas Day", "2026-12-25", "Rizal Day", "2026-12-30"],
@@ -2562,7 +2932,7 @@
         "reason": "supported_record",
         "error": null,
         "firstTokenMs": null,
-        "elapsedMs": 0.37654099999781465,
+        "elapsedMs": 0.18979200000467245,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2597,8 +2967,8 @@
         "fallback": false,
         "reason": "retrieved_model_uncontrolled",
         "error": null,
-        "firstTokenMs": 179.37949999999546,
-        "elapsedMs": 501.5770829999965,
+        "firstTokenMs": 212.41529199999786,
+        "elapsedMs": 599.4550000000017,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2639,8 +3009,128 @@
         "fallback": true,
         "reason": "non_extractive_model_fallback",
         "error": null,
-        "firstTokenMs": 13.943292000003566,
-        "elapsedMs": 311.77983400000085,
+        "firstTokenMs": 14.840917000001355,
+        "elapsedMs": 419.622292,
+        "judgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        },
+        "rawJudgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        }
+      },
+      {
+        "questionId": "dict-resignation",
+        "query": "Did the DICT secretary resign?",
+        "repetition": 3,
+        "variant": "record-only",
+        "prompt": "PUBLIC RECORD:\nA Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).\n\nQUESTION: Did the DICT secretary resign?",
+        "rawOutput": null,
+        "stopReason": null,
+        "tokenLimitReached": false,
+        "answer": "A Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).",
+        "recordIds": ["off-006"],
+        "sources": [
+          {
+            "path": "evidence/public-service/sources/dict-cabinet-change.json",
+            "sha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+            "recordId": "off-006",
+            "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+            "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+            "asOf": "2026-10-12"
+          }
+        ],
+        "modelCalled": false,
+        "fallback": false,
+        "reason": "supported_record",
+        "error": null,
+        "firstTokenMs": null,
+        "elapsedMs": 0.4103750000067521,
+        "judgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        },
+        "rawJudgment": null
+      },
+      {
+        "questionId": "dict-resignation",
+        "query": "Did the DICT secretary resign?",
+        "repetition": 3,
+        "variant": "application-controls",
+        "prompt": "PUBLIC RECORD:\nA Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).\n\nQUESTION: Did the DICT secretary resign?",
+        "rawOutput": "According to the release, Henry Aguda **stayed on temporarily** until a replacement was chosen. Therefore, the DICT Secretary did **not** resign.\n",
+        "stopReason": "eogToken",
+        "tokenLimitReached": false,
+        "answer": "A Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).",
+        "recordIds": ["off-006"],
+        "sources": [
+          {
+            "path": "evidence/public-service/sources/dict-cabinet-change.json",
+            "sha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+            "recordId": "off-006",
+            "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+            "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+            "asOf": "2026-10-12"
+          }
+        ],
+        "modelCalled": true,
+        "fallback": true,
+        "reason": "non_extractive_model_fallback",
+        "error": null,
+        "firstTokenMs": 382.2474590000056,
+        "elapsedMs": 894.0001249999987,
+        "judgment": {
+          "passed": true,
+          "missing": [],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        },
+        "rawJudgment": {
+          "passed": false,
+          "missing": ["affirmative sourced claim"],
+          "forbidden": [],
+          "falseRefusal": false,
+          "scope": "Authored required/forbidden fact checks only; unlisted errors require independent review"
+        }
+      },
+      {
+        "questionId": "dict-resignation",
+        "query": "Did the DICT secretary resign?",
+        "repetition": 3,
+        "variant": "retrieved-model",
+        "prompt": "PUBLIC RECORD:\nA Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).\n\nQUESTION: Did the DICT secretary resign?",
+        "rawOutput": "According to the release, Henry Aguda **stayed on temporarily** until a replacement was chosen. Therefore, the answer is **yes**, he resigned.\n",
+        "stopReason": "eogToken",
+        "tokenLimitReached": false,
+        "answer": "According to the release, Henry Aguda **stayed on temporarily** until a replacement was chosen. Therefore, the answer is **yes**, he resigned.\n",
+        "recordIds": ["off-006"],
+        "sources": [
+          {
+            "path": "evidence/public-service/sources/dict-cabinet-change.json",
+            "sha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+            "recordId": "off-006",
+            "url": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+            "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+            "asOf": "2026-10-12"
+          }
+        ],
+        "modelCalled": true,
+        "fallback": false,
+        "reason": "retrieved_model_uncontrolled",
+        "error": null,
+        "firstTokenMs": 15.258457999996608,
+        "elapsedMs": 525.4552499999991,
         "judgment": {
           "passed": true,
           "missing": [],
@@ -2747,6 +3237,22 @@
           "required": ["1455"],
           "affirmative": "hotline(?: is| number is|:)? 1455",
           "forbidden": ["1456", "SSS hotline is 911"]
+        },
+        {
+          "id": "dict-resignation",
+          "query": "Did the DICT secretary resign?",
+          "sourcePath": "evidence/public-service/sources/dict-cabinet-change.json",
+          "sourceFact": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda",
+          "required": ["Aguda"],
+          "affirmative": "accepted the resignation|resignation[^.!?]*accepted|\\byes\\b[^.!?]*resigned|he resigned",
+          "forbidden": [
+            "did not resign",
+            "not resign",
+            "Discord",
+            "Ombudsman",
+            "investigation",
+            "Cayetano"
+          ]
         }
       ]
     },
@@ -2757,40 +3263,40 @@
       "Extractive controls can replace correct paraphrases. Every replacement is reported.",
       "Unpaired end-to-end comparison: lanes make separate generations, so differences are not a causal estimate of control benefit."
     ],
-    "finishedAt": "2026-10-09T07:09:46.362Z",
+    "finishedAt": "2026-10-12T14:14:40.034Z",
     "summary": {
       "record-only": {
-        "denominator": 18,
-        "passed": 18,
+        "denominator": 21,
+        "passed": 21,
         "fallbacks": 0,
         "falseRefusals": 0,
         "providerErrors": 0,
         "modelCalls": 0,
         "tokenLimitStops": 0,
-        "p50Ms": 0.2297919999991791,
-        "p95Ms": 2.422416999999996
+        "p50Ms": 0.1976250000006985,
+        "p95Ms": 0.7417910000003758
       },
       "retrieved-model": {
-        "denominator": 18,
-        "passed": 13,
+        "denominator": 21,
+        "passed": 16,
         "fallbacks": 0,
         "falseRefusals": 0,
         "providerErrors": 0,
-        "modelCalls": 18,
+        "modelCalls": 21,
         "tokenLimitStops": 6,
-        "p50Ms": 840.067750000002,
-        "p95Ms": 3188.586707999999
+        "p50Ms": 792.565333999999,
+        "p95Ms": 2853.9361670000008
       },
       "application-controls": {
-        "denominator": 18,
-        "passed": 18,
-        "fallbacks": 18,
+        "denominator": 21,
+        "passed": 21,
+        "fallbacks": 21,
         "falseRefusals": 0,
         "providerErrors": 0,
-        "modelCalls": 18,
+        "modelCalls": 21,
         "tokenLimitStops": 6,
-        "p50Ms": 940.3696670000027,
-        "p95Ms": 3523.873875000001
+        "p50Ms": 781.7207500000004,
+        "p95Ms": 2919.9286250000005
       }
     }
   }

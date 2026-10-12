@@ -88,6 +88,22 @@
       "required": ["1455"],
       "affirmative": "hotline(?: is| number is|:)? 1455",
       "forbidden": ["1456", "SSS hotline is 911"]
+    },
+    {
+      "id": "dict-resignation",
+      "query": "Did the DICT secretary resign?",
+      "sourcePath": "evidence/public-service/sources/dict-cabinet-change.json",
+      "sourceFact": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda",
+      "required": ["Aguda"],
+      "affirmative": "accepted the resignation|resignation[^.!?]*accepted|\\byes\\b[^.!?]*resigned|he resigned",
+      "forbidden": [
+        "did not resign",
+        "not resign",
+        "Discord",
+        "Ombudsman",
+        "investigation",
+        "Cayetano"
+      ]
     }
   ]
 }

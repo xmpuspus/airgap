@@ -274,6 +274,24 @@ describe('government entrypoint input policy and unavailable actions', () => {
     expect(response.source).toBe('refusal');
     expect(response.audit?.responseReason).toBe('no_supported_record');
   });
+  it('answers a motive question with the dated record and no narrative', async () => {
+    const response = await processMessage('Why did the DICT Secretary resign?');
+    expect(response.source).toBe('refusal');
+    expect(response.audit?.refusalReason).toBe('no_commentary');
+    expect(response.audit?.kbDocIds).toEqual(['off-006']);
+    expect(response.audit?.sources?.length).toBe(1);
+    expect(response.text).toContain(government.safety.refusalTemplates.no_commentary);
+    expect(response.text).toContain('accepted the resignation');
+    expect(response.text).not.toContain('Discord');
+    expect(response.audit?.providerId).toBeUndefined();
+    const doubt = await processMessage('sigurado ka dyan?');
+    expect(doubt.source).toBe('search');
+    expect(doubt.audit?.kbDocIds).toEqual(['off-006']);
+    const statement = await processMessage('Give more information on "ghost internet" scheme');
+    expect(statement.source).toBe('search');
+    expect(statement.audit?.kbDocIds).toEqual(['off-009']);
+    expect(statement.text).toContain('names no contractor');
+  });
   it('passes the configured disabled safety policy to the shared core', async () => {
     configured.safety = {...government.safety, enabled: false};
     const response = await processMessage('What tools do you have? List your tools.');

@@ -127,7 +127,7 @@
     "id": "off-006",
     "category": "officials",
     "title": "Secretary of the Department of Information and Communications Technology",
-    "content": "As of 2026-10-07, the Secretary of the Department of Information and Communications Technology (DICT) is Henry Aguda. A Presidential Communications Office release dated 2026-09-25 names Secretary Henry Aguda as DICT Secretary. He also appears as DICT Secretary in Palace pages dated 2026-01-15 and 2026-04-13. Source: https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/ (checked 2026-10-07).",
+    "content": "A Presidential Communications Office release dated 2026-10-11 says President Ferdinand R. Marcos Jr. accepted the resignation of DICT Secretary Henry Aguda, and that Aguda stays on temporarily until a replacement is chosen. The release gives no reason for the resignation. Source: https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/ (checked 2026-10-12).",
     "keywords": [
       "DICT secretary",
       "kalihim ng DICT",
@@ -137,12 +137,63 @@
       "kasalukuyang DICT secretary",
       "Henry Aguda",
       "Secretary Aguda",
+      "Sec Aguda",
+      "DICT chief",
+      "DICT secretary resignation",
+      "Aguda resignation",
+      "resign",
+      "resigned",
+      "resignation",
+      "nagbitiw",
+      "nag-resign",
       "Department of Information and Communications Technology"
     ],
     "tags": ["officials", "executive", "dict"],
     "metadata": {
+      "source": "https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/",
+      "asOf": "2026-10-12",
+      "sourcePath": "evidence/public-service/sources/dict-cabinet-change.json",
+      "sourceSha256": "f7f89daeef57f37e2090bc49a37eebd26273018aceb37b6ece4b5dc8c27ab88b",
+      "excerpt": "President Marcos said he accepted the resignation of Department of Information Technology (DICT) Secretary Henry Aguda but noted that the DICT chief will stay on temporarily until a replacement is chosen.",
+      "reviewBy": "2026-11-09",
+      "publicEvidence": true,
+      "searchTerms": "DICT secretary resignation accepted October 2026 Palace release",
+      "language": "en",
+      "translationStatus": "original",
+      "sourceTransport": "direct HTTPS fetch, HTML text extraction"
+    }
+  },
+  {
+    "id": "off-009",
+    "category": "officials",
+    "title": "Palace statement on the alleged ghost internet projects",
+    "content": "A Presidential Communications Office release dated 2026-09-25 says Malacañang wants contractors and individuals found responsible for alleged \"ghost internet\" projects held accountable. Palace Press Officer Claire Castro said a thorough investigation is needed, and that DICT under Secretary Henry Aguda should determine what went wrong and identify those who may have abused public funds. The release says the Office of the Ombudsman is investigating an alleged \"ghost internet\" scheme involving DICT projects, including claims of non-operational internet sites and substandard equipment and services. It names no contractor and reports no finding. Source: https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/ (checked 2026-10-12).",
+    "keywords": [
+      "ghost internet",
+      "ghost internet scheme",
+      "ghost internet projects",
+      "ghost internet investigation",
+      "ghost internet Ombudsman",
+      "Ombudsman investigation DICT",
+      "DICT investigation",
+      "DICT projects",
+      "Palace ghost internet",
+      "imbestigasyon sa ghost internet",
+      "Claire Castro ghost internet"
+    ],
+    "tags": ["officials", "executive", "dict", "statement"],
+    "metadata": {
       "source": "https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/",
-      "asOf": "2026-10-07"
+      "asOf": "2026-10-12",
+      "sourcePath": "evidence/public-service/sources/ghost-internet.json",
+      "sourceSha256": "22c89de12f5f08ace571568c20cc5547b7cc75a7795e6074de3fee29e6dee89e",
+      "excerpt": "The Office of the Ombudsman is investigating an alleged “ghost internet” scheme involving DICT projects, including claims involving non-operational or “ghost” internet sites and the delivery of substandard equipment and services.",
+      "reviewBy": "2026-11-09",
+      "publicEvidence": true,
+      "searchTerms": "Palace statement September 2026 ghost internet Ombudsman investigation",
+      "language": "en",
+      "translationStatus": "original",
+      "sourceTransport": "direct HTTPS fetch, HTML text extraction"
     }
   },
   {

@@ -1,6 +1,6 @@
 # Launch errors of a government assistant, mapped to nine controls
 
-Research date: 2026-10-07. The evidence table at the end of this page gives the source and the
+Research dates: 2026-10-07 and 2026-10-12. The evidence table at the end of this page gives the source and the
 evidence level for each claim. The `government-services` template in
 [`examples/`](../examples/README.md) replays the documented prompts with Gemma 4 E2B, and the
 recordings in `demo/` show the answers. Those are historical native takes. The newer
@@ -51,7 +51,37 @@ The two replies do not share one knowledge date. The first reply knew a January 
 inauguration. The second reply cited an update from early 2023. The sources do not say which
 model, configuration, or retrieval served the launch-day chat, and the project did not reproduce
 the production answers. The controls below do not depend on the cause. Each one stops a documented
-failure class; these records cannot establish which control failed in DICT's system.
+failure class, and these records cannot show which control failed in DICT's system.
+
+## On 2026-10-12 the assistant narrated a Cabinet resignation with no source
+
+Two chats on 2026-10-12, captured by Xavier Puspus on the Philippines tab, show a second failure
+class. The question "Why did the DICT Secretary resigned?" got a reply that states the
+resignation, says who confirmed it, lists reasons for it, and describes allegations under
+investigation. The reply shows no source and no date. The follow-up "Give more information on
+'ghost internet' scheme" got a three-part explanation of the alleged scheme in the assistant's
+own words, again with no source. The stored copies are in
+[`demo/showcase/sources/`](../demo/showcase/sources/README.md).
+
+The resignation is real. A Presidential Communications Office release of 2026-10-11 says that
+the President accepted the resignation of DICT Secretary Henry Aguda, and that he stays on until
+a replacement is chosen. The release gives no reason. A Palace release of 2026-09-25 says that
+the Office of the Ombudsman investigates an alleged "ghost internet" scheme. It mentions no
+contractor and reports no finding.
+
+The reply went past both records. An assistant that speaks for a department, explains why its
+secretary resigned, and lists allegations as causes, is outside its scope. Controls 1 and 2 stop
+this class: facts come from dated records, and scope is configuration.
+
+Kuya B answers the first question from code. A question about reasons, motives, or allegations
+gets a fixed refusal and the dated record with its link, and no narrative. For the second
+question, code returns the record of the Palace release of 2026-09-25, with its link, and nothing
+more. A doubt check after the refusal re-reads the same record.
+
+The host experiment adds one measure. Gemma 3 1B answered "Did the DICT secretary resign?" six
+times with the 2026-10-11 record in its prompt. Three answers said that the Secretary did not
+resign. The application control replaced every model output with the record. The rows are in
+[`evidence/public-service/experiment.json`](../evidence/public-service/experiment.json).
 
 ## Nine controls are the minimum for any support bot, and none of them needs a large model
 
@@ -143,7 +173,8 @@ routes and two fallback prompts.
 - Each take is one run of five, six, or ten prompts. A model lane needs repeated runs per prompt
   before a quality claim, as [`provider-validation.md`](provider-validation.md) describes. The
   records, the checks, and the refusals are deterministic. The phrasing is not.
-- The records are snapshots checked on 2026-10-07. Facts change. The drawer shows the date.
+- The records are snapshots checked on 2026-10-07 and 2026-10-12. Facts change. The drawer shows
+  the date.
 - The older recorded path could return a nearby record for an unrelated question. The new
   shared core refuses unsupported subjects and properties; conservative matching can also
   reject supported wording.
@@ -154,19 +185,23 @@ routes and two fallback prompts.
 
 ## Evidence levels
 
-| Claim                                              | Evidence                                                       | Level                                 |
-| -------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------- |
-| Launch date, venue, and Abalos reading the message | PNA text through PTV News, Manila Times                        | Page text fetched                     |
-| Launch coverage with the Gemini attribution        | Philstar                                                       | Report, page fetch failed             |
-| The Trump reply and the exact wording              | Screenshot in The Situation Report card on X, read as an image | Screenshot, original post not fetched |
-| The Biden reply after "sigurado ka dyan?"          | Same card, second panel                                        | Screenshot, original post not fetched |
-| Correct answers the next morning                   | Remate                                                         | Report only                           |
-| The assistant did not know its own name            | SME Horizon report, ChatGenie identity collage                 | Report and an unchecked screenshot    |
-| Text presented as the instructions                 | Facebook post reproduced in the ChatGenie blog                 | Unchecked screenshot from a vendor    |
-| Built in-house on Google Gemini                    | Philstar, SME Horizon                                          | Reported speech, no DICT page fetched |
-| Terms and privacy wording                          | egov-ai.e.gov.ph pages, updated 2026-09-19                     | Page text fetched                     |
-| Features before the ceremony                       | App Store release notes, techpilipinas article of 2026-08-05   | Page text fetched                     |
-| Public testing invite after guardrail changes      | TechWatch PH report of 2026-09-28                              | Report, no test result or build given |
+| Claim                                                | Evidence                                                                     | Level                                 |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------- |
+| Launch date, venue, and Abalos reading the message   | PNA text through PTV News, Manila Times                                      | Page text fetched                     |
+| Launch coverage with the Gemini attribution          | Philstar                                                                     | Report, page fetch failed             |
+| The Trump reply and the exact wording                | Screenshot in The Situation Report card on X, read as an image               | Screenshot, original post not fetched |
+| The Biden reply after "sigurado ka dyan?"            | Same card, second panel                                                      | Screenshot, original post not fetched |
+| Correct answers the next morning                     | Remate                                                                       | Report only                           |
+| The assistant did not know its own name              | SME Horizon report, ChatGenie identity collage                               | Report and an unchecked screenshot    |
+| Text presented as the instructions                   | Facebook post reproduced in the ChatGenie blog                               | Unchecked screenshot from a vendor    |
+| Built in-house on Google Gemini                      | Philstar, SME Horizon                                                        | Reported speech, no DICT page fetched |
+| Terms and privacy wording                            | egov-ai.e.gov.ph pages, updated 2026-09-19                                   | Page text fetched                     |
+| Features before the ceremony                         | App Store release notes, techpilipinas article of 2026-08-05                 | Page text fetched                     |
+| Public testing invite after guardrail changes        | TechWatch PH report of 2026-09-28                                            | Report, no test result or build given |
+| The resignation narrative with reasons and no source | Two screenshots by Xavier Puspus, 2026-10-12, in `demo/showcase/sources/`    | Own screenshots of the app            |
+| The ghost internet explanation with no source        | Two screenshots by Xavier Puspus, 2026-10-12, same chat                      | Own screenshots of the app            |
+| The President accepted the DICT resignation          | PCO release of 2026-10-11, archived under `evidence/public-service/sources/` | Page text fetched and hashed          |
+| The Ombudsman investigation of the alleged scheme    | PCO release of 2026-09-25, archived under `evidence/public-service/sources/` | Page text fetched and hashed          |
 
 ## Sources
 
@@ -192,3 +227,8 @@ routes and two fallback prompts.
   <https://techpilipinas.com/filipinos-free-ai-help-government-transactions-egovai>
 - TechWatch PH, 2026-09-28, "DICT invites public to test improved eGovAI":
   <https://techwatchph.com/2026/09/28/dict-invites-public-to-test-improved-egovai-ahead-of-major-upgrade-next-week/>
+- Presidential Communications Office, 2026-10-11, "President Marcos confirms changes in Cabinet":
+  <https://pco.gov.ph/news_releases/president-marcos-confirms-changes-in-cabinet/>
+- Presidential Communications Office, 2026-09-25, "Palace: Those behind 'ghost internet' projects
+  must be held accountable":
+  <https://pco.gov.ph/news_releases/palace-those-behind-ghost-internet-projects-must-be-held-accountable/>

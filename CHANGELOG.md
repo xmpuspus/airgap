@@ -53,6 +53,12 @@ minor releases.
 - `--take` in the industry recorder for a second take of one fixture, and `startAt` in a
   comparison spec to begin a beat at the typed prompt.
 - `bench/RESULTS.md`, which the bench renderer rebuilds from `bench/results/`.
+- A `no_commentary` route in the shared public-service core. A question about why an official
+  left office, or about allegations, gets the configured refusal and the dated record with its
+  link, with no narrative. The government template adds two sourced Palace releases. One
+  confirms the DICT resignation on 2026-10-11. The other is the 2026-09-25 statement on the
+  alleged ghost internet projects. The comparison spec gains two beats from 2026-10-12
+  screenshots, and the host experiment gains the resignation question.
 
 ### Changed
 

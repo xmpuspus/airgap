@@ -244,7 +244,11 @@ async function processMessageInner(
         const controlled = controlPublicModelOutput(generated.text, planned, selected);
         reply = controlled.answer;
         if (controlled.fallback) {
-          providerFailure = {providerId, reason: 'ungrounded', message: controlled.reason};
+          providerFailure = {
+            providerId,
+            reason: 'ungrounded',
+            message: 'the model text was not the record, so the record shows',
+          };
         } else {
           source = 'llm';
         }

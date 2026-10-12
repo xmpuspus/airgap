@@ -81,6 +81,27 @@
       "id": "gov-15",
       "query": "Can I sue the LTO?",
       "expectRefusal": "not_legal_advice"
+    },
+    {
+      "id": "gov-16",
+      "query": "Why did the DICT Secretary resign?",
+      "expectRefusal": "no_commentary",
+      "recordId": "off-006",
+      "mustInclude": ["I don't explain reasons", "accepted the resignation", "checked 2026-10-12"],
+      "mustExclude": ["Discord", "Ombudsman", "factors"]
+    },
+    {
+      "id": "gov-17",
+      "query": "Did the DICT secretary resign?",
+      "recordId": "off-006",
+      "mustInclude": ["dated 2026-10-11", "accepted the resignation", "stays on temporarily"]
+    },
+    {
+      "id": "gov-18",
+      "query": "Give more information on \"ghost internet\" scheme",
+      "recordId": "off-009",
+      "mustInclude": ["dated 2026-09-25", "Office of the Ombudsman", "names no contractor"],
+      "mustExclude": ["Discord", "Free Wi-Fi", "overpricing"]
     }
   ]
 }

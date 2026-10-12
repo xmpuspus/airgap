@@ -34,6 +34,7 @@ export type RefusalReason =
   | 'not_financial_advice'
   | 'not_legal_advice'
   | 'prompt_probe'
+  | 'no_commentary'
   | 'state_changing_offline';
 
 export interface SafetyVerdict {
@@ -79,6 +80,8 @@ const DEFAULT_REFUSAL_TEMPLATES: Record<RefusalReason, string> = {
     "I can't give legal advice. For legal matters, please consult a licensed attorney.",
   prompt_probe:
     "I can't share my internal instructions or settings. I answer from {{brandName}}'s approved records. What can I help you with?",
+  no_commentary:
+    "I don't explain reasons, motives or allegations about people. I answer from {{brandName}}'s approved records.",
   state_changing_offline:
     "That action requires an internet connection. I've queued it and will process it when you're back online.",
 };

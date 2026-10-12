@@ -50,6 +50,20 @@ const PROMPT_PROBE_PATTERNS = [
   /\bjailbreak\b/i,
 ];
 
+// A question about why an official left office, or about allegations against
+// one, gets the dated record and no narrative. Event words stay in the query,
+// because a record can carry them as keywords.
+const CONDUCT_PATTERN =
+  /\b(allegations?|alleged(?:ly)?|accus(?:ed|ation|ations)|scandals?|anomal(?:y|ies|ous)|controvers(?:y|ies|ial)|corrupt(?:ion)?|kurakot|guilty|indict(?:ed|ment)|impeach(?:ed|ment))\b/i;
+const DEPARTURE_PATTERN =
+  /\b(resign(?:ed|s|ation|ations)?|nagbitiw|magbibitiw|pagbibitiw|nag-?resign|fired|sacked|ousted|quit|step(?:ped|s)? down|stepping down|tinanggal|sinibak)\b/i;
+const MOTIVE_PATTERN =
+  /\b(why|bakit|reasons?|dahilan|motives?|how come|what (?:led|caused|prompted)|behind)\b/i;
+
+export function isPublicCommentaryQuestion(text: string): boolean {
+  return CONDUCT_PATTERN.test(text) || (MOTIVE_PATTERN.test(text) && DEPARTURE_PATTERN.test(text));
+}
+
 export function checkInputPolicy(query: string, policy: InputPolicy = {}): string | undefined {
   if (policy.enabled === false) return undefined;
   if (PROMPT_PROBE_PATTERNS.some(pattern => pattern.test(query))) return 'prompt_probe';
@@ -71,7 +85,7 @@ export function normalize(text: string): string {
 }
 
 const STOP = new Set(
-  'who what when was is are the a an of for to how do i my me in on this that current ang ng sa mga ano sino paano kasalukuyang ba ka dyan please po about could can you tell give number'.split(
+  'who what when was is are the a an of for to how do i my me in on this that current ang ng sa mga ano sino paano kasalukuyang ba ka dyan please po about could can you tell give number did does has have had were been be still now ngayon more information info explain details regarding against si ni kay nag'.split(
     ' ',
   ),
 );
@@ -336,6 +350,25 @@ export function answerPublicService(
       'deterministic',
       'device_clock',
     );
+  if (isPublicCommentaryQuestion(text)) {
+    const factual = [CONDUCT_PATTERN, MOTIVE_PATTERN].reduce(
+      (value, pattern) => value.replace(new RegExp(pattern.source, 'gi'), ' '),
+      text,
+    );
+    const assessed = assessAnswerability(factual, records);
+    const shown = assessed.allowed ? assessed.records : [];
+    return result(
+      (policy.refusalTemplates?.no_commentary ??
+        "I don't explain reasons, motives or allegations about officials. I show dated official records only.") +
+        (shown.length
+          ? '\n\nThe official record I have:\n\n' + shown.map(r => r.content).join('\n\n')
+          : ''),
+      'refusal',
+      'no_commentary',
+      shown,
+      shown.length ? factual : text,
+    );
+  }
   const doubt = isPublicDoubt(text);
   const correction =
     /https:\/\/\S+/.test(text) && /according|source|ayon|proclamation|correction/i.test(text);
