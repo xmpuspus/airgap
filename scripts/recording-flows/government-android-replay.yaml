@@ -74,7 +74,7 @@ name: Airgap government services replay take, seven captured prompts, Android mo
     visible: '(?s).*Airgap public-service example.*'
     timeout: 60000
 - waitForAnimationToEnd
-- assertVisible: 'Local knowledge'
+- assertVisible: 'App guidance'
 - takeScreenshot: ${SHOT_PREFIX}-identity
 # Beat 5: the prompt probe guardrail.
 - tapOn: 'Support question'
