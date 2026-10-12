@@ -95,11 +95,11 @@ npm run public:build
 
 The runner hashes the model before it loads the file. It uses
 `node-llama-cpp` 3.18.1, CPU execution, a 2,048-token context, a 160-token
-output limit, temperature 0, and seed 42. It runs six sourced questions three
+output limit, temperature 0, and seed 42. It runs seven sourced questions three
 times in three variants. The variants are record-only, retrieved-context model,
 and application-controls model.
 
-This produces 54 rows, including 36 real model calls. The two model variants
+This produces 63 rows, including 42 real model calls. The two model variants
 use the same prompt and corpus. Their order alternates. Each generation resets
 chat history.
 
@@ -129,7 +129,9 @@ directory.
 The [independent review](../evidence/public-service/experiment-review.md) accounts
 for two valid retrieved-model short answers marked wrong and six token-limit stops
 per model lane. The NBI outputs pass the narrow phrase checks despite truncation and
-wording absent from the supplied prompt. All 18 controlled answers fell back to records.
+wording absent from the supplied prompt. That review covers the earlier 54-row run.
+
+In the current 63-row run, all 21 controlled answers fell back to records.
 Its timing table shows the measured
 CPU host and model. This experiment makes no phone or Gemma 4 performance claim.
 The pinned runner cannot load the supplied Gemma 4 architecture.

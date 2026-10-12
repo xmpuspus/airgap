@@ -53,7 +53,7 @@ The [capture index](demo/public-service/README.md) links all five and their sour
 
 ![A real historical holiday change applied and rolled back in the Source Workbench](demo/public-service/source-workbench.gif)
 
-The local model reached its token limit in 12 of 36 calls. All 18 controlled answers
+The local model reached its token limit in 12 of 42 calls. All 21 controlled answers
 used the complete source record instead of the model's wording. The fact checks also
 rejected correct short names and passed incomplete NBI replies.
 [Read every output and the independent review](evidence/public-service/experiment-review.md).
