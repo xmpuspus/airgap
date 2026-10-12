@@ -275,7 +275,8 @@ async function processMessageInner(
             : {reason: 'generation_failed', message: String(err)};
       }
     }
-    onToken?.(reply);
+    // The reply arrives whole with its audit, so nothing streams. One streamed
+    // copy showed the raw source link for a frame before the answer card.
     addToHistory('user', text);
     addToHistory('bot', reply);
     return {

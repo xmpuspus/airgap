@@ -269,6 +269,14 @@ describe('government entrypoint input policy and unavailable actions', () => {
     expect(response.text).not.toContain('Hello');
     expect(response.text).toContain('Goodbye');
   });
+  it('sends no streamed text, so the raw source link never shows before the answer card', async () => {
+    const streamed: string[] = [];
+    const response = await processMessage('Why did the DICT Secretary resign?', {
+      onToken: token => streamed.push(token),
+    });
+    expect(response.text).toContain('accepted the resignation');
+    expect(streamed).toEqual([]);
+  });
   it('marks a clock answer so the answer card can name the device clock', async () => {
     const response = await processMessage('What date and time now?');
     expect(response.audit?.responseReason).toBe('device_clock');

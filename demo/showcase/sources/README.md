@@ -15,8 +15,8 @@ Nobody on this project reproduced the chats in the first three files.
 
 The X image was scaled to 1600 pixels wide. The identity collage keeps its published size. The
 Facebook image is cropped to the chat panels. The 2026-10-12 screenshots keep their phone size.
-In the two blog images and in the first screen of each 2026-10-12 chat, the small user avatar
-next to the question bubble is painted over with the background color.
+In the two blog images, in the X news card, and in the first screen of each 2026-10-12 chat, the
+small user avatar next to the question bubble is painted over with the background color.
 
 ## Rights
 
