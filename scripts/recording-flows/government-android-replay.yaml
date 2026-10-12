@@ -40,7 +40,9 @@ name: Airgap government services replay take, seven captured prompts, Android mo
     notVisible: '.* is thinking\.\.\.'
     timeout: 300000
 - waitForAnimationToEnd
-- assertVisible: 'Downloaded Airgap model'
+# The chip names the model as the answer source, or says why the record
+# shows instead when the model text was not the record.
+- assertVisible: '(?s).*Downloaded Airgap model.*'
 - takeScreenshot: ${SHOT_PREFIX}-president
 # Beat 2: the Filipino doubt check.
 - tapOn: 'Support question'
