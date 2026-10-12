@@ -1,7 +1,7 @@
 # All five final GIF loops passed visual inspection
 
-The recordings use source commit `86311fe14034a7833875cc0ade30e26a2e14610c`.
-Capture finished on 12 October 2026 at 17:49:29 UTC. Chromium 145.0.7632.6 and
+The recordings use source commit `94d094ed8f4e4d68db23ef58a5e89cf55b750849`.
+Capture finished on 12 October 2026 at 23:41:57 UTC. Chromium 145.0.7632.6 and
 Playwright 1.58.0 ran the actual application at 1280×900. Every export keeps the
 full raw duration at normal speed, with no omitted ranges.
 The [manifest](../../demo/public-service/recordings.json) binds code, styles, source
@@ -9,18 +9,19 @@ archives, model report, raw videos and exports to their exact hashes.
 
 This capture followed the 2026-10-13 changes: a publisher on the three Palace records and the
 holiday record, a government welcome list of the eight sourced topics, a government reply that
-no longer streams, a checked-date age on the device calendar, and reruns of the host experiment
-with the same results. A reviewer read
+no longer streams, a checked-date age on the device calendar, a source drawer without the
+saved-copy path and hash, and reruns of the host experiment with the same results. A reviewer
+read
 every contact sheet and each clip's beat list. No blank or broken recording frame blocked the
 review.
 
 | Clip             | Duration | Result                                                                                                      |
 | ---------------- | -------: | ----------------------------------------------------------------------------------------------------------- |
 | replay-pack      |  12.32 s | PASS. Shows the 26-case sequential run, 26/26 result and all cases.                                         |
-| evidence-lab     |  17.76 s | PASS. Shows a Filipino question, the dated record, doubt recheck, source text and case download.            |
-| source-workbench |  23.48 s | PASS. Shows the real historical change from 21 to 23 August 2024, then rollback to 21 August.               |
-| model-controls   |  23.40 s | PASS. Shows recorded model text, token-limit stop, fallback status and the complete source-record reply.    |
-| demo-kit         |  12.48 s | PASS. Shows the real reproduction command, prerequisites, code and corpus hashes, and source-pack download. |
+| evidence-lab     |  17.80 s | PASS. Shows a Filipino question, the dated record, doubt recheck, source text and case download.            |
+| source-workbench |  23.52 s | PASS. Shows the real historical change from 21 to 23 August 2024, then rollback to 21 August.               |
+| model-controls   |  23.44 s | PASS. Shows recorded model text, token-limit stop, fallback status and the complete source-record reply.    |
+| demo-kit         |  11.96 s | PASS. Shows the real reproduction command, prerequisites, code and corpus hashes, and source-pack download. |
 
 The workbench distinguishes the signed proclamation from its dated covering memo.
 The amendment uses the archived circular that reports the actual proclamation change.
@@ -30,16 +31,16 @@ visible. Browser playback does not call a model.
 
 | Released GIF         | SHA-256                                                            |
 | -------------------- | ------------------------------------------------------------------ |
-| replay-pack.gif      | `4c10f18cc2b14a7b2d5a3a16bc9adb6632547c28e6e15c77a558f6a24dac9d41` |
-| evidence-lab.gif     | `d7a93088aaf255a766e3cf6ba4bb955b270c69feca50121e3b691a41a082692f` |
-| source-workbench.gif | `e1b33a8d7e4aca23fd971af0aad167a0359f3f07dba44532318ece58d2a4385f` |
-| model-controls.gif   | `718ee610fba9a436ae4a7c21bffc906f573ddb3ac6f8cfdaeb84fa6a85c70c72` |
-| demo-kit.gif         | `f97576f2d60e7b7b4a067f5a3076fba06f9f09ee36bc8231d9aa82e1c976346f` |
+| replay-pack.gif      | `8703fc0a42c5b298d8ef603e38c1c238789dbccb4d64b3fb4845fab33020aa12` |
+| evidence-lab.gif     | `a74116c70b59552c26cc974bd39ec8c524758ac07e9e249d7f3dfbc2bff75429` |
+| source-workbench.gif | `88e884885a2c91d0d3b39be7bb77926d9f7ba7435b2f4284f4cf15003b0b2184` |
+| model-controls.gif   | `df9a56e4e07c5e4939fa455825ad3a766b86b7b491901869494eaa950c3c3dfe` |
+| demo-kit.gif         | `70ff2b0ca7100a97354a8d3ebc63a3d9045595a7122150d1ce939530dd2376e5` |
 
 ## Earlier captures
 
-The captures of 12 October 2026 at 17:03:14 UTC (source `b477b0c`) and 17:27:47 UTC (source
-`38d0faf`) passed this review before the last fixes. A capture at source `ee510bc` was replaced
+The captures of 12 October 2026 at 17:03:14 UTC (source `b477b0c`), 17:27:47 UTC (source
+`38d0faf`) and 17:49:29 UTC (source `86311fe`) passed this review before the last fixes. A capture at source `ee510bc` was replaced
 before review.
 
 The capture of 12 October 2026 at 15:19:51 UTC, at source commit
