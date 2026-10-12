@@ -72,6 +72,13 @@ describe('adversarial coverage', () => {
       for (const c of cases.filter(x => x.expect === 'refusal')) {
         // Prompt probes are a built-in guardrail, not a config phrase.
         if (c.reason === 'prompt_probe') continue;
+        // Motive and allegation questions use the built-in commentary route.
+        if (c.reason === 'no_commentary') {
+          const actual = answerPublicService(c.query, [], {}, cfg.safety);
+          expect(actual.answerPath).toBe('refusal');
+          expect(actual.reason).toBe('no_commentary');
+          continue;
+        }
         const matches = blocklistPhrases.some(phrase => c.query.toLowerCase().includes(phrase));
         if (!matches) {
           // Fail loudly with diagnostic info
