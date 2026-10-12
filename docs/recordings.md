@@ -1,7 +1,7 @@
 # Record release GIFs
 
 Airgap keeps sixteen GIFs as product evidence. The set has one Android flow, one iOS flow, one
-joint README flow, eight industry recordings, a ten-prompt take, a five-prompt replay take, a
+joint README flow, eight industry recordings, a ten-prompt take, a seven-prompt replay take, a
 five-prompt service take, and two composed GIFs with a card per beat. The government services
 recordings run the downloaded Gemma 4 model on an Android emulator. One composed GIF puts the
 replay take next to published replies. The other labels each service prompt with the control it
@@ -186,7 +186,9 @@ sources without operating the apps again.
 
 If a development-only notice appears in otherwise valid source footage, record its exact source
 timestamps in `omittedSourceRangesSeconds`. The public GIF can omit that interval, but the source MP4
-must stay unchanged. Do not omit product errors, delays, failed actions, or other app behavior.
+must stay unchanged. The Gemma 4 takes also omit each model wait, from 1.5 seconds after the send
+tap to half a second before the answer shows, and list it in the same field. Do not omit product
+errors, other delays, failed actions, or other app behavior.
 
 ```bash
 npm run recordings:rebuild -- --commit <40-character-commit>
@@ -212,8 +214,9 @@ node scripts/record-industries.mjs \
   --model-file models/gemma-4-e2b-it-q3ks.gguf
 ```
 
-The comparison uses a separate five-prompt replay take, in the published order, so the loop shows
-no exchange that its cards do not describe. Record it with `--take replay`, then build the
+The comparison uses a separate seven-prompt replay take, so the loop shows no exchange that its
+cards do not describe. The take sends the five published prompts in their published order, then
+the two prompts from the 2026-10-12 screenshots. Record it with `--take replay`, then build the
 comparison from the spec. The left card of each beat shows crops of the published screenshots in
 `demo/showcase/sources/`, or the quoted reply when no screenshot exists, and says where the
 evidence came from. Nothing on the left is a recording of another app. The builder prints each

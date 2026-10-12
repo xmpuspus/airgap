@@ -10,8 +10,8 @@ minor releases.
 
 - A `government-services` template with dated, sourced public records for Philippine officials,
   holidays, hotlines, and service steps, plus golden and adversarial cases that replay the
-  2026-09-21 eGovPH assistant failures. Four recordings replay ten, six, and five prompts with
-  Gemma 4 E2B on an Android emulator.
+  2026-09-21 eGovPH assistant failures. Four recordings replay ten, seven, six, and five prompts
+  with Gemma 4 E2B on an Android emulator.
 - A comparison GIF builder that puts one card per prompt, with crops of the published
   screenshots or a note on what the beat proves, next to the recorded take, with a `showcase`
   recording kind and a `virtual-device-model` provider evidence class. A second composed GIF
@@ -59,6 +59,9 @@ minor releases.
   confirms the DICT resignation on 2026-10-11. The other is the 2026-09-25 statement on the
   alleged ghost internet projects. The comparison spec gains two beats from 2026-10-12
   screenshots, and the host experiment gains the resignation question.
+- A seven-prompt replay take with Gemma 4 E2B and a rebuilt comparison GIF. The take sends the
+  five published Kuya A prompts, then the two 2026-10-12 eGovPH questions on the DICT Secretary
+  and the alleged ghost internet scheme.
 
 ### Changed
 
@@ -110,6 +113,12 @@ minor releases.
   without an update server, and gave the model size in one unit.
 - Listed only the eight sourced government topics in the welcome card, renamed the passport quick
   reply to match its record, and greeted a later "hi" with the bot's own name.
+- Counted a record's checked-date age on the device calendar. After midnight in Manila, a record
+  checked the day before read "today" because the count used the UTC date.
+- Sent the government reply once, with its audit. A streamed copy showed the raw source link in
+  the bubble for one frame before the answer card.
+- Painted over the user avatars in the X news card screenshot, as in the other stored
+  screenshots, and cropped the comparison cards to whole lines.
 
 ### Removed
 

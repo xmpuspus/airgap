@@ -60,19 +60,22 @@ rejected correct short names and passed incomplete NBI replies.
 These are CPU host measurements with Gemma 3. The older native recordings below have
 their own source and model identities.
 
-![Published replies of a government assistant on its launch day, next to Kuya B on Gemma 4 E2B](demo/airgap-showcase-government.gif)
+![Replies of a government assistant from its launch day and from 2026-10-12, next to Kuya B on Gemma 4 E2B](demo/airgap-showcase-government.gif)
 
-The left cards show the published replies of a national government app's assistant on its
-2026-09-21 launch day. The right panel shows Kuya B, the `government-services` template, on the
-same five prompts on an Android 15 emulator configured with a 3-bit Gemma 4 E2B file.
-The first answer uses the model. The challenge, clock, identity and refusal are code paths.
+The left cards show replies of a national government app's assistant: five published on its
+2026-09-21 launch day and two from screenshots of 2026-10-12. The right panel shows Kuya B, the
+`government-services` template, on the same seven prompts on an Android 15 emulator configured
+with a 3-bit Gemma 4 E2B file. The president and Palace statement questions go to the model.
+The app shows the record unless the model copies it exactly, and the answer card says which
+happened. The challenge, clock, identity, refusal and resignation answers are code paths.
 
-The president answer comes from a dated record with a source line. In this older take, a
-challenge repeats that answer. The
-time comes from the device clock. The identity comes from configuration. A prompt probe gets a
-fixed refusal from code. The
-[case study](docs/case-study-government-assistant-launch.md) gives every source and the nine
-controls behind the take.
+The president answer comes from a dated record. Its card gives the publisher and the checked
+date. A challenge re-reads that record. The time comes from the device clock. The identity
+comes from configuration. A prompt probe gets a fixed refusal from code.
+
+A question about why the DICT Secretary resigned gets a fixed refusal and the dated Palace
+record, with no reasons. The [case study](docs/case-study-government-assistant-launch.md) gives
+every source and the nine controls behind the take.
 
 ![Airgap on the Android emulator and the iOS simulator: provider readiness, then cited offline answers](demo/airgap-readme-side-by-side.gif)
 
@@ -340,17 +343,17 @@ shows exact answer provenance.
 
 ## Evidence labels state the checked behavior
 
-| Evidence                  | Target                                   | Result                                                          | Unchecked behavior                                 |
-| ------------------------- | ---------------------------------------- | --------------------------------------------------------------- | -------------------------------------------------- |
-| Joint and iOS GIFs        | Android 15 emulator + iOS 26.4 simulator | Readiness, UI, and cited answers                                | Physical native providers                          |
-| Fresh Android GIF         | Android 15 emulator                      | Answer, queue, Outbox, and privacy checked                      | Android system AI or physical-device behavior      |
-| Eight industry GIFs       | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked        | Production data, actions, approvals, or compliance |
-| iOS native compile        | Generic iOS Simulator                    | Foundation Models bridge compiles                               | Eligible physical-device runtime                   |
-| Android debug compile     | Android app, min SDK 24                  | ML Kit beta2 bridge compiles                                    | Supported AICore device runtime                    |
-| iOS provider scenario     | iOS 26.4 simulator                       | Native bridge, routing, answer, provenance, and UI              | Apple model output or physical-device behavior     |
-| Android provider scenario | Android 15 emulator                      | Native bridge, routing, answer, provenance, and UI              | AICore or Gemini Nano model output                 |
-| Gemma 4 E2B takes         | Android 15 emulator                      | Four takes of ten, six, and five prompts on the on-device model | Phone speed, repeated runs, or production data     |
-| Apple host probe          | Apple-silicon Mac, macOS 26              | Framework and environment availability                          | iPhone behavior; AI must be enabled by the owner   |
+| Evidence                  | Target                                   | Result                                                                 | Unchecked behavior                                 |
+| ------------------------- | ---------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------- |
+| Joint and iOS GIFs        | Android 15 emulator + iOS 26.4 simulator | Readiness, UI, and cited answers                                       | Physical native providers                          |
+| Fresh Android GIF         | Android 15 emulator                      | Answer, queue, Outbox, and privacy checked                             | Android system AI or physical-device behavior      |
+| Eight industry GIFs       | Android 15 emulator                      | Fixture-specific onboarding, answer, and sources checked               | Production data, actions, approvals, or compliance |
+| iOS native compile        | Generic iOS Simulator                    | Foundation Models bridge compiles                                      | Eligible physical-device runtime                   |
+| Android debug compile     | Android app, min SDK 24                  | ML Kit beta2 bridge compiles                                           | Supported AICore device runtime                    |
+| iOS provider scenario     | iOS 26.4 simulator                       | Native bridge, routing, answer, provenance, and UI                     | Apple model output or physical-device behavior     |
+| Android provider scenario | Android 15 emulator                      | Native bridge, routing, answer, provenance, and UI                     | AICore or Gemini Nano model output                 |
+| Gemma 4 E2B takes         | Android 15 emulator                      | Four takes of ten, seven, six, and five prompts on the on-device model | Phone speed, repeated runs, or production data     |
+| Apple host probe          | Apple-silicon Mac, macOS 26              | Framework and environment availability                                 | iPhone behavior; AI must be enabled by the owner   |
 
 Every kept app GIF records source commit, provider ID, model identity, device,
 operating system, evidence class, capture command, dimensions, duration, byte

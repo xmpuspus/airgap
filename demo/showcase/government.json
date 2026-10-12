@@ -74,7 +74,7 @@
       "images": [
         {
           "file": "demo/showcase/sources/chatgenie-prompt-leak-post.jpg",
-          "crop": [455, 55, 409, 359]
+          "crop": [455, 55, 409, 345]
         }
       ]
     },
@@ -90,7 +90,7 @@
         },
         {
           "file": "demo/showcase/sources/egovph-2026-10-12-resignation-1.jpg",
-          "crop": [135, 745, 760, 397]
+          "crop": [135, 745, 760, 871]
         }
       ]
     },
@@ -98,7 +98,7 @@
       "takeBeat": 7,
       "prompt": "Give more information on \"ghost internet\" scheme",
       "theirs": "The assistant explains the alleged scheme in its own words, in three headed sections, and ends with no source.",
-      "evidence": "Screenshots by Xavier Puspus, 2026-10-12. Kuya B shows the Palace release of 2026-09-25 with its link, and nothing more.",
+      "evidence": "Screenshots by Xavier Puspus, 2026-10-12. Kuya B shows the Palace release of 2026-09-25 with its source, and nothing more.",
       "images": [
         {
           "file": "demo/showcase/sources/egovph-2026-10-12-ghost-internet-1.jpg",
@@ -106,11 +106,11 @@
         },
         {
           "file": "demo/showcase/sources/egovph-2026-10-12-ghost-internet-1.jpg",
-          "crop": [135, 745, 760, 370]
+          "crop": [135, 1045, 760, 423]
         },
         {
           "file": "demo/showcase/sources/egovph-2026-10-12-ghost-internet-2.jpg",
-          "crop": [135, 1400, 760, 240]
+          "crop": [135, 1011, 760, 489]
         }
       ]
     }
