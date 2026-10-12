@@ -84,7 +84,7 @@ minor releases.
   against `2026-09-25`.
 - Told the model not to repeat the "reference information" wording in its answer.
 - Showed the retrieved records instead of a refusal when model text fails the grounding check.
-  The answer chip says that the model did not answer and quotes the unsourced value.
+  The answer card says why the model text did not show.
 - Showed whole records on the no-model path. The 200-character cut dropped every source line.
 - Fixed the refusal bubble, which collapsed its text to a tall empty bar.
 - Ran the Apple on-device model with content-transformation guardrails, because the iOS Simulator

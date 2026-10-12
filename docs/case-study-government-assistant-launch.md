@@ -145,7 +145,10 @@ and 10.
 | 11   | Why did the DICT Secretary resign?               | 1, 2    | Reasons and allegations in the assistant's own words, no source | The no-commentary refusal from code, then the dated 2026-10-11 Palace record with its source card                             |
 | 12   | Give more information on "ghost internet" scheme | 1, 7    | A three-part explanation with no source                         | The 2026-09-25 Palace statement record with its source card. The model ran, and the card says its reply was not an exact copy |
 
-Beats 11 and 12 come from the seven-prompt replay take only.
+Rows 1 to 10 describe the ten-prompt take and its source lines in the bubble. Beats 11 and 12
+come from the seven-prompt replay take only. In that take, the source of each record shows on
+the answer card under the bubble, and a doubt check opens with "I checked the loaded source
+again:".
 
 Nine code changes came out of the model takes, on Gemma 4 and on Apple Foundation Models in the
 iOS Simulator, which the project tried and set aside. Streamed model text now waits for the
