@@ -29,7 +29,11 @@ name: Airgap iOS release recording
 - tapOn: 'Check plans'
 - extendedWaitUntil:
     visible: 'Document answer'
-    timeout: 30000
+    timeout: 90000
+# The feedback buttons render only after the answer finishes streaming.
+- extendedWaitUntil:
+    visible: 'Not helpful'
+    timeout: 90000
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
 - swipe:
     direction: UP

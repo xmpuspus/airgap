@@ -202,6 +202,16 @@ describe('recording manifest validation', () => {
     expect(flow).toMatch(/visible: 'Document answer'\n\s+timeout: 90000/);
   });
 
+  test('waits on iOS until the answer finishes streaming', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/demo-ios.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toMatch(/visible: 'Document answer'\n\s+timeout: 90000/);
+    expect(flow).toMatch(/visible: 'Not helpful'\n\s+timeout: 90000/);
+  });
+
   test('moves the screen after the answer so the recorder keeps the final card', () => {
     const flow = fs.readFileSync(
       path.join(process.cwd(), 'scripts/recording-flows/industry-android.yaml'),
