@@ -123,7 +123,10 @@ minor releases.
 - Demo mode shows no downloaded model in Settings or onboarding, and the Settings privacy line
   matches the cloud setting.
 - The first chat screen shows only the template's own quick replies. "Sync now" shows only when
-  an update server is set.
+  an update server is set, and the Settings sync status reads "Built-in records" without one.
+- Queued replies, receipts, and the outbox show each tool's label, such as "Open a support
+  ticket", in words written for the person using the app.
+- The Android, iOS, side-by-side, and seven fictional industry GIFs show the current app.
 - Search keeps the troubleshooting records for "no signal" and "not working".
 - Sync rejects a signed knowledge bundle older than the installed one.
 - The provider chain moves to the next provider when one provider cannot report its state.
