@@ -247,9 +247,9 @@ describe('recording manifest validation', () => {
         'utf8',
       );
 
-      expect(flow).toMatch(/point: '80%,10%'\n\s+retryTapIfNoChange: true/);
+      expect(flow).toMatch(/text: 'Open Outbox'\n\s+retryTapIfNoChange: true/);
       expect(flow).toMatch(/text: 'Open settings'\n\s+retryTapIfNoChange: true/);
-      expect(flow).toMatch(/extendedWaitUntil:\n\s+visible: 'Outbox(?: is clear)?'/);
+      expect(flow).toMatch(/extendedWaitUntil:\n\s+visible: 'Pending'/);
     },
   );
 

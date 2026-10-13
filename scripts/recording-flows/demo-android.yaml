@@ -51,12 +51,12 @@ name: Airgap Android release recording
     timeout: 20000
 - takeScreenshot: ${SHOT_PREFIX}-action-receipt
 - tapOn:
-    point: '80%,10%'
+    text: 'Open Outbox'
     retryTapIfNoChange: true
+- waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: 'Outbox'
+    visible: 'Pending'
     timeout: 10000
-- assertVisible: 'Pending'
 - takeScreenshot: ${SHOT_PREFIX}-outbox
 - back
 - tapOn:
