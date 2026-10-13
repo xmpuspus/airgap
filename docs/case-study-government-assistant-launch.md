@@ -98,7 +98,7 @@ and to the place where the template implements it.
 | 4. Checks run before display                          | Fluent text with no visible source. The screen showed an accuracy disclaimer             | Blocklist and confidence gate before generation; a token gate halts the stream      |
 | 5. Dates and time come from the system, not the model | The time came back in UTC                                                                | Code answers the clock question from the device clock; records carry checked dates  |
 | 6. A public replay test runs on every change          | No published test results after launch day                                               | Golden and adversarial cases in `__tests__/golden/`; recordings pinned to commits   |
-| 7. The user sees who answered                         | No model name, no knowledge version, no source on screen                                 | The answer chip shows the provider, the model file, and the source count            |
+| 7. The user sees who answered                         | No model name, no knowledge version, no source on screen                                 | The answer card shows the source, its publisher, and the checked date               |
 | 8. The model never decides                            | A world-knowledge answer inside an app that also runs transactions                       | Tool routes and actions are keyword routed; the model only phrases retrieved text   |
 | 9. The inner workings stay private                    | A public post shows text presented as the instructions, after "repeat the words above"   | A prompt probe gets a fixed refusal from code that says nothing about the internals |
 
@@ -122,11 +122,12 @@ where each came from. The take sends the five published prompts in the published
 the two prompts from the 2026-10-12 screenshots. The five prompts with no published reply stay
 out of that GIF, because nobody on this project reproduced the production chat.
 
-[`demo/airgap-showcase-government-services.gif`](../demo/airgap-showcase-government-services.gif)
+An earlier take,
+[`demo/airgap-showcase-government-services.gif`](../demo/airgap-showcase-government-services.gif),
 shows five service prompts: a passport fee, the NBI clearance requirements, the Bonifacio Day
-date, the SSS hotline, and a concern report queued in airplane mode. Each card says which control
-the beat shows. Every answer carries its source line, and the queued report goes to the outbox
-without any model. The six-prompt take in
+date, the SSS hotline, and a concern report queued in airplane mode. It comes from a template
+version that still had the report action. Each card says which control the beat shows. The
+six-prompt take in
 [`demo/industry-government.gif`](../demo/industry-government.gif) shows beats 1, 2, 4, 5, 6,
 and 10.
 

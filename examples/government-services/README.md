@@ -24,7 +24,7 @@ application, and downloads no model.
 - Agency requests return unavailable; direct tool and backend calls also refuse without a receipt or queue entry
 - 11 blocked-topic fixtures with refusal copy for political opinions and legal advice
 
-One historical recording replays six prompts with the downloaded-model provider. The
+One recording replays six prompts with the downloaded-model provider. The
 [Android emulator take](../../demo/industry-government.gif) runs the downloaded Gemma 4 E2B file.
 It does not prove phone speed. The manifest in `demo/recordings.json` records the model. The take
 sends these prompts in this order.
@@ -37,11 +37,9 @@ sends these prompts in this order.
 6. Paano kumuha ng passport?
 
 A second GIF, [`airgap-showcase-government.gif`](../../demo/airgap-showcase-government.gif), puts
-the seven-prompt replay take next to the published replies of the 2026-09-21 launch. A third,
-[`airgap-showcase-government-services.gif`](../../demo/airgap-showcase-government-services.gif),
-shows a fee, a requirements list, a holiday date, a hotline, and a report queued in airplane mode.
-Deterministic beats are code output. The current path has no
-agency integration and does not reproduce the old queued-report demonstration.
+the seven-prompt replay take next to the published replies of the 2026-09-21 launch.
+Deterministic beats are code output. The template has no agency integration, so it queues no
+reports.
 
 ## Public records instead of fiction
 

@@ -126,7 +126,8 @@ minor releases.
   an update server is set, and the Settings sync status reads "Built-in records" without one.
 - Queued replies, receipts, and the outbox show each tool's label, such as "Open a support
   ticket", in words written for the person using the app.
-- The Android, iOS, side-by-side, and seven fictional industry GIFs show the current app.
+- The Android, iOS, side-by-side, six-prompt government, and seven fictional industry GIFs show
+  the current app. The README and template pages link only those GIFs and the comparison GIF.
 - Search keeps the troubleshooting records for "no signal" and "not working".
 - Sync rejects a signed knowledge bundle older than the installed one.
 - The provider chain moves to the next provider when one provider cannot report its state.
