@@ -110,6 +110,38 @@ describe('inference provider resolver', () => {
     expect(result.providerId).toBe('llama-rn');
   });
 
+  test('falls back when a provider capability check rejects', async () => {
+    const broken = fakeProvider('apple-foundation-models');
+    (broken.getCapabilities as jest.Mock).mockRejectedValue(new Error('native bridge failed'));
+    const fallback = fakeProvider('llama-rn');
+
+    const result = await generateWithProviders(
+      request,
+      [broken, fallback],
+      policy('prefer-offline', ['apple-foundation-models', 'llama-rn']),
+    );
+
+    expect(result.providerId).toBe('llama-rn');
+    expect(broken.generate).not.toHaveBeenCalled();
+  });
+
+  test('names the provider whose capability check rejected when no fallback is left', async () => {
+    const broken = fakeProvider('apple-foundation-models');
+    (broken.getCapabilities as jest.Mock).mockRejectedValue(new Error('native bridge failed'));
+
+    await expect(
+      generateWithProviders(
+        request,
+        [broken],
+        policy('prefer-offline', ['apple-foundation-models']),
+      ),
+    ).rejects.toMatchObject({
+      reason: 'model_not_ready',
+      providerId: 'apple-foundation-models',
+      message: expect.stringContaining('native bridge failed'),
+    });
+  });
+
   test('does not fall back after cancellation', async () => {
     const first = fakeProvider('apple-foundation-models', {failure: 'cancelled'});
     const fallback = fakeProvider('llama-rn');

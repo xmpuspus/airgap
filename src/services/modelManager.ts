@@ -8,7 +8,6 @@ import {getBackendConnector, type RemoteModelManifest} from './backendConnector'
 const modelStorage = () => getSecureStore('model-manager');
 const KEY_DOWNLOADED = 'model_downloaded';
 const KEY_LAST_UPDATE_CHECK = 'last_model_update_check';
-const KEY_REMOTE_SHA = 'remote_model_sha256';
 
 export interface ModelUpdateResult {
   checked: boolean;
@@ -25,7 +24,6 @@ export interface ModelUpdateResult {
 
 class ModelManager {
   private modelsDir = `${RNFS.DocumentDirectoryPath}/models`;
-  private downloadJobId: number | null = null;
 
   getModelPath(): string {
     return `${this.modelsDir}/${modelConfig.filename}`;
@@ -52,7 +50,7 @@ class ModelManager {
   }
 
   private async verifyChecksum(filePath: string): Promise<boolean> {
-    // Size check first — fast, catches truncation without re-hashing GBs.
+    // Size check first: it catches truncation without re-hashing gigabytes.
     if (modelConfig.sizeBytes) {
       const stat = await RNFS.stat(filePath);
       const actualSize = Number(stat.size);
@@ -110,12 +108,9 @@ class ModelManager {
     const partialExists = await RNFS.exists(partialPath);
     if (partialExists) await RNFS.unlink(partialPath);
 
-    const headers: Record<string, string> = {};
-
-    const {jobId, promise} = RNFS.downloadFile({
+    const {promise} = RNFS.downloadFile({
       fromUrl: modelConfig.url,
       toFile: partialPath,
-      headers,
       progressDivider: 2,
       begin: () => onProgress(0),
       progress: res => {
@@ -125,24 +120,14 @@ class ModelManager {
       },
     });
 
-    this.downloadJobId = jobId;
-
-    let result;
-    try {
-      result = await promise;
-    } finally {
-      this.downloadJobId = null;
-    }
+    const result = await promise;
 
     if (result.statusCode !== 200) {
       await RNFS.unlink(partialPath).catch(() => undefined);
       throw new Error(`Model download failed with status ${result.statusCode}`);
     }
 
-    // Verify checksum before promoting partial to final
     await this.verifyChecksum(partialPath);
-
-    // Move partial file to final destination
     await RNFS.moveFile(partialPath, destPath);
     logger.info('ModelManager', 'Model download complete', {path: destPath});
 
@@ -178,22 +163,11 @@ class ModelManager {
     return Number(stat.size) / (1024 * 1024);
   }
 
-  cancelDownload(): void {
-    if (this.downloadJobId !== null) {
-      RNFS.stopDownload(this.downloadJobId);
-      this.downloadJobId = null;
-      logger.info('ModelManager', 'Download cancelled');
-    }
-  }
-
   /**
-   * Poll the BFF for a newer model. Gated on connectivity AND Wi-Fi —
-   * we never burn a user's cellular data on a 2 GB download. Returns
-   * a structured result the caller can decide to act on (e.g. surface
-   * an "Update available" prompt in Settings).
-   *
-   * This does NOT actually download the new model. Use applyUpdate()
-   * for that — kept separate so the user can opt in.
+   * Poll the BFF for a newer model. Gated on connectivity and Wi-Fi,
+   * so a user's cellular data is never spent on a 2 GB download.
+   * Returns a structured result the caller can act on, for example
+   * an "Update available" prompt in Settings. It does not download the model.
    */
   async checkForUpdate(options?: {force?: boolean}): Promise<ModelUpdateResult> {
     const backend = (config as unknown as {backend?: {baseUrl?: string}}).backend;
@@ -228,7 +202,6 @@ class ModelManager {
       const localSha = modelConfig.sha256;
       const remoteSha = manifest.sha256;
       const hasUpdate = !!remoteSha && !!localSha && remoteSha !== localSha;
-      if (remoteSha) modelStorage().set(KEY_REMOTE_SHA, remoteSha);
 
       logger.info('ModelManager', 'Model update check complete', {
         localSha: localSha?.substring(0, 12),
@@ -243,85 +216,6 @@ class ModelManager {
     } catch (err) {
       logger.warn('ModelManager', 'Model update check failed', {err: String(err)});
       return {checked: false, reason: 'fetch_failed'};
-    }
-  }
-
-  /**
-   * Download a new model bundle from the BFF and atomically swap. The
-   * old model is preserved as <filename>.previous.gguf so we can roll
-   * back if the new file fails to load. Wi-Fi-only by default.
-   */
-  async applyUpdate(
-    manifest: RemoteModelManifest,
-    onProgress?: (fraction: number) => void,
-  ): Promise<{ok: boolean; error?: string}> {
-    if (!manifest.url || !manifest.sha256 || !manifest.filename) {
-      return {ok: false, error: 'manifest missing required fields'};
-    }
-    if (!(await connectivityService.isOnWiFi())) {
-      return {ok: false, error: 'not_on_wifi'};
-    }
-
-    const dirExists = await RNFS.exists(this.modelsDir);
-    if (!dirExists) await RNFS.mkdir(this.modelsDir);
-
-    const updatePath = `${this.modelsDir}/${manifest.filename}.update.gguf`;
-    const finalPath = this.getModelPath();
-    const previousPath = `${finalPath}.previous.gguf`;
-
-    try {
-      const oldUpdateExists = await RNFS.exists(updatePath);
-      if (oldUpdateExists) await RNFS.unlink(updatePath);
-      const {promise} = RNFS.downloadFile({
-        fromUrl: manifest.url,
-        toFile: updatePath,
-        progressDivider: 5,
-        progress: res => {
-          if (onProgress && res.contentLength > 0) {
-            onProgress(Math.max(0, Math.min(1, res.bytesWritten / res.contentLength)));
-          }
-        },
-      });
-      const result = await promise;
-      if (result.statusCode !== 200) {
-        await RNFS.unlink(updatePath).catch(() => undefined);
-        return {ok: false, error: `HTTP ${result.statusCode}`};
-      }
-
-      if (manifest.sizeBytes) {
-        const stat = await RNFS.stat(updatePath);
-        if (Number(stat.size) !== manifest.sizeBytes) {
-          await RNFS.unlink(updatePath).catch(() => undefined);
-          return {ok: false, error: 'model_size_invalid'};
-        }
-      }
-
-      // Verify SHA before swap.
-      const actualSha = await RNFS.hash(updatePath, 'sha256');
-      if (actualSha !== manifest.sha256) {
-        await RNFS.unlink(updatePath).catch(() => undefined);
-        return {
-          ok: false,
-          error: `sha256 mismatch: expected ${manifest.sha256}, got ${actualSha}`,
-        };
-      }
-
-      // Swap: current -> .previous.gguf, .update.gguf -> current
-      const currentExists = await RNFS.exists(finalPath);
-      if (currentExists) {
-        const prevExists = await RNFS.exists(previousPath);
-        if (prevExists) await RNFS.unlink(previousPath);
-        await RNFS.moveFile(finalPath, previousPath);
-      }
-      await RNFS.moveFile(updatePath, finalPath);
-      logger.info('ModelManager', 'model update applied', {
-        from: modelConfig.sha256?.substring(0, 12),
-        to: manifest.sha256.substring(0, 12),
-      });
-      return {ok: true};
-    } catch (err) {
-      await RNFS.unlink(updatePath).catch(() => undefined);
-      return {ok: false, error: String(err)};
     }
   }
 }

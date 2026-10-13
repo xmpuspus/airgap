@@ -1,5 +1,5 @@
 /**
- * Telemetry service — append-only audit trail of every orchestrator turn.
+ * Telemetry service: append-only audit trail of every orchestrator turn.
  *
  * Every processMessage result gets converted into a TelemetryEvent and
  * buffered locally in MMKV. On connectivity-restore (or on a schedule)
@@ -108,7 +108,7 @@ export async function flushTelemetry(): Promise<{
   const toSend = buf.slice();
   try {
     await backend.postTelemetry(toSend);
-    // Clear only the events we actually sent — new events may have been
+    // Clear only the events we actually sent. New events may have been
     // appended concurrently between loadBuffer() above and now.
     const latest = loadBuffer();
     const remaining = latest.filter(
@@ -120,9 +120,9 @@ export async function flushTelemetry(): Promise<{
       remaining: remaining.length,
     });
     return {flushed: toSend.length, buffered: remaining.length};
-  } catch (err: any) {
-    logger.warn('telemetry', 'flush failed — will retry on next reconnect', {
-      error: err?.message,
+  } catch (err) {
+    logger.warn('telemetry', 'flush failed, will retry on next reconnect', {
+      error: err instanceof Error ? err.message : String(err),
     });
     return {flushed: 0, buffered: buf.length};
   }
@@ -136,7 +136,7 @@ let scheduled = false;
 export function startTelemetryFlusher(options?: {intervalMinutes?: number}): void {
   if (scheduled) return;
   if (!analyticsEnabled()) {
-    logger.info('telemetry', 'analytics.enabled=false — telemetry flusher will not start');
+    logger.info('telemetry', 'analytics.enabled=false, telemetry flusher will not start');
     return;
   }
   const intervalMs = (options?.intervalMinutes ?? 10) * 60 * 1000;

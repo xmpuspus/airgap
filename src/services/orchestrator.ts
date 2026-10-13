@@ -3,7 +3,14 @@ import {routeGeneration, generationAvailable, getMode} from './llmRouter';
 import {ensureSourceLine} from '../utils/sourceLine';
 import {InferenceProviderError} from './inference/providerResolver';
 import type {MessageAudit} from '../types/chat';
-import {offlineQueue} from './offlineQueue';
+import type {KBDocument} from '../types/knowledge';
+import {
+  accountActionReply,
+  offlineQueue,
+  runBackendAction,
+  unfinishedRequestReply,
+} from './offlineQueue';
+import {isGovernmentDomain} from './actionQueueTypes';
 import {connectivityService} from './connectivityService';
 import {requiresOnline, getOnlineActionType} from '../utils/onlineCheck';
 import {
@@ -33,9 +40,7 @@ import {
   actions,
   interpolate,
 } from '../config/loader';
-import {getBackendConnector} from './backendConnector';
 import {logger} from './logger';
-import type {QueuedAction} from '../types/chat';
 import type {QuickReply} from '../types/chat';
 import type {InferenceProviderId} from './inference/types';
 import {conversationStore} from './conversationStore';
@@ -58,8 +63,8 @@ import {
   recordToolLatency,
 } from './metrics';
 
-// A template without prompts.queued showed an empty bubble for a queued
-// action. This text stands in until the template supplies its own.
+// A queued action always gets a reply. This text applies when the template
+// has no prompts.queued.
 const DEFAULT_QUEUED_REPLY =
   'This needs a connection. I saved your request and will send it when the device is back online.\n\nQueued: {{actionLabel}}';
 
@@ -69,19 +74,23 @@ function queuedReply(actionLabel: string): string {
   return interpolate(template, config).replaceAll('{{actionLabel}}', () => actionLabel);
 }
 
-// No template prompt covers a failed request, and no follow-up comes after
-// this reply, so it must not promise one.
-const UNFINISHED_REQUEST_REPLY =
-  'I could not complete that request right now. Please try again later or call {{hotline}}.';
+// Thanks and goodbye count as greetings, but each gets its own reply.
+function farewellReply(text: string): string | null {
+  const word = text
+    .replace(/[!.,?]/g, '')
+    .trim()
+    .toLowerCase();
+  if (['thanks', 'thank you'].includes(word)) {
+    return 'You are welcome. Ask another question any time.';
+  }
+  if (['bye', 'goodbye'].includes(word)) return 'Goodbye. Ask again any time.';
+  return null;
+}
 
-function accountActionReply(): string {
-  // hotlineLabel is optional, and an empty one would leave "()" in the text.
-  const hotline = brand.hotlineLabel ? '{{hotline}} ({{hotlineLabel}})' : '{{hotline}}';
-  return interpolate(
-    'Account changes like cancellation, disconnection, or deactivation require verification. ' +
-      `Please call ${hotline} or visit any {{brandName}} store with a valid ID to proceed.`,
-    config,
-  );
+// Date and time come from the device clock, never from a model or a record.
+function deviceClockReply(): string {
+  const clock = formatDeviceClock(new Date(), config.locale?.language ?? 'en');
+  return `It is ${clock} on this device's clock. I have no clock of my own, and each record shows the date it was checked.`;
 }
 
 export interface OrchestratorResponse {
@@ -89,7 +98,7 @@ export interface OrchestratorResponse {
   source: 'llm' | 'search' | 'system' | 'queue' | 'tool' | 'refusal';
   suggestedReplies?: QuickReply[];
   queuedActionId?: string;
-  /** Audit metadata — consumed by the observability dev panel and the BFF telemetry endpoint. */
+  /** Audit metadata, consumed by the observability dev panel and the BFF telemetry endpoint. */
   audit?: {
     kbDocIds: string[];
     confidence: number;
@@ -157,11 +166,9 @@ export interface ProcessMessageHooks {
 
 export async function processMessage(
   userText: string,
-  onTokenOrHooks?: ((token: string) => void) | ProcessMessageHooks,
+  hooks: ProcessMessageHooks = {},
 ): Promise<OrchestratorResponse> {
   ensureHistoryLoaded();
-  const hooks: ProcessMessageHooks =
-    typeof onTokenOrHooks === 'function' ? {onToken: onTokenOrHooks} : onTokenOrHooks ?? {};
   const response = await processMessageInner(userText, hooks);
   return finalizeResponse(userText, response);
 }
@@ -190,19 +197,13 @@ async function processMessageInner(
 
   // Government examples have no agency integration. The shared core decides
   // answerability, freshness, doubt and tool unavailability before any provider.
-  if (config.llm?.supportDomain === 'government') {
+  if (isGovernmentDomain()) {
     // A greeting at any point gets the bot's own name and the topics, not a
     // missing-record reply.
     if (isGreeting(text)) {
-      const word = text
-        .replace(/[!.,?]/g, '')
-        .trim()
-        .toLowerCase();
-      const response = ['thanks', 'thank you'].includes(word)
-        ? 'You are welcome. Ask another question any time.'
-        : ['bye', 'goodbye'].includes(word)
-        ? 'Goodbye. Ask again any time.'
-        : `Hello! I'm ${brand.botName}. Pick a topic below or type your question.`;
+      const response =
+        farewellReply(text) ??
+        `Hello! I'm ${brand.botName}. Pick a topic below or type your question.`;
       publicSession = {};
       lastRecordAnswer = null;
       addToHistory('user', text);
@@ -210,8 +211,7 @@ async function processMessageInner(
       return {text: response, source: 'system', suggestedReplies: quickReplies as QuickReply[]};
     }
     if (isPublicClockQuestion(text)) {
-      const clock = formatDeviceClock(new Date(), config.locale?.language ?? 'en');
-      const response = `It is ${clock} on this device's clock. I have no clock of my own, and each record shows the date it was checked.`;
+      const response = deviceClockReply();
       publicSession = {};
       lastRecordAnswer = null;
       addToHistory('user', text);
@@ -275,8 +275,8 @@ async function processMessageInner(
             : {reason: 'generation_failed', message: String(err)};
       }
     }
-    // The reply arrives whole with its audit, so nothing streams. One streamed
-    // copy showed the raw source link for a frame before the answer card.
+    // The reply arrives whole with its audit. Nothing streams, so the raw
+    // source link never shows before the answer card.
     addToHistory('user', text);
     addToHistory('bot', reply);
     return {
@@ -297,7 +297,9 @@ async function processMessageInner(
 
   // A greeting as the first message gets a welcome and quick replies, not a search.
   if (isGreeting(text) && conversationHistory.length === 0) {
-    const response = `Hi there! I'm your ${brand.name} support assistant. How can I help you today?`;
+    const response =
+      farewellReply(text) ??
+      `Hi there! I'm your ${brand.name} support assistant. How can I help you today?`;
     addToHistory('user', text);
     addToHistory('bot', response);
     return {
@@ -324,10 +326,8 @@ async function processMessageInner(
     };
   }
 
-  // Date and time come from the device clock, never from a model or a record.
   if (isClockQuestion(text)) {
-    const clock = formatDeviceClock(new Date(), config.locale?.language ?? 'en');
-    const response = `It is ${clock} on this device's clock. I have no clock of my own, and each record shows the date it was checked.`;
+    const response = deviceClockReply();
     addToHistory('user', text);
     addToHistory('bot', response);
     return {text: response, source: 'system'};
@@ -375,42 +375,29 @@ async function processMessageInner(
       };
     }
 
-    // Success path — run the LLM over the structured tool result as
+    // Success path: run the LLM over the structured tool result as
     // grounding. The router picks local, cloud, or demo formatter based
     // on config.llm.mode. If no path is available, fall through to the
     // raw summary.
     if (await generationAvailable()) {
       try {
         const systemPrompt = getSystemPrompt();
-        const groundingBlock = formatToolResultForLLM(result);
-        const userMessage = buildUserMessage(
-          text,
-          // Synthesize a pseudo-KBDocument so the existing builder can inline it.
-          [
-            {
-              id: `tool:${tool.name}`,
-              category: 'faq',
-              title: `Tool result: ${tool.description}`,
-              content: groundingBlock,
-              keywords: [],
-              tags: [],
-              metadata: {},
-            } as any,
-          ],
-          conversationHistory,
-          {contextChars: recordContextChars()},
-        );
-        const toolDocs = [
+        // One pseudo-record carries the tool result into the prompt and the
+        // grounding check, so the model and the check see the same facts.
+        const toolDocs: KBDocument[] = [
           {
             id: `tool:${tool.name}`,
             category: 'faq',
-            title: 'tool',
-            content: groundingBlock,
+            title: `Tool result: ${tool.description}`,
+            content: formatToolResultForLLM(result),
             keywords: [],
             tags: [],
             metadata: {},
-          } as any,
+          },
         ];
+        const userMessage = buildUserMessage(text, toolDocs, conversationHistory, {
+          contextChars: recordContextChars(),
+        });
         // Stream only text that the grounding check has already passed.
         const gate = createGroundedTokenGate(toolDocs, onToken, {question: text});
         const llmStart = Date.now();
@@ -463,7 +450,7 @@ async function processMessageInner(
       }
     }
 
-    // LLM unavailable — return the tool's pre-formatted summary directly.
+    // LLM unavailable: return the tool's pre-formatted summary directly.
     const response = result.summary ?? 'Done.';
     addToHistory('user', text);
     addToHistory('bot', response);
@@ -475,14 +462,20 @@ async function processMessageInner(
   }
 
   // A config that defines actions but no tools still works through this path.
-  // The switch cases serve the telco fixture actions until templates define
-  // them as tools.
   if (requiresOnline(text)) {
-    const isOnline = connectivityService.isOnline();
     const actionType = getOnlineActionType(text);
 
-    if (!isOnline && actionType) {
-      const action = offlineQueue.enqueue(actionType as QueuedAction['type'], text, '');
+    // An account change needs an identity check that the outbox cannot do, so
+    // it gets its answer at once instead of a place in the queue.
+    if (actionType === 'account_action') {
+      const response = accountActionReply();
+      addToHistory('user', text);
+      addToHistory('bot', response);
+      return {text: response, source: 'system'};
+    }
+
+    if (actionType && !connectivityService.isOnline()) {
+      const action = offlineQueue.enqueue(actionType, text, '');
       const actionLabel = actions.find(a => a.id === actionType)?.label ?? actionType;
       const response = queuedReply(actionLabel);
       addToHistory('user', text);
@@ -490,41 +483,13 @@ async function processMessageInner(
       return {text: response, source: 'queue', queuedActionId: action.id};
     }
 
-    if (isOnline && actionType) {
-      const backend = getBackendConnector();
+    if (actionType) {
       let response: string;
-
       try {
-        switch (actionType) {
-          case 'balance_check': {
-            const result = await backend.checkBalance('current');
-            response = `Your current balance is ${result.balance}. Data remaining: ${result.data}. Active promo: ${result.promos}.`;
-            break;
-          }
-          case 'plan_change': {
-            const result = await backend.changePlan('current', '');
-            response = result.message;
-            break;
-          }
-          case 'ticket_create': {
-            const result = await backend.createTicket(text);
-            response = result.message;
-            break;
-          }
-          case 'outage_check': {
-            const result = await backend.checkOutage();
-            response = result.message;
-            break;
-          }
-          case 'account_action':
-            response = accountActionReply();
-            break;
-          default:
-            response = interpolate(UNFINISHED_REQUEST_REPLY, config);
-        }
+        response = (await runBackendAction(actionType, text)).summary;
       } catch (err) {
         logger.warn('orchestrator', 'Online action failed', {actionType, err: String(err)});
-        response = interpolate(UNFINISHED_REQUEST_REPLY, config);
+        response = unfinishedRequestReply();
       }
 
       addToHistory('user', text);
@@ -556,7 +521,8 @@ async function processMessageInner(
   // legal notice must not change between runs, so no model phrases it.
   const verbatim = finalResults[0]?.metadata?.verbatim === true;
   if (!verbatim && (await generationAvailable()) && finalResults.length > 0) {
-    // Safety: a weak retrieval refuses before any text streams to the screen.
+    // Safety: when the template sets a confidence threshold, a weak retrieval
+    // refuses before any text streams to the screen.
     const retrieval = checkConfidence(finalResults);
     if (!retrieval.confident) {
       const refusalText = refusalFor('low_confidence');
@@ -675,8 +641,8 @@ const LOW_CONFIDENCE_METRIC = 0.5;
 /**
  * Final polish on every orchestrator response:
  *   - Prepend the degraded-mode staleness banner if the KB has not been
- *     synced in >24h and the answer source is not a tool call (tool calls
- *     are always live via the backend)
+ *     synced in >24h. Tool, refusal, and queue replies skip it because none
+ *     of them shows KB content.
  *   - Record telemetry for the turn (PII-safe)
  * Returns a new response object with the possibly-augmented text.
  */

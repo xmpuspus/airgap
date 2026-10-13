@@ -1,7 +1,7 @@
-import {config} from '../config/loader';
+import {config, interpolate} from '../config/loader';
+import {isGovernmentDomain} from './actionQueueTypes';
 import {getAccessToken} from './authProvider';
 import type {BundleManifest} from './bundleVerifier';
-import {logger} from './logger';
 
 export interface BalanceResponse {
   balance: string;
@@ -97,9 +97,7 @@ export class MockBackendConnector implements BackendConnector {
     _options?: BackendRequestOptions,
   ): Promise<PlanChangeResponse> {
     return {
-      message:
-        "To change your plan, please specify which plan you'd like to switch to. " +
-        'You can say something like "Switch to Plan 999" and I\'ll process it.',
+      message: 'Your plan change request was received.',
       effectiveDate: '',
     };
   }
@@ -129,8 +127,9 @@ export class MockBackendConnector implements BackendConnector {
     _params: Record<string, unknown>,
     _options?: BackendRequestOptions,
   ): Promise<ActionResponse> {
+    const mockResponse = config.actions.find(action => action.id === actionType)?.mockResponse;
     return {
-      message: `Action "${actionType}" acknowledged. Let me look into that for you.`,
+      message: mockResponse ? interpolate(mockResponse, config) : 'Your request was received.',
     };
   }
 }
@@ -283,29 +282,23 @@ const unavailableAgency: BackendConnector = {
 };
 
 function buildConnectorFromConfig(): BackendConnector {
-  if (config.llm?.supportDomain === 'government') return unavailableAgency;
-  try {
-    const backend = (config as any).backend;
-    if (backend?.type === 'rest' && backend?.baseUrl) {
-      return new RestBackendConnector(backend.baseUrl, {
-        audience: backend.auth?.audience,
-      });
-    }
-  } catch (error) {
-    logger.error('backendConnector', 'configured backend failed to build, using the mock', {
-      error: (error as Error).message,
-    });
+  const backend = config.backend;
+  if (backend?.type !== 'rest') return new MockBackendConnector();
+  // A silent fallback to the mock would show fictional data as real account data.
+  if (!backend.baseUrl) {
+    throw new Error('backend.baseUrl is required when backend.type is "rest"');
   }
-  return new MockBackendConnector();
+  return new RestBackendConnector(backend.baseUrl, {audience: backend.auth?.audience});
 }
 
 let connector: BackendConnector = buildConnectorFromConfig();
 
 export function getBackendConnector(): BackendConnector {
-  if (config.llm?.supportDomain === 'government') return unavailableAgency;
+  if (isGovernmentDomain()) return unavailableAgency;
   return connector;
 }
 
+// Integrators install their production connector here.
 export function setBackendConnector(newConnector: BackendConnector): void {
   connector = newConnector;
 }

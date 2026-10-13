@@ -40,5 +40,3 @@ export interface QuickReply {
   title: string;
   value: string;
 }
-
-export type {QueueRecord as QueuedAction} from '../services/actionQueueTypes';

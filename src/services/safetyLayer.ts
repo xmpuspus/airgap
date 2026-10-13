@@ -1,20 +1,19 @@
 /**
- * Safety layer — gates LLM output before it reaches the user.
+ * Safety layer: gates LLM output before it reaches the user.
  *
  * Responsibilities:
- *   1. Topic blocklist — refuse queries that fall outside the configured
- *      allowed topics (e.g. medical/legal/financial advice for unrelated
- *      verticals, self-harm, politics).
- *   2. Confidence gate — refuse when the retrieved KB has no documents above
- *      the minimum confidence threshold.
- *   3. Grounding enforcement — reject answers that claim specific dollar
- *      amounts, dates, or numeric facts not present in the retrieved context.
- *   4. Refusal templates — vertical-specific fail-closed copy for the cases
- *      we intentionally do not answer (medical/legal/financial disclaimers).
+ *   1. Topic blocklist: refuse queries that match a configured blocked topic
+ *      (e.g. medical/legal/financial advice, self-harm, politics) or a
+ *      prompt probe. Anything not blocked goes on to retrieval.
+ *   2. Confidence gate: refuse when the top retrieved record scores below
+ *      `confidenceThreshold`. It applies only when a template sets the
+ *      threshold above 0. The default of 0 passes any non-empty result.
+ *   3. Grounding enforcement: reject answers that state a currency amount,
+ *      a date, or a name that the retrieved records do not contain.
+ *   4. Refusal templates: vertical-specific copy for the cases we
+ *      intentionally do not answer (medical/legal/financial disclaimers).
  *
- * Fail-closed philosophy: when uncertain, refuse. The user is always pointed
- * to the hotline or in-person channels. The system never invents a price,
- * a medication, or a legal term.
+ * Refusals point the user to the hotline or in-person channels.
  *
  * All behavior is config-driven through `config.safety`. Disabling the entire
  * safety layer is a one-line change in airgap.config.json.
@@ -119,19 +118,17 @@ export function checkBlocklist(query: string): {
 }
 
 /**
- * Confidence check — refuse when KB search returned nothing strong enough.
+ * Confidence check: refuse when KB search returned nothing strong enough.
  *
- * Uses the BM25 score from the top retrieved doc (if MiniSearch left a
- * `score` field on the document) and normalises it to the [0, 1] range
- * via score / (score + 1). This is monotonic in BM25 — higher BM25
- * always yields higher normalised confidence — but bounded so callers can
+ * Uses the BM25 score that searchService keeps on `metadata.score` of the top
+ * retrieved doc and normalises it to the [0, 1] range via
+ * score / (score + 1). This is monotonic in BM25: higher BM25
+ * always yields higher normalised confidence, but it is bounded so callers can
  * compare against a fixed threshold without knowing the absolute BM25
  * scale of the corpus.
  *
- * If no docs were retrieved, confidence is 0 and the call fails closed.
- * If docs were retrieved but no score is present (e.g. mocked test
- * fixtures), confidence falls back to 1 so we don't break existing tests
- * that pre-date the scoring change.
+ * If no docs were retrieved, or the top doc has no valid score, confidence is
+ * 0 and the call fails closed. With the default threshold of 0 both still pass.
  */
 export function checkConfidence(retrievedDocs: KBDocument[]): {
   confident: boolean;
@@ -144,23 +141,11 @@ export function checkConfidence(retrievedDocs: KBDocument[]): {
   if (retrievedDocs.length === 0) {
     return {confident: false, confidence: 0};
   }
-  // MiniSearch attaches a `score` field to each result. searchService
-  // strips it during the KBDocument map step, so we look for it on the
-  // raw object as well as on metadata.
-  const top = retrievedDocs[0] as unknown as {
-    score?: number;
-    metadata?: {score?: number};
-  };
-  const rawScore = top.score ?? top.metadata?.score ?? null;
-  let confidence: number;
-  if (rawScore !== null && Number.isFinite(rawScore) && rawScore >= 0) {
-    confidence = rawScore / (rawScore + 1);
-  } else {
-    // No score present — keep the legacy permissive behaviour so the
-    // confidence gate doesn't fire just because a test fixture lacks the
-    // score field.
-    confidence = 1;
-  }
+  const rawScore = (retrievedDocs[0].metadata as {score?: unknown} | undefined)?.score;
+  const confidence =
+    typeof rawScore === 'number' && Number.isFinite(rawScore) && rawScore >= 0
+      ? rawScore / (rawScore + 1)
+      : 0;
   return {confident: confidence >= threshold, confidence};
 }
 
@@ -170,14 +155,12 @@ export function checkConfidence(retrievedDocs: KBDocument[]): {
  * An answer is considered ungrounded if any of the following is true:
  *   - It mentions a currency amount not present in any retrieved doc
  *   - It mentions a specific date not present in any retrieved doc
- *   - It claims to quote the user's account/plan/policy without a tool call
+ *   - It uses a capitalized name that no retrieved doc, the question, or the brand contains
  *
- * Catches hallucinated prices, made-up promo dates, and fabricated
- * account details. Purely textual — no side effects.
+ * Purely textual, with no side effects.
  */
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-// Full names and the usual short forms only. An open "sep[a-z]*" read
-// "2 separate IDs" as a date.
+// Full names and the usual short forms only, so "2 separate IDs" is not a date.
 const MONTH_NAME =
   '(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?' +
   '|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\\.?';

@@ -7,13 +7,12 @@ import type {LlmRunStats} from './llmService';
 
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
-// Structured doc shape for streamFromKb. Keeps the formatter decoupled
-// from buildUserMessage's literal layout.
+// Doc shape the renderer needs. Keeps it decoupled from buildUserMessage's
+// literal layout.
 type DocLike = Pick<KBDocument, 'category' | 'title' | 'content'>;
 
 // Pulls the REFERENCE INFORMATION block out of a buildUserMessage payload.
-// Only used when the orchestrator routes through routeGeneration; the
-// preferred entry point is streamFromKb, which takes structured docs.
+// The demo provider receives only that text, so it must parse the block back.
 export function extractReferenceBlock(userMessage: string): string | null {
   const match = userMessage.match(
     /REFERENCE INFORMATION:\s*\n+([\s\S]*?)(?:\n\nCONVERSATION SO FAR:|\n\nAnswer this customer question)/,
@@ -37,9 +36,8 @@ export function renderDocs(docs: DocLike[]): string {
   return parts.join('\n\n');
 }
 
-// Back-compat path: parses the [CATEGORY] Title format that buildUserMessage
-// emits. Kept so routeGeneration's text-in / text-out signature still works.
-// The orchestrator should prefer streamFromKb for new code.
+// Parses the [CATEGORY] Title format that buildUserMessage emits, because
+// routeGeneration passes text in and expects text out.
 export function formatReferenceAsReply(block: string): string {
   const docHeaderRe = /(^|\n\n+)(\[[A-Z_]+\]\s+[^\n]*)/g;
   const headers: Array<{titleStart: number; titleEnd: number}> = [];
@@ -89,18 +87,8 @@ class DemoLlmService {
     };
   }
 
-  // Preferred path: structured docs in, streamed text out. Pass the
-  // top-K KBDocuments straight from searchKB, no string round-trip.
-  async streamFromKb(
-    docs: DocLike[],
-    onChunk?: (chunk: string) => void,
-    onFirstChunk?: () => void,
-  ): Promise<string> {
-    return this.run(renderDocs(docs) || NO_KB_FALLBACK, onChunk, onFirstChunk);
-  }
-
-  // Back-compat: routeGeneration calls this with the buildUserMessage
-  // payload. Parses the REFERENCE INFORMATION block back out.
+  // routeGeneration calls this with the buildUserMessage payload. It parses
+  // the REFERENCE INFORMATION block back out.
   async generate(
     _systemPrompt: string,
     userMessage: string,

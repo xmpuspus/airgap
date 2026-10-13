@@ -3,16 +3,17 @@
  *
  * Pulls a signed manifest from the configured BFF, compares it against the
  * last-known version in MMKV, downloads a new bundle if the manifest is
- * newer, verifies the signature and sha256, writes atomically, and rebuilds
- * the in-memory MiniSearch index. On failure the previous bundle is kept
- * and the user sees a degraded-mode staleness banner.
+ * newer, verifies the signature and sha256, swaps the file into place with a
+ * restorable backup, and rebuilds the in-memory MiniSearch index. On failure
+ * the previous bundle is kept and the user sees a degraded-mode staleness banner.
  *
  * The service checks exact file bytes with TweetNaCl before it changes the
  * installed knowledge files.
  */
 
 import RNFS from 'react-native-fs';
-import {config} from '../config/loader';
+import {config, brand} from '../config/loader';
+import {t} from '../utils/i18n';
 import {logger} from './logger';
 import {connectivityService} from './connectivityService';
 import {getSecureStore} from './secureStorage';
@@ -32,6 +33,8 @@ const KEY_KB_VERSION = 'kbVersion';
 const KEY_PREVIOUS_KB_VERSION = 'previousKbVersion';
 const KEY_LAST_SYNC_ERROR = 'lastSyncError';
 
+const SYNC_INTERVAL_HOURS = 6;
+
 export type KbManifest = BundleManifest;
 
 export interface SyncResult {
@@ -46,14 +49,28 @@ export interface SyncResult {
 export type StalenessBand = 'fresh' | 'stale' | 'very_stale' | 'never';
 
 function getBackendBase(): string | null {
-  const backend = (config as any).backend;
-  if (!backend?.baseUrl) return null;
-  return backend.baseUrl.replace(/\/+$/, '');
+  const baseUrl = config.backend?.baseUrl;
+  if (!baseUrl) return null;
+  return baseUrl.replace(/\/+$/, '');
 }
 
 function getPinnedPublicKeys(): Readonly<Record<string, string>> {
-  const backend = (config as any).backend;
-  return backend?.sync?.publicKeys ?? {};
+  return config.backend?.sync?.publicKeys ?? {};
+}
+
+// Versions are numbers, dates, or ISO timestamps. Comparing their digit groups
+// in order ranks "10" above "9" and one ISO timestamp against another.
+// A version with no digits cannot be ranked, so it never counts as older.
+function isOlderVersion(offered: string, installed: string): boolean {
+  const offeredParts = offered.match(/\d+/g);
+  const installedParts = installed.match(/\d+/g);
+  if (!offeredParts || !installedParts) return false;
+  const length = Math.max(offeredParts.length, installedParts.length);
+  for (let i = 0; i < length; i += 1) {
+    const diff = Number(offeredParts[i] ?? 0) - Number(installedParts[i] ?? 0);
+    if (diff !== 0) return diff < 0;
+  }
+  return false;
 }
 
 // Without signed-bundle keys there is no server to sync with.
@@ -150,10 +167,9 @@ export async function loadBundleIntoKnowledge(): Promise<
     logger.info('syncService', 'loaded downloaded KB bundle', {version});
     return {source: 'bundle', version};
   } catch (err) {
-    logger.warn('syncService', 'failed to load downloaded bundle, falling back to compiled-in KB', {
+    logger.warn('syncService', 'failed to load downloaded bundle, trying the previous bundle', {
       error: (err as Error).message,
     });
-    // Try the previous bundle as a last resort.
     const backupPath = `${RNFS.DocumentDirectoryPath}/kb/bundle-previous.json`;
     const backupExists = await RNFS.exists(backupPath).catch(() => false);
     if (backupExists) {
@@ -185,10 +201,10 @@ async function rollbackBundle(): Promise<boolean> {
 }
 
 /**
- * Fetch the manifest, download and verify the bundle, atomically swap it
- * into place, and rebuild the in-memory search index from it. If the rebuild
- * fails, the file swap rolls back and the previous (or compiled-in) KB stays
- * searchable.
+ * Fetch the manifest, download and verify the bundle, swap it into place
+ * (keeping the old file as a backup), and rebuild the in-memory search index
+ * from the verified text. If the rebuild fails, the file swap rolls back and
+ * the previous (or compiled-in) KB stays searchable.
  */
 export async function syncKnowledge(): Promise<SyncResult> {
   if (!connectivityService.isOnline()) {
@@ -210,10 +226,20 @@ export async function syncKnowledge(): Promise<SyncResult> {
       syncStorage().remove(KEY_LAST_SYNC_ERROR);
       return {ok: true, action: 'noop', version: manifest.version, previousVersion};
     }
+    // A server that offers an older version must not downgrade the installed knowledge.
+    if (previousVersion && isOlderVersion(manifest.version, previousVersion)) {
+      return {
+        ok: false,
+        action: 'noop',
+        error: 'older_version',
+        version: manifest.version,
+        previousVersion,
+      };
+    }
 
     const downloaded = await downloadBundle(manifest);
     tmpPath = downloaded.tmpPath;
-    await verifyBundle({
+    const verified = verifyBundle({
       bytes: downloaded.bytes,
       actualSha256: downloaded.actualSha256,
       manifest,
@@ -222,13 +248,12 @@ export async function syncKnowledge(): Promise<SyncResult> {
     await swapBundle(tmpPath);
     swapped = true;
 
-    // Atomic-swap succeeded on disk. Now rebuild the in-memory MiniSearch
-    // index from the new bundle. If this fails (malformed bundle, empty
+    // The swap is on disk. If the index rebuild fails (malformed bundle, empty
     // docs), roll back the file swap AND revert to the previous (or
     // compiled-in) KB so the user never sees an empty search state.
     const finalPath = `${RNFS.DocumentDirectoryPath}/kb/bundle-current.json`;
     try {
-      await loadBundleFile(finalPath, manifest.version);
+      replaceKnowledgeFromBundle(verified.text, manifest.version);
     } catch (rebuildErr) {
       logger.error('syncService', 'bundle rebuild failed after swap, rolling back', {
         error: (rebuildErr as Error).message,
@@ -284,27 +309,25 @@ export async function syncKnowledge(): Promise<SyncResult> {
       previousVersion,
       bytesDownloaded: downloaded.bytesDownloaded,
     };
-  } catch (err: any) {
+  } catch (err) {
+    const message = (err as Error | undefined)?.message;
     if (tmpPath) await RNFS.unlink(tmpPath).catch(() => undefined);
-    logger.error('syncService', 'KB sync failed', {
-      error: err?.message,
-    });
-    syncStorage().set(KEY_LAST_SYNC_ERROR, err?.message ?? 'unknown');
+    logger.error('syncService', 'KB sync failed', {error: message});
+    syncStorage().set(KEY_LAST_SYNC_ERROR, message ?? 'unknown');
     const rolledBack = swapped ? await rollbackBundle().catch(() => false) : false;
     notifySyncListeners({
       ok: false,
       action: rolledBack ? 'rollback' : 'error',
-      error: err?.message,
+      error: message,
     });
     return {
       ok: false,
       action: rolledBack ? 'rollback' : 'error',
-      error: err?.message ?? 'unknown_error',
+      error: message ?? 'unknown_error',
     };
   }
 }
 
-// listeners
 type SyncListener = (result: SyncResult) => void;
 const listeners = new Set<SyncListener>();
 function notifySyncListeners(r: SyncResult) {
@@ -321,7 +344,6 @@ export function onSync(fn: SyncListener): () => void {
   return () => listeners.delete(fn);
 }
 
-// scheduler
 let scheduleTimer: ReturnType<typeof setInterval> | null = null;
 let reconnectUnsub: (() => void) | null = null;
 
@@ -329,12 +351,10 @@ let reconnectUnsub: (() => void) | null = null;
  * Start the sync scheduler. Runs once immediately on start (fire-and-forget)
  * plus on every reconnect and every N hours while the app is in foreground.
  */
-export function startSyncScheduler(options?: {intervalHours?: number}): void {
+export function startSyncScheduler(): void {
   if (scheduleTimer) return;
-  const intervalHours = options?.intervalHours ?? 6;
-  const intervalMs = intervalHours * 60 * 60 * 1000;
+  const intervalMs = SYNC_INTERVAL_HOURS * 60 * 60 * 1000;
 
-  // One-shot on boot.
   syncKnowledge().catch(err => {
     logger.warn('syncService', 'initial sync failed', {error: String(err)});
   });
@@ -353,7 +373,7 @@ export function startSyncScheduler(options?: {intervalHours?: number}): void {
     }
   });
 
-  logger.info('syncService', 'sync scheduler started', {intervalHours});
+  logger.info('syncService', 'sync scheduler started', {intervalHours: SYNC_INTERVAL_HOURS});
 }
 
 export function stopSyncScheduler(): void {
@@ -374,7 +394,6 @@ export async function clearDownloadedKnowledge(): Promise<void> {
   revertToCompiledKnowledge();
 }
 
-// staleness
 export function getStalenessInfo(): {
   band: StalenessBand;
   lastSyncAt: number | null;
@@ -418,13 +437,15 @@ export function getKbSource(): {
 export function getDegradedModePrefix(): string | null {
   // Without signed-bundle keys there is no server to sync with. The compiled-in
   // records are the release, and the answer card already says "Built-in release".
-  if (Object.keys(getPinnedPublicKeys()).length === 0) return null;
+  if (!isSyncConfigured()) return null;
   const {band, kbVersion} = getStalenessInfo();
   if (band === 'fresh') return null;
   if (band === 'stale') {
-    return `(My info may be a day or two out of date${
-      kbVersion ? ' (v' + kbVersion + ')' : ''
-    }; for current rates please call the hotline.)\n\n`;
+    const version = kbVersion ? ` (v${kbVersion})` : '';
+    return `${t(
+      'sync.staleNotice',
+      `(My info is more than a day old${version}; for current details please call ${brand.hotline}.)`,
+    )}\n\n`;
   }
   if (band === 'very_stale') {
     return `(My info is more than a week old and may be stale. Please verify prices and policies by calling the hotline.)\n\n`;

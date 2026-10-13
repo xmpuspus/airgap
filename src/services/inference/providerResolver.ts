@@ -133,7 +133,22 @@ export async function generateWithProviders(
   const failures: InferenceProviderError[] = [];
 
   for (const provider of resolveProviderChain(providers, policy)) {
-    const capabilities = await provider.getCapabilities();
+    let capabilities: InferenceCapabilities;
+    try {
+      capabilities = await provider.getCapabilities();
+    } catch (error) {
+      // One broken bridge must not end the chain; the next provider may be ready.
+      failures.push(
+        new InferenceProviderError(
+          'model_not_ready',
+          `${provider.id} capability check failed: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+          provider.id,
+        ),
+      );
+      continue;
+    }
     // The chain filter knows only provider IDs; a registered provider can still run remotely.
     if (policy.mode === 'offline-only' && capabilities.locality === 'cloud') {
       failures.push(

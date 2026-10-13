@@ -11,7 +11,7 @@ const mockManifest = {
 };
 const mockFetchKbManifest = jest.fn(async () => mockManifest);
 const mockFetchKbBytes = jest.fn(async () => Uint8Array.from([1, 2, 3]));
-const mockVerifyBundle = jest.fn(async (_input: unknown) => {
+const mockVerifyBundle = jest.fn((_input: unknown) => {
   throw new Error('bundle_signature_invalid');
 });
 jest.mock('react-native-fs', () => ({

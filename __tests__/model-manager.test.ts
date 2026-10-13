@@ -68,7 +68,7 @@ describe('model manager file checks', () => {
     await modelManager.downloadModel(value => progress.push(value));
 
     expect(mockUnlink).toHaveBeenCalledWith('/tmp/airgap-model-test/models/model.gguf.partial');
-    expect(mockDownloadFile).toHaveBeenCalledWith(expect.objectContaining({headers: {}}));
+    expect(mockDownloadFile.mock.calls[0][0]).not.toHaveProperty('headers');
     expect(progress.every(value => value >= 0 && value <= 1)).toBe(true);
     expect(mockMoveFile).toHaveBeenCalledWith(
       '/tmp/airgap-model-test/models/model.gguf.partial',

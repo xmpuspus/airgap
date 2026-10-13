@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 import {config, providerPolicyFromConfig} from '../config/loader';
 import type {LlmSection} from '../config/loader';
 import type {
+  InferenceMode,
   InferencePlatform,
   InferenceProvider,
   InferenceProviderId,
@@ -14,7 +15,7 @@ import {androidAicoreProvider} from './inference/androidAicoreProvider';
 import {providerHarnessActive} from './inference/providerHarness';
 import {getSecureStore} from './secureStorage';
 
-export type Mode = 'offline-only' | 'prefer-online' | 'prefer-offline' | 'demo';
+export type Mode = InferenceMode;
 export type UserMode = Exclude<Mode, 'demo'>;
 
 const VALID_MODES: ReadonlyArray<Mode> = [
@@ -106,8 +107,16 @@ function activePolicy() {
 
 export async function generationAvailable(): Promise<boolean> {
   const providers = resolveProviderChain(inferenceProviders, activePolicy());
-  const states = await Promise.all(providers.map(provider => provider.getCapabilities()));
-  return states.some(state => state.state === 'available');
+  // A rejecting bridge counts as unavailable instead of failing the whole check.
+  const states = await Promise.all(
+    providers.map(provider =>
+      provider.getCapabilities().then(
+        capabilities => capabilities.state === 'available',
+        () => false,
+      ),
+    ),
+  );
+  return states.some(Boolean);
 }
 
 export async function routeGeneration(

@@ -196,7 +196,7 @@ function validateManifest(manifest: BundleManifest): void {
   }
 }
 
-export async function verifyBundle(input: BundleVerificationInput): Promise<VerifiedBundle> {
+export function verifyBundle(input: BundleVerificationInput): VerifiedBundle {
   validateManifest(input.manifest);
   if (input.bytes.length !== input.manifest.byteLength) {
     throw new Error('bundle_length_invalid');

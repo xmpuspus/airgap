@@ -17,6 +17,7 @@ import {
   refusalFor,
   getSafetyPolicy,
 } from '../src/services/safetyLayer';
+import {config} from '../src/config/loader';
 import {logger, type LogEntry} from '../src/services/logger';
 import type {KBDocument} from '../src/types/knowledge';
 
@@ -116,6 +117,39 @@ describe('safetyLayer.checkConfidence', () => {
   test('any result passes the default threshold', () => {
     const {confident} = checkConfidence([doc()]);
     expect(confident).toBe(true);
+  });
+
+  describe('with a threshold above 0', () => {
+    const safety = (config as unknown as {safety: {confidenceThreshold?: number}}).safety;
+    const original = safety.confidenceThreshold;
+
+    beforeEach(() => {
+      safety.confidenceThreshold = 0.5;
+    });
+    afterEach(() => {
+      safety.confidenceThreshold = original;
+    });
+
+    test('a result without a score fails closed', () => {
+      const {confident, confidence} = checkConfidence([doc()]);
+      expect(confident).toBe(false);
+      expect(confidence).toBe(0);
+    });
+
+    test('a strong metadata score passes', () => {
+      const {confident, confidence} = checkConfidence([doc({metadata: {score: 3}})]);
+      expect(confident).toBe(true);
+      expect(confidence).toBe(0.75);
+    });
+
+    test('a weak metadata score fails', () => {
+      expect(checkConfidence([doc({metadata: {score: 0.5}})]).confident).toBe(false);
+    });
+
+    test('a score outside metadata is ignored', () => {
+      const scored = {...doc(), score: 3} as KBDocument;
+      expect(checkConfidence([scored]).confident).toBe(false);
+    });
   });
 });
 

@@ -1,16 +1,17 @@
-export type QueueActionType =
-  | 'balance_check'
-  | 'plan_change'
-  | 'ticket_create'
-  | 'outage_check'
-  | 'account_action'
-  | 'tool_call';
+import {config} from '../config/loader';
+
+// The government example has no agency integration, so no request may reach
+// a backend or the outbox.
+export function isGovernmentDomain(): boolean {
+  return config.llm?.supportDomain === 'government';
+}
 
 export type QueueStatus = 'pending' | 'processing' | 'completed' | 'failed';
 
 export interface QueueRecord {
   id: string;
-  type: QueueActionType;
+  /** A configured action id, or tool_call with the tool in toolName. */
+  type: string;
   toolName?: string;
   query: string;
   createdAt: number;

@@ -51,41 +51,41 @@ function validInput(): BundleVerificationInput {
 }
 
 describe('bundle verifier', () => {
-  test('accepts the exact signed bytes', async () => {
-    await expect(verifyBundle(validInput())).resolves.toMatchObject({
+  test('accepts the exact signed bytes', () => {
+    expect(verifyBundle(validInput())).toMatchObject({
       version: '2',
       text: expect.stringContaining('Checked answer'),
     });
   });
 
-  test('rejects a bad length', async () => {
+  test('rejects a bad length', () => {
     const input = validInput();
     input.manifest.byteLength += 1;
-    await expect(verifyBundle(input)).rejects.toThrow('bundle_length_invalid');
+    expect(() => verifyBundle(input)).toThrow('bundle_length_invalid');
   });
 
-  test('rejects a bad sha256', async () => {
+  test('rejects a bad sha256', () => {
     const input = validInput();
     input.actualSha256 = '0'.repeat(64);
-    await expect(verifyBundle(input)).rejects.toThrow('bundle_sha256_invalid');
+    expect(() => verifyBundle(input)).toThrow('bundle_sha256_invalid');
   });
 
-  test('rejects a bad signature', async () => {
+  test('rejects a bad signature', () => {
     const input = validInput();
     input.bytes[0] = input.bytes[0] === 123 ? 124 : 123;
     input.manifest.byteLength = input.bytes.length;
     input.manifest.sha256 = createHash('sha256').update(input.bytes).digest('hex');
     input.actualSha256 = input.manifest.sha256;
-    await expect(verifyBundle(input)).rejects.toThrow('bundle_signature_invalid');
+    expect(() => verifyBundle(input)).toThrow('bundle_signature_invalid');
   });
 
-  test('rejects an unknown key ID', async () => {
+  test('rejects an unknown key ID', () => {
     const input = validInput();
     input.manifest.keyId = 'unknown-key';
-    await expect(verifyBundle(input)).rejects.toThrow('bundle_key_invalid');
+    expect(() => verifyBundle(input)).toThrow('bundle_key_invalid');
   });
 
-  test('rejects a bad bundle schema', async () => {
+  test('rejects a bad bundle schema', () => {
     const input = validInput();
     const bytes = new TextEncoder().encode(JSON.stringify({files: {}}));
     input.bytes = bytes;
@@ -93,15 +93,15 @@ describe('bundle verifier', () => {
     input.manifest.sha256 = createHash('sha256').update(bytes).digest('hex');
     input.actualSha256 = input.manifest.sha256;
     input.manifest.signature = sign(null, bytes, privateKey).toString('base64');
-    await expect(verifyBundle(input)).rejects.toThrow('bundle_schema_invalid');
+    expect(() => verifyBundle(input)).toThrow('bundle_schema_invalid');
   });
 
   test.each([
     ['algorithm', 'RSA'],
     ['signatureEncoding', 'hex'],
-  ] as const)('rejects an unsupported %s', async (field, value) => {
+  ] as const)('rejects an unsupported %s', (field, value) => {
     const input = validInput();
     Object.assign(input.manifest, {[field]: value});
-    await expect(verifyBundle(input)).rejects.toThrow('bundle_manifest_invalid');
+    expect(() => verifyBundle(input)).toThrow('bundle_manifest_invalid');
   });
 });

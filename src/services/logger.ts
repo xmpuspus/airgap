@@ -10,10 +10,6 @@ interface LogEntry {
 
 type LogListener = (entry: LogEntry) => void;
 
-/**
- * Patterns that scrub values that look like secrets or PII. Keep the list
- * tight — false positives turn the logger into a debugging obstacle.
- */
 const REDACT_PATTERNS: {name: string; re: RegExp; replacement: string}[] = [
   {name: 'email', re: /[\w.+-]+@[\w-]+\.[\w.-]+/g, replacement: '[email]'},
   {name: 'phonePH', re: /\b09\d{9}\b/g, replacement: '[phone]'},

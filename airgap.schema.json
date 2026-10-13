@@ -890,11 +890,6 @@
             "minItems": 1,
             "description": "Trigger phrases. Any whole-word match selects this tool."
           },
-          "parameters": {
-            "type": "object",
-            "description": "JSON schema for the tool arguments",
-            "additionalProperties": true
-          },
           "offlineQueueEligible": {
             "type": "boolean",
             "default": true,
@@ -908,16 +903,6 @@
           "vertical": {
             "type": "string",
             "description": "Which vertical owns this tool (telco/banking/healthcare/airline/insurance/electric/water)"
-          },
-          "refusalReason": {
-            "type": "string",
-            "enum": [
-              "not_medical_advice",
-              "not_financial_advice",
-              "not_legal_advice",
-              "state_changing_offline"
-            ],
-            "description": "Override the default refusal reason on failure"
           },
           "backendMethod": {
             "type": "string",

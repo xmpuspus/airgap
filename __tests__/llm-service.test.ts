@@ -24,6 +24,7 @@ jest.mock('../src/services/modelManager', () => ({
 
 import {modelConfig} from '../src/config/loader';
 import {LLMService} from '../src/services/llmService';
+import {logger, type LogEntry} from '../src/services/logger';
 
 describe('local LLM generation timeout', () => {
   beforeEach(() => {
@@ -53,6 +54,37 @@ describe('local LLM generation timeout', () => {
       expect.objectContaining({enable_thinking: false}),
       expect.any(Function),
     );
+  });
+
+  test('logs the runtime token count, not a word count', async () => {
+    mockContext.completion.mockImplementationOnce(async () => ({
+      text: 'one two three',
+      tokens_predicted: 9,
+    }));
+    const entries: LogEntry[] = [];
+    const stop = logger.addListener(entry => entries.push(entry));
+    const service = new LLMService();
+    await service.load();
+
+    await service.generate('System', 'Question');
+    stop();
+
+    const done = entries.find(entry => entry.message.startsWith('Generated in'));
+    expect(done?.data).toMatchObject({tokens: 9});
+  });
+
+  test('rejects a second concurrent generation without a misleading skip log', async () => {
+    mockContext.completion.mockImplementationOnce(() => new Promise(() => undefined));
+    const entries: LogEntry[] = [];
+    const stop = logger.addListener(entry => entries.push(entry));
+    const service = new LLMService();
+    await service.load();
+    service.generate('System', 'first').catch(() => undefined);
+
+    await expect(service.generate('System', 'second')).rejects.toThrow('already in progress');
+    stop();
+
+    expect(entries.filter(entry => entry.level === 'warn')).toEqual([]);
   });
 
   test('stops a generation at the configured time limit', async () => {

@@ -1,7 +1,6 @@
 import type {KBCategory, KBDocument} from '../types/knowledge';
 import {getSearchIndex, getAllDocuments, getDocumentById} from '../knowledge';
 import {config} from '../config/loader';
-import {logger} from './logger';
 
 // Read at call time so a template or a test can change the depth after load.
 function defaultTopK(): number {
@@ -10,14 +9,18 @@ function defaultTopK(): number {
 
 // Negation patterns: extract the negated term
 const NEGATION_PATTERNS = [
-  /\bnot?\s+(\w+)/i,
-  /\bdon'?t\s+want\s+(\w+)/i,
-  /\bwithout\s+(\w+)/i,
-  /\bexcept\s+(\w+)/i,
-  /\bno\s+(\w+)/i,
-  /\bexclude\s+(\w+)/i,
-  /\bnot\s+interested\s+in\s+(\w+)/i,
+  /\bnot?\s+(\w+)/gi,
+  /\bdon'?t\s+want\s+(\w+)/gi,
+  /\bwithout\s+(\w+)/gi,
+  /\bexcept\s+(\w+)/gi,
+  /\bexclude\s+(\w+)/gi,
+  /\bnot\s+interested\s+in\s+(\w+)/gi,
 ];
+
+// A customer who writes "no signal" reports a problem. Treating "signal" as an
+// exclusion would drop the troubleshooting records that answer it.
+const SYMPTOM_PHRASE =
+  /^(?:no\s+(?:signal|internet|service|connection)|not\s+(?:working|loading|connecting))$/i;
 
 /**
  * Extract negated terms from a query.
@@ -26,12 +29,21 @@ const NEGATION_PATTERNS = [
 export function extractNegatedTerms(query: string): string[] {
   const negated: string[] = [];
   for (const pattern of NEGATION_PATTERNS) {
-    const match = query.match(pattern);
-    if (match && match[1]) {
-      negated.push(match[1].toLowerCase());
+    for (const match of query.matchAll(pattern)) {
+      if (match[1] && !SYMPTOM_PHRASE.test(match[0])) {
+        negated.push(match[1].toLowerCase());
+      }
     }
   }
   return [...new Set(negated)];
+}
+
+function stripNegations(query: string): string {
+  let stripped = query;
+  for (const pattern of NEGATION_PATTERNS) {
+    stripped = stripped.replace(pattern, match => (SYMPTOM_PHRASE.test(match) ? match : ''));
+  }
+  return stripped.replace(/\s+/g, ' ').trim();
 }
 
 /**
@@ -48,31 +60,14 @@ function applyNegationFilter(results: KBDocument[], negatedTerms: string[]): KBD
   });
 }
 
-export function searchKB(
-  query: string,
-  options?: {category?: KBCategory; topK?: number},
-): KBDocument[] {
+export function searchKB(query: string, options?: {topK?: number}): KBDocument[] {
   const topK = options?.topK ?? defaultTopK();
 
-  const category = options?.category;
-
   // Strip negation phrases from the search query so MiniSearch focuses on what the user DOES want
-  let searchQuery = query;
   const negatedTerms = extractNegatedTerms(query);
-  if (negatedTerms.length > 0) {
-    logger.debug('searchService', 'Negated terms detected', {negatedTerms});
-    // Remove negation phrases to improve search precision
-    for (const pattern of NEGATION_PATTERNS) {
-      searchQuery = searchQuery.replace(pattern, '');
-    }
-    searchQuery = searchQuery.replace(/\s+/g, ' ').trim();
-  }
+  const searchQuery = negatedTerms.length > 0 ? stripNegations(query) : query;
 
-  const results = getSearchIndex().search(searchQuery || query, {
-    filter: category
-      ? result => (result as unknown as {category: string}).category === category
-      : undefined,
-  });
+  const results = getSearchIndex().search(searchQuery || query);
 
   let mapped: KBDocument[] = results.slice(0, topK * 2).map(result => {
     // Preserve the BM25 score on the metadata field so the safety layer
@@ -93,13 +88,8 @@ export function searchKB(
     };
   });
 
-  // Apply negation filter
   mapped = applyNegationFilter(mapped, negatedTerms);
-
-  // Boost results whose category matches the query intent
   mapped = applyCategoryBoost(mapped, query);
-
-  // Re-rank based on query intent (price/speed sorting)
   mapped = reRankResults(mapped, query);
 
   return mapped.slice(0, topK);
@@ -120,6 +110,11 @@ const CATEGORY_SIGNALS: {keywords: string[]; category: KBCategory}[] = [
   {keywords: ['pay', 'payment', 'bill', 'gcash', 'bank'], category: 'payment'},
 ];
 
+// Whole-word match, so "airplane" does not signal "plan".
+function hasWord(text: string, word: string): boolean {
+  return new RegExp(`\\b${word}\\b`).test(text);
+}
+
 /**
  * Boost results whose category matches the detected query intent.
  * Moves matching-category results to the front without dropping others.
@@ -127,7 +122,7 @@ const CATEGORY_SIGNALS: {keywords: string[]; category: KBCategory}[] = [
 function applyCategoryBoost(results: KBDocument[], query: string): KBDocument[] {
   const lower = query.toLowerCase();
   for (const signal of CATEGORY_SIGNALS) {
-    if (signal.keywords.some(kw => lower.includes(kw))) {
+    if (signal.keywords.some(kw => hasWord(lower, kw))) {
       const matching = results.filter(r => r.category === signal.category);
       const rest = results.filter(r => r.category !== signal.category);
       if (matching.length > 0) {
@@ -150,44 +145,34 @@ const PRICE_ASC_KEYWORDS = [
 const PRICE_DESC_KEYWORDS = ['most expensive', 'premium', 'highest price', 'top tier'];
 const SPEED_DESC_KEYWORDS = ['fastest', 'highest speed', 'most speed', 'best speed'];
 
+// Records without a value sort last in either direction.
+function sortByValue(
+  results: KBDocument[],
+  getValue: (doc: KBDocument) => number | null,
+  direction: 'asc' | 'desc',
+): KBDocument[] {
+  return [...results].sort((a, b) => {
+    const valueA = getValue(a);
+    const valueB = getValue(b);
+    if (valueA === null && valueB === null) return 0;
+    if (valueA === null) return 1;
+    if (valueB === null) return -1;
+    return direction === 'asc' ? valueA - valueB : valueB - valueA;
+  });
+}
+
 function reRankResults(results: KBDocument[], query: string): KBDocument[] {
   if (results.length <= 1) return results;
   const lower = query.toLowerCase();
 
-  // Price-ascending sort for "cheapest"/"budget" queries
   if (PRICE_ASC_KEYWORDS.some(kw => lower.includes(kw))) {
-    return [...results].sort((a, b) => {
-      const priceA = getNumericMeta(a, 'price');
-      const priceB = getNumericMeta(b, 'price');
-      if (priceA === null && priceB === null) return 0;
-      if (priceA === null) return 1;
-      if (priceB === null) return 1;
-      return priceA - priceB;
-    });
+    return sortByValue(results, doc => getNumericMeta(doc, 'price'), 'asc');
   }
-
-  // Price-descending sort
   if (PRICE_DESC_KEYWORDS.some(kw => lower.includes(kw))) {
-    return [...results].sort((a, b) => {
-      const priceA = getNumericMeta(a, 'price');
-      const priceB = getNumericMeta(b, 'price');
-      if (priceA === null && priceB === null) return 0;
-      if (priceA === null) return 1;
-      if (priceB === null) return 1;
-      return priceB - priceA;
-    });
+    return sortByValue(results, doc => getNumericMeta(doc, 'price'), 'desc');
   }
-
-  // Speed-descending sort for "fastest" queries
   if (SPEED_DESC_KEYWORDS.some(kw => lower.includes(kw))) {
-    return [...results].sort((a, b) => {
-      const speedA = parseSpeed(a);
-      const speedB = parseSpeed(b);
-      if (speedA === null && speedB === null) return 0;
-      if (speedA === null) return 1;
-      if (speedB === null) return 1;
-      return speedB - speedA;
-    });
+    return sortByValue(results, parseSpeed, 'desc');
   }
 
   return results;

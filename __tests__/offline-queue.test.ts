@@ -69,4 +69,56 @@ describe('offline action queue', () => {
 
     expect(listener).toHaveBeenCalledTimes(2);
   });
+
+  test('sends a configured action without a dedicated method to the backend', async () => {
+    mockExecuteAction.mockResolvedValue({message: 'Refill request sent.'});
+    const queued = offlineQueue.enqueue('prescription_refill', 'Refill my prescription', 'chat-1');
+
+    const [result] = await offlineQueue.processQueue();
+
+    expect(mockExecuteAction).toHaveBeenCalledWith(
+      'prescription_refill',
+      {query: 'Refill my prescription'},
+      {idempotencyKey: queued.id},
+    );
+    expect(result.action.status).toBe('completed');
+    expect(result.response).toBe('Refill request sent.');
+  });
+
+  test('keeps a running record in processing for other readers', async () => {
+    let finish: (value: {message: string}) => void = () => undefined;
+    mockExecuteAction.mockReturnValue(new Promise(resolve => (finish = resolve)));
+    offlineQueue.enqueue('tool_call', 'Create a ticket', 'chat-1', 'create_ticket');
+
+    const run = offlineQueue.processQueue();
+    expect(offlineQueue.getQueue()[0].status).toBe('processing');
+    finish({message: 'Ticket created'});
+    await run;
+
+    expect(offlineQueue.getQueue()[0].status).toBe('completed');
+  });
+
+  test('returns a record left in processing to pending when the queue loads', () => {
+    jest.isolateModules(() => {
+      const {getSecureStore} = require('../src/services/secureStorage');
+      getSecureStore('offline-queue').set(
+        'queued_actions',
+        JSON.stringify([
+          {
+            id: 'stranded',
+            type: 'tool_call',
+            toolName: 'create_ticket',
+            query: 'Create a ticket',
+            createdAt: 1,
+            status: 'processing',
+            retryCount: 0,
+            chatMessageId: 'chat-1',
+          },
+        ]),
+      );
+      const {offlineQueue: loaded} = require('../src/services/offlineQueue');
+
+      expect(loaded.getQueue()[0].status).toBe('pending');
+    });
+  });
 });

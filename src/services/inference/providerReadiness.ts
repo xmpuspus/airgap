@@ -6,6 +6,7 @@ import type {
   ProviderPolicyEntry,
 } from './types';
 import {meetsMinimumOsVersion} from './providerResolver';
+import {logger} from '../logger';
 
 function unavailableCapabilities(
   entry: ProviderPolicyEntry,
@@ -18,7 +19,7 @@ function unavailableCapabilities(
     supportsStreaming: entry.id !== 'demo',
     supportsCancellation: entry.id !== 'demo',
     platform: entry.platform === 'all' || !entry.platform ? platform : entry.platform,
-    reason: entry.enabled ? 'generation_failed' : 'provider_disabled',
+    reason: entry.enabled ? 'model_not_ready' : 'provider_disabled',
   };
 }
 
@@ -53,7 +54,11 @@ export async function readConfiguredProviderCapabilities(
           return {...capabilities, state: 'unavailable', reason: 'provider_disabled'};
         }
         return capabilities;
-      } catch {
+      } catch (error) {
+        logger.error('providerReadiness', 'capability read failed', {
+          providerId: entry.id,
+          error: error instanceof Error ? error.message : String(error),
+        });
         return unavailableCapabilities(entry, platform);
       }
     }),

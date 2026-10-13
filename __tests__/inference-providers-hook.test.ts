@@ -2,6 +2,7 @@ import {
   readConfiguredProviderCapabilities,
   selectProviderEntriesForMode,
 } from '../src/services/inference/providerReadiness';
+import {logger} from '../src/services/logger';
 import type {
   InferenceCapabilities,
   InferenceProvider,
@@ -51,7 +52,8 @@ test('reads the configured platform chain in priority order and keeps disabled e
   expect(android.getCapabilities).not.toHaveBeenCalled();
 });
 
-test('turns a capability-check failure into a usable unavailable state', async () => {
+test('turns a capability-check failure into a not-ready state and logs the error', async () => {
+  const logError = jest.spyOn(logger, 'error').mockImplementation(() => undefined);
   const apple = provider('apple-foundation-models');
   (apple.getCapabilities as jest.Mock).mockRejectedValue(new Error('native bridge failed'));
 
@@ -65,9 +67,34 @@ test('turns a capability-check failure into a usable unavailable state', async (
     expect.objectContaining({
       providerId: 'apple-foundation-models',
       state: 'unavailable',
-      reason: 'generation_failed',
+      reason: 'model_not_ready',
     }),
   ]);
+  expect(logError).toHaveBeenCalledWith(
+    'providerReadiness',
+    expect.any(String),
+    expect.objectContaining({providerId: 'apple-foundation-models'}),
+  );
+  logError.mockRestore();
+});
+
+test('shows an enabled provider that is not registered as not ready', async () => {
+  const logError = jest.spyOn(logger, 'error').mockImplementation(() => undefined);
+
+  await expect(
+    readConfiguredProviderCapabilities(
+      'ios',
+      [],
+      [{id: 'apple-foundation-models', enabled: true, priority: 0, platform: 'ios'}],
+    ),
+  ).resolves.toEqual([
+    expect.objectContaining({
+      providerId: 'apple-foundation-models',
+      state: 'unavailable',
+      reason: 'model_not_ready',
+    }),
+  ]);
+  logError.mockRestore();
 });
 
 test('shows operator-blocked downloads as unavailable', async () => {

@@ -87,21 +87,19 @@ export class LLMService {
       throw new Error('Model not loaded. Call load() first.');
     }
 
-    // Concurrency guard — only one generation at a time
     if (this.generating) {
-      logger.warn('LLM', 'Generation already in progress, skipping');
       throw new Error('Generation already in progress. Please wait.');
     }
 
     this.generating = true;
     const startTime = Date.now();
-    // Reset stats for this run — keep loadMs (carries over from last load()).
+    // loadMs carries over from the last load(), so only the per-run stats reset.
     this.lastFirstTokenMs = null;
     this.lastTotalMs = null;
     this.lastTokenCount = 0;
     let firstTokenFired = false;
 
-    // Generation timeout — prevent infinite hangs on slow devices
+    // The timeout stops infinite hangs on slow devices.
     // The limit covers prompt processing too. Slow hardware needs a higher value.
     const timeoutMs = modelConfig.generationTimeoutMs ?? 15_000;
     let timeoutHandle: ReturnType<typeof setTimeout> | null = null;
@@ -151,7 +149,7 @@ export class LLMService {
       const elapsed = Date.now() - startTime;
       this.lastTotalMs = elapsed;
       logger.info('LLM', `Generated in ${elapsed}ms`, {
-        tokens: result.text.split(/\s+/).length,
+        tokens: result.tokens_predicted,
         elapsed,
         // Prompt and token rates from the runtime, for device benchmarks.
         timings: result.timings,

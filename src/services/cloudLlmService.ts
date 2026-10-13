@@ -1,14 +1,15 @@
 /**
- * Cloud LLM proxy — routes LLM requests through the BFF when the config
- * enables hybrid mode and the device is online.
+ * Cloud LLM proxy. Sends LLM requests through the BFF when the config
+ * enables the cloud provider and the device is online.
  *
  * Contract:
  *   - Same generate(systemPrompt, userMessage, onToken?) signature as
- *     llmService, so the orchestrator can swap based on config.llm.mode.
- *   - Responses are cached by (query_hash, kbVersion) for the session to
- *     avoid double-billing repeated queries.
- *   - Network/auth errors never crash the app; callers fall back to the
- *     local llmService per config.llm.mode.
+ *     llmService. The `cloudProvider` in inference/existingProviders.ts
+ *     wraps this service.
+ *   - Responses are cached by (system prompt, user message, kbVersion) for
+ *     the session to avoid double-billing repeated queries.
+ *   - Network and auth errors reject the promise. The provider resolver in
+ *     inference/providerResolver.ts handles fallback to the next provider.
  *
  * The BFF is expected to expose:
  *
@@ -21,10 +22,10 @@
  */
 
 import {config} from '../config/loader';
+import type {LlmSection} from '../config/loader';
 import {logger} from './logger';
 import {connectivityService} from './connectivityService';
 import {getAccessToken} from './authProvider';
-import {fnv1a32} from '../utils/hash';
 
 interface CloudGenerateResponse {
   text: string;
@@ -35,8 +36,9 @@ interface CloudGenerateResponse {
 const cache = new Map<string, {text: string; expiresAt: number}>();
 const CACHE_TTL_MS = 30 * 60 * 1000;
 
-function hashKey(system: string, user: string, kbVersion: string): string {
-  return fnv1a32(`${kbVersion}::${system}::${user}`);
+// The full string is the key: a short hash can collide and serve another answer.
+function cacheKeyFor(system: string, user: string, kbVersion: string): string {
+  return `${kbVersion}::${system}::${user}`;
 }
 
 function cacheGet(key: string): string | null {
@@ -46,12 +48,15 @@ function cacheGet(key: string): string | null {
     cache.delete(key);
     return null;
   }
+  // Re-insert so Map order tracks recent use and eviction drops the least recent.
+  cache.delete(key);
+  cache.set(key, entry);
   return entry.text;
 }
 
 function cacheSet(key: string, text: string): void {
+  cache.delete(key);
   cache.set(key, {text, expiresAt: Date.now() + CACHE_TTL_MS});
-  // Crude LRU — cap size at 100 entries
   if (cache.size > 100) {
     const firstKey = cache.keys().next().value;
     if (firstKey !== undefined) cache.delete(firstKey);
@@ -62,15 +67,15 @@ export class CloudLLMService {
   private generating = false;
 
   isAvailable(): boolean {
-    const llm = (config as any).llm;
-    const backend = (config as any).backend;
+    const llm: LlmSection | undefined = config.llm;
+    const backend = config.backend;
     return !!(llm?.cloud?.enabled && (llm?.cloud?.endpoint || backend?.baseUrl));
   }
 
   private getEndpoint(): string | null {
-    const llm = (config as any).llm;
+    const llm: LlmSection | undefined = config.llm;
     if (llm?.cloud?.endpoint) return llm.cloud.endpoint;
-    const backend = (config as any).backend;
+    const backend = config.backend;
     if (backend?.baseUrl) {
       return `${backend.baseUrl.replace(/\/+$/, '')}/api/v1/llm/generate`;
     }
@@ -92,9 +97,9 @@ export class CloudLLMService {
       throw new Error('cloud generation already in progress');
     }
 
-    const llm = (config as any).llm ?? {};
+    const llm: LlmSection = config.llm ?? {};
     const kbVersion = llm.cacheByKbVersion ? getCurrentKbVersion() : 'na';
-    const cacheKey = hashKey(systemPrompt, userMessage, kbVersion);
+    const cacheKey = cacheKeyFor(systemPrompt, userMessage, kbVersion);
     const hit = cacheGet(cacheKey);
     if (hit) {
       logger.info('cloudLlm', 'cache hit');
@@ -105,7 +110,8 @@ export class CloudLLMService {
     this.generating = true;
     const started = Date.now();
     try {
-      const endpoint = this.getEndpoint()!;
+      const endpoint = this.getEndpoint();
+      if (!endpoint) throw new Error('cloud LLM not configured');
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
       };

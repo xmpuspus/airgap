@@ -31,17 +31,15 @@ backend result because a model is absent.
 }
 ```
 
-| Field                  | Meaning                                                         |
-| ---------------------- | --------------------------------------------------------------- |
-| `name`                 | Stable audit and outbox identifier                              |
-| `description`          | Human label for status and receipts                             |
-| `keywords`             | Whole-word phrases. The first listed match wins                 |
-| `offlineQueueEligible` | Allows a state-changing call into the outbox when offline       |
-| `stateChanging`        | Marks a call that can change remote state                       |
-| `vertical`             | Optional fixture or diagnostics group                           |
-| `backendMethod`        | Method on `BackendConnector`. The default is `name`             |
-| `refusalReason`        | Optional safe refusal category                                  |
-| `parameters`           | Documentation schema. The current router does not model-fill it |
+| Field                  | Meaning                                                   |
+| ---------------------- | --------------------------------------------------------- |
+| `name`                 | Stable audit and outbox identifier                        |
+| `description`          | Human label for status and receipts                       |
+| `keywords`             | Whole-word phrases. The first listed match wins           |
+| `offlineQueueEligible` | Allows a state-changing call into the outbox when offline |
+| `stateChanging`        | Marks a call that can change remote state                 |
+| `vertical`             | Optional fixture or diagnostics group                     |
+| `backendMethod`        | Method on `BackendConnector`. The default is `name`       |
 
 Place specific keywords before broad ones. Add tests for similar phrases and words that must not
 match. The router uses whole-word, case-insensitive regular expressions.

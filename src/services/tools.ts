@@ -1,5 +1,5 @@
 /**
- * Tool calling — deterministic keyword router with LLM-assisted synthesis.
+ * Tool calling: deterministic keyword router with LLM-assisted synthesis.
  *
  * Design: the model provider never chooses or authorizes backend work.
  * Airgap routes with configured keywords, runs the known backend method,
@@ -7,7 +7,7 @@
  *
  * This keeps tool calling:
  *   - Fast (keyword match, no extra LLM pass to decide)
- *   - Reliable (no reliance on Gemma 4 E2B emitting well-formed JSON)
+ *   - Reliable (no reliance on the model emitting well-formed JSON)
  *   - Grounded (the LLM sees a verified tool result, not a guess)
  *   - Offline-aware (state-changing tools queue when offline)
  *
@@ -16,36 +16,23 @@
 
 import {config} from '../config/loader';
 import {logger} from './logger';
-import {getBackendConnector} from './backendConnector';
 import {connectivityService} from './connectivityService';
-import {offlineQueue} from './offlineQueue';
-import type {QueuedAction} from '../types/chat';
+import {offlineQueue, runBackendAction, unfinishedRequestReply} from './offlineQueue';
+import {isGovernmentDomain} from './actionQueueTypes';
 
 export interface ToolDefinition {
   /** Unique identifier. Matches the backend method name by convention. */
   name: string;
   /** Human-readable description shown in docs and the dev panel. */
   description: string;
-  /** Keyword list — any match (case-insensitive, whole-word) selects this tool. */
+  /** Keyword list. Any match (case-insensitive, whole-word) selects this tool. */
   keywords: string[];
-  /** JSON schema for the arguments the tool expects. */
-  parameters?: {
-    type: 'object';
-    properties?: Record<string, {type: string; description?: string}>;
-    required?: string[];
-  };
   /** Can this tool be safely queued when offline? */
   offlineQueueEligible?: boolean;
   /** Does this tool mutate remote state? */
   stateChanging?: boolean;
   /** Which vertical owns this tool (telco/banking/healthcare/etc.). */
   vertical?: string;
-  /** Override the default refusal if execution fails. */
-  refusalReason?:
-    | 'not_medical_advice'
-    | 'not_financial_advice'
-    | 'not_legal_advice'
-    | 'state_changing_offline';
   /** The backend method to invoke. Mapped by name. */
   backendMethod?: string;
 }
@@ -66,7 +53,7 @@ export interface ToolResult {
 }
 
 function getTools(): ToolDefinition[] {
-  if (config.llm?.supportDomain === 'government') return [];
+  if (isGovernmentDomain()) return [];
   return (config as unknown as {tools?: ToolDefinition[]}).tools ?? [];
 }
 
@@ -97,7 +84,7 @@ export function findToolForQuery(query: string): ToolDefinition | null {
  * instead and return a queuedActionId.
  */
 export async function executeTool(tool: ToolDefinition, query: string): Promise<ToolResult> {
-  if (config.llm?.supportDomain === 'government') {
+  if (isGovernmentDomain()) {
     return {
       toolName: tool.name,
       ok: false,
@@ -106,22 +93,10 @@ export async function executeTool(tool: ToolDefinition, query: string): Promise<
     };
   }
   const online = connectivityService.isOnline();
+  // The config schema makes a tool queue eligible unless it opts out.
+  const queueEligible = tool.offlineQueueEligible !== false;
 
-  if (!online && tool.offlineQueueEligible !== false && tool.stateChanging) {
-    const action = offlineQueue.enqueue('tool_call' as QueuedAction['type'], query, '', tool.name);
-    logger.info('tools', 'Queued offline tool call', {
-      tool: tool.name,
-      id: action.id,
-    });
-    return {
-      toolName: tool.name,
-      ok: true,
-      queuedActionId: action.id,
-      summary: `Queued "${tool.description}" — will execute on reconnect.`,
-    };
-  }
-
-  if (!online && !tool.offlineQueueEligible) {
+  if (!online && !queueEligible) {
     return {
       toolName: tool.name,
       ok: false,
@@ -131,76 +106,30 @@ export async function executeTool(tool: ToolDefinition, query: string): Promise<
     };
   }
 
-  const backend = getBackendConnector();
-  const method = tool.backendMethod ?? tool.name;
+  if (!online && tool.stateChanging) {
+    const action = offlineQueue.enqueue('tool_call', query, '', tool.name);
+    logger.info('tools', 'Queued offline tool call', {
+      tool: tool.name,
+      id: action.id,
+    });
+    return {toolName: tool.name, ok: true, queuedActionId: action.id};
+  }
 
   try {
-    let data: Record<string, unknown> = {};
-    let summary = '';
-
-    switch (method) {
-      case 'checkBalance':
-      case 'lookupBalance': {
-        const r = await backend.checkBalance('current');
-        data = {...r};
-        summary = `Balance: ${r.balance}. Data: ${r.data}. Active promo: ${r.promos}.`;
-        break;
-      }
-      case 'changePlan':
-      case 'activateAddon': {
-        const r = await backend.changePlan('current', '');
-        data = {...r};
-        summary = r.message;
-        break;
-      }
-      case 'createTicket':
-      case 'fileClaim':
-      case 'disputeTransaction': {
-        const r = await backend.createTicket(query);
-        data = {...r};
-        summary = r.message;
-        break;
-      }
-      case 'reportOutage':
-      case 'checkOutage':
-      case 'lookupFlightStatus':
-      case 'checkPolicyStatus':
-      case 'checkBillStatus':
-      case 'bookAppointment':
-      case 'scheduleCallback':
-      case 'scheduleMeterRead':
-      case 'requestCallback': {
-        const r = await backend.checkOutage();
-        data = {...r};
-        summary = r.message;
-        break;
-      }
-      case 'lookupMedication':
-      case 'listRecentTransactions': {
-        const r = await backend.executeAction(method, {query});
-        data = {...r};
-        summary = r.message;
-        break;
-      }
-      default: {
-        const r = await backend.executeAction(method, {query});
-        data = {...r};
-        summary = r.message;
-      }
-    }
-
+    const {data, summary} = await runBackendAction(tool.backendMethod ?? tool.name, query);
     logger.info('tools', 'Tool executed', {tool: tool.name, online});
     return {toolName: tool.name, ok: true, data, summary};
-  } catch (err: any) {
+  } catch (err) {
+    const message = err instanceof Error ? err.message : undefined;
     logger.error('tools', 'Tool execution failed', {
       tool: tool.name,
-      error: err?.message,
+      error: message,
     });
     return {
       toolName: tool.name,
       ok: false,
-      error: err?.message ?? 'unknown_error',
-      summary: "I couldn't complete that request right now. Please try again or call the hotline.",
+      error: message ?? 'unknown_error',
+      summary: unfinishedRequestReply(),
     };
   }
 }
@@ -215,7 +144,7 @@ export function formatToolResultForLLM(result: ToolResult): string {
     return `TOOL ERROR (${result.toolName}): ${result.summary ?? result.error ?? 'failed'}`;
   }
   if (result.queuedActionId) {
-    return `TOOL QUEUED (${result.toolName}): ${result.summary}`;
+    return `TOOL QUEUED (${result.toolName})`;
   }
   const dataLines = Object.entries(result.data ?? {})
     .map(([k, v]) => `  ${k}: ${JSON.stringify(v)}`)

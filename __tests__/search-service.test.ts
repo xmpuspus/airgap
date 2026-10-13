@@ -50,6 +50,20 @@ describe('extractNegatedTerms', () => {
     expect(extractNegatedTerms('no contract plans')).toContain('contract');
   });
 
+  test.each([
+    'no signal',
+    'my phone is not working',
+    'no internet',
+    'no service',
+    'page not loading',
+  ])('ignores the symptom phrase "%s"', query => {
+    expect(extractNegatedTerms(query)).toEqual([]);
+  });
+
+  test('keeps an exclusion that follows a symptom phrase', () => {
+    expect(extractNegatedTerms('no signal, no contract plans')).toEqual(['contract']);
+  });
+
   test('returns empty for query without negation', () => {
     expect(extractNegatedTerms('what plans do you have')).toHaveLength(0);
   });
@@ -69,10 +83,49 @@ describe('searchKB', () => {
 
     // Provide mock search results
     const mockDocs = [
-      {id: 'plan-1', category: 'plan', title: 'Plan 299', content: 'Prepaid plan', keywords: ['prepaid'], tags: ['budget'], metadata: {price: 299}},
-      {id: 'plan-2', category: 'plan', title: 'Plan 999', content: 'Postpaid plan', keywords: ['postpaid'], tags: ['premium'], metadata: {price: 999}},
-      {id: 'plan-3', category: 'plan', title: 'Plan 599', content: 'Mid-range plan', keywords: ['mid'], tags: [], metadata: {price: 599}},
-      {id: 'faq-1', category: 'faq', title: 'Balance check', content: 'How to check', keywords: ['balance'], tags: []},
+      {
+        id: 'faq-0',
+        category: 'faq',
+        title: 'Explain charges',
+        content: 'About charges',
+        keywords: ['charges'],
+        tags: [],
+      },
+      {
+        id: 'plan-1',
+        category: 'plan',
+        title: 'Plan 299',
+        content: 'Prepaid plan',
+        keywords: ['prepaid'],
+        tags: ['budget'],
+        metadata: {price: 299},
+      },
+      {
+        id: 'plan-2',
+        category: 'plan',
+        title: 'Plan 999',
+        content: 'Postpaid plan',
+        keywords: ['postpaid'],
+        tags: ['premium'],
+        metadata: {price: 999},
+      },
+      {
+        id: 'plan-3',
+        category: 'plan',
+        title: 'Plan 599',
+        content: 'Mid-range plan',
+        keywords: ['mid'],
+        tags: [],
+        metadata: {price: 599},
+      },
+      {
+        id: 'faq-1',
+        category: 'faq',
+        title: 'Balance check',
+        content: 'How to check',
+        keywords: ['balance'],
+        tags: [],
+      },
     ];
 
     jest.mock('../src/knowledge', () => ({
@@ -104,6 +157,25 @@ describe('searchKB', () => {
   test('returns results limited by topK', () => {
     const results = searchKB('plans', {topK: 2});
     expect(results.length).toBeLessThanOrEqual(2);
+  });
+
+  test('sorts unpriced records last for a cheapest query', () => {
+    const ids = searchKB('cheapest', {topK: 5}).map(r => r.id);
+    expect(ids.slice(0, 3)).toEqual(['plan-1', 'plan-3', 'plan-2']);
+  });
+
+  test('sorts unpriced records last for a most expensive query', () => {
+    const ids = searchKB('most expensive', {topK: 5}).map(r => r.id);
+    expect(ids.slice(0, 3)).toEqual(['plan-2', 'plan-3', 'plan-1']);
+  });
+
+  test('matches category signals as whole words', () => {
+    // "airplane" contains "plan" but is not the word "plan"
+    expect(searchKB('airplane charges', {topK: 5})[0].id).toBe('faq-0');
+  });
+
+  test('boosts the category for a whole-word signal', () => {
+    expect(searchKB('which plan', {topK: 5})[0].category).toBe('plan');
   });
 
   test('returns results with required fields', () => {

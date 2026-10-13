@@ -26,10 +26,7 @@ class ConnectivityService {
         online: this.online,
       });
       if (wasOnline !== this.online) {
-        logger.info(
-          'Connectivity',
-          this.online ? 'Back online' : 'Went offline',
-        );
+        logger.info('Connectivity', this.online ? 'Back online' : 'Went offline');
         this.listeners.forEach(fn => fn(this.online));
       }
     });
@@ -46,12 +43,6 @@ class ConnectivityService {
   }
 
   isOnline(): boolean {
-    if (!this.initialized) {
-      logger.warn(
-        'Connectivity',
-        'isOnline() called before init(), returning default (true)',
-      );
-    }
     return this.online;
   }
 
@@ -60,13 +51,6 @@ class ConnectivityService {
     return () => {
       this.listeners = this.listeners.filter(l => l !== fn);
     };
-  }
-
-  async check(): Promise<boolean> {
-    const state = await NetInfo.fetch();
-    this.online = !!state.isConnected && !!state.isInternetReachable;
-    logger.debug('Connectivity', 'Manual check', {online: this.online});
-    return this.online;
   }
 
   /**
