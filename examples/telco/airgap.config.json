@@ -227,7 +227,7 @@
   "tools": [
     {
       "name": "checkBalance",
-      "description": "Look up the caller's balance, data remaining, and active promo",
+      "description": "Check your balance, data remaining, and active promo",
       "keywords": ["my balance", "my bill amount", "my data usage", "check my usage"],
       "offlineQueueEligible": true,
       "stateChanging": false,
@@ -236,7 +236,7 @@
     },
     {
       "name": "reportOutage",
-      "description": "Check for a service outage in the caller's area",
+      "description": "Check for a service outage in your area",
       "keywords": ["outage status", "service outage", "outage in my area"],
       "offlineQueueEligible": true,
       "stateChanging": false,
@@ -254,7 +254,7 @@
     },
     {
       "name": "activateAddon",
-      "description": "Activate a data or voice add-on on the caller's plan",
+      "description": "Activate a data or voice add-on",
       "keywords": ["activate addon", "activate add-on", "change my plan", "upgrade my plan"],
       "offlineQueueEligible": true,
       "stateChanging": true,

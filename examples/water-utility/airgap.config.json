@@ -217,7 +217,7 @@
   "tools": [
     {
       "name": "reportOutage",
-      "description": "Report a water outage or low pressure at the caller's address",
+      "description": "Report a water outage or low pressure at your address",
       "keywords": ["no water", "water outage", "report outage", "low pressure"],
       "offlineQueueEligible": true,
       "stateChanging": true,
@@ -235,7 +235,7 @@
     },
     {
       "name": "scheduleMeterRead",
-      "description": "Schedule a technician to read the caller's meter",
+      "description": "Schedule a meter reading",
       "keywords": ["meter read", "read my meter", "schedule meter", "meter reading"],
       "offlineQueueEligible": true,
       "stateChanging": true,

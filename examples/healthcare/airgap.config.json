@@ -181,7 +181,7 @@
     },
     {
       "name": "lookupMedication",
-      "description": "Look up generic information about a medication from the approved KB",
+      "description": "Look up general information about a medication",
       "keywords": ["what is", "information about", "side effects of", "generic name of"],
       "offlineQueueEligible": true,
       "stateChanging": false,

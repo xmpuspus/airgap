@@ -214,7 +214,7 @@
   "tools": [
     {
       "name": "reportOutage",
-      "description": "Report a power outage at the caller's address",
+      "description": "Report a power outage at your address",
       "keywords": ["power outage", "no power", "report outage", "electricity out"],
       "offlineQueueEligible": true,
       "stateChanging": true,
@@ -232,7 +232,7 @@
     },
     {
       "name": "scheduleMeterRead",
-      "description": "Schedule a technician to read the caller's meter",
+      "description": "Schedule a meter reading",
       "keywords": ["meter read", "read my meter", "schedule meter", "meter reading"],
       "offlineQueueEligible": true,
       "stateChanging": true,

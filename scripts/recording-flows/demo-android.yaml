@@ -47,7 +47,7 @@ name: Airgap Android release recording
 - hideKeyboard
 - tapOn: 'Send message'
 - extendedWaitUntil:
-    visible: 'Queued'
+    visible: '(?s).*Queued: Open a support ticket.*'
     timeout: 20000
 - takeScreenshot: ${SHOT_PREFIX}-action-receipt
 - tapOn:

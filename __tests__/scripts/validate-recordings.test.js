@@ -212,7 +212,9 @@ describe('recording manifest validation', () => {
 
     expect(flow).toMatch(/inputText: 'Create a ticket'\n- hideKeyboard\n- tapOn: 'Send message'/);
     expect(flow).not.toContain("inputText: 'Check my balance'");
-    expect(flow).toMatch(/tapOn: 'Send message'\n- extendedWaitUntil:\n\s+visible: 'Queued'/);
+    expect(flow).toMatch(
+      /tapOn: 'Send message'\n- extendedWaitUntil:\n\s+visible: '\(\?s\)\.\*Queued: Open a support ticket\.\*'/,
+    );
   });
 
   test('clears Android development notices after changing airplane mode', () => {

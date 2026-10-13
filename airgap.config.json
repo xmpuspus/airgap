@@ -301,7 +301,7 @@
   "tools": [
     {
       "name": "checkBalance",
-      "description": "Look up the caller's account balance, data remaining, and active promo",
+      "description": "Check your balance, data remaining, and active promo",
       "keywords": [
         "my balance",
         "my bill amount",
@@ -319,7 +319,7 @@
     },
     {
       "name": "reportOutage",
-      "description": "Check for a service outage in the caller's area",
+      "description": "Check for a service outage in your area",
       "keywords": ["outage status", "service outage", "outage in my area"],
       "offlineQueueEligible": true,
       "stateChanging": false,
@@ -328,7 +328,7 @@
     },
     {
       "name": "createTicket",
-      "description": "Open a support ticket for the caller",
+      "description": "Open a support ticket",
       "keywords": [
         "create a ticket",
         "create ticket",
@@ -343,7 +343,7 @@
     },
     {
       "name": "activateAddon",
-      "description": "Activate a data or voice add-on on the caller's plan",
+      "description": "Activate a data or voice add-on",
       "keywords": [
         "change my plan",
         "switch my plan",
@@ -363,7 +363,7 @@
     },
     {
       "name": "scheduleCallback",
-      "description": "Schedule a callback from support at a time the caller chooses",
+      "description": "Schedule a callback from support",
       "keywords": [
         "call me back",
         "schedule callback",

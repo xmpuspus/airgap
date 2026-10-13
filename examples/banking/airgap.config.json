@@ -207,7 +207,7 @@
   "tools": [
     {
       "name": "lookupBalance",
-      "description": "Look up the caller's checking, savings, or card balance",
+      "description": "Check your account or card balance",
       "keywords": ["my balance", "my account balance", "my checking balance", "my savings balance"],
       "offlineQueueEligible": true,
       "stateChanging": false,
@@ -216,7 +216,7 @@
     },
     {
       "name": "listRecentTransactions",
-      "description": "List the caller's recent transactions",
+      "description": "List your recent transactions",
       "keywords": [
         "recent transactions",
         "my transactions",
