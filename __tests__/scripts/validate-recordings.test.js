@@ -202,6 +202,17 @@ describe('recording manifest validation', () => {
     expect(flow).toMatch(/visible: 'Document answer'\n\s+timeout: 90000/);
   });
 
+  test('moves the screen after the answer so the recorder keeps the final card', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/industry-android.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toMatch(
+      /answer-source\n(?:#.*\n)*- swipe:\n\s+direction: DOWN[\s\S]*- swipe:\n\s+direction: UP[\s\S]*- waitForAnimationToEnd\n- stopRecording/,
+    );
+  });
+
   test('can record one named industry after an interrupted batch', () => {
     const script = fs.readFileSync(
       path.join(process.cwd(), 'scripts/record-industries.mjs'),

@@ -25,4 +25,13 @@ name: Airgap industry template recording
     visible: 'Document answer'
     timeout: 90000
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
+# Android screen recording writes a frame only on change, so a short scroll
+# keeps the finished answer card in the clip.
+- swipe:
+    direction: DOWN
+    duration: 500
+- swipe:
+    direction: UP
+    duration: 500
+- waitForAnimationToEnd
 - stopRecording
