@@ -158,8 +158,8 @@ device, model identity, prompt version, knowledge version, and app commit. See
 
 ### Android system AI
 
-The Kotlin module uses ML Kit GenAI Prompt API `1.0.0-beta2`. It keeps the base
-app base at API 24 but returns `unsupported_os` before ML Kit initialization
+The Kotlin module uses ML Kit GenAI Prompt API `1.0.0-beta2`. The base app keeps
+`minSdk 24`, but the module returns `unsupported_os` before ML Kit initialization
 on API 24 or 25.
 
 On API 26 or newer, the module checks feature status, streams model download

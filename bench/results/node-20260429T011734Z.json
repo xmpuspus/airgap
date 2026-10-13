@@ -1,6 +1,6 @@
 {
   "device": "mac-host-node",
-  "model": "gemma-4-e2b-it-q3ks.gguf",
+  "model": "n/a",
   "mode": "demo",
   "capturedAt": "2026-04-29T01:17:34.168Z",
   "pathTaken": "fallback",

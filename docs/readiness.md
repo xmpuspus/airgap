@@ -1,11 +1,8 @@
-# Airgap product readiness review
-
-Checked against `main` on 2026-10-08. This page replaces the April 2026 proof-of-concept scorecard,
-which no longer described the repository. Git history keeps that earlier audit.
+# Where Airgap is ready and what you still own
 
 ## The project is useful for offline support pilots
 
-Airgap now gives maintainers a checked React Native base for local FAQs, troubleshooting, policy lookup,
+Airgap gives maintainers a checked React Native base for local FAQs, troubleshooting, policy lookup,
 locations, eligibility guidance, and recoverable service requests. The default demo works without
 a model file or network request. Eight industry fixtures exercise the same runtime with different
 knowledge, prompts, tools, and safety rules. Seven use fictional data. The government services
@@ -26,8 +23,8 @@ The repository includes the following parts.
 
 | Use case                                     | Repository state                                               | Work an operator still owns                                  |
 | -------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------ |
-| Offline FAQs and troubleshooting             | Ready for evaluation and bounded POC                           | Replace and approve knowledge and test target devices        |
-| Locations, hours, plans, and policy guidance | Ready for evaluation and bounded POC                           | Content ownership, expiry, escalation, accessibility         |
+| Offline FAQs and troubleshooting             | Ready for evaluation and limited pilot                         | Replace and approve knowledge and test target devices        |
+| Locations, hours, plans, and policy guidance | Ready for evaluation and limited pilot                         | Content ownership, expiry, escalation, accessibility         |
 | Account lookups and service requests         | Interface and queue contracts exist                            | Identity, authorization, backend adapter, audit              |
 | Answers from Apple Foundation Models         | Bridge and controlled app journey pass                         | Eligible physical-device evaluation                          |
 | Answers from the Android ML Kit Prompt API   | Bridge and controlled app journey pass                         | Listed physical-device evaluation and terms review           |
@@ -46,17 +43,15 @@ The repository includes the following parts.
   it directly, and Maestro runs available or failure paths through the native bridge and visible UI.
 - The evidence validator distinguishes deterministic runtime, simulated provider, host-native
   model, and target-device reports. Capture hardware remains a separate field.
-- The macOS Foundation Models probe loads the real framework. The 2026-08-13 maintainer run found
-  Apple Intelligence disabled, which is an environment observation and not a passing model run.
-  On 2026-10-07 the iOS 26.4 Simulator reported the model as ready and then failed every request.
+- Apple Foundation Models has no passing model run. See [provider validation](provider-validation.md).
 - Four government services takes run Gemma 4 E2B as a 3-bit GGUF file through `llama.rn` on an
   Android 15 emulator. Each take is one recorded run, pinned to its source commit.
 - Every kept app GIF records the source commit, device, OS, provider, model identity, capture
   command, duration, dimensions, byte size, public playback speed, evidence class, and loop review.
 
-See [`README.md`](README.md) for the current evidence table and
-[`demo/recordings.json`](demo/recordings.json) for exact media facts.
-Use [`docs/provider-validation.md`](docs/provider-validation.md) for the exact provider commands and
+See [`README.md`](../README.md) for the current evidence table and
+[`demo/recordings.json`](../demo/recordings.json) for exact media facts.
+Use [`docs/provider-validation.md`](provider-validation.md) for the exact provider commands and
 the limits of each evidence class.
 
 ## Release gaps
@@ -80,5 +75,5 @@ Airgap is not a hosted customer service, identity provider, account system, comp
 or general agent framework. Models phrase retrieved information. They do not choose tools,
 authenticate a person, approve sensitive actions, or update an account.
 
-Use [`ROADMAP.md`](ROADMAP.md) for planned work, [`DEPLOYMENT.md`](DEPLOYMENT.md) for an operator
-checklist, and [`SECURITY.md`](SECURITY.md) for the security boundary.
+Use [`ROADMAP.md`](../ROADMAP.md) for planned work, [`DEPLOYMENT.md`](../DEPLOYMENT.md) for an
+operator checklist, and [`SECURITY.md`](../SECURITY.md) for the security boundary.

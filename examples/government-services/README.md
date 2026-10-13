@@ -8,18 +8,18 @@ Start with the [public-service guide](../../docs/public-service-showcase.md).
 ## Run the example
 
 ```bash
-npx create-airgap-bot citizen-help --template government-services
-cd citizen-help
-npm install
+git clone https://github.com/xmpuspus/airgap.git && cd airgap
+npm ci
+npm run setup
 npm run android
 ```
 
-The app starts in deterministic `demo` mode. It reads no account, makes no decision on an
+When `npm run setup` asks for the industry template, choose `government-services`. The app starts in deterministic `demo` mode. It reads no account, makes no decision on an
 application, and downloads no model.
 
 ## Included data and actions
 
-- 37 stored documents; only six with `publicEvidence` enter the current public answer path
+- 38 stored documents. Only the eight with `publicEvidence` enter the public answer path.
 - No action stubs, backend or tools; offline queuing is disabled
 - Agency requests return unavailable; direct tool and backend calls also refuse without a receipt or queue entry
 - 11 blocked-topic fixtures with refusal copy for political opinions and legal advice
@@ -37,10 +37,10 @@ sends these prompts in this order.
 6. Paano kumuha ng passport?
 
 A second GIF, [`airgap-showcase-government.gif`](../../demo/airgap-showcase-government.gif), puts
-a ten-prompt take next to the published replies of the 2026-09-21 launch. A third,
+the seven-prompt replay take next to the published replies of the 2026-09-21 launch. A third,
 [`airgap-showcase-government-services.gif`](../../demo/airgap-showcase-government-services.gif),
 shows a fee, a requirements list, a holiday date, a hotline, and a report queued in airplane mode.
-These are earlier native takes. Deterministic beats are code output. The current path has no
+Deterministic beats are code output. The current path has no
 agency integration and does not reproduce the old queued-report demonstration.
 
 ## Public records instead of fiction
@@ -51,21 +51,16 @@ DFA passport FAQ, the NBI, the SSS, the BIR, PSAHelpline, and a DILG regional pa
 eight-record pack has exact saved source paths and hashes. Other historical template records
 are stored for compatibility and are excluded from these public answers.
 
-On 2026-10-07 the DFA requirements page and the PSA, PhilHealth, LTO, PhilSys, Pag-IBIG, and
-COMELEC service pages blocked fetches. Those services are not in this release.
+This release does not cover the PSA, PhilHealth, LTO, PhilSys, Pag-IBIG, or COMELEC services, or
+the DFA requirements list. Add them from fetched official pages.
 
-## The questions this template replays
+## The golden cases test identity, scope, doubt, and prompt probes
 
-The quick replies and the golden cases replay the launch-week failures of a national government
-assistant in September 2026. The documented prompts were "Who is the current president?" and the
-Filipino challenge "sigurado ka dyan?". Here both prompts return the same dated officials record.
-A question about another country refuses with the jurisdiction limit. Identity comes from
-code. A prompt probe returns a fixed refusal. The cases are in
-`__tests__/golden/government-services.json`.
-
-Two prompts from 2026-10-12 screenshots complete the set. A question about why the DICT Secretary
-resigned gets a fixed refusal and the dated Palace record, with no reasons. A request for more on
-the "ghost internet" scheme gets the Palace release of 2026-09-25 with its link.
+The cases ask who the president is, challenge the answer, ask about another country, ask the
+bot's name, and probe for its instructions. Each returns a dated record or a fixed refusal from
+code. A question about why an official resigned gets a refusal and the dated record, with no
+reasons. The [case study](../../docs/case-study-government-assistant-launch.md) explains where the
+prompts come from.
 
 ## Known limits
 

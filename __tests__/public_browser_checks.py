@@ -1,7 +1,6 @@
-"""Authored browser regressions using actual site bytes and an actual missing file.
+"""Browser checks for the public lab and landing page.
 
-Called by public:qa. No route interception, provider doubles, or clock changes.
-Screenshots are embedded in the already-declared qa.json output.
+They run against the served site files, with no mocks.
 """
 
 import base64
@@ -105,10 +104,7 @@ def check_loading_recovery(browser, width, height, pack):
                 page.evaluate("document.documentElement.scrollWidth - innerWidth") <= 1
             )
             return {
-                "origin": (
-                    "Authored filesystem fault: real pack omitted, "
-                    "then exact bytes restored"
-                ),
+                "origin": "Pack file removed, then restored byte for byte",
                 "httpStatuses": [
                     missing.value.status,
                     still_missing.value.status,

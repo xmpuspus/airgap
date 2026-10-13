@@ -2,7 +2,9 @@
 
 ## The review covers all 54 displayed answers and 36 raw outputs
 
-The actual model runner produced `evidence/public-service/experiment.json` against source commit `a8f688f99148e00123a708ba0940638214511f3d`. That revision predates the report. An independent reviewer read all 54 displayed answers, all 36 raw outputs and the six exact source archives.
+This review covers the 54-row run of 2026-10-09. `experiment.json` holds a later 63-row run.
+
+The model runner produced the reviewed report against source commit `a8f688f99148e00123a708ba0940638214511f3d`. That revision predates the report. The review read all 54 displayed answers, all 36 raw outputs and the six exact source archives.
 
 - Run ID: `2026-10-09T07-08-56.968Z-1d5687aa-e12e-4974-bd97-8ea7e9aa2389`
 - Started: `2026-10-09T07:08:57.817Z`
@@ -26,7 +28,7 @@ The artifact has 54 displayed rows: 18 record-only rows, 18 retrieved-model rows
 | `holidays.json`             | `hol-001` | `47191eba3c93309a4d17aceeb826d31961c62008816f902d813dc3d406ef95a8` |
 | `sss.json`                  | `hot-005` | `6b6e5768caffaa35a0ff0ec6343b834ea1524535ad0f683c073fbc79c778085d` |
 
-The run metadata matches the reviewed local files: core `c9a825df630040722a8417d26b32e2a7acf938a5f4416ac08b7d39c527f41550`, corpus `f66af3ac1393ecedcdd6bb83853c8fbd165a2764eaba9033f2698985f8bed285`, runner `9a028f9654b1186277b696d6098e480a4680378ab142cefbbaa2d01ba302e3b1`, criteria `39440b5d96dd14c1124a0f85e928ae82534311153451ea7297f5e5456569ea17`, and policy `07991aec1b2da138beef282440a5d581ec848afeb2d1cffb6f956dd256755cc0`.
+The run metadata records these hashes: core `c9a825df630040722a8417d26b32e2a7acf938a5f4416ac08b7d39c527f41550`, corpus `f66af3ac1393ecedcdd6bb83853c8fbd165a2764eaba9033f2698985f8bed285`, runner `9a028f9654b1186277b696d6098e480a4680378ab142cefbbaa2d01ba302e3b1`, criteria `39440b5d96dd14c1124a0f85e928ae82534311153451ea7297f5e5456569ea17`, and policy `07991aec1b2da138beef282440a5d581ec848afeb2d1cffb6f956dd256755cc0`.
 
 ## The recorded controls replaced all 18 model answers
 
@@ -53,7 +55,7 @@ The 18 retrieved-model raw outputs break down as follows:
 
 The 18 application-control raw outputs have the same question pattern: three president bare-name criterion failures, three holiday truncation failures, and 12 narrow-criteria passes. Controls replace all 18 raw outputs with the source-backed record. This includes the six token-limited NBI and holiday generations. The resulting displayed control rows pass 18/18.
 
-No raw row triggered a forbidden-string result or a scored false refusal. This only describes the six authored fact checks. These checks cannot prove complete factual correctness, source freshness, refusal quality for broader prompts, or model behavior outside these six questions.
+No raw row triggered a forbidden-string result or a scored false refusal. This only describes the six maintainer-written fact checks. These checks cannot prove complete factual correctness, source freshness, refusal quality for broader prompts, or model behavior outside these six questions.
 
 ## Model review and capture review have separate evidence
 

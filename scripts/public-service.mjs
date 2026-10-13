@@ -111,7 +111,7 @@ export function replay() {
   });
   return {
     schemaVersion: 1,
-    promptOrigin: 'Maintainer-authored regression criteria; not citizen conversations',
+    promptOrigin: 'Maintainer-written test criteria; not citizen conversations',
     executedAt: new Date().toISOString(),
     concurrency: 1,
     coreSha256: sha256(fs.readFileSync(path.join(root, 'src/core/publicService.ts'))),

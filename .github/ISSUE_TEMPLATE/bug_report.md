@@ -28,13 +28,13 @@ labels: bug
 - Platform: Android / iOS
 - Device: (make + model)
 - OS version:
-- Node version (if reproducing via journey runner):
+- Node version (if reproducing via test scripts):
 
 ## Scope
 
 - [ ] I can reproduce this on a fresh clone
 - [ ] I can reproduce this on multiple devices
-- [ ] This is specific to one config vertical (which one?):
+- [ ] This is specific to one industry template (which one?):
 
 ## Anything else
 

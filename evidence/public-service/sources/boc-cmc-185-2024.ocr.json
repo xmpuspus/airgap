@@ -5,7 +5,7 @@
   "sourceIsOriginalPdf": true,
   "sourcePath": "evidence/public-service/sources/boc-cmc-185-2024.pdf",
   "sourceSha256": "5ec4a61f27d0107b44b34b4d77905e9c2c78e0f6aa9bb1ab6e18e95a3c26208f",
-  "transport": "Downloaded official PDF supplied by task owner; unedited local OCR text extraction",
+  "transport": "Official PDF downloaded from the publisher URL; unedited local OCR text extraction",
   "extractedAt": "2026-10-09T06:44:58.128309+00:00",
   "ocrVersion": "tesseract 5.5.1",
   "pages": [

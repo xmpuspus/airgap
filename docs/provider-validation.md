@@ -94,6 +94,10 @@ successful run produces `simulated-provider` evidence because the response comes
 manifest. It does not become target-device evidence just because the full app and native
 bridge ran.
 
+The side-by-side README GIF uses the deterministic `demo` provider. Its footage does not prove
+Apple Foundation Models or Android system AI on a physical device. Provider harness runs are
+`simulated-provider` evidence and are separate from the deterministic public GIFs.
+
 Validate one or more generated reports explicitly.
 
 ```bash
@@ -109,22 +113,21 @@ changing system settings.
 
 The app runs the Apple model with the `permissiveContentTransformations` guardrails, because the
 app only rephrases approved records. The default guardrails also run a sensitive-content
-classifier. On 2026-10-07 the iOS 26.4 Simulator reported the model as ready and then failed every
-generation with a missing-data error from that classifier, while the Mac host answered the same
-prompt. With the content-transformation guardrails the simulator answers.
+classifier. With those default guardrails, the iOS 26.4 Simulator can report the model as ready
+and then fail every generation with a missing-data error from that classifier. The Mac host
+answers the same prompt. With the content-transformation guardrails, the simulator answers.
 
 ```bash
 npm run providers:apple:probe
 npm run providers:validate -- tmp/provider-validation/apple-host-probe-<timestamp>.json
 ```
 
-An unavailable probe is a valid environment observation, not proof of model generation. The latest
-maintainer check on 2026-10-07 is the simulator run above, and the Apple-silicon Mac host answered
-the same prompt. An earlier check on 2026-08-13 returned `appleIntelligenceNotEnabled`. Enabling Apple Intelligence is a manual owner action in System
-Settings. Airgap does not change it.
+An unavailable probe is a valid environment observation, not proof of model generation. If it
+reports `appleIntelligenceNotEnabled`, enable Apple Intelligence in System Settings. Airgap does
+not change it.
 
-After the owner enables Apple Intelligence and the probe reports availability, run the three
-fictional grounded cases.
+After you enable Apple Intelligence and the probe reports availability, run the three fictional
+grounded cases.
 
 ```bash
 npm run providers:apple:evaluate
@@ -133,7 +136,8 @@ npm run providers:validate -- tmp/provider-validation/apple-host-evaluation-<tim
 
 A passing result is `host-native-model` evidence for the recorded Mac model, macOS version, prompt
 pack, and knowledge version. It does not prove iPhone eligibility, memory use, thermal behavior,
-background behavior, or mobile latency.
+background behavior, or mobile latency. No passing Apple Foundation Models run exists in this
+repository.
 
 ## Check a physical-device candidate before claiming target evidence
 
@@ -155,8 +159,8 @@ AICore is useful for `simulated-provider` checks but cannot run genuine ML Kit P
 A physical or hosted device still needs a ready provider before it can satisfy the release gate.
 
 Firebase Test Lab preflight needs an existing authenticated `gcloud` installation, project, and
-physical model choice. The first command checks configuration only. Add `--execute` only when the
-owner approves the external matrix and supplies an APK.
+physical model choice. The first command checks configuration only. Add `--execute` only when
+your organization approves the external matrix and you supply an APK.
 
 ```bash
 npm run providers:device:preflight -- \

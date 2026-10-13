@@ -1,4 +1,4 @@
-<!-- Thanks for the PR. Please fill out the sections below. -->
+<!-- Fill in each section. -->
 
 ## What this PR does
 
@@ -6,13 +6,7 @@
 
 ## How it's tested
 
-- [ ] `npx tsc --noEmit` clean
-- [ ] `npx eslint .` clean
-- [ ] `npx jest` clean
-- [ ] New test added for new behavior (if applicable)
-- [ ] `node __tests__/run-journeys.mjs` clean (if touching orchestrator/search)
-- [ ] `node __tests__/run-multi-turn.mjs` clean (if touching follow-up or prompt builder)
-- [ ] `node __tests__/run-industry-tests.mjs` clean (if touching a vertical config)
+- [ ] The checks in CONTRIBUTING.md pass (list any you skipped and why)
 - [ ] Manual device check on Android (describe device/emulator)
 - [ ] Manual device check on iOS (describe device/simulator)
 
@@ -25,7 +19,7 @@
 
 ## Safety / security
 
-- [ ] No new hardcoded encryption key constants (use `createKeyedMMKV`)
+- [ ] No new hardcoded encryption key constants (open stores through `src/services/secureStorage.ts`)
 - [ ] No new hardcoded refusal strings (use `refusalFor(reason)`)
 - [ ] No `console.log` in committed code (use `logger`)
 - [ ] If a new tool was added, it has an adversarial test case in

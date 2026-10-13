@@ -215,8 +215,7 @@ for (const [name, spec] of Object.entries(industries)) {
 
   for (const test of spec.queries) {
     if (name === 'government-services') {
-      // This vertical now exercises the shipped answer/policy path, not a
-      // search over legacy records that have no packaged public evidence.
+      // Government services runs the shipped answer and policy path, not MiniSearch.
       const actual = answerPublicService(test.q, loadPublicRecords(), {}, loadPublicPolicy());
       const missing = test.expectContains.filter(
         term => !actual.answer.toLowerCase().includes(term.toLowerCase()),

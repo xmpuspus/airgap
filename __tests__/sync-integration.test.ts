@@ -1,9 +1,7 @@
 /**
  * Sync integration test. It checks the path from a synced bundle file, to
- * memory, to search results. Earlier, syncService.swapBundle wrote
- * bundle-current.json to DocumentDirectoryPath while searchService loaded the
- * compiled-in KB files at import time, so the user never saw synced content.
- * This test guards against that regression.
+ * memory, to search results. It guards that search returns synced content,
+ * not only the compiled-in KB files.
  */
 
 // --- Mocks ---

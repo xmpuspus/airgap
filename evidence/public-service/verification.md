@@ -1,10 +1,13 @@
 # The local checks pass at the recorded source
 
-The final capture source is `f8c2411da69a0b64bb43a02384a6836e592b6393`.
+These checks ran on 2026-10-09 at source `f8c2411`. The released captures come from a later
+source. See the [visual review](visual-review.md).
+
+The capture source for these checks is `f8c2411da69a0b64bb43a02384a6836e592b6393`.
 The core is SHA-256 `c9a825df630040722a8417d26b32e2a7acf938a5f4416ac08b7d39c527f41550`.
 The released model report is SHA-256
 `f158fd1e6cf3942f3635435b654da54c7055a28d46114560b42ef74424235e53`.
-The [independent model review](experiment-review.md) covers all 54 displayed answers
+The [model output review](experiment-review.md) covers all 54 displayed answers
 and 36 raw outputs. All 18 controlled answers use the source-record fallback.
 
 | Check                                              | Result on 2026-10-09                                                                                                    |
@@ -27,7 +30,7 @@ GIF/MP4 files and nine existing site GIFs with matching source hashes.
 The final `public:capture` process completed with exit 0. Its complete process
 capture has SHA-256 `d685b9ff433126e9132962ff4c76b7114718dd04e309d4f6a0946e6350017ddf`.
 The full `public:demo` command then passed in a separate checkout at the same source.
-That [independent reproduction](reproduction-review.md) includes 36 new model
+That [reproduction](reproduction-review.md) includes 36 new model
 generations and a final browser pass against its newly captured media.
 It reused installed dependencies and the existing CPU binding.
 
@@ -73,16 +76,15 @@ The pinned runner cannot load the supplied Gemma 4 architecture. There was no fr
 native-device run. Existing native recordings keep their separate identities.
 
 The historical revision pair is tested in both orders. The real 2025 Proclamation 727
-calendar now tests refusal after its annual scope ends. The same test adds the checked
+calendar tests refusal after its annual scope ends. The same test adds the checked
 2026 Proclamation 1006 record and checks the selected record in either order. An explicit
 2025 query must still refuse the expired record. It cannot borrow the 2026 answer.
 
 Its catalogue
-rollover metadata is authored application configuration, not a claim of legal amendment.
+rollover metadata is maintainer-written application configuration, not a claim of legal amendment.
 All 13 core tests passed with the real clock on 2026-10-09. Current records need source
 review before their maintainer deadlines expire.
 
 The frozen checker remains SHA-256
 `36058f62e6b496d4a186e044ef7760afde1744bde88d04f5c022a4af36aed5ec`.
-The work is committed locally. No agency transaction, deployment or external publication
-is part of this evidence.
+No agency transaction or deployment is part of this evidence.

@@ -709,7 +709,7 @@ def capture(browser, base, pack, source_commit, committed_files):
     descriptions = {
         "replay-pack": (
             "Replay Pack",
-            f"Runs {len(pack['cases'])} authored checks in order, with no model call.",
+            f"Runs {len(pack['cases'])} test cases in order, with no model call.",
         ),
         "evidence-lab": (
             "Evidence Lab",
@@ -717,11 +717,11 @@ def capture(browser, base, pack, source_commit, committed_files):
         ),
         "source-workbench": (
             "Source Workbench",
-            "Applies the actual 2024 holiday amendment and rolls it back.",
+            "Applies the 2024 holiday amendment and rolls it back.",
         ),
         "model-controls": (
             "Model Controls",
-            "Compares actual recorded NBI model outputs "
+            "Compares recorded NBI model outputs "
             "with the answer the application displays.",
         ),
         "demo-kit": (
@@ -730,10 +730,11 @@ def capture(browser, base, pack, source_commit, committed_files):
         ),
     }
     index = [
-        "# Actual public-service browser captures",
+        "# Public-service browser captures",
         "",
-        "Each clip records a browser run. Inspect each full loop "
-        "and its screenshots before publication.",
+        "Each clip records the browser app. The "
+        "[visual review](../../evidence/public-service/visual-review.md) lists the "
+        "hashes, source commit, and desktop and mobile checks for each capture.",
         "",
         "| Feature | What the clip shows | GIF | MP4 |",
         "| --- | --- | --- | --- |",
@@ -747,10 +748,9 @@ def capture(browser, base, pack, source_commit, committed_files):
     index.extend(
         [
             "",
-            "[Manifest](recordings.json) records hashes, observed beats "
+            "[Manifest](recordings.json) records hashes, recorded beats "
             "and uncut edit ranges.",
-            "Raw footage remains ignored under tmp/recordings. "
-            "No native run is implied.",
+            "The clips run in a desktop browser, not on a phone.",
             "",
         ]
     )

@@ -20,7 +20,7 @@
       "sourceSha256": "25122b9ab9b32bf326a5f8f806d2da6d90546de9ecde9ff14ca4e529e8eedc1c",
       "excerpt": "Ninoy Aquino Day - 21. August (Wednesday)",
       "sourceTextPath": "evidence/public-service/sources/boc-ocom-memo-01-2024.ocr.json",
-      "sourceTextSha256": "9a70de3e315f9724b09a0530b3b9c1f61b7255450edffa7e2f98ce93f91e14b9",
+      "sourceTextSha256": "9bbb522beaccff112b2cae2053e942539cdf177ec407ae0d361f65531504e979",
       "sourceClass": "Customs memo with full Proclamation 368 attached on PDF pages 2–4",
       "page": 3
     }
@@ -46,7 +46,7 @@
       "excerpt": "Aquino Day from August 21, 2024 (Wednesday) to August 23, 2024 (Friday).",
       "supersedes": "historical368",
       "sourceTextPath": "evidence/public-service/sources/bir-rmc-102-2024.ocr.json",
-      "sourceTextSha256": "ae8232d21f45e45badb6f2fc989f76e101cf9eee3dce743c2cbe29a2e50fcef9",
+      "sourceTextSha256": "e52e0ab3fb7be5662de956b6537336f6728a9db6cd9a90655cb38ecd47a7d158",
       "sourceClass": "BIR Revenue Memorandum Circular 102-2024 reporting Proclamation 665; no attachment in this one-page PDF",
       "proclamationIssuedAt": "2024-08-15",
       "page": 1

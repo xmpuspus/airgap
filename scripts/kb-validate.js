@@ -48,16 +48,16 @@ function run() {
       allErrors.push(`${filename}: expected array at root`);
       continue;
     }
-    // Run validation per file but share the seenIds map across files so
-    // a duplicate id between two files is still detected.
+    // validateDocs tracks ids within one file only, so its duplicate-id errors are dropped below.
     const fileErrors = validateDocs(docs, filename);
-    // validateDocs maintains its own internal seenIds; for cross-file
-    // duplicate detection we pass the merged set through a second pass.
+    // The shared seenIds map reports a duplicate id within a file or between files.
     for (let i = 0; i < docs.length; i++) {
       if (docs[i] && docs[i].id) {
         if (seenIds.has(docs[i].id)) {
           allErrors.push(
-            `${filename}[${i}]: duplicate id '${docs[i].id}' (first seen in ${seenIds.get(docs[i].id)})`,
+            `${filename}[${i}]: duplicate id '${docs[i].id}' (first seen in ${seenIds.get(
+              docs[i].id,
+            )})`,
           );
         } else {
           seenIds.set(docs[i].id, filename);

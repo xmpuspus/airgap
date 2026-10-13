@@ -4,7 +4,7 @@
   "originBytes": false,
   "sourcePath": "evidence/public-service/sources/bir-rmc-102-2024.pdf",
   "sourceSha256": "c6ea58aaf786c87d52cec01cae426cceb3a0ac1b710158066fe05ba9fcb61896",
-  "transport": "Downloaded official PDF supplied by task owner; unedited local OCR text extraction",
+  "transport": "Official PDF downloaded from the publisher URL; unedited local OCR text extraction",
   "extractedAt": "2026-10-09T04:43:17.628578+00:00",
   "ocrVersion": "tesseract 5.5.1",
   "pages": [

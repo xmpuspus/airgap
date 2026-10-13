@@ -28,7 +28,7 @@
  * a clear message instead of writing an empty result.
  */
 
-import {readFile, writeFile, access} from 'node:fs/promises';
+import {readFile, writeFile} from 'node:fs/promises';
 import {existsSync} from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
@@ -100,9 +100,7 @@ async function tryLoadHarness() {
     throw new Error('benchHarness.ts is missing. Expected at ' + HARNESS_PATH);
   }
 
-  // Best-effort: only attempted when a TS loader is already on disk.
-  // We do NOT npm install here; the README documents the optional
-  // `--import tsx` invocation for future runs.
+  // Loads `benchHarness.ts` through `tsx` or `ts-node/esm` when either is installed.
   for (const loader of ['tsx', 'ts-node/esm']) {
     try {
       // Simple availability check via require.resolve.
@@ -242,7 +240,8 @@ async function main() {
   const config = await loadConfig();
 
   const device = process.env.AIRGAP_BENCH_DEVICE || 'node-host';
-  const model = config?.model?.filename ?? 'unknown';
+  // Demo rows run the formatter, so no model file applies.
+  const model = 'n/a';
   const mode = 'demo';
 
   let runs = null;

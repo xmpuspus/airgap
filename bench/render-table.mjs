@@ -30,9 +30,8 @@
 //     "notes":       string (optional)
 //   }
 //
-// Legacy snake_case keys (`first_token_ms_p50`, `tokens_per_sec_p50`,
-// `cold_load_ms`) are still accepted for back-compat with hand-rolled
-// fixtures.
+// It also accepts snake_case keys from hand-written result files
+// (`first_token_ms_p50`, `tokens_per_sec_p50`, `cold_load_ms`).
 //
 // CLI:
 //   node bench/render-table.mjs            # run against repo root
@@ -121,7 +120,7 @@ function formatCell(value, fallback = 'n/a') {
 }
 
 // Read either canonical BenchResult (camelCase + summary block) or the
-// legacy snake_case fixture shape that earlier hand-written results used.
+// snake_case shape used by hand-written result files.
 function firstTokenP50(row) {
   return row.summary?.p50FirstTokenMs ?? row.first_token_ms_p50 ?? null;
 }

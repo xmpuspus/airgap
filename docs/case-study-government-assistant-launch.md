@@ -1,6 +1,6 @@
 # Launch errors of a government assistant, mapped to nine controls
 
-Research dates: 2026-10-07 and 2026-10-12. The evidence table at the end of this page gives the source and the
+Sources checked on 2026-10-07 and 2026-10-12. The evidence table at the end of this page gives the source and the
 evidence level for each claim. The `government-services` template in
 [`examples/`](../examples/README.md) replays the documented prompts with Gemma 4 E2B, and the
 recordings in `demo/` show the answers. Those are historical native takes. The newer
@@ -174,7 +174,7 @@ were recorded after these changes, at the commits that `demo/recordings.json` li
 
 The golden cases are in [`__tests__/golden/government-services.json`](../__tests__/golden/government-services.json).
 The original CI exercised fixture and retrieval assertions rather than every golden answer.
-The new `public:replay` command executes all 15 government cases through the shared answer
+The `public:replay` command executes all 18 government cases through the shared answer
 core and asserts routes and answer text. Its unavailable action path creates no queued
 report; the older queue footage describes the earlier template behavior.
 The adversarial cases add political-opinion, voting, legal, and medical refusals, plus two tool

@@ -73,10 +73,6 @@
               <strong>Local knowledge</strong>
               <dl>
                 <div>
-                  <dt>Knowledge version</dt>
-                  <dd>telco-2026.08</dd>
-                </div>
-                <div>
                   <dt>Documents</dt>
                   <dd>Plans, billing</dd>
                 </div>
@@ -125,10 +121,10 @@ python3 -m http.server --bind 127.0.0.1 --directory web 8080</code></pre>
               for source dates, measured limits and how to add a sourced case.
             </p>
             <h3>Reproduce all five recordings</h3>
-            <pre><code>npm run public:demo -- --model /path/to/local-gemma-3.gguf</code></pre>
+            <pre><code>npm run public:demo -- --model /path/to/gemma-3-1b-it.gguf</code></pre>
             <p>
               Requires committed source, FFmpeg and a compatible local model. The kit checks
-              dependencies, runs the experiment and exports actual browser GIFs and MP4s. Review
+              dependencies, runs the experiment and exports browser GIFs and MP4s. Review
               each full loop before sharing it. No API key is required.
             </p>
           </div>
@@ -145,7 +141,7 @@ python3 -m http.server --bind 127.0.0.1 --directory web 8080</code></pre>
               <a href="assets/gifs/public-service/replay-pack.mp4">Replay MP4</a>
             </article>
             <article data-feature="evidence-lab">
-              <h3>Break Kuya B: Evidence Lab</h3>
+              <h3>Evidence Lab: break Kuya B, the sample government assistant</h3>
               <p>
                 Type a question, ask a doubt follow-up, inspect the source excerpt and download
                 reusable case JSON. Unsupported details refuse; agency requests report unavailable.

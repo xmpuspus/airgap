@@ -14,8 +14,8 @@ evidence, so the manifest does not list it.
 The [public-service capture kit](public-service-showcase.md) adds five browser targets in
 `demo/public-service/`. They are separate from these sixteen historical native GIFs. The
 new manifest binds committed source and knowledge to exact file hashes. The generated model
-report and browser data pack are hashed separately. The lead commits reviewed source before
-capture, then reviews the derived media. No new native run is claimed.
+report and browser data pack are hashed separately. Commit reviewed source before capture, then
+review the derived media. The clips run in a desktop browser, not on a phone.
 
 `npm run public:qa` checks build freshness and drives the sequential desktop/mobile journey,
 checks downloads and source updates, and writes only ignored screenshots and JSON under
@@ -31,11 +31,10 @@ and whether it shows recorded model results.
 Read all screenshots and watch each full loop before setting `loopReviewed: true` in the
 new manifest. `public:verify` requires all five files, matching runtime/data hashes and
 that review. The existing `recordings:validate` command also checks the new manifest when
-present, while retaining the original sixteen-recording contract. The first host captures
-failed visual review for speed, mobile readability and the wrong model-result row. They were
-replaced. The [current manifest](../demo/public-service/recordings.json) identifies the five
-replacement GIFs, and their [visual review](../evidence/public-service/visual-review.md) records
-the inspected loops and approved hashes. The [independent reproduction](../evidence/public-service/reproduction-review.md)
+present, while retaining the original sixteen-recording contract. The
+[current manifest](../demo/public-service/recordings.json) lists the five GIFs, and their
+[visual review](../evidence/public-service/visual-review.md) records the inspected loops and
+approved hashes. The [reproduction review](../evidence/public-service/reproduction-review.md)
 records the full demo command run in a separate checkout. Its outputs remain separate from
 the reviewed release media.
 

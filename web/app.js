@@ -80,7 +80,7 @@
 
     els.configSnippet.textContent = JSON.stringify(data.config, null, 2);
 
-    els.phoneGif.src = data.gif + '?v=' + Date.now();
+    els.phoneGif.src = data.gif;
     els.phoneGif.alt = data.label + ' support flow recorded from the Android emulator';
     setText(
       els.templateStatus,
@@ -98,7 +98,7 @@
     manifest.verticals.forEach(function (v) {
       var opt = document.createElement('option');
       opt.value = v.vertical;
-      opt.textContent = v.label + ' · ' + v.vertical;
+      opt.textContent = v.label;
       els.select.appendChild(opt);
     });
   }

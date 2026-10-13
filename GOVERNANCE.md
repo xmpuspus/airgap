@@ -30,7 +30,7 @@ the paths that need maintainer review.
 
 Repeated, correct contributions can lead to scoped review or triage authority.
 The maintainer documents that authority in this file and `CODEOWNERS` before it
-takes effect. No other maintainers exist at this time.
+takes effect. No other maintainers exist.
 
 ## Releases
 

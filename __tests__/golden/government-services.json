@@ -1,6 +1,6 @@
 {
   "vertical": "government-services",
-  "description": "Maintainer-authored government-service cases. Shared code executes answer and route assertions. Doubt rechecks loaded records; unsupported questions refuse. Agency actions report unavailable because no integration exists.",
+  "description": "Maintainer-written government-service cases. Shared code executes answer and route assertions. Doubt rechecks loaded records; unsupported questions refuse. Agency actions report unavailable because no integration exists.",
   "cases": [
     {
       "id": "gov-1",

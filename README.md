@@ -24,42 +24,6 @@ The default demo makes no model request and needs no download. It lets a new
 contributor check retrieval, citations, privacy status, and the interface before
 choosing an inference provider or connecting a backend.
 
-## Try the public-service Evidence Lab
-
-The [local browser lab](web/lab.html) and CLI share the government mobile answer core.
-They replay 26 authored cases, show exact source excerpts and hashes, and apply a real
-historical holiday amendment. A separate tab exposes all outputs from the seven-question,
-three-repetition host-model comparison. Live browser questions call no model or agency.
-
-```bash
-npm ci
-node scripts/public-service.mjs replay --json
-npm run public:build
-python3 -m http.server --bind 127.0.0.1 --directory web 8080
-```
-
-Use Node 22.18 or newer. Open `http://127.0.0.1:8080/lab.html`.
-The [reproduction guide](docs/public-service-showcase.md) covers first run, source review,
-model limits and contributions. Each feature includes a GIF and MP4 derived from a real browser recording.
-The [capture index](demo/public-service/README.md) links all five and their source hashes.
-
-| Feature          | What you can try                                                       | Demo                                            |
-| ---------------- | ---------------------------------------------------------------------- | ----------------------------------------------- |
-| Replay Pack      | Run all 26 authored questions and inspect failures, routes and sources | [GIF](demo/public-service/replay-pack.gif)      |
-| Evidence Lab     | Ask a question, challenge the answer and download its evidence         | [GIF](demo/public-service/evidence-lab.gif)     |
-| Source Workbench | Apply the real 2024 holiday amendment, then roll it back               | [GIF](demo/public-service/source-workbench.gif) |
-| Model Controls   | Compare raw local-model text with the answer the application displays  | [GIF](demo/public-service/model-controls.gif)   |
-| Demo Kit         | Reproduce the experiment, browser checks and all five recordings       | [GIF](demo/public-service/demo-kit.gif)         |
-
-![A real historical holiday change applied and rolled back in the Source Workbench](demo/public-service/source-workbench.gif)
-
-The local model reached its token limit in 12 of 42 calls. All 21 controlled answers
-used the complete source record instead of the model's wording. The fact checks also
-rejected correct short names and passed incomplete NBI replies.
-[Read every output and the independent review](evidence/public-service/experiment-review.md).
-These are CPU host measurements with Gemma 3. The older native recordings below have
-their own source and model identities.
-
 ![Replies of a government assistant from its launch day and from 2026-10-12, next to Kuya B on Gemma 4 E2B](demo/airgap-showcase-government.gif)
 
 The left cards show replies of a national government app's assistant: five published on its
@@ -79,13 +43,8 @@ every source and the nine controls behind the take.
 
 ![Airgap on the Android emulator and the iOS simulator: provider readiness, then cited offline answers](demo/airgap-readme-side-by-side.gif)
 
-This second GIF combines real Android 15 emulator and iPhone 17 Pro Simulator runs from
-the same source commit. Both use the deterministic `demo` provider. The footage
-does not prove Apple Foundation Models or Android system AI on a physical device.
-Exact capture metadata is in [`demo/recordings.json`](demo/recordings.json).
-The provider harness can also run controlled Apple and Android states through the native bridges
-and visible app journey. Those runs are labeled simulated provider evidence and are separate from
-the deterministic public GIFs.
+This GIF shows the same build on an Android 15 emulator and an iPhone 17 Pro Simulator with
+built-in document answers. Capture details are in [`demo/recordings.json`](demo/recordings.json).
 
 ## Get the first offline answer
 
@@ -123,6 +82,12 @@ Compile Apple Foundation Models support with Xcode 26 or newer. The
 app still deploys to iOS 15.1 and reports the Apple provider as unavailable on
 older or ineligible devices.
 
+## Try the public-service Evidence Lab
+
+The [local browser lab](web/lab.html) and CLI replay 26 government cases from saved public
+sources and call no model. The [reproduction guide](docs/public-service-showcase.md) covers the
+commands, the five recorded features, and the local-model comparison.
+
 ## The minimum architecture for a public-facing support bot
 
 The diagram below is the whole request path for one user message. Code owns every
@@ -157,9 +122,9 @@ REQUEST PIPELINE  (per user message, in this order)
                           prompt = rules + retrieved records + question
   6. Output validation    every amount, date, and name in the answer must
      (code, before render) exist in the records; streamed tokens are gated;
-                          on a miss -> show the record and say why
-  7. Provenance           provider, model file, knowledge version, and
-                          sources shown on the answer
+                          on a miss -> show the record
+  7. Provenance           answer source, publisher, and checked date on
+                          the card. Audit records keep provider and model
 
 ACTIONS  (the model never decides)
   keyword router -> REST backend connector | offline outbox with
@@ -320,7 +285,7 @@ flowchart LR
     P --> L[Downloaded llama.rn model]
     P --> C[Authenticated cloud service]
     P --> D[Deterministic document answer]
-    A --> V[Answer, model identity, sources]
+    A --> V[Answer card with its source]
     G --> V
     L --> V
     C --> V
@@ -339,7 +304,7 @@ The main path starts in [`src/services/orchestrator.ts`](src/services/orchestrat
 The provider policy is in
 [`src/services/inference/providerResolver.ts`](src/services/inference/providerResolver.ts),
 and [`src/components/chat/AnswerProvenance.tsx`](src/components/chat/AnswerProvenance.tsx)
-shows exact answer provenance.
+shows the answer source, publisher, and checked date on the answer card.
 
 ## Evidence labels state the checked behavior
 
@@ -408,8 +373,7 @@ host probe, physical-device preflight, and optional downloaded-model placement.
 
 Use [GitHub Issues](https://github.com/xmpuspus/airgap/issues) for reproducible
 bugs and scoped feature requests. Report vulnerabilities through
-[private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new)
-after the maintainer enables it in the repository settings.
+[private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new).
 
 ## License
 

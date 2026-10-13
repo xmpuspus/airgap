@@ -7,11 +7,10 @@ full raw duration at normal speed, with no omitted ranges.
 The [manifest](../../demo/public-service/recordings.json) binds code, styles, source
 archives, model report, raw videos and exports to their exact hashes.
 
-This capture followed the 2026-10-13 changes: a publisher on the three Palace records and the
-holiday record, a government welcome list of the eight sourced topics, a government reply that
-no longer streams, a checked-date age on the device calendar, a source drawer without the
-saved-copy path and hash, and reruns of the host experiment with the same results. A reviewer
-read
+This capture shows a publisher on the three Palace records and the holiday record, a welcome
+list of the eight sourced topics, a reply that does not stream, the age of each checked date,
+and a source drawer with the publisher and link. The host experiment was rerun with the same
+results. A reviewer read
 every contact sheet and each clip's beat list. No blank or broken recording frame blocked the
 review.
 
@@ -37,25 +36,7 @@ visible. Browser playback does not call a model.
 | model-controls.gif   | `df9a56e4e07c5e4939fa455825ad3a766b86b7b491901869494eaa950c3c3dfe` |
 | demo-kit.gif         | `70ff2b0ca7100a97354a8d3ebc63a3d9045595a7122150d1ce939530dd2376e5` |
 
-## Earlier captures
-
-The captures of 12 October 2026 at 17:03:14 UTC (source `b477b0c`), 17:27:47 UTC (source
-`38d0faf`) and 17:49:29 UTC (source `86311fe`) passed this review before the last fixes. A capture at source `ee510bc` was replaced
-before review.
-
-The capture of 12 October 2026 at 15:19:51 UTC, at source commit
-`325c1acdf8f3f58b6bef6dc7d72c02379d623fd6`, passed the same review after the DICT records,
-the `no_commentary` route and five new authored cases.
-
-The capture of 9 October 2026 at source commit `f8c2411da69a0b64bb43a02384a6836e592b6393`
-passed the same review with 21 cases and six records. Its desktop and mobile error-recovery
-run, at 1280×900 and 390×844, covered the homepage, the five feature cards, lab, original
-source, amendment, rollback, missing-file error, failed retry and successful recovery. The
-[separate full reproduction](reproduction-review.md) passed the same checks in another
-checkout. The 2026-10-12 capture reran the same browser journey and canonical QA before
-export, and its HTTP checks matched the ten new GIF/MP4 files.
-
 Raw videos, screenshots, downloads and loop-review frames stay in ignored run
 directories. The [guide](../../docs/public-service-showcase.md) explains how to
 create them. This review approves only the released hashes above. Separate
-reproduction media keep their unreviewed flags. No fresh native-device run is implied.
+reproduction media keep their unreviewed flags.

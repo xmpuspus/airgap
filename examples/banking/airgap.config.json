@@ -1,5 +1,5 @@
 {
-  "$schema": "../airgap.schema.json",
+  "$schema": "../../airgap.schema.json",
   "specVersion": "1.0.0",
   "brand": {
     "name": "PrimaBank",

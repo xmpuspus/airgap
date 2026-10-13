@@ -240,20 +240,10 @@ describe('vertical-specific natural language coverage', () => {
         return;
       }
       let hits = 0;
-      const misses: string[] = [];
       for (const phrase of phrases) {
-        const tool = findTool(phrase, tools);
-        if (tool) {
-          hits++;
-        } else {
-          misses.push(phrase);
-        }
+        if (findTool(phrase, tools)) hits++;
       }
       expect(hits).toBeGreaterThanOrEqual(8);
-      // Document any misses so a future audit can spot keyword gaps.
-      if (misses.length > 0) {
-        console.warn(`[${vertical}] tool router missed:`, misses);
-      }
     });
   }
 });

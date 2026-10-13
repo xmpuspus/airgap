@@ -47,7 +47,7 @@ const experimentFile = 'evidence/public-service/experiment.json';
 const pack = {
   schemaVersion: 1,
   origin:
-    'Maintainer-authored prompts and criteria; factual text comes from the linked primary sources',
+    'Maintainer-written prompts and criteria; factual text comes from the linked primary sources',
   coreSha256: sha256(core),
   corpusSha256: sha256(JSON.stringify(records)),
   records,
@@ -66,5 +66,5 @@ if (!checkOnly)
 process.stdout.write(
   `${checkOnly ? 'Verified' : 'Built'} shared core, ${records.length} service records, ${
     historical.length
-  } historical versions and ${pack.cases.length} authored cases.\n`,
+  } historical versions and ${pack.cases.length} test cases.\n`,
 );

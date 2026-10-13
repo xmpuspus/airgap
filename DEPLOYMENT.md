@@ -221,8 +221,8 @@ integrity field together if you replace it.
   "model": {
     "url": "https://models.example.com/support/model.gguf",
     "filename": "support-model.gguf",
-    "sizeBytes": 2625634304,
-    "sizeMB": 2504,
+    "sizeBytes": 2445652064,
+    "sizeMB": 2445,
     "sha256": "replace-with-64-lowercase-hex-characters"
   }
 }
@@ -263,7 +263,7 @@ Start it with secrets from the environment.
 
 ```bash
 export BFF_AUTH_TOKEN='replace-in-a-secret-manager'
-node server/index.mjs --port 3000 --kb-root src/knowledge
+node server/index.mjs --port 3000
 ```
 
 Set up its URL, public signing key, and token provider in the app. Production

@@ -26,7 +26,7 @@ reader does not need to infer which document applies. Start with the path that m
 
 ## Knowledge authors work locally first
 
-- [`kb-studio.md`](kb-studio.md) covers the browser-based local authoring tool and validation.
+- [`kb-studio.md`](kb-studio.md) covers the command-line authoring tool and validation.
 - [`../examples/README.md`](../examples/README.md) compares all eight fixture industries and links to
   each checked emulator recording.
 - [`../CUSTOMIZATION.md`](../CUSTOMIZATION.md) gives the schema fields and content workflow.
@@ -49,7 +49,7 @@ reader does not need to infer which document applies. Start with the path that m
 - [`observability.md`](observability.md) lists diagnostic and telemetry fields and their privacy
   limits.
 - [`../CONTRIBUTING.md`](../CONTRIBUTING.md) lists needed tests and review checks.
-- [`../PRODUCT-AUDIT.md`](../PRODUCT-AUDIT.md) separates checked behavior from open product gates.
+- [`readiness.md`](readiness.md) separates checked behavior from open product gates.
 - [`../ROADMAP.md`](../ROADMAP.md) lists current release gates and deferred work.
 
 The guides above, the public schema, tests, and source define current behavior. Git history

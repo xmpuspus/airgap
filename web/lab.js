@@ -214,7 +214,7 @@ $('export-experiment').addEventListener('click', () =>
 function renderExperiment(report) {
   if (!report) {
     $('experiment-status').textContent =
-      'NOT RUN: no local-model experiment is packaged. Live questions still use deterministic code.';
+      'Not run: no local-model experiment is packaged. Live questions still use deterministic code.';
     return;
   }
   $('experiment-status').textContent = `${report.model.filename} · ${report.host.platform}/${

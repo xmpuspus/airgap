@@ -1,4 +1,4 @@
-// Demo mode tests. LLM-free formatter, deterministic, all 7 verticals.
+// Demo mode tests. LLM-free formatter, deterministic, all 8 industry templates.
 
 jest.mock('react-native-fs', () => require('./helpers/rn-mocks').rnFs());
 jest.mock('react-native-mmkv', () => require('./helpers/rn-mocks').rnMmkv());
@@ -157,14 +157,15 @@ describe('llmRouter mode resolution', () => {
   });
 
   it('setUserMode(demo) is a no-op so users cannot toggle into demo from Settings', () => {
-    // Save current resolved mode to restore later.
-    const before = getMode();
-    setUserMode('demo' as any);
-    // Demo override should not persist; getMode keeps the operator default.
-    // (In tests, the operator config currently has mode:demo, so this
-    // returns demo for that reason, not because the override stuck.)
-    setUserMode(null);
-    expect(getMode()).toBe(before);
+    const operatorLlm = config.llm;
+    config.llm = {...operatorLlm, mode: 'prefer-offline'};
+    try {
+      setUserMode('demo' as any);
+      expect(getMode()).toBe('prefer-offline');
+    } finally {
+      setUserMode(null);
+      config.llm = operatorLlm;
+    }
   });
 
   it('records the deterministic provider and model identity', async () => {
@@ -202,7 +203,7 @@ describe('provider audit metadata', () => {
   });
 });
 
-describe('government entrypoint input policy and unavailable actions', () => {
+describe('government-services answers', () => {
   const government = JSON.parse(
     readFileSync(join(__dirname, '../examples/government-services/airgap.config.json'), 'utf8'),
   );
@@ -345,7 +346,7 @@ describe('government entrypoint input policy and unavailable actions', () => {
     await expect(backend.executeAction('application_status', {})).rejects.toThrow(
       'no_agency_integration',
     );
-    // Authored invocation of the generic connector contract, with no provider stub.
+    // Call the connector directly.
     const result = await executeTool(
       {
         name: 'createTicket',
@@ -366,7 +367,7 @@ describe('government entrypoint input policy and unavailable actions', () => {
       offlineQueue.enqueue('account_action', 'Update my account', 'authored-request'),
     ).toThrow('no_agency_integration');
     expect(offlineQueue.getQueue()).toEqual([]);
-    // A real queue record made before switching to the government configuration.
+    // Queue the item under the default config, then switch to the government config.
     config.llm = previous.llm;
     offlineQueue.enqueue('account_action', 'Update my account', 'authored-request');
     config.llm = government.llm;

@@ -27,12 +27,25 @@ has the answer, route, model-called flag, conversation history, record hashes,
 and source hashes. Questions run locally after static files load. Source links
 use the network.
 
-The replay runs 15 original government golden cases and six authored cases in
-sequence. It compares each answer and route with its saved expectation. Maintainers wrote these prompts. They
+The replay runs 18 government golden cases and eight maintainer-written cases in sequence.
+It compares each answer and route with its saved expectation. Maintainers wrote these prompts. They
 do not record citizen conversations. `gov-6` checks a prompt-probe refusal
 without revealing a configuration filename.
 
-## Six service records use saved public source text
+Each feature has a GIF and an MP4 from a real browser recording. The
+[capture index](../demo/public-service/README.md) links all five and their source hashes.
+
+| Feature          | What you can try                                                      | Demo                                               |
+| ---------------- | --------------------------------------------------------------------- | -------------------------------------------------- |
+| Replay Pack      | Run all 26 cases and inspect failures, routes and sources             | [GIF](../demo/public-service/replay-pack.gif)      |
+| Evidence Lab     | Ask a question, challenge the answer and download its evidence        | [GIF](../demo/public-service/evidence-lab.gif)     |
+| Source Workbench | Apply the real 2024 holiday amendment, then roll it back              | [GIF](../demo/public-service/source-workbench.gif) |
+| Model Controls   | Compare raw local-model text with the answer the application displays | [GIF](../demo/public-service/model-controls.gif)   |
+| Demo Kit         | Reproduce the experiment, browser checks and all five recordings      | [GIF](../demo/public-service/demo-kit.gif)         |
+
+![A real historical holiday change applied and rolled back in the Source Workbench](../demo/public-service/source-workbench.gif)
+
+## Eight service records use saved public source text
 
 The [source archives](../evidence/public-service/README.md) store fetched text from
 NBI, SSS, DFA, PCO, and the Supreme Court E-Library. The scripts hash the
@@ -40,13 +53,15 @@ exact saved JSON bytes. The fetch tool extracted the text. These files do not
 preserve original HTML or PDF bytes. You do not need third-party screenshots to
 reuse the cases.
 
-These six current-service archives use extracted JSON text. The historical
+These eight current-service archives use extracted JSON text. The historical
 amendment below uses two actual government PDFs, with OCR text, page references,
 and hashes.
 
 The records cover the president named in the July 2026 SONA transcript, the
 passport appointment portal, dated passport fees, NBI clearance requirements,
-ten regular holidays in Proclamation 1006, and the SSS hotline. The fee source
+ten regular holidays in Proclamation 1006, the SSS hotline, the accepted DICT
+Secretary resignation, and the Palace statement on the alleged ghost internet
+projects. The fee source
 is the **2022** DFA Citizen’s Charter. Its PHP 950 reference has an explicit
 date. It does not state the fee payable today. Eid dates need separate
 proclamations and are outside this pack.
@@ -63,7 +78,7 @@ the sources again. The project sets this review date. The 2026 holiday record
 expires at year end. Historical records need an explicit year and stay outside
 responses about current services.
 
-## Apply the actual 2024 holiday amendment
+## Apply the 2024 holiday amendment
 
 In Source workbench, compare the two authorities and run the affected-question
 checks. Load the original. Ask for the date of Ninoy Aquino Day in 2024.
@@ -113,7 +128,7 @@ prose. The gate checks whole-record matches. It cannot check facts semantically.
 
 [Every actual output and measurement](../evidence/public-service/experiment.json) has
 the question, prompt, raw model text, displayed answer, source hashes, fallback
-flag, first-token time, elapsed time, stop reason, and authored fact judgments.
+flag, first-token time, elapsed time, stop reason, and maintainer-written fact judgments.
 Token-limit stops are separate from fact checks. The
 [criteria](../validation/public-service-experiment.json) point to the saved source text.
 
@@ -126,14 +141,13 @@ Phrase checks can miss errors and reject correct wording. Read each output befor
 you make a quality claim. Earlier failed and pre-review runs stay in the evidence
 directory.
 
-The [independent review](../evidence/public-service/experiment-review.md) accounts
-for two valid retrieved-model short answers marked wrong and six token-limit stops
-per model lane. The NBI outputs pass the narrow phrase checks despite truncation and
-wording absent from the supplied prompt. That review covers the earlier 54-row run.
+An [output review](../evidence/public-service/experiment-review.md) of the earlier 54-row run
+found two valid short answers marked wrong and six token-limit stops per model lane.
 
-In the current 63-row run, all 21 controlled answers fell back to records.
-Its timing table shows the measured
-CPU host and model. This experiment makes no phone or Gemma 4 performance claim.
+In the current 63-row run, the local model reached its token limit in 12 of 42 calls. All 21
+controlled answers used the complete source record instead of the model's wording. The fact
+checks rejected a correct short name and passed incomplete NBI replies. Its timing table shows
+the measured CPU host and Gemma 3 model. This experiment makes no phone or Gemma 4 performance claim.
 The pinned runner cannot load the supplied Gemma 4 architecture.
 
 ## Capture all five features with one command
@@ -174,7 +188,7 @@ The scripts do not intercept network responses or replace providers.
 Recovery checks serve copies of the actual site with the source-pack file absent.
 The static server returns HTTP 404. The browser checks the error and retries
 while the file is still missing, then retries after the exact pack bytes are
-restored. The recovered page must answer a real question. These are authored
+restored. The recovered page must answer a real question. These are deliberate
 filesystem faults, not government source changes. Temporary site copies are
 removed when the check exits.
 
@@ -182,9 +196,7 @@ removed when the check exits.
 HTTP statuses, recovered pack hash and PNG screenshots encoded as Base64 under each
 viewport's `loadingRecovery.screenshots` and `landing.screenshot` fields. Decode
 the `base64` bytes as PNG and compare their SHA-256 with `sha256` before visual
-inspection. Keeping these images in that report preserves the declared QA output
-paths. The six normal lab screenshots and eight downloaded JSON files keep
-their existing paths. Automated assertions do not replace visual inspection.
+inspection. Automated assertions do not replace visual inspection.
 
 Raw WebM files, screenshots, downloads, and contact sheets stay ignored under
 `tmp/recordings/public-service` and `tmp/public-showcase`. The
@@ -209,7 +221,7 @@ set with
 Recovery refuses to replace an existing release.
 
 After capture, inspect every screenshot and each full loop before you set a
-recording's `loopReviewed` field. The field records human or reviewer inspection.
+recording's `loopReviewed` field. The field records that someone inspected the full loop.
 The capture command never sets it true. Then run the checks below. Commit only
 reviewed derived media and sanitized evidence. Do not commit raw footage, models,
 credentials, or native output.
@@ -233,7 +245,7 @@ files are current, starts the site, and writes screenshots and downloaded JSON
 under ignored `tmp`. It copies the saved media into the ignored site-assets
 directory, but it does not rebuild or replace the reviewed demo recordings.
 `public:capture` and `public:demo` replace recordings and need a new review.
-Their screenshots still need independent inspection.
+Their screenshots still need a separate visual inspection.
 
 ## Add a sourced case
 
@@ -245,8 +257,8 @@ and publisher URL.
 Only records marked `publicEvidence` enter this pack. Existing unrelated template
 records stay stored but do not support these answers.
 
-Add authored queries and answer and route expectations to
-[the authored case file](../validation/public-service-cases.json). Include an
+Add maintainer-written queries and answer and route expectations to
+[the case file](../validation/public-service-cases.json). Include an
 unsupported property and a doubt follow-up. Do not invent an agency reply or a
 citizen conversation. Run replay, the browser journey, and affected model and
 capture checks. A core, corpus, or runner change invalidates its evidence hashes

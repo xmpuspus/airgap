@@ -25,6 +25,21 @@ The script runs the queries in `bench/queries.json` through the demo pipeline an
 `bench/results/node-<YYYYMMDDTHHMMSSZ>.json`. Each run writes a new file. Set
 `AIRGAP_BENCH_DEVICE` to change the device label.
 
+## Run the model measurement
+
+```bash
+node bench/lib/run-llm.mjs --model /path/to/model.gguf --device mac-host-llm --queries 5
+```
+
+The runner loads a GGUF file with `node-llama-cpp` and a 2,048-token context. It sends the first
+`--queries` entries of `bench/queries.json`, five by default, with up to 80 output tokens each.
+It writes `bench/results/<device>-<YYYYMMDDTHHMMSSZ>.json`.
+
+Without `--model`, it looks for the Gemma 3 1B fixture in `.dev-fixtures/`, then
+`models/gemma-4-e2b-it-q3ks.gguf`. `--device` defaults to `mac-host-llm`, and `--notes` sets the
+Notes column. The environment variables `AIRGAP_BENCH_MODEL`, `AIRGAP_BENCH_DEVICE`, and
+`AIRGAP_BENCH_NOTES` set the same values.
+
 ## Run the harness on a device
 
 `src/dev/benchHarness.ts` exports `runBench(queries)`. It drives each query through the
@@ -71,8 +86,7 @@ The renderer also accepts the older keys `first_token_ms_p50`, `tokens_per_sec_p
 ## Emulator numbers show regressions, not device speed
 
 Emulator RAM and CPU differ from a phone. Treat an emulator row as a regression floor, never as
-a performance target. The table has no Gemma 4 E2B row yet. The stock Pixel image leaves about
-2.2 GB free after Google Play services and the app, and the Gemma 4 E2B Q3_K_S file needs
-2.3 GB, so the model does not fit without a larger storage setting. The laptop fixture row uses a
-Gemma 3 1B file because the Node runtime in use did not read the Gemma 4 architecture. The Notes
+a performance target. The table has no Gemma 4 E2B row. The stock Pixel image leaves about
+2.2 GB free and the Q3_K_S file needs 2.3 GB. The laptop fixture row uses a Gemma 3 1B file
+because the Node runtime cannot load the Gemma 4 architecture. The Notes
 column records the model file, so a fixture run is never read as Gemma 4 data.

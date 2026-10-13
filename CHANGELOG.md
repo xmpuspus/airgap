@@ -10,7 +10,7 @@ minor releases.
 
 - A `government-services` template with dated, sourced public records for Philippine officials,
   holidays, hotlines, and service steps, plus golden and adversarial cases that replay the
-  2026-09-21 eGovPH assistant failures. Four recordings replay ten, seven, six, and five prompts
+  questions from the 2026-09-21 eGovPH assistant launch. Four recordings replay ten, seven, six, and five prompts
   with Gemma 4 E2B on an Android emulator.
 - A comparison GIF builder that puts one card per prompt, with crops of the published
   screenshots or a note on what the beat proves, next to the recorded take, with a `showcase`
@@ -28,7 +28,7 @@ minor releases.
 - A doubt check such as "sigurado ka dyan?" repeats the last record-backed answer from the record
   store, with the same sources.
 - A short question that equals a record keyword searches on its own instead of as a follow-up.
-- The message audit records why the model did not answer when the app shows records instead.
+- When the app shows records instead of model text, it stores the reason with the message.
 - A `docs/support-bot-minimum.md` page with the nine controls any support bot needs, and a case
   study that maps one public launch to them.
 - A streaming gate that holds model text until the grounding check passes, so an unsourced
@@ -57,11 +57,11 @@ minor releases.
   left office, or about allegations, gets the configured refusal and the dated record with its
   link, with no narrative. The government template adds two sourced Palace releases. One
   confirms the DICT resignation on 2026-10-11. The other is the 2026-09-25 statement on the
-  alleged ghost internet projects. The comparison spec gains two beats from 2026-10-12
-  screenshots, and the host experiment gains the resignation question.
+  alleged ghost internet projects. The comparison GIF adds two prompts from 2026-10-12, and the
+  browser lab adds the resignation question.
 - A seven-prompt replay take with Gemma 4 E2B and a rebuilt comparison GIF. The take sends the
   five published Kuya A prompts, then the two 2026-10-12 eGovPH questions on the DICT Secretary
-  and the alleged ghost internet scheme.
+  and the alleged ghost internet projects.
 
 ### Changed
 
@@ -70,13 +70,13 @@ minor releases.
   knowledge root instead of exiting, and rate-limits every request before the token check.
 - The prompt probe rule matches only requests aimed at the assistant's own instructions, so a
   question about roaming rules or setup instructions gets a normal reply.
-- The grounding check compares whole numbers, so "PHP 29" no longer passes against "PHP 299".
+- The grounding check compares whole numbers, so "PHP 29" fails against "PHP 299".
 - The logger redacts a phone number after a plus sign and a bare `sk-` key.
 - A first message counts as a greeting only when it matches the greeting list.
 - Generic replies read the brand name and hotline from the configuration instead of the telco
   fixture text.
-- `scripts/setup.sh` copies a template and sets brand fields. It no longer renames the native
-  projects, which broke the Kotlin package and the Xcode target.
+- `scripts/setup.sh` copies a template and sets brand fields. It keeps the native project names,
+  because a rename broke the Kotlin package and the Xcode target.
 - Matched the model checksum and size to the current upstream Gemma 4 E2B file.
 - Turned off the Gemma 4 thinking channel, which streamed reasoning into the answer.
 - Accepted a sourced date in either word order in the grounding check.
@@ -84,7 +84,6 @@ minor releases.
   against `2026-09-25`.
 - Told the model not to repeat the "reference information" wording in its answer.
 - Showed the retrieved records instead of a refusal when model text fails the grounding check.
-  The message audit keeps the reason.
 - Showed whole records on the no-model path. The 200-character cut dropped every source line.
 - Fixed the refusal bubble, which collapsed its text to a tall empty bar.
 - Ran the Apple on-device model with content-transformation guardrails, because the iOS Simulator
@@ -97,12 +96,11 @@ minor releases.
 - Moved the record's `Source: <link> (checked <date>)` sentence out of the answer bubble. The
   answer card shows the publisher and the checked date, and the source drawer keeps the full link.
 - Replaced "Built-in release · 0 sources" with the record source or a local record count.
-- Kept the answer card to the answer source and the record's checked date. The card no longer
-  shows why a model reply was not used, or the model file. The message audit keeps both.
-- Removed the saved-copy path and hash from the source drawer, and the model file name and hash
-  from the install card. The records keep them for reviewers.
+- Kept the answer card to the answer source and the record's checked date. The card leaves out
+  why a model reply was not used, and the model file.
+- Removed file paths, model file names, and hashes from the source drawer and the install card.
 - Labeled refusal cards by what happened ("Record only", "No record", "Not answered") instead of
-  "Disclaimer". A motive question keeps the record's source card and chip.
+  "Disclaimer". A question about why an official acted keeps the record's source card and chip.
 - Wrapped long record titles in the source chip instead of cutting them off.
 - Replaced the grey thumb shapes with "Helpful" and "Not helpful" buttons, and removed the
   duplicate source pill under each answer.
@@ -116,16 +114,30 @@ minor releases.
   reply to match its record, and greeted a later "hi" with the bot's own name.
 - Counted a record's checked-date age on the device calendar. After midnight in Manila, a record
   checked the day before read "today" because the count used the UTC date.
-- Sent the government reply once, with its audit. A streamed copy showed the raw source link in
-  the bubble for one frame before the answer card.
-- Painted over the user avatars in the X news card screenshot, as in the other stored
-  screenshots, and cropped the comparison cards to whole lines.
+- Fixed a one-frame flash of the raw source link before the government answer card appeared.
+- Masked user avatars in the comparison GIF's news screenshot and cropped its cards to whole lines.
+- Template actions call their own backend method, online and from the outbox. A healthcare
+  booking gets the booking reply, and a queued claim or refill runs when the device reconnects.
+- The mock backend answers with the action's configured `mockResponse`. A `rest` backend with
+  no `baseUrl` stops with a configuration error.
+- Demo mode shows no downloaded model in Settings or onboarding, and the Settings privacy line
+  matches the cloud setting.
+- The first chat screen shows only the template's own quick replies. "Sync now" shows only when
+  an update server is set.
+- Search keeps the troubleshooting records for "no signal" and "not working".
+- Sync rejects a signed knowledge bundle older than the installed one.
+- The provider chain moves to the next provider when one provider cannot report its state.
+- `theme.darkMode: "auto"` follows the device appearance at launch.
+- Scaffolded apps point `$schema` at their own schema file and include `DEPLOYMENT.md`.
+- The support service returns 500 for an unreadable model manifest.
+- The government README runs the template from source, and the readiness table moved to
+  `docs/readiness.md`.
 
 ### Removed
 
-- The internal plan documents under `docs/`, the two legacy recording shell scripts, and the
-  bench device scripts that never ran.
-- Three unused chat components, unused exports, and a hidden schema fingerprint constant.
+- The two legacy recording shell scripts and the bench device scripts.
+- Three unused chat components and a hidden schema fingerprint constant.
+- The `parameters` and `refusalReason` tool fields, which the router does not read.
 
 ## [0.2.0] release candidate
 

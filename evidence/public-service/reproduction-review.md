@@ -1,11 +1,11 @@
 # A separate checkout reproduced all five features
 
-An independent reviewer ran the complete demo command against source commit
+A second run in a separate checkout used the complete demo command against source commit
 `f8c2411da69a0b64bb43a02384a6836e592b6393` on 9 October 2026.
 The detached checkout reused the installed dependencies and CPU binding.
 This checks a fresh source checkout. It does not check a fresh dependency installation.
 
-The reviewer supplied the existing Gemma 3 1B Q4_K_M model to this command:
+The run supplied the existing Gemma 3 1B Q4_K_M model to this command:
 
 ```bash
 npm run public:demo -- --model /path/to/local-gemma-3.gguf
@@ -20,7 +20,7 @@ No API key, provider substitute, response interception or invented source fact w
 The kept process capture reports exit 0, no timeout or cancellation, and complete
 stdout and stderr. Its archive SHA-256 is
 `e85c4ebad4c44e51b51ce65573aa8c5dc1733634e269106fd0b64c6c223c65d7`.
-The reviewer decoded both streams and checked their hashes.
+Both streams were decoded and their hashes checked.
 
 | Stream |  Bytes | SHA-256                                                            |
 | ------ | -----: | ------------------------------------------------------------------ |
@@ -37,14 +37,14 @@ Run `2026-10-09T07-21-50.710Z-38fea926-8483-4a52-9453-d4e0017e4f70`
 used node-llama-cpp 3.18.1 on an Apple M5 CPU, Darwin 25.5.0 arm64.
 It produced 54 rows, 36 nonempty raw model outputs, zero provider errors and 12 token-limit stops.
 
-| Variant              | Passed authored checks | Model calls | Fallbacks |
-| -------------------- | ---------------------: | ----------: | --------: |
-| Record-only          |                  18/18 |           0 |         0 |
-| Retrieved model      |                  13/18 |          18 |         0 |
-| Application controls |                  18/18 |          18 |        18 |
+| Variant              | Passed fact checks | Model calls | Fallbacks |
+| -------------------- | -----------------: | ----------: | --------: |
+| Record-only          |              18/18 |           0 |         0 |
+| Retrieved model      |              13/18 |          18 |         0 |
+| Application controls |              18/18 |          18 |        18 |
 
 These are narrow string checks on six questions. The separate reproduction did not
-replace the released experiment report. Its [independent output review](experiment-review.md)
+replace the released experiment report. The [output review](experiment-review.md)
 describes the criteria's false negatives, truncation and unsupported-wording risk.
 
 ## The final browser pass checked the new media
@@ -71,4 +71,4 @@ The first separate checkout lacked the homepage and industry GIF copies. Its in-
 QA ran before capture and so checked the old media hashes. The final source
 builds the complete site and repeats browser QA after capture. The separate run above
 confirms both fixes. Its checkout, exact process capture and raw footage stay local for
-audit. No deployment, external publication or native-device run happened.
+audit. No deployment or native-device run happened.

@@ -1,5 +1,5 @@
 // The model section sets how much of each record the model receives and how
-// long one answer can take. Both used to be constants in code.
+// long one answer can take.
 
 jest.mock('react-native-fs', () => require('./helpers/rn-mocks').rnFs());
 jest.mock('react-native-mmkv', () => require('./helpers/rn-mocks').rnMmkv());

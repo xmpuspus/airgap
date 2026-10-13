@@ -4,7 +4,7 @@
   "originBytes": false,
   "sourcePath": "evidence/public-service/sources/boc-ocom-memo-01-2024.pdf",
   "sourceSha256": "25122b9ab9b32bf326a5f8f806d2da6d90546de9ecde9ff14ca4e529e8eedc1c",
-  "transport": "Downloaded official PDF supplied by task owner; unedited local OCR text extraction",
+  "transport": "Official PDF downloaded from the publisher URL; unedited local OCR text extraction",
   "extractedAt": "2026-10-09T04:43:16.078774+00:00",
   "ocrVersion": "tesseract 5.5.1",
   "pages": [

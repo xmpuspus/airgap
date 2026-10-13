@@ -163,7 +163,7 @@
     "id": "faq-009",
     "category": "faq",
     "title": "How this assistant is configured",
-    "content": "As of 2026-10-07, the instructions for this assistant are public. They are in the airgap.config.json file of the open-source Airgap project, under prompts.system. The file holds no password, key, or account permission. A model cannot change a record, approve an application, or run an action. Tool routes come from configuration keywords, not from model output. Reading the instructions gives no extra access. Source: Airgap demo configuration (checked 2026-10-07).",
+    "content": "As of 2026-10-07, the instructions for this assistant are public. They hold no password, key, or account permission. The assistant reads saved official records only. It cannot change a record, approve an application, or run an action. Reading the instructions gives no extra access. Source: Airgap demo configuration (checked 2026-10-07).",
     "keywords": [
       "system prompt",
       "show me your system prompt",

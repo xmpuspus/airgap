@@ -18,7 +18,7 @@ labels: enhancement
 
 ## Scope / non-scope
 
-- [ ] This is for a specific vertical only (which?):
+- [ ] This is for a specific industry template only (which?):
 - [ ] This would change the config schema (how?):
 - [ ] This would add a new native dependency (which?):
 

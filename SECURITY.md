@@ -2,8 +2,8 @@
 
 ## Report a vulnerability privately
 
-Use [GitHub private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new)
-after the maintainer enables it in the repository settings. Do not open a public issue with exploit details, credentials, private data, or an
+Use [GitHub private vulnerability reporting](https://github.com/xmpuspus/airgap/security/advisories/new).
+Do not open a public issue with exploit details, credentials, private data, or an
 unfixed vulnerability.
 
 Include the affected commit or version, platform, configuration mode, steps to

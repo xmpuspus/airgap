@@ -26,7 +26,7 @@ test('historical dates identify the signed proclamation and dated covering docum
   const [original, amendment] = versions;
   const customs = loadSourceArchive(original);
   const bir = loadSourceArchive(amendment);
-  // These dates come from the archived PDFs, not their upload paths or a clock.
+  // The dates come from the archived PDFs.
   assert.match(customs.pages[3].text, /11th dayof october[\s\S]*Twenty Three/i);
   assert.match(customs.pages[0].text, /DATE : 02 JANUARY 2024/);
   assert.match(bir.pages[0].text, /August 16, 2024/);
@@ -41,7 +41,7 @@ test('historical dates identify the signed proclamation and dated covering docum
 });
 
 test('output gate accepts actual record text and replaces the recorded nonverbatim model outputs', () => {
-  // Fixed actual execution protects the regression without inventing model text.
+  // These rows are recorded model outputs, so the test needs no live model.
   const report = readJson('evidence/public-service/experiment-pre-source-review.json');
   const outputs = report.rows.filter(row => row.variant === 'application-controls');
   assert.equal(outputs.length, 18);
@@ -154,8 +154,7 @@ test('legacy bundles and incomplete evidence fail closed without fabricated cita
   assert.equal(answer.answerPath, 'refusal');
   assert.deepEqual(answer.sources, []);
   assert.equal(assessAnswerability('NBI clearance', legacy).allowed, false);
-  // Authored schema-validation inputs remove metadata from a real record.
-  // They introduce no source facts, changed fees, model responses or clocks.
+  // Remove one metadata field at a time from a shipped record.
   const real = records.find(record => record.id === 'fee-011');
   for (const field of ['sourcePath', 'sourceSha256', 'source', 'excerpt', 'asOf', 'reviewBy']) {
     const incomplete = structuredClone(real);
@@ -167,7 +166,7 @@ test('legacy bundles and incomplete evidence fail closed without fabricated cita
   }
 });
 
-test('the actual historical successor wins in either input order', () => {
+test('the historical successor wins in either input order', () => {
   for (const ordered of [versions, [...versions].reverse()]) {
     const result = answerPublicService('When was Ninoy Aquino Day in 2024?', ordered);
     assert.equal(result.answerPath, 'record');
@@ -177,7 +176,7 @@ test('the actual historical successor wins in either input order', () => {
   }
 });
 
-test('an annual holiday source needs verification after its real calendar year', () => {
+test('an annual holiday source needs verification after its calendar year', () => {
   const expired = readJson('validation/public-service-expiry.json').record;
   // loadSourceArchive verifies the PDF hash, OCR hash, repository-relative PDF
   // lineage, source URL, and the unedited excerpt before this record is used.
@@ -195,8 +194,7 @@ test('an annual holiday source needs verification after its real calendar year',
 
   const approved2026 = structuredClone(records.find(record => record.id === 'hol-001'));
   assert.ok(approved2026);
-  // This clone preserves the approved Proclamation 1006 record. The two added
-  // fields are application catalogue metadata, not a claim of legal amendment.
+  // The added fields link the 2026 record to the 2025 record in the catalogue.
   approved2026.metadata.claimKey = expired.metadata.claimKey;
   approved2026.metadata.supersedes = expired.id;
   approved2026.metadata.catalogueRelation =
@@ -228,7 +226,7 @@ test('an annual holiday source needs verification after its real calendar year',
   assert.deepEqual(missing2025.recordIds, []);
 });
 
-test('another real source cannot be accepted under the planned citation', () => {
+test('another source cannot be accepted under the planned citation', () => {
   const planned = answerPublicService('Magkano ang passport?', records);
   const unrelated = records.find(record => record.id === 'req-002');
   const result = controlPublicModelOutput(unrelated.content, planned, records);
@@ -237,7 +235,7 @@ test('another real source cannot be accepted under the planned citation', () => 
   assert.equal(result.answer, planned.answer);
 });
 
-test('actual source update, doubt and rollback re-read the loaded record', () => {
+test('source update, doubt and rollback re-read the loaded record', () => {
   for (const version of versions) {
     const source = fs.readFileSync(path.join(root, version.metadata.sourcePath));
     assert.equal(sha256(source), version.metadata.sourceSha256);
@@ -330,4 +328,17 @@ test('bare pressure and unreviewed URLs do not replace source facts', () => {
   );
   assert.equal(unknown.answerPath, 'clarification');
   assert.equal(unknown.reason, 'unverified_correction');
+});
+
+test('a blocklist phrase keeps every colon after the reason', () => {
+  const policy = {topicBlocklist: ['custom_reason:form 12:30']};
+  const matching = answerPublicService(
+    'Is there a fee for form 12:30 filings?',
+    records,
+    {},
+    policy,
+  );
+  assert.equal(matching.reason, 'custom_reason');
+  const partial = answerPublicService('Is there a fee for form 12 filings?', records, {}, policy);
+  assert.notEqual(partial.reason, 'custom_reason');
 });

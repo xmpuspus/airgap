@@ -9,7 +9,7 @@ It does not contain account lookup, ticket, plan, outage, generic action, or clo
 routes. [`docs/enterprise-integration.md`](../docs/enterprise-integration.md) defines the mobile
 contracts for those operator-owned endpoints.
 
-## Four routes need a bearer token
+## Four routes need a bearer token and one is public
 
 | Method | Route                      | Purpose                            |
 | ------ | -------------------------- | ---------------------------------- |
@@ -32,9 +32,12 @@ export BFF_AUTH_TOKEN="replace-with-a-random-development-token"
 node server/index.mjs \
   --port 3000 \
   --kb-root ../src/knowledge \
-  --keypair tmp/airgap-bff/ed25519.json \
-  --telemetry-log tmp/airgap-bff/telemetry.jsonl
+  --keypair .keys/ed25519.json \
+  --telemetry-log telemetry.jsonl
 ```
+
+The server resolves these paths from the `server/` folder. Git ignores `server/.keys/` and
+`server/telemetry.jsonl`.
 
 The server prints the new public key on first start. Keep the private key
 file outside source control and restrict it to the service account that signs
@@ -55,6 +58,10 @@ knowledge releases.
 | `MODEL_MANIFEST` or `--model-manifest` | Model metadata JSON path                                              | `./model.json`         |
 | `TELEMETRY_LOG` or `--telemetry-log`   | Telemetry JSONL path                                                  | `./telemetry.jsonl`    |
 
+If the model manifest file is missing, `/api/v1/sync/model` returns built-in metadata for the
+Gemma 4 E2B Q3_K_S file. It gives version `1.0.0`, the file name, the download URL, the SHA-256,
+and a size of 2,445,652,064 bytes.
+
 ## Curl can read the signed manifest
 
 ```bash
@@ -65,7 +72,8 @@ curl \
 
 Authorized responses include `RateLimit-Limit`, `RateLimit-Remaining`, and
 `RateLimit-Reset`. A client over the limit receives `429` and `Retry-After`.
-The server accepts request bodies up to 256 KB. It rejects requests with an
+The limiter keys each bucket on the client socket address. Behind a TLS proxy, all clients share
+one bucket. The server accepts request bodies up to 256 KB. It rejects requests with an
 `Origin` header because this service is not a browser API.
 
 ## Production needs external identity and storage services
@@ -88,10 +96,13 @@ hash checks control whether the app may install it.
 
 ## A container runs the same process
 
+The image holds only the server file. Mount the knowledge folder and pass `--kb-root`.
+
 ```bash
 docker build -t airgap-bff server
 docker run --rm -p 3000:3000 \
   -e BFF_AUTH_TOKEN="$BFF_AUTH_TOKEN" \
   -v "$PWD/tmp/airgap-bff:/app/.keys" \
-  airgap-bff
+  -v "$PWD/src/knowledge:/app/knowledge:ro" \
+  airgap-bff node index.mjs --port 3000 --kb-root /app/knowledge
 ```

@@ -10,9 +10,8 @@
 // llama.cpp does not understand the gemma4 architecture yet), so the
 // default path here uses the Gemma 3 1B Q4 fixture and labels the row
 // "fixture, not Gemma 4" in the Notes column. The on-device llama.rn
-// runtime DOES load Gemma 4; the Pixel emulator path will replace this
-// row with real numbers once the emulator has enough disk for the
-// 2.3 GB GGUF.
+// runtime does load Gemma 4. Results from this runner are labeled as the
+// Gemma 3 fixture.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -102,8 +101,7 @@ async function main() {
     });
     const totalMs = performance.now() - t0;
     const firstTokenMs = firstTokenAt !== null ? firstTokenAt - t0 : totalMs;
-    const tokensPerSec =
-      totalMs > 0 ? (tokenCount * 1000) / totalMs : null;
+    const tokensPerSec = totalMs > 0 ? (tokenCount * 1000) / totalMs : null;
     runs.push({
       query: q,
       loadMs: runs.length === 0 ? loadMs : null,
@@ -113,7 +111,9 @@ async function main() {
       tokensPerSec: tokensPerSec ? Number(tokensPerSec.toFixed(1)) : null,
     });
     console.log(
-      ` first=${firstTokenMs.toFixed(0)}ms total=${totalMs.toFixed(0)}ms tok/s=${tokensPerSec ? tokensPerSec.toFixed(1) : 'n/a'}`,
+      ` first=${firstTokenMs.toFixed(0)}ms total=${totalMs.toFixed(0)}ms tok/s=${
+        tokensPerSec ? tokensPerSec.toFixed(1) : 'n/a'
+      }`,
     );
     void text;
   }
@@ -126,7 +126,9 @@ async function main() {
     model: path.basename(modelPath),
     mode: 'real',
     capturedAt: new Date().toISOString(),
-    notes: args.notes || (path.basename(modelPath).includes('gemma-3') ? 'fixture (Gemma 3 1B Q4), not Gemma 4' : ''),
+    notes:
+      args.notes ||
+      (path.basename(modelPath).includes('gemma-3') ? 'fixture (Gemma 3 1B Q4), not Gemma 4' : ''),
     runs,
     summary: {
       p50FirstTokenMs: percentile(firstTokens, 50),
@@ -137,12 +139,7 @@ async function main() {
   };
 
   const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\..+/, 'Z');
-  const outFile = path.join(
-    repoRoot,
-    'bench',
-    'results',
-    `${args.device}-${stamp}.json`,
-  );
+  const outFile = path.join(repoRoot, 'bench', 'results', `${args.device}-${stamp}.json`);
   fs.writeFileSync(outFile, JSON.stringify(result, null, 2) + '\n');
   console.log(`[bench-llm] wrote ${outFile}`);
 

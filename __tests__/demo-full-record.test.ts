@@ -1,6 +1,6 @@
 // Demo mode renders the retrieved record as the answer, so it must show the
-// whole record. The 400-character cap exists for small model contexts only, and
-// it used to cut the source line off every demo answer.
+// whole record. The 400-character cap exists for small model contexts only,
+// so the cap must not cut the source line.
 
 jest.mock('react-native-fs', () => require('./helpers/rn-mocks').rnFs());
 jest.mock('react-native-mmkv', () => require('./helpers/rn-mocks').rnMmkv());

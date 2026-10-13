@@ -46,7 +46,7 @@ test('the passport quick reply names what its record gives', () => {
   expect(passport.title).not.toMatch(/steps/i);
 });
 
-test('each sourced record names the site its link opens', () => {
+test('the holiday record names the Supreme Court E-Library as its source site', () => {
   const holidays = sourced.find(record => record.id === 'hol-001');
   expect(String(holidays?.metadata?.source)).toContain('elibrary.judiciary.gov.ph');
   expect(holidays?.metadata?.publisher).toBe('Supreme Court E-Library');

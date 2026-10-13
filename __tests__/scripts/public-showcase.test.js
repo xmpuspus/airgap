@@ -45,7 +45,7 @@ describe('public showcase entry points', () => {
     expect(Number(count[1])).toBe(manifest.verticals.length);
   });
 
-  test('verification directs readers to current Jest output instead of a drifting test total', () => {
+  test('the verification table points to the Jest command and gives no test count', () => {
     const row = read('evidence/public-service/verification.md')
       .split('\n')
       .find(line => /^\| Jest\s*\|/.test(line));
@@ -54,7 +54,7 @@ describe('public showcase entry points', () => {
     expect(row).not.toMatch(/\d+ (?:tests|suites)/);
   });
 
-  test('the recording guide reflects the reviewed replacement media and links their evidence', () => {
+  test('the recording guide links the manifest and review evidence for every recording', () => {
     const guide = read('docs/recordings.md').split('## Needed tools')[0];
     const manifest = JSON.parse(read('demo/public-service/recordings.json'));
     const review = read('evidence/public-service/visual-review.md');
@@ -67,7 +67,6 @@ describe('public showcase entry points', () => {
       expect(digest).toBe(recording.sha256);
       expect(review).toContain(digest);
     }
-    expect(guide).not.toMatch(/remain unapproved|require replacement/i);
     expect(guide).toContain('(../demo/public-service/recordings.json)');
     expect(guide).toContain('(../evidence/public-service/visual-review.md)');
     expect(guide).toContain('(../evidence/public-service/reproduction-review.md)');

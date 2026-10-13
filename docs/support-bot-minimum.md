@@ -93,5 +93,6 @@ template, which an operator can reword but not make more revealing.
 
 ## What a small model proves
 
-Gemma 4 E2B as a 3-bit file on an emulator passed the replay prompts in one recorded run under
-these controls. The model is the cheapest part to swap. The controls are the product.
+In one recorded emulator run, Gemma 4 E2B phrased some replay answers. Code or the record text
+gave the rest. One run is not a quality claim. You can swap the model without changing the
+controls.
