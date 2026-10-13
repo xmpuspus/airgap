@@ -85,6 +85,7 @@ export function convertToGif({
   colors = 96,
   playbackSpeed = 1,
   omittedSourceRangesSeconds = [],
+  endHoldSeconds = 0,
 }) {
   fs.mkdirSync(path.dirname(output), {recursive: true});
   const filter = gifFilter({
@@ -93,6 +94,7 @@ export function convertToGif({
     colors,
     playbackSpeed,
     omittedSourceRangesSeconds,
+    endHoldSeconds,
   });
   run('ffmpeg', ['-y', '-i', source, '-filter_complex', filter, '-loop', '0', output]);
 }

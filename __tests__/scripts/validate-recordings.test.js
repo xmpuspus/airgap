@@ -511,6 +511,26 @@ describe('recording manifest validation', () => {
     );
   });
 
+  test('accepts a short end hold and rejects a long or negative one', () => {
+    expect(validateRecording(record({endHoldSeconds: 1.5})).endHoldSeconds).toBe(1.5);
+    expect(() => validateRecording(record({endHoldSeconds: 6}))).toThrow(
+      'recording_end_hold_invalid',
+    );
+    expect(() => validateRecording(record({endHoldSeconds: -1}))).toThrow(
+      'recording_end_hold_invalid',
+    );
+  });
+
+  test('holds the last frame when a recording sets an end hold', () => {
+    expect(
+      gifFilter({fps: 10, width: 360, colors: 80, playbackSpeed: 4, endHoldSeconds: 1.5}),
+    ).toBe(
+      'setpts=PTS/4,tpad=stop_mode=clone:stop_duration=1.5,fps=10,scale=360:-2:flags=lanczos,split[s0][s1];' +
+        '[s0]palettegen=max_colors=80:stats_mode=diff[p];' +
+        '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
+    );
+  });
+
   test('requires ordered non-overlapping omitted source ranges', () => {
     expect(() => validateRecording(record({omittedSourceRangesSeconds: [[114, 107]]}))).toThrow(
       'recording_omitted_range_invalid',

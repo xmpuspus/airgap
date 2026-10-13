@@ -186,8 +186,13 @@ sources without operating the apps again.
 If a development-only notice appears in otherwise valid source footage, record its exact source
 timestamps in `omittedSourceRangesSeconds`. The public GIF can omit that interval, but the source MP4
 must stay unchanged. The Gemma 4 takes also omit each model wait, from 1.5 seconds after the send
-tap to half a second before the answer shows, and list it in the same field. Do not omit product
-errors, other delays, failed actions, or other app behavior.
+tap to half a second before the answer shows, and list it in the same field. The industry and
+iOS demo flows scroll once after the answer, because the recordings write a frame only on change.
+Omit that closing scroll from its first frame, so the loop ends on the answer at rest.
+
+The finished screen can last a fraction of a second in a sped-up GIF. Set `endHoldSeconds`, up
+to 5, on the manifest entry to hold the last frame at the end of the loop. Do not omit product errors, other
+delays, failed actions, or other app behavior.
 
 ```bash
 npm run recordings:rebuild -- --commit <40-character-commit>

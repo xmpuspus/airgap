@@ -50,6 +50,7 @@ function main() {
       colors: recording.kind === 'industry' ? 80 : 96,
       playbackSpeed,
       omittedSourceRangesSeconds: recording.omittedSourceRangesSeconds ?? [],
+      endHoldSeconds: recording.endHoldSeconds ?? 0,
     });
 
     const probe = probeMedia(output);

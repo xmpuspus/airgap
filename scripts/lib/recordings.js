@@ -162,7 +162,14 @@ function maestroRecordingPath(target) {
   return path.resolve(target).split(path.sep).join('/');
 }
 
-function gifFilter({fps, width, colors, playbackSpeed = 1, omittedSourceRangesSeconds = []}) {
+function gifFilter({
+  fps,
+  width,
+  colors,
+  playbackSpeed = 1,
+  omittedSourceRangesSeconds = [],
+  endHoldSeconds = 0,
+}) {
   const filters = [];
   let input = '';
   if (omittedSourceRangesSeconds.length > 0) {
@@ -180,9 +187,12 @@ function gifFilter({fps, width, colors, playbackSpeed = 1, omittedSourceRangesSe
     segments.push(`[${label}]`);
     input = `${segments.join('')}concat=n=${segments.length}:v=1:a=0,`;
   }
+  // A screen recording writes a frame only on change, so the finished screen
+  // can last a fraction of a second; the hold lets the loop rest on it.
+  const hold = endHoldSeconds > 0 ? `tpad=stop_mode=clone:stop_duration=${endHoldSeconds},` : '';
   return [
     ...filters,
-    `${input}setpts=PTS/${playbackSpeed},fps=${fps},scale=${width}:-2:flags=lanczos,split[s0][s1]`,
+    `${input}setpts=PTS/${playbackSpeed},${hold}fps=${fps},scale=${width}:-2:flags=lanczos,split[s0][s1]`,
     `[s0]palettegen=max_colors=${colors}:stats_mode=diff[p]`,
     '[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle',
   ].join(';');
@@ -317,6 +327,14 @@ function validateRecording(recording, measured) {
   }
   if (!Array.isArray(recording.omittedSourceRangesSeconds)) {
     fail('recording_omitted_range_invalid');
+  }
+  if (
+    recording.endHoldSeconds !== undefined &&
+    (!Number.isFinite(recording.endHoldSeconds) ||
+      recording.endHoldSeconds < 0 ||
+      recording.endHoldSeconds > 5)
+  ) {
+    fail('recording_end_hold_invalid');
   }
   let previousEnd = -1;
   for (const range of recording.omittedSourceRangesSeconds) {
