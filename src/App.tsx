@@ -1,11 +1,11 @@
-// Airgap — https://github.com/xmpuspus/airgap
+// Airgap: https://github.com/xmpuspus/airgap
 // Copyright 2026 Xavier Puspus. MIT license.
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, Text, View, Image, StyleSheet, useWindowDimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {COLORS, SPACING, TYPOGRAPHY, ThemeProvider} from './constants/theme';
+import {COLORS, SPACING, TYPOGRAPHY} from './constants/theme';
 import {brand, features} from './config/loader';
 import {showsOutbox} from './utils/appChrome';
 import {connectivityService} from './services/connectivityService';
@@ -61,7 +61,6 @@ function HeaderTitle() {
   );
 }
 
-// A circle with a dot read as a radio button, so the button says what it opens.
 function SettingsButton({onPress, compact}: {onPress: () => void; compact: boolean}) {
   return (
     <TouchableOpacity
@@ -128,7 +127,9 @@ export default function App() {
         modelManager.checkForUpdate().catch(() => undefined);
       } catch {
         if (active) {
-          setStartupError('Secure storage is unavailable. Unlock the device and restart Airgap.');
+          setStartupError(
+            `Secure storage is unavailable. Unlock the device and restart ${brand.name}.`,
+          );
         }
       }
     }
@@ -150,7 +151,7 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <View style={startupStyles.screen} accessibilityRole="alert">
-          <Text style={startupStyles.title}>Airgap could not start</Text>
+          <Text style={startupStyles.title}>{brand.name} could not start</Text>
           <Text style={startupStyles.message}>{startupError}</Text>
         </View>
       </SafeAreaProvider>
@@ -161,56 +162,54 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <ThemeProvider>
-        <SafeAreaProvider>
-          <NavigationContainer>
-            <Stack.Navigator
-              initialRouteName={hasOnboarded ? 'Chat' : 'Onboarding'}
-              screenOptions={{
-                headerStyle: {backgroundColor: '#0B1F33'},
-                headerTintColor: COLORS.textInverse,
-                headerTitleStyle: {fontWeight: '600'},
-                headerShadowVisible: false,
-              }}>
-              <Stack.Screen name="Onboarding" options={{headerShown: false}}>
-                {(props: any) => <OnboardingScreen {...props} onComplete={completeOnboarding} />}
-              </Stack.Screen>
-              <Stack.Screen
-                name="Chat"
-                component={ChatScreen as any}
-                options={({navigation}: any) => ({
-                  /* eslint-disable react/no-unstable-nested-components --
-                   * React Navigation's headerTitle/headerRight options expect
-                   * factory functions that return JSX. The factory is called
-                   * by the navigator, not by our render loop, so the
-                   * "unstable component" concern does not apply. */
-                  headerTitle: () => <HeaderTitle />,
-                  headerRight: () => (
-                    <HeaderActions
-                      onOutbox={() => navigation.navigate('Outbox')}
-                      onSettings={() => navigation.navigate('Settings')}
-                    />
-                  ),
-                  /* eslint-enable react/no-unstable-nested-components */
-                })}
-              />
-              <Stack.Screen
-                name="Outbox"
-                component={OutboxScreen as any}
-                options={{title: 'Outbox', headerBackTitle: 'Back'}}
-              />
-              <Stack.Screen
-                name="Settings"
-                component={SettingsScreen as any}
-                options={{
-                  title: 'Settings',
-                  headerBackTitle: 'Back',
-                }}
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </ThemeProvider>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={hasOnboarded ? 'Chat' : 'Onboarding'}
+            screenOptions={{
+              headerStyle: {backgroundColor: '#0B1F33'},
+              headerTintColor: COLORS.textInverse,
+              headerTitleStyle: {fontWeight: '600'},
+              headerShadowVisible: false,
+            }}>
+            <Stack.Screen name="Onboarding" options={{headerShown: false}}>
+              {(props: any) => <OnboardingScreen {...props} onComplete={completeOnboarding} />}
+            </Stack.Screen>
+            <Stack.Screen
+              name="Chat"
+              component={ChatScreen as any}
+              options={({navigation}: any) => ({
+                /* eslint-disable react/no-unstable-nested-components --
+                 * React Navigation's headerTitle/headerRight options expect
+                 * factory functions that return JSX. The factory is called
+                 * by the navigator, not by our render loop, so the
+                 * "unstable component" concern does not apply. */
+                headerTitle: () => <HeaderTitle />,
+                headerRight: () => (
+                  <HeaderActions
+                    onOutbox={() => navigation.navigate('Outbox')}
+                    onSettings={() => navigation.navigate('Settings')}
+                  />
+                ),
+                /* eslint-enable react/no-unstable-nested-components */
+              })}
+            />
+            <Stack.Screen
+              name="Outbox"
+              component={OutboxScreen as any}
+              options={{title: 'Outbox', headerBackTitle: 'Back'}}
+            />
+            <Stack.Screen
+              name="Settings"
+              component={SettingsScreen as any}
+              options={{
+                title: 'Settings',
+                headerBackTitle: 'Back',
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
     </ErrorBoundary>
   );
 }

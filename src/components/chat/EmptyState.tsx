@@ -8,13 +8,6 @@ import type {QuickReply} from '../../types/chat';
 
 const AVATAR_SIZE = 80;
 
-// Feature summary pills shown below the greeting
-const FEATURE_PILLS = [
-  'Plans & Pricing',
-  'Troubleshooting',
-  'Store Locator',
-];
-
 interface Props {
   onQuickReply: (reply: QuickReply) => void;
 }
@@ -26,13 +19,11 @@ export function EmptyState({onQuickReply}: Props) {
   const avatarScale = useRef(new Animated.Value(0.8)).current;
   const textFade = useRef(new Animated.Value(0)).current;
   const textSlide = useRef(new Animated.Value(16)).current;
-  const pillsFade = useRef(new Animated.Value(0)).current;
-  const pillsSlide = useRef(new Animated.Value(12)).current;
   const repliesFade = useRef(new Animated.Value(0)).current;
   const repliesSlide = useRef(new Animated.Value(10)).current;
 
   useEffect(() => {
-    // Staggered entrance: avatar → text → pills → replies
+    // Staggered entrance: avatar, text, replies
     Animated.stagger(100, [
       Animated.parallel([
         Animated.spring(avatarScale, {
@@ -59,18 +50,6 @@ export function EmptyState({onQuickReply}: Props) {
         }),
       ]),
       Animated.parallel([
-        Animated.timing(pillsFade, {
-          toValue: 1,
-          duration: TIMING.normal,
-          useNativeDriver: true,
-        }),
-        Animated.spring(pillsSlide, {
-          toValue: 0,
-          ...TIMING.spring,
-          useNativeDriver: true,
-        }),
-      ]),
-      Animated.parallel([
         Animated.timing(repliesFade, {
           toValue: 1,
           duration: TIMING.normal,
@@ -84,7 +63,6 @@ export function EmptyState({onQuickReply}: Props) {
       ]),
     ]).start();
 
-    // Subtle breathing animation on avatar
     const breathe = Animated.loop(
       Animated.sequence([
         Animated.timing(breatheAnim, {
@@ -120,8 +98,14 @@ export function EmptyState({onQuickReply}: Props) {
       ring.stop();
     };
   }, [
-    breatheAnim, ringAnim, avatarFade, avatarScale,
-    textFade, textSlide, pillsFade, pillsSlide, repliesFade, repliesSlide,
+    breatheAnim,
+    ringAnim,
+    avatarFade,
+    avatarScale,
+    textFade,
+    textSlide,
+    repliesFade,
+    repliesSlide,
   ]);
 
   const handleQuickReply = useCallback(
@@ -143,11 +127,7 @@ export function EmptyState({onQuickReply}: Props) {
           },
         ]}>
         <Animated.View style={[styles.glowRing, {opacity: ringAnim}]} />
-        <Animated.View
-          style={[
-            styles.avatarWrapper,
-            {transform: [{scale: breatheAnim}]},
-          ]}>
+        <Animated.View style={[styles.avatarWrapper, {transform: [{scale: breatheAnim}]}]}>
           <Image
             source={require('../../../assets/images/airgap-avatar.png')}
             style={styles.avatar}
@@ -162,28 +142,10 @@ export function EmptyState({onQuickReply}: Props) {
           opacity: textFade,
           transform: [{translateY: textSlide}],
         }}>
-        <Text style={styles.greeting}>
-          {t('emptyStateGreeting', `Hi, I'm ${brand.botName}`)}
-        </Text>
+        <Text style={styles.greeting}>{t('emptyStateGreeting', `Hi, I'm ${brand.botName}`)}</Text>
         <Text style={styles.prompt}>
           {t('emptyStatePrompt', `Ask me anything about ${brand.name}`)}
         </Text>
-      </Animated.View>
-
-      {/* Feature summary pills */}
-      <Animated.View
-        style={[
-          styles.pillsRow,
-          {
-            opacity: pillsFade,
-            transform: [{translateY: pillsSlide}],
-          },
-        ]}>
-        {FEATURE_PILLS.map(label => (
-          <View key={label} style={styles.featurePill}>
-            <Text style={styles.featurePillText}>{label}</Text>
-          </View>
-        ))}
       </Animated.View>
 
       {/* Quick replies */}
@@ -247,27 +209,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: SPACING.lg,
     paddingHorizontal: SPACING.xl,
-  },
-  pillsRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: SPACING.sm,
-    marginBottom: SPACING.xl,
-    paddingHorizontal: SPACING.xl,
-  },
-  featurePill: {
-    backgroundColor: COLORS.primary + '0A',
-    borderWidth: 1,
-    borderColor: COLORS.primary + '18',
-    borderRadius: SPACING.xl,
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.xs + 2,
-  },
-  featurePillText: {
-    ...TYPOGRAPHY.caption,
-    color: COLORS.primary,
-    fontWeight: '500',
   },
   repliesWrapper: {
     width: '100%',

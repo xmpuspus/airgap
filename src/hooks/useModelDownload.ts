@@ -4,16 +4,14 @@ import {modelConfig} from '../config/loader';
 import {getMode} from '../services/llmRouter';
 
 export function useModelDownload() {
-  // Demo mode skips the 2.4 GB download entirely and pretends the model
-  // is already in place.
+  // Demo mode has no model, so it never reports one as downloaded.
   const demoMode = getMode() === 'demo';
-  const [isDownloaded, setDownloaded] = useState(demoMode);
+  const [isDownloaded, setDownloaded] = useState(false);
   const [isDownloading, setDownloading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [modelSizeMB, setModelSizeMB] = useState<number>(modelConfig.sizeMB ?? 2445);
 
   useEffect(() => {
-    // Demo mode: skip real model check, pretend it's ready
     if (demoMode) return;
 
     let mounted = true;

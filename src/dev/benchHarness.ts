@@ -38,8 +38,8 @@ export interface BenchOpts {
 
 /**
  * Compute a percentile (0..100) from an unsorted numeric array. Uses
- * linear interpolation between nearest ranks. Returns NaN for empty input
- * — callers guard against that before invoking summarize().
+ * linear interpolation between nearest ranks. Returns NaN for empty input,
+ * which runBench rules out by rejecting an empty query list.
  */
 function percentile(values: number[], p: number): number {
   if (values.length === 0) return NaN;
@@ -73,6 +73,8 @@ function summarize(runs: BenchRun[], includeTps: boolean): BenchSummary {
  * short-circuited before invoking the LLM/demo formatter).
  */
 export async function runBench(queries: string[], opts: BenchOpts = {}): Promise<BenchResult> {
+  if (queries.length === 0) throw new Error('runBench needs at least one query');
+
   // Lazy-load to keep the module pure-Node-importable. The orchestrator
   // pulls in MMKV, react-native-fs, etc. via transitive imports, but those
   // are mocked at the jest layer and only resolved at runBench time.

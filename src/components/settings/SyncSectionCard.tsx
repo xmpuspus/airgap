@@ -1,13 +1,4 @@
-/**
- * SyncSectionCard — Settings screen surface for the KB sync pipeline.
- *
- * Shows the current bundle source (compiled-in vs downloaded), version,
- * last sync time, freshness band, and last error if any. Provides a
- * "Sync now" button that calls syncService.syncKnowledge directly.
- *
- * Subscribes to onSync so the rows update immediately after a sync
- * completes (instead of waiting for the next 30s poll on StalenessChip).
- */
+/** Settings card that shows the knowledge sync state and offers a sync when an update server is set up. */
 
 import React, {useCallback, useEffect, useState} from 'react';
 import {ActivityIndicator, Pressable, StyleSheet, Text, View} from 'react-native';
@@ -15,6 +6,7 @@ import {COLORS, RADIUS, SHADOWS, SPACING, TYPOGRAPHY} from '../../constants/them
 import {
   getKbSource,
   getStalenessInfo,
+  isSyncConfigured,
   onSync,
   syncKnowledge,
 } from '../../services/syncService';
@@ -36,13 +28,13 @@ function bandLabel(band: string): string {
 function bandColor(band: string): string {
   switch (band) {
     case 'fresh':
-      return COLORS.success ?? '#059669';
+      return COLORS.success;
     case 'stale':
-      return COLORS.warning ?? '#D97706';
+      return COLORS.warning;
     case 'very_stale':
-      return COLORS.error ?? '#DC2626';
+      return COLORS.error;
     default:
-      return COLORS.offline ?? '#94A3B8';
+      return COLORS.offline;
   }
 }
 
@@ -50,9 +42,7 @@ function Row({label, value, valueColor}: {label: string; value: string; valueCol
   return (
     <View style={styles.row}>
       <Text style={styles.label}>{label}</Text>
-      <Text
-        style={[styles.value, valueColor ? {color: valueColor} : null]}
-        numberOfLines={1}>
+      <Text style={[styles.value, valueColor ? {color: valueColor} : null]} numberOfLines={1}>
         {value}
       </Text>
     </View>
@@ -118,30 +108,34 @@ export function SyncSectionCard() {
           />
         </>
       ) : null}
-      <View style={styles.divider} />
-      <Pressable
-        onPress={handleSyncNow}
-        disabled={syncing}
-        style={({pressed}) => [styles.actionRow, pressed && styles.actionRowPressed]}
-        accessibilityRole="button"
-        accessibilityLabel={t('sync.syncNow', 'Sync knowledge base now')}>
-        {syncing ? (
-          <View style={styles.actionInner}>
-            <ActivityIndicator color={COLORS.primary} size="small" />
-            <Text style={[styles.actionText, {marginLeft: SPACING.sm}]}>
-              {t('sync.syncing', 'Syncing…')}
-            </Text>
-          </View>
-        ) : (
-          <>
-            <Text style={styles.actionText}>{t('sync.syncNow', 'Sync now')}</Text>
-            <View style={styles.chevron}>
-              <View style={styles.chevronTop} />
-              <View style={styles.chevronBottom} />
-            </View>
-          </>
-        )}
-      </Pressable>
+      {isSyncConfigured() && (
+        <>
+          <View style={styles.divider} />
+          <Pressable
+            onPress={handleSyncNow}
+            disabled={syncing}
+            style={({pressed}) => [styles.actionRow, pressed && styles.actionRowPressed]}
+            accessibilityRole="button"
+            accessibilityLabel={t('sync.syncNow', 'Sync knowledge base now')}>
+            {syncing ? (
+              <View style={styles.actionInner}>
+                <ActivityIndicator color={COLORS.primary} size="small" />
+                <Text style={[styles.actionText, {marginLeft: SPACING.sm}]}>
+                  {t('sync.syncing', 'Syncing…')}
+                </Text>
+              </View>
+            ) : (
+              <>
+                <Text style={styles.actionText}>{t('sync.syncNow', 'Sync now')}</Text>
+                <View style={styles.chevron}>
+                  <View style={styles.chevronTop} />
+                  <View style={styles.chevronBottom} />
+                </View>
+              </>
+            )}
+          </Pressable>
+        </>
+      )}
     </View>
   );
 }

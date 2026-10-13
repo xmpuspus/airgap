@@ -40,17 +40,9 @@ export function formatMegabytes(mb: number): string {
   return `${mb} MB`;
 }
 
-// The hotline comes from the template. A fixed number sent government users to
-// the telco fixture's line.
+// The hotline comes from the template.
 export function chatErrorReply(hotline: string | undefined): string {
   return hotline
     ? `Sorry, something went wrong. Try again, or call ${hotline}.`
     : 'Sorry, something went wrong. Try again.';
-}
-
-// Android 15 draws apps edge to edge, so adjustResize no longer shrinks the
-// window for the keyboard. Padding by the keyboard overlap works on both
-// platforms, and the overlap is zero where the window still resizes.
-export function chatKeyboardBehavior(_os: string): 'padding' {
-  return 'padding';
 }

@@ -7,16 +7,16 @@ export interface RenameOptions {
 }
 
 export interface RenameDerived {
-  npmName: string;       // kebab-case, e.g. "acme-support"
-  pascalName: string;    // PascalCase, e.g. "AcmeSupport" (used for native targets)
-  packageSlug: string;   // lowercase no-hyphens, e.g. "acmesupport" (used as java package leaf)
+  npmName: string; // kebab-case, e.g. "acme-support"
+  pascalName: string; // PascalCase, e.g. "AcmeSupport" (used for native targets)
+  packageSlug: string; // lowercase no-hyphens, e.g. "acmesupport" (used as java package leaf)
   androidPackage: string; // e.g. "com.acmesupport"
 }
 
 export function deriveNames(botName: string): RenameDerived {
   const npmName = botName.toLowerCase();
   const parts = npmName.split('-').filter(Boolean);
-  const pascalName = parts.map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join('');
+  const pascalName = parts.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join('');
   // Java packages cannot contain hyphens, and android namespaces by convention
   // use lowercase. Strip hyphens for the leaf segment.
   const packageSlug = parts.join('');
@@ -100,44 +100,28 @@ export async function rename(opts: RenameOptions): Promise<void> {
   const {targetDir, botName} = opts;
   const {npmName, pascalName, packageSlug, androidPackage} = deriveNames(botName);
 
-  // 1. Root package.json: name field.
-  await rewriteJson(path.join(targetDir, 'package.json'), (json) => {
+  await rewriteJson(path.join(targetDir, 'package.json'), json => {
     json.name = npmName;
   });
 
-  // 2. app.json: name and displayName.
-  await rewriteJson(path.join(targetDir, 'app.json'), (json) => {
+  await rewriteJson(path.join(targetDir, 'app.json'), json => {
     json.name = pascalName;
     json.displayName = pascalName;
   });
 
-  // 3. android/app/build.gradle: namespace and applicationId.
   await replaceInFile(path.join(targetDir, 'android', 'app', 'build.gradle'), [
     [/namespace\s+"com\.airgap"/g, `namespace "${androidPackage}"`],
     [/applicationId\s+"com\.airgap"/g, `applicationId "${androidPackage}"`],
   ]);
 
-  // 4. android/app/src/main/AndroidManifest.xml: there's no explicit package
-  //    attribute in modern RN templates (namespace is in build.gradle), but
-  //    rewrite app_name references and any leftover com.airgap mentions.
+  // Modern RN templates keep the namespace in build.gradle, not in a package
+  // attribute here, so only leftover com.airgap mentions need a rewrite.
   await replaceInFile(
     path.join(targetDir, 'android', 'app', 'src', 'main', 'AndroidManifest.xml'),
     [['com.airgap', androidPackage]],
   );
 
-  // 5. android/app/src/main/java/com/airgap/* -> com/<packageSlug>/*.
-  //    The actual files in Airgap are .kt (Kotlin), but handle .java too in case
-  //    a future template ships them.
-  const oldJavaDir = path.join(
-    targetDir,
-    'android',
-    'app',
-    'src',
-    'main',
-    'java',
-    'com',
-    'airgap',
-  );
+  const oldJavaDir = path.join(targetDir, 'android', 'app', 'src', 'main', 'java', 'com', 'airgap');
   const newJavaDir = path.join(
     targetDir,
     'android',
@@ -166,39 +150,36 @@ export async function rename(opts: RenameOptions): Promise<void> {
     }
   }
 
-  // 6. android/app/src/main/res/values/strings.xml: app_name.
   await replaceInFile(
     path.join(targetDir, 'android', 'app', 'src', 'main', 'res', 'values', 'strings.xml'),
-    [[/<string name="app_name">[^<]*<\/string>/g, `<string name="app_name">${pascalName}</string>`]],
-  );
-
-  // 7. iOS Info.plist: CFBundleDisplayName. CFBundleName/CFBundleIdentifier
-  //    are typically variables driven by the xcode project (PRODUCT_NAME,
-  //    PRODUCT_BUNDLE_IDENTIFIER). Rewrite the literal display name and any
-  //    accidental "Airgap" string in the plist.
-  await replaceInFile(
-    path.join(targetDir, 'ios', 'Airgap', 'Info.plist'),
     [
       [
-        /<key>CFBundleDisplayName<\/key>\s*<string>Airgap<\/string>/g,
-        `<key>CFBundleDisplayName</key>\n\t<string>${pascalName}</string>`,
+        /<string name="app_name">[^<]*<\/string>/g,
+        `<string name="app_name">${pascalName}</string>`,
       ],
     ],
   );
 
-  // 8. ios/Podfile: target name.
+  // CFBundleName and CFBundleIdentifier come from Xcode build variables
+  // (PRODUCT_NAME, PRODUCT_BUNDLE_IDENTIFIER), so only the literal display
+  // name needs a rewrite.
+  await replaceInFile(path.join(targetDir, 'ios', 'Airgap', 'Info.plist'), [
+    [
+      /<key>CFBundleDisplayName<\/key>\s*<string>Airgap<\/string>/g,
+      `<key>CFBundleDisplayName</key>\n\t<string>${pascalName}</string>`,
+    ],
+  ]);
+
   await replaceInFile(path.join(targetDir, 'ios', 'Podfile'), [
     [/target ['"]Airgap['"] do/g, `target '${pascalName}' do`],
     [/target ['"]AirgapTests['"] do/g, `target '${pascalName}Tests' do`],
   ]);
 
-  // 9. iOS workspace and xcodeproj literal references inside project.pbxproj
-  //    and contents.xcworkspacedata. Replace before renaming directories.
+  // Rewrite the references inside project.pbxproj and contents.xcworkspacedata
+  // before the directories move, because the paths below use the old names.
   const xcodeproj = path.join(targetDir, 'ios', 'Airgap.xcodeproj', 'project.pbxproj');
   if (await fileExists(xcodeproj)) {
-    await replaceInFile(xcodeproj, [
-      [/Airgap/g, pascalName],
-    ]);
+    await replaceInFile(xcodeproj, [[/Airgap/g, pascalName]]);
   }
   const workspaceData = path.join(
     targetDir,
@@ -207,12 +188,9 @@ export async function rename(opts: RenameOptions): Promise<void> {
     'contents.xcworkspacedata',
   );
   if (await fileExists(workspaceData)) {
-    await replaceInFile(workspaceData, [
-      [/Airgap/g, pascalName],
-    ]);
+    await replaceInFile(workspaceData, [[/Airgap/g, pascalName]]);
   }
 
-  // 10. Rename ios/ directories themselves.
   const iosDirs: Array<[string, string]> = [
     ['Airgap', pascalName],
     ['Airgap.xcodeproj', `${pascalName}.xcodeproj`],
@@ -227,7 +205,7 @@ export async function rename(opts: RenameOptions): Promise<void> {
     }
   }
 
-  // 11. Drop a marker so anyone inspecting the scaffold can see what changed.
+  // Drop a marker so anyone inspecting the scaffold can see what changed.
   await fsp.writeFile(
     path.join(targetDir, '.airgap-scaffold.json'),
     JSON.stringify(
@@ -241,5 +219,4 @@ export async function rename(opts: RenameOptions): Promise<void> {
       2,
     ) + '\n',
   );
-
 }

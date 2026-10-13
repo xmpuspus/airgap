@@ -216,3 +216,15 @@ test('drops rate buckets after their window ends', () => {
   takeRateToken('10.0.0.3', buckets, 5, 1000, 1000);
   assert.deepEqual([...buckets.keys()], ['10.0.0.2', '10.0.0.3']);
 });
+
+test('answers 500 for an unreadable model manifest and keeps serving', async t => {
+  const manifestPath = join(fixtureRoot, 'broken-model.json');
+  await writeFile(manifestPath, '{not json');
+  const {url, server} = await startServer(['--model-manifest', manifestPath]);
+  t.after(() => server.kill());
+  const headers = {Authorization: 'Bearer test-token-with-enough-entropy'};
+  const response = await fetch(`${url}/api/v1/sync/model`, {headers});
+  assert.equal(response.status, 500);
+  assert.deepEqual(await response.json(), {error: 'model_manifest_failed'});
+  assert.equal((await fetch(`${url}/healthz`)).status, 200);
+});

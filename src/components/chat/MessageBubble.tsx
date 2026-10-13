@@ -25,6 +25,7 @@ import type {BotMessage} from '../../types/chat';
 import {CitationChips} from './CitationChips';
 import {AnswerProvenance} from './AnswerProvenance';
 import {ActionReceipt} from './ActionReceipt';
+import {toolDisplayName} from './toolDisplayName';
 import {describeSourceMetadata} from './sourceMetadata';
 import {refusalLabelFor, showsRecordCard} from './messagePresentation';
 import {offlineQueue} from '../../services/offlineQueue';
@@ -36,12 +37,9 @@ import {useReducedMotion} from '../../hooks/useReducedMotion';
 
 const AVATAR_SIZE = 32;
 
-const SOURCE_COLORS: Record<string, string> = {
-  llm: COLORS.primary,
-  search: COLORS.secondary,
-  queue: COLORS.warning ?? COLORS.secondary,
-  tool: COLORS.success ?? COLORS.primary,
-  refusal: COLORS.warning ?? '#D97706',
+const SOURCE_COLORS = {
+  tool: COLORS.success,
+  refusal: COLORS.warning,
 };
 
 function formatTimestamp(date: Date): string {
@@ -251,12 +249,11 @@ function ToolPill({toolName, color}: {toolName: string; color: string}) {
         <View style={[styles.toolCheckShort, {backgroundColor: color}]} />
         <View style={[styles.toolCheckLong, {backgroundColor: color}]} />
       </View>
-      <Text style={[styles.toolPillText, {color}]}>{toolName}</Text>
+      <Text style={[styles.toolPillText, {color}]}>{toolDisplayName(toolName)}</Text>
     </View>
   );
 }
 
-// Resolve corner radii from grouping position
 function getBubbleRadii(isBot: boolean, position: BubblePosition) {
   const side = isBot ? BUBBLE_RADIUS.bot : BUBBLE_RADIUS.user;
   return side[position];
@@ -368,13 +365,8 @@ export function MessageBubble({
     borderBottomRightRadius: radii.bottomRight,
   };
 
-  // Spacing between grouped messages
   const verticalMargin =
-    position === 'first' || position === 'middle'
-      ? GROUP_SPACING.grouped
-      : position === 'last'
-      ? GROUP_SPACING.grouped
-      : GROUP_SPACING.ungrouped;
+    position === 'standalone' ? GROUP_SPACING.ungrouped : GROUP_SPACING.grouped;
 
   // Before the first token the typing row says the bot is working. An empty
   // bubble next to it would only repeat that.

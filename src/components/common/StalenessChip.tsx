@@ -1,19 +1,6 @@
 /**
- * StalenessChip — a small pressable row rendered in the chat screen header.
- * Reads syncService.getStalenessInfo() on mount and every 30 seconds, and
- * surfaces the current KB freshness band so a cold reviewer can see that
- * the app is syncing (or needs to sync). Tapping opens an Alert with
- * version + last-sync info and a "Sync now" button.
- *
- * Visual rules:
- *  - fresh (<24h)       : success dot + "Synced"
- *  - stale (24h-7d)     : warning dot + "Updated Xd ago"
- *  - very_stale (>7d)   : error dot   + "Outdated"
- *  - never              : offline dot + "Not synced"
- *  - syncing            : primary dot with a pulse animation
- *
- * No emoji — the dot is a 8px View circle. Matches the rest of the
- * geometric icon language in the app.
+ * Header chip that shows record freshness, polled every 30 seconds, and opens a status alert.
+ * The dot color follows the freshness band when an update server is set up. It pulses while syncing.
  */
 
 import React, {useEffect, useMemo, useRef, useState, useCallback} from 'react';
@@ -37,14 +24,14 @@ type Band = 'fresh' | 'stale' | 'very_stale' | 'never';
 function bandColor(band: Band): string {
   switch (band) {
     case 'fresh':
-      return COLORS.success ?? '#059669';
+      return COLORS.success;
     case 'stale':
-      return COLORS.warning ?? '#D97706';
+      return COLORS.warning;
     case 'very_stale':
-      return COLORS.error ?? '#DC2626';
+      return COLORS.error;
     case 'never':
     default:
-      return COLORS.offline ?? '#94A3B8';
+      return COLORS.offline;
   }
 }
 

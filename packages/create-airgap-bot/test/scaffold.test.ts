@@ -32,7 +32,6 @@ describe('scaffold', () => {
       sourceDir: REPO_ROOT,
     });
 
-    // Top-level structure exists.
     expect(fs.existsSync(path.join(targetDir, 'package.json'))).toBe(true);
     expect(fs.existsSync(path.join(targetDir, 'airgap.config.json'))).toBe(true);
     expect(fs.existsSync(path.join(targetDir, 'src'))).toBe(true);
@@ -44,13 +43,11 @@ describe('scaffold', () => {
     expect(fs.existsSync(path.join(targetDir, 'android', 'app', 'build'))).toBe(false);
     expect(fs.existsSync(path.join(targetDir, 'ios', 'Pods'))).toBe(false);
 
-    // package.json name matches bot name (kebab-case).
     const pkg = JSON.parse(await fsp.readFile(path.join(targetDir, 'package.json'), 'utf8')) as {
       name: string;
     };
     expect(pkg.name).toBe(botName);
 
-    // Android applicationId reflects the new name.
     const gradle = await fsp.readFile(
       path.join(targetDir, 'android', 'app', 'build.gradle'),
       'utf8',
@@ -61,18 +58,17 @@ describe('scaffold', () => {
     // Old package id must be gone.
     expect(gradle).not.toContain('com.airgap');
 
-    // airgap.config.json matches the chosen template's config.
     const scaffolded = JSON.parse(
       await fsp.readFile(path.join(targetDir, 'airgap.config.json'), 'utf8'),
     );
     const templateCfg = JSON.parse(
       await fsp.readFile(path.join(REPO_ROOT, 'examples', 'telco', 'airgap.config.json'), 'utf8'),
     );
-    expect(scaffolded).toEqual(templateCfg);
+    // The scaffolder points $schema at the app root; every other field is copied as is.
+    expect(scaffolded).toEqual({...templateCfg, $schema: './airgap.schema.json'});
     expect(fs.existsSync(path.join(targetDir, 'src', 'knowledge', 'index.ts'))).toBe(true);
     expect(fs.existsSync(path.join(targetDir, 'src', 'knowledge', 'plans.json'))).toBe(true);
 
-    // Java/Kotlin sources moved to the new package directory.
     const newJavaDir = path.join(
       targetDir,
       'android',
@@ -96,7 +92,6 @@ describe('scaffold', () => {
     );
     expect(fs.existsSync(oldJavaDir)).toBe(false);
 
-    // app.json reflects PascalCase display name.
     const appJson = JSON.parse(await fsp.readFile(path.join(targetDir, 'app.json'), 'utf8')) as {
       name: string;
       displayName: string;
@@ -104,15 +99,30 @@ describe('scaffold', () => {
     expect(appJson.name).toBe(deriveNames(botName).pascalName);
     expect(appJson.displayName).toBe(deriveNames(botName).pascalName);
 
-    // iOS directories renamed.
     expect(fs.existsSync(path.join(targetDir, 'ios', deriveNames(botName).pascalName))).toBe(true);
     expect(
       fs.existsSync(path.join(targetDir, 'ios', `${deriveNames(botName).pascalName}.xcodeproj`)),
     ).toBe(true);
     expect(fs.existsSync(path.join(targetDir, 'ios', 'Airgap'))).toBe(false);
 
-    // Marker file recorded.
     expect(fs.existsSync(path.join(targetDir, '.airgap-scaffold.json'))).toBe(true);
+  }, 60000);
+
+  it('points $schema at the schema file in the app root', async () => {
+    const targetDir = path.join(tmpDir, 'bank-support');
+
+    await scaffold({
+      botName: 'bank-support',
+      template: 'banking',
+      targetDir,
+      sourceDir: REPO_ROOT,
+    });
+
+    const scaffolded = JSON.parse(
+      await fsp.readFile(path.join(targetDir, 'airgap.config.json'), 'utf8'),
+    );
+    expect(scaffolded.$schema).toBe('./airgap.schema.json');
+    expect(fs.existsSync(path.join(targetDir, 'airgap.schema.json'))).toBe(true);
   }, 60000);
 });
 

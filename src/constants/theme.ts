@@ -2,12 +2,29 @@
  * intended use of these operators; the rule's "probably a typo for &&/||"
  * heuristic does not apply.
  */
-import React, {createContext, useMemo} from 'react';
-import {useColorScheme} from 'react-native';
+import {Appearance} from 'react-native';
 import {theme as configTheme} from '../config/loader';
 import type {ThemeSection} from '../config/loader';
 
-// --- Color utilities ---
+// The config loader and the dark palette both fill these fields.
+type Palette = ThemeSection &
+  Required<
+    Pick<
+      ThemeSection,
+      | 'surface'
+      | 'text'
+      | 'textSecondary'
+      | 'textInverse'
+      | 'botBubble'
+      | 'userBubble'
+      | 'success'
+      | 'warning'
+      | 'error'
+      | 'offline'
+      | 'border'
+      | 'inputBg'
+    >
+  >;
 
 function hexToRgb(hex: string): {r: number; g: number; b: number} {
   const n = parseInt(hex.slice(1), 16);
@@ -57,23 +74,21 @@ function generateDarkPalette(light: ThemeSection): ThemeSection {
   };
 }
 
-// --- Resolve active palette ---
-
 const darkModeConfig = configTheme.darkMode ?? false;
-const lightPalette: ThemeSection = configTheme;
-const darkPalette: ThemeSection = {
+const lightPalette = configTheme as Palette;
+const darkPalette = {
   ...generateDarkPalette(lightPalette),
   ...(configTheme.darkTheme ?? {}),
-};
+} as Palette;
 
-function resolveStaticPalette(): ThemeSection {
-  if (darkModeConfig === true) return darkPalette;
-  return lightPalette;
+// "auto" follows the device appearance at load; it does not switch while the app runs.
+function resolveStaticPalette(): Palette {
+  const dark =
+    darkModeConfig === 'auto' ? Appearance.getColorScheme() === 'dark' : darkModeConfig === true;
+  return dark ? darkPalette : lightPalette;
 }
 
-export const COLORS: ThemeSection = resolveStaticPalette();
-
-// --- Font support ---
+export const COLORS: Palette = resolveStaticPalette();
 
 const fontFamily = configTheme.font ?? 'System';
 
@@ -82,8 +97,6 @@ export const FONTS = {
   medium: fontFamily,
   bold: fontFamily,
 };
-
-// --- Typography scale ---
 
 export const TYPOGRAPHY = {
   display: {
@@ -130,8 +143,6 @@ export const TYPOGRAPHY = {
   },
 };
 
-// --- Spacing ---
-
 export const SPACING = {
   '2xs': 2,
   xs: 4,
@@ -140,12 +151,9 @@ export const SPACING = {
   lg: 16,
   xl: 24,
   '2xl': 32,
-  xxl: 32,
   '3xl': 48,
   '4xl': 64,
 };
-
-// --- Border radius ---
 
 export const RADIUS = {
   xs: 4,
@@ -157,8 +165,7 @@ export const RADIUS = {
   full: 9999,
 };
 
-// --- Bubble geometry (Messenger-style grouping) ---
-// Four position states: standalone, first, middle, last
+// Messenger-style grouping. Four position states: standalone, first, middle, last
 // "Tail side" = bottom-left for bot, bottom-right for user
 
 const BUBBLE_FULL = 20;
@@ -227,8 +234,6 @@ export const GROUP_SPACING = {
   ungrouped: 12, // Between different senders or time-separated
 };
 
-// --- Shadow presets ---
-
 export const SHADOWS = {
   sm: {
     shadowColor: '#0F172A',
@@ -260,8 +265,6 @@ export const SHADOWS = {
   },
 };
 
-// --- Animation timing ---
-
 export const TIMING = {
   fast: 150,
   normal: 250,
@@ -270,38 +273,3 @@ export const TIMING = {
   springGentle: {tension: 60, friction: 8},
   springSnappy: {tension: 140, friction: 12},
 };
-
-// --- Theme Context ---
-
-interface ThemeContextValue {
-  colors: ThemeSection;
-  isDark: boolean;
-  fonts: typeof FONTS;
-}
-
-const ThemeContext = createContext<ThemeContextValue>({
-  colors: COLORS,
-  isDark: darkModeConfig === true,
-  fonts: FONTS,
-});
-
-export function ThemeProvider({children}: {children: React.ReactNode}) {
-  const systemScheme = useColorScheme();
-
-  const value = useMemo<ThemeContextValue>(() => {
-    let isDark: boolean;
-    if (darkModeConfig === 'auto') {
-      isDark = systemScheme === 'dark';
-    } else {
-      isDark = darkModeConfig === true;
-    }
-
-    return {
-      colors: isDark ? darkPalette : lightPalette,
-      isDark,
-      fonts: FONTS,
-    };
-  }, [systemScheme]);
-
-  return React.createElement(ThemeContext.Provider, {value}, children);
-}

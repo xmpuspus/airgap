@@ -1,25 +1,15 @@
-/**
- * DiagnosticsPanel — shown in Settings when features.diagnosticsPanel is
- * enabled in airgap.config.json. Displays the in-process metrics rollup
- * plus safety policy snapshot and sync staleness info.
- *
- * Intentionally minimal — this is a dev/ops aid, not a user-facing feature.
- */
+/** Settings panel for operators that shows the metrics rollup, safety policy, and sync age. */
 
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS, SPACING, RADIUS, TYPOGRAPHY} from '../../constants/theme';
-import {
-  getMetricsReport,
-  resetMetrics,
-  type MetricsReport,
-} from '../../services/metrics';
+import {getMetricsReport, resetMetrics, type MetricsReport} from '../../services/metrics';
 import {getSafetyPolicy} from '../../services/safetyLayer';
 import {getStalenessInfo} from '../../services/syncService';
 import {listRegisteredTools} from '../../services/tools';
 
 function fmt(v: number | null, unit = ''): string {
-  if (v === null) return '—';
+  if (v === null) return 'n/a';
   if (unit === 'ms') return `${Math.round(v)} ms`;
   if (unit === '%') return `${(v * 100).toFixed(1)} %`;
   return String(v);
@@ -65,33 +55,20 @@ export function DiagnosticsPanel() {
       <Text style={styles.sectionTitle}>Safety</Text>
       <Row label="Enabled" value={policy.enabled ? 'yes' : 'no'} />
       <Row label="Blocklist size" value={String(policy.blocklistSize)} />
-      <Row
-        label="Confidence threshold"
-        value={String(policy.confidenceThreshold)}
-      />
+      <Row label="Confidence threshold" value={String(policy.confidenceThreshold)} />
 
       <Text style={styles.sectionTitle}>Sync</Text>
-      <Row label="KB version" value={staleness.kbVersion ?? '—'} />
+      <Row label="KB version" value={staleness.kbVersion ?? 'n/a'} />
       <Row label="Staleness" value={staleness.band} />
       <Row
         label="Last sync"
-        value={
-          staleness.lastSyncAt
-            ? new Date(staleness.lastSyncAt).toLocaleString()
-            : 'never'
-        }
+        value={staleness.lastSyncAt ? new Date(staleness.lastSyncAt).toLocaleString() : 'never'}
       />
-      {staleness.lastError ? (
-        <Row label="Last error" value={staleness.lastError} />
-      ) : null}
+      {staleness.lastError ? <Row label="Last error" value={staleness.lastError} /> : null}
 
       <Text style={styles.sectionTitle}>Tools registered ({tools.length})</Text>
       {tools.map(t => (
-        <Row
-          key={t.name}
-          label={t.name}
-          value={t.vertical ?? 'generic'}
-        />
+        <Row key={t.name} label={t.name} value={t.vertical ?? 'generic'} />
       ))}
 
       <TouchableOpacity style={styles.resetButton} onPress={() => resetMetrics()}>
@@ -144,7 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.md,
     borderRadius: RADIUS.sm,
     borderWidth: 1,
-    borderColor: COLORS.border ?? '#E5E7EB',
+    borderColor: COLORS.border,
   },
   resetText: {
     ...TYPOGRAPHY.bodySmall,

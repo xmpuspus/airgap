@@ -97,6 +97,7 @@ __tests__/llm-journey-results.json
 
 # BFF runtime artifacts
 server/.keys/
+server/tmp/
 server/telemetry.jsonl
 
 # Secrets and credentials - never commit these

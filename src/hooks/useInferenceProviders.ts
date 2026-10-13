@@ -2,6 +2,7 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import {Platform} from 'react-native';
 import {config} from '../config/loader';
 import {getInferenceProviders, getMode} from '../services/llmRouter';
+import {logger} from '../services/logger';
 import type {AndroidDownloadProgress} from '../services/inference/androidAicoreProvider';
 import {
   readConfiguredProviderCapabilities,
@@ -59,26 +60,25 @@ export function useInferenceProviders() {
       setLoading(true);
       setError(undefined);
     }
-    const registered = getInferenceProviders();
-    const capabilities = await readConfiguredProviderCapabilities(
-      currentPlatform(),
-      registered,
-      selectProviderEntriesForMode(getMode(), configuredEntries(registered)),
-    );
-    if (mounted.current) {
-      setProviders(capabilities);
-      setLoading(false);
+    try {
+      const registered = getInferenceProviders();
+      const capabilities = await readConfiguredProviderCapabilities(
+        currentPlatform(),
+        registered,
+        selectProviderEntriesForMode(getMode(), configuredEntries(registered)),
+      );
+      if (mounted.current) setProviders(capabilities);
+    } catch (err) {
+      logger.error('useInferenceProviders', 'Provider status refresh failed', err);
+      if (mounted.current) setError('Provider status could not be refreshed.');
+    } finally {
+      if (mounted.current) setLoading(false);
     }
   }, []);
 
   useEffect(() => {
     mounted.current = true;
-    refresh().catch(() => {
-      if (mounted.current) {
-        setLoading(false);
-        setError('Provider status could not be refreshed.');
-      }
-    });
+    refresh();
     return () => {
       mounted.current = false;
     };

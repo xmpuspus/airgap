@@ -118,7 +118,7 @@ function OverflowChip({count, firstOverflowId, onPress}: OverflowProps) {
       hitSlop={{top: 8, bottom: 8, left: 4, right: 4}}
       accessibilityRole="button"
       accessibilityLabel={`${count} more sources`}
-      accessibilityHint="Opens the source list">
+      accessibilityHint="Opens the next source">
       {({pressed}) => (
         <View style={[styles.chip, styles.overflowChip, pressed && styles.chipPressed]}>
           <Text numberOfLines={1} style={styles.overflowText}>

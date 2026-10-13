@@ -2,9 +2,10 @@ import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import type {QueueRecord} from '../../services/actionQueueTypes';
 import {COLORS, SPACING, RADIUS, TYPOGRAPHY} from '../../constants/theme';
+import {toolDisplayName} from './toolDisplayName';
 
 export function getActionReceiptView(record: QueueRecord) {
-  const title = (record.toolName ?? record.type).replaceAll('_', ' ');
+  const title = toolDisplayName(record.toolName ?? record.type);
   if (record.status === 'failed' && record.errorCode === 'no_agency_integration') {
     return {
       title,
@@ -18,7 +19,7 @@ export function getActionReceiptView(record: QueueRecord) {
     processing: ['Retrying', 'The service is processing this action.'],
     failed: ['Failed', 'The service did not accept this action.'],
     completed: ['Completed', 'The service completed this action.'],
-  }[record.status];
+  }[record.status] ?? ['Unknown', 'The state of this action is not known.'];
   return {
     title,
     statusLabel: status[0],

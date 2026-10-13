@@ -10,15 +10,6 @@ export function getSystemPrompt(): string {
   return interpolate(prompts.system, config);
 }
 
-/**
- * Build the user message with:
- * 1. KB context (at the top — most important, gets best attention)
- * 2. Recent conversation history (last 2-3 turns for continuity)
- * 3. Current user question (at the bottom — closest to generation point)
- *
- * This structure follows research on context positioning for small models:
- * important info at start and end, not middle.
- */
 // Characters of each record that a model sees. Small on-device models have a
 // short context, so the default keeps three records under about 300 tokens.
 export const MODEL_CONTEXT_CHARS = 400;
@@ -28,6 +19,12 @@ export interface UserMessageOptions {
   contextChars?: number | null;
 }
 
+/**
+ * Build the user message with:
+ * 1. KB context (at the top)
+ * 2. Recent conversation history (last 2-3 turns for continuity)
+ * 3. Current user question (at the bottom, closest to generation point)
+ */
 export function buildUserMessage(
   userQuery: string,
   kbResults: KBDocument[],
@@ -37,7 +34,6 @@ export function buildUserMessage(
   const parts: string[] = [];
   const cap = options?.contextChars === undefined ? MODEL_CONTEXT_CHARS : options.contextChars;
 
-  // 1. KB context at top
   if (kbResults.length > 0) {
     const contextBlock = kbResults
       .map(doc => {
@@ -50,7 +46,6 @@ export function buildUserMessage(
     parts.push('REFERENCE INFORMATION:\nNo relevant information found in the knowledge base.');
   }
 
-  // 2. Conversation history (last 3 turns max, trimmed)
   if (conversationHistory && conversationHistory.length > 0) {
     const recentTurns = conversationHistory.slice(-6); // last 3 exchanges (6 messages)
     const historyBlock = recentTurns
@@ -65,7 +60,6 @@ export function buildUserMessage(
     parts.push(`CONVERSATION SO FAR:\n${historyBlock}`);
   }
 
-  // 3. Current question at bottom (closest to generation point)
   // The model copies the wording of this line. Keep "reference information"
   // out of the answer so the user never sees the prompt scaffolding.
   parts.push(
@@ -79,7 +73,7 @@ export function buildUserMessage(
 
 /**
  * Format search results as structured text when LLM is not available.
- * Uses **bold** for titles and truncates content for readability.
+ * Uses **bold** for titles.
  */
 export function formatSearchResults(kbResults: KBDocument[]): string {
   if (kbResults.length === 0) {

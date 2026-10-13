@@ -26,6 +26,7 @@ const files = [
   '.eslintrc.js',
   '.prettierrc.json',
   '.watchmanconfig',
+  'DEPLOYMENT.md',
   'Gemfile',
   'LICENSE',
   'airgap.config.json',

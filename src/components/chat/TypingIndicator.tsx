@@ -48,7 +48,6 @@ export function TypingIndicator() {
     }).start();
   }, [pulseAnim]);
 
-  // Use "standalone" bot radii for the typing bubble
   const radii = BUBBLE_RADIUS.bot.standalone;
 
   return (

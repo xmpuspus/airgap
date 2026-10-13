@@ -96,7 +96,7 @@ npm ci
 npm run cli:pack:test
 ```
 
-The pack check builds the template, scaffolds projects from both package and local sources, and inspects the npm archive. Run `npm run conflict-check` before publication to check the package and repository names on their public services.
+The pack check builds the template, scaffolds projects from both package and local sources, and inspects the npm archive. Run `npm run build --workspace create-airgap-bot && npm run conflict-check --workspace create-airgap-bot` before publication to check the package and repository names on their public services.
 
 ## License
 

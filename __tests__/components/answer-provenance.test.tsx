@@ -1,8 +1,8 @@
 import {getProvenanceView} from '../../src/components/chat/AnswerProvenance';
 
-// The card tells a citizen where the answer came from. Why a model reply was
-// not used stays in the message audit, not on the card.
-test('shows only the record source when the model ran but the record shows', () => {
+// The card tells a citizen where the answer came from, and nothing about how
+// the reply was produced.
+test('shows only the record source when the card shows the stored record', () => {
   expect(
     getProvenanceView({
       source: 'search',

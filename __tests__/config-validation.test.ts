@@ -142,6 +142,12 @@ describe('validateConfig', () => {
     expect(result.errors.some(e => e.includes('dataRetentionDays'))).toBe(true);
   });
 
+  test('fractional privacy.dataRetentionDays', () => {
+    const cfg = makeValidConfig({privacy: {dataRetentionDays: 1.5}});
+    const result = validateConfig(cfg);
+    expect(result.errors.some(e => e.includes('dataRetentionDays'))).toBe(true);
+  });
+
   test('invalid privacy.privacyPolicyUrl', () => {
     const cfg = makeValidConfig({privacy: {privacyPolicyUrl: 'not-a-url'}});
     const result = validateConfig(cfg);

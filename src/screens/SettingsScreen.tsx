@@ -22,6 +22,8 @@ import {LLMModeControl} from '../components/settings/LLMModeControl';
 import {SyncSectionCard} from '../components/settings/SyncSectionCard';
 import {ProviderStatusCard} from '../components/settings/ProviderStatusCard';
 import {useInferenceProviders} from '../hooks/useInferenceProviders';
+import {getMode} from '../services/llmRouter';
+import {logger} from '../services/logger';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -79,9 +81,10 @@ export function SettingsScreen({navigation}: Props) {
   const insets = useSafeAreaInsets();
   const {isDownloaded, modelSizeMB, deleteModel} = useModelDownload();
   const providerReadiness = useInferenceProviders();
+  const demoMode = getMode() === 'demo';
 
   // 7-tap easter egg on the app version row enables the Diagnostics panel
-  // for the current session only. Not persisted — closing and reopening
+  // for the current session only. Not persisted: closing and reopening
   // Settings resets it. Operators who want it permanently flip
   // features.diagnosticsPanel in airgap.config.json.
   const [, setTapCount] = useState(0);
@@ -168,11 +171,9 @@ export function SettingsScreen({navigation}: Props) {
       const lines = history.map(
         turn => `${turn.role === 'user' ? 'You' : brand.botName}: ${turn.text}`,
       );
-      const text = `${
-        brand.botName
-      } — Chat Export\n${new Date().toLocaleDateString()}\n${'='.repeat(40)}\n\n${lines.join(
-        '\n\n',
-      )}`;
+      const text = `${brand.botName}: Chat Export\n${new Date().toLocaleDateString()}\n${'='.repeat(
+        40,
+      )}\n\n${lines.join('\n\n')}`;
       await Share.share({message: text, title: `${brand.botName} Chat Export`});
     } catch {
       // Share cancelled
@@ -195,12 +196,12 @@ export function SettingsScreen({navigation}: Props) {
             const results = await deleteAllUserData();
             const failures = results.filter(result => !result.ok);
             if (failures.length > 0) {
+              logger.warn('SettingsScreen', 'Data deletion incomplete', {
+                failed: failures.map(result => result.id),
+              });
               Alert.alert(
                 t('deleteIncomplete', 'Deletion Incomplete'),
-                t(
-                  'deleteIncompleteDetail',
-                  `Could not delete: ${failures.map(result => result.id).join(', ')}`,
-                ),
+                t('deleteIncompleteDetail', 'Some data could not be deleted. Try again.'),
               );
               return;
             }
@@ -241,49 +242,53 @@ export function SettingsScreen({navigation}: Props) {
       </View>
 
       {/* AI Model */}
-      <View style={styles.section}>
-        <SectionHeader title={t('aiModel', 'AI Model')} />
-        <View style={styles.card}>
-          <SettingsRow
-            label={t('status', 'Status')}
-            value={
-              isDownloaded ? t('downloaded', 'Downloaded') : t('notDownloaded', 'Not downloaded')
-            }
-            valueColor={isDownloaded ? COLORS.success : COLORS.textSecondary}
-          />
-          <View style={styles.divider} />
-          <SettingsRow label={t('model', 'Model')} value={modelConfig.filename} />
-          <View style={styles.divider} />
-          <SettingsRow label={t('size', 'Size')} value={formatSize(modelSizeMB)} />
-          {isDownloaded && (
-            <>
-              <View style={styles.divider} />
-              <TouchableOpacity
-                style={styles.actionRow}
-                onPress={handleDeleteModel}
-                activeOpacity={0.6}
-                accessibilityLabel={t('deleteModel', 'Delete AI Model')}
-                accessibilityRole="button">
-                <Text style={styles.deleteText}>{t('deleteModel', 'Delete Model')}</Text>
-              </TouchableOpacity>
-            </>
-          )}
-          {!isDownloaded && (
-            <>
-              <View style={styles.divider} />
-              <TouchableOpacity
-                style={styles.actionRow}
-                onPress={handleRedownload}
-                activeOpacity={0.6}
-                accessibilityLabel={t('downloadModel', 'Download AI Model')}
-                accessibilityRole="button">
-                <Text style={styles.primaryActionText}>{t('downloadModel', 'Download Model')}</Text>
-                <Chevron />
-              </TouchableOpacity>
-            </>
-          )}
+      {!demoMode && (
+        <View style={styles.section}>
+          <SectionHeader title={t('aiModel', 'AI Model')} />
+          <View style={styles.card}>
+            <SettingsRow
+              label={t('status', 'Status')}
+              value={
+                isDownloaded ? t('downloaded', 'Downloaded') : t('notDownloaded', 'Not downloaded')
+              }
+              valueColor={isDownloaded ? COLORS.success : COLORS.textSecondary}
+            />
+            <View style={styles.divider} />
+            <SettingsRow label={t('model', 'Model')} value={modelConfig.filename} />
+            <View style={styles.divider} />
+            <SettingsRow label={t('size', 'Size')} value={formatSize(modelSizeMB)} />
+            {isDownloaded && (
+              <>
+                <View style={styles.divider} />
+                <TouchableOpacity
+                  style={styles.actionRow}
+                  onPress={handleDeleteModel}
+                  activeOpacity={0.6}
+                  accessibilityLabel={t('deleteModel', 'Delete AI Model')}
+                  accessibilityRole="button">
+                  <Text style={styles.deleteText}>{t('deleteModel', 'Delete Model')}</Text>
+                </TouchableOpacity>
+              </>
+            )}
+            {!isDownloaded && (
+              <>
+                <View style={styles.divider} />
+                <TouchableOpacity
+                  style={styles.actionRow}
+                  onPress={handleRedownload}
+                  activeOpacity={0.6}
+                  accessibilityLabel={t('downloadModel', 'Download AI Model')}
+                  accessibilityRole="button">
+                  <Text style={styles.primaryActionText}>
+                    {t('downloadModel', 'Download Model')}
+                  </Text>
+                  <Chevron />
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
         </View>
-      </View>
+      )}
 
       {/* Knowledge Sync */}
       <View style={styles.section}>
@@ -437,8 +442,10 @@ export function SettingsScreen({navigation}: Props) {
           <View style={styles.divider} />
           <View style={styles.aboutBlock}>
             <Text style={styles.aboutText}>
-              {brand.botName} is an AI-powered assistant for {brand.name}. It runs entirely on your
-              device — your conversations never leave your phone.
+              {brand.botName} is an AI-powered assistant for {brand.name}.{' '}
+              {config.llm?.cloud?.enabled
+                ? 'Answers come from records on your device. When you are online, your questions can be sent to an online service.'
+                : 'It runs on your device. Your conversations stay on your phone.'}
             </Text>
           </View>
         </View>

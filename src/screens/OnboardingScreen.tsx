@@ -12,6 +12,7 @@ import {useReducedMotion} from '../hooks/useReducedMotion';
 import {useInferenceProviders} from '../hooks/useInferenceProviders';
 import {ProviderSetupCard} from '../components/onboarding/ProviderSetupCard';
 import {isSyncConfigured} from '../services/syncService';
+import {getMode} from '../services/llmRouter';
 import {howThisWorksDefaults, installDetail} from '../utils/appChrome';
 
 type RootStackParamList = {
@@ -134,6 +135,7 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
   const {progress, isDownloading, isDownloaded, modelSizeMB, startDownload} = useModelDownload();
   const reducedMotion = useReducedMotion();
   const providerReadiness = useInferenceProviders();
+  const demoMode = getMode() === 'demo';
   const serviceReady = hasAccessTokenProvider() && config.llm?.cloud?.enabled === true;
 
   const logoScale = useRef(new Animated.Value(0)).current;
@@ -220,11 +222,9 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
       contentContainerStyle={[styles.screenContent, {paddingTop: insets.top + SPACING.xl}]}
       bounces={false}
       showsVerticalScrollIndicator={false}>
-      {/* Background layers */}
       <View style={styles.bgGradientTop} />
       <View style={styles.bgGradientMid} />
 
-      {/* Logo */}
       <Animated.View style={[styles.brandSection, {transform: [{scale: logoScale}]}]}>
         <View style={styles.logoContainer}>
           <Image
@@ -235,7 +235,6 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
         </View>
       </Animated.View>
 
-      {/* Title */}
       <Animated.View
         style={{
           opacity: titleOpacity,
@@ -245,7 +244,7 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
         <Text style={styles.subtitle}>{ONBOARDING_SUBTITLE}</Text>
       </Animated.View>
 
-      {/* How this works — capability bullets */}
+      {/* How this works: capability bullets */}
       <Animated.View
         style={[
           styles.capabilityCard,
@@ -304,7 +303,6 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
         })}
       </Animated.View>
 
-      {/* CTA section */}
       <Animated.View
         style={[
           styles.bottomSection,
@@ -315,7 +313,6 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
           },
         ]}>
         <View style={styles.pathCard}>
-          <Text style={styles.pathEyebrow}>PATH 1</Text>
           <Text style={styles.pathTitle}>Try Offline Demo</Text>
           <Text style={styles.pathDetail}>
             Shows the built-in records as written. It needs no network or model download.
@@ -329,27 +326,26 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.pathCard}>
-          <Text style={styles.pathEyebrow}>PATH 2</Text>
-          <Text style={styles.pathTitle}>Install Local AI</Text>
-          <Text style={styles.pathDetail}>{installDetail(modelConfig.sizeBytes)}</Text>
-          <DownloadProgress
-            onSkip={goToChat}
-            onComplete={goToChat}
-            progress={progress}
-            isDownloading={isDownloading}
-            isDownloaded={isDownloaded}
-            modelSizeMB={modelSizeMB}
-            startDownload={startDownload}
-          />
-        </View>
+        {!demoMode && (
+          <View style={styles.pathCard}>
+            <Text style={styles.pathTitle}>Install Local AI</Text>
+            <Text style={styles.pathDetail}>{installDetail(modelConfig.sizeBytes)}</Text>
+            <DownloadProgress
+              onComplete={goToChat}
+              progress={progress}
+              isDownloading={isDownloading}
+              isDownloaded={isDownloaded}
+              modelSizeMB={modelSizeMB}
+              startDownload={startDownload}
+            />
+          </View>
+        )}
 
         {serviceReady && (
           <View style={styles.pathCard}>
-            <Text style={styles.pathEyebrow}>PATH 3</Text>
             <Text style={styles.pathTitle}>Use Set-Up Service</Text>
             <Text style={styles.pathDetail}>
-              Uses the operator's access-token source and cloud endpoint when online.
+              Uses your organization's online service when connected.
             </Text>
             <TouchableOpacity
               style={styles.serviceButton}
@@ -363,7 +359,7 @@ export function OnboardingScreen({navigation, onComplete}: Props) {
 
         {!isDownloading && isDownloaded && (
           <TouchableOpacity
-            style={[styles.getStartedButton, isDownloaded && styles.getStartedButtonReady]}
+            style={[styles.getStartedButton, styles.getStartedButtonReady]}
             onPress={goToChat}
             activeOpacity={0.8}
             accessibilityLabel={t('startChatting', 'Start Chatting')}
@@ -517,10 +513,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: SPACING.md,
   },
-  featureIconGlyph: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   featureText: {
     flex: 1,
     ...TYPOGRAPHY.bodySmall,
@@ -537,12 +529,6 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.md,
     padding: SPACING.lg,
     marginBottom: SPACING.md,
-  },
-  pathEyebrow: {
-    ...TYPOGRAPHY.micro,
-    color: '#0E7490',
-    fontWeight: '800',
-    letterSpacing: 0.8,
   },
   pathTitle: {
     ...TYPOGRAPHY.title,

@@ -1,6 +1,5 @@
 import {
   chatErrorReply,
-  chatKeyboardBehavior,
   formatMegabytes,
   formatModelSize,
   howThisWorksDefaults,
@@ -57,13 +56,6 @@ describe('chat error reply', () => {
   test('gives the configured hotline, not a fixed number', () => {
     expect(chatErrorReply('8888')).toBe('Sorry, something went wrong. Try again, or call 8888.');
     expect(chatErrorReply(undefined)).toBe('Sorry, something went wrong. Try again.');
-  });
-});
-
-describe('chat input', () => {
-  test('moves the input above the keyboard on Android as well as iOS', () => {
-    expect(chatKeyboardBehavior('android')).toBe('padding');
-    expect(chatKeyboardBehavior('ios')).toBe('padding');
   });
 });
 

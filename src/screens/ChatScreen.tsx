@@ -11,6 +11,7 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
+import type {NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {MessageBubble} from '../components/chat/MessageBubble';
@@ -19,6 +20,7 @@ import {QuickReplies} from '../components/chat/QuickReplies';
 import {InputToolbar} from '../components/chat/InputToolbar';
 import {OperatingState} from '../components/common/OperatingState';
 import {SourceDrawer} from '../components/chat/SourceDrawer';
+import {toolDisplayName} from '../components/chat/toolDisplayName';
 import {SourceDrawerProvider} from '../hooks/useSourceDrawer';
 import {EmptyState} from '../components/chat/EmptyState';
 import {useChat} from '../hooks/useChat';
@@ -36,7 +38,7 @@ import {shouldShowSuggestedReplies} from './chatState';
 import {useInferenceProviders} from '../hooks/useInferenceProviders';
 import {isSystemProvider, providerDisplayName} from '../services/inference/providerPresentation';
 import {brand} from '../config/loader';
-import {chatErrorReply, chatKeyboardBehavior} from '../utils/appChrome';
+import {chatErrorReply} from '../utils/appChrome';
 
 type RootStackParamList = {
   Chat: undefined;
@@ -184,10 +186,8 @@ export function ChatScreen(_props: Props) {
       if (llmService.isLoaded() || llmService.isLoading()) return;
       const downloaded = await modelManager.isModelDownloaded();
       if (downloaded) {
-        logger.info('ChatScreen', 'Model found, auto-loading...');
         try {
           await llmService.load();
-          logger.info('ChatScreen', 'Model auto-loaded successfully');
           setModelReady(true);
         } catch (err) {
           logger.warn('ChatScreen', 'Model auto-load failed', err);
@@ -274,7 +274,7 @@ export function ChatScreen(_props: Props) {
   }, []);
 
   const handleScroll = useCallback(
-    (event: any) => {
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const offset = event.nativeEvent.contentOffset.y;
       const shouldShow = offset > 200;
       if (shouldShow !== showScrollButton) {
@@ -341,7 +341,10 @@ export function ChatScreen(_props: Props) {
     <View ref={screenRef} style={styles.screen} collapsable={false} onLayout={handleScreenLayout}>
       <KeyboardAvoidingView
         style={styles.screen}
-        behavior={chatKeyboardBehavior(Platform.OS)}
+        // Android 15 draws apps edge to edge, so adjustResize does not shrink the
+        // window for the keyboard. Padding by the keyboard overlap works on both
+        // platforms, and the overlap is zero where the window still resizes.
+        behavior="padding"
         keyboardVerticalOffset={keyboardOffset}>
         <OperatingState
           mode={getMode()}
@@ -377,10 +380,10 @@ export function ChatScreen(_props: Props) {
                 <View
                   style={styles.toolRunningPill}
                   accessibilityLiveRegion="polite"
-                  accessibilityLabel={`Running ${runningTool}`}>
+                  accessibilityLabel={`Running ${toolDisplayName(runningTool)}`}>
                   <View style={styles.toolRunningDot} />
                   <Text style={styles.toolRunningText} numberOfLines={1}>
-                    Running {runningTool}...
+                    Running {toolDisplayName(runningTool)}...
                   </Text>
                 </View>
               )}
@@ -516,7 +519,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.md,
     paddingVertical: SPACING.xs + 2,
     borderRadius: RADIUS.full,
-    backgroundColor: (COLORS.primary ?? '#0891B2') + '14',
+    backgroundColor: COLORS.primary + '14',
     marginTop: SPACING.sm,
     marginLeft: SPACING.lg,
     gap: 8,
@@ -525,11 +528,11 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: COLORS.primary ?? '#0891B2',
+    backgroundColor: COLORS.primary,
   },
   toolRunningText: {
     ...TYPOGRAPHY.caption,
-    color: COLORS.primary ?? '#0891B2',
+    color: COLORS.primary,
     fontWeight: '600',
   },
 });

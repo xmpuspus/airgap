@@ -187,4 +187,8 @@ describe('runBench', () => {
     });
     expect(seen).toEqual(queries);
   }, 30000);
+
+  it('rejects an empty query list', async () => {
+    await expect(runBench([])).rejects.toThrow('runBench needs at least one query');
+  });
 });

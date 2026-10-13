@@ -4,14 +4,46 @@ import type {ConversationTurn} from './promptBuilder';
 // If a 1-3 word query contains one of these, it's a new topic, not a follow-up.
 const TOPIC_KEYWORDS = new Set([
   // Products / services
-  'apn', 'sim', 'esim', 'fiber', 'roaming', 'store', 'plan', 'plans',
-  'gcash', 'wifi', 'promo', 'promos', 'postpaid', 'prepaid', 'load',
-  'data', 'hotspot', 'volte', '5g', '4g', 'lte', 'broadband',
+  'apn',
+  'sim',
+  'esim',
+  'fiber',
+  'roaming',
+  'store',
+  'plan',
+  'plans',
+  'gcash',
+  'wifi',
+  'promo',
+  'promos',
+  'postpaid',
+  'prepaid',
+  'load',
+  'data',
+  'hotspot',
+  'volte',
+  '5g',
+  '4g',
+  'lte',
+  'broadband',
   // Actions / categories
-  'billing', 'payment', 'balance', 'topup', 'top-up', 'porting',
-  'troubleshoot', 'troubleshooting', 'signal', 'outage',
+  'billing',
+  'payment',
+  'balance',
+  'topup',
+  'top-up',
+  'porting',
+  'troubleshoot',
+  'troubleshooting',
+  'signal',
+  'outage',
   // Locations
-  'bgc', 'cebu', 'davao', 'makati', 'baguio', 'iloilo',
+  'bgc',
+  'cebu',
+  'davao',
+  'makati',
+  'baguio',
+  'iloilo',
 ]);
 
 // Patterns that indicate a follow-up to the previous topic
@@ -45,26 +77,15 @@ const FOLLOW_UP_PATTERNS = [
   /^(how much|what price|how long|when|where|which)\?*$/i,
 ];
 
-// Keywords that indicate the user is starting a NEW topic (not a follow-up)
-const NEW_TOPIC_INDICATORS = [
-  /\b(i want to|i need to|i'd like to|can you help me with|help me)\b/i,
-  /\b(another question|different question|new question|also|by the way)\b/i,
-  /\b(what is|what are|how do i|how can i|where is|where can)\b/i,
-];
-
 /**
  * Detect if the current query is a follow-up to the previous conversation.
  */
-export function isFollowUp(
-  currentQuery: string,
-  history: ConversationTurn[],
-): boolean {
-  // No history = can't be a follow-up
+export function isFollowUp(currentQuery: string, history: ConversationTurn[]): boolean {
   if (!history || history.length === 0) return false;
 
   const trimmed = currentQuery.trim();
 
-  // Very short queries (1-4 words) are likely follow-ups if there's history
+  // Very short queries (1-3 words) are likely follow-ups if there's history
   const wordCount = trimmed.split(/\s+/).length;
   if (wordCount <= 3 && history.length >= 2) {
     // Unless it's a clear standalone greeting or topic
@@ -72,7 +93,10 @@ export function isFollowUp(
       return false;
 
     // If any word matches a known topic keyword, treat as a new topic
-    const queryWords = trimmed.toLowerCase().replace(/[^a-z0-9\s-]/g, '').split(/\s+/);
+    const queryWords = trimmed
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .split(/\s+/);
     if (queryWords.some(w => TOPIC_KEYWORDS.has(w))) return false;
 
     return true;
@@ -81,11 +105,6 @@ export function isFollowUp(
   // Check follow-up patterns
   for (const pattern of FOLLOW_UP_PATTERNS) {
     if (pattern.test(trimmed)) return true;
-  }
-
-  // Check if it's clearly a new topic
-  for (const pattern of NEW_TOPIC_INDICATORS) {
-    if (pattern.test(trimmed)) return false;
   }
 
   return false;
@@ -123,16 +142,11 @@ function extractBotEntities(botText: string): string[] {
  * plus product names and prices from the last bot response,
  * and prepend them to the current query for search.
  */
-export function expandQuery(
-  currentQuery: string,
-  history: ConversationTurn[],
-): string {
+export function expandQuery(currentQuery: string, history: ConversationTurn[]): string {
   if (history.length < 2) return currentQuery;
 
   // Find the last user query (most important for topic)
-  const lastUserTurn = [...history]
-    .reverse()
-    .find(t => t.role === 'user');
+  const lastUserTurn = [...history].reverse().find(t => t.role === 'user');
 
   if (!lastUserTurn) return currentQuery;
 
@@ -141,20 +155,126 @@ export function expandQuery(
 
   // Extract significant words (skip common words)
   const stopWords = new Set([
-    'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
-    'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could',
-    'should', 'may', 'might', 'can', 'shall', 'to', 'of', 'in', 'for',
-    'on', 'with', 'at', 'by', 'from', 'as', 'into', 'through', 'during',
-    'before', 'after', 'above', 'below', 'between', 'and', 'but', 'or',
-    'not', 'no', 'nor', 'so', 'yet', 'both', 'each', 'all', 'any', 'few',
-    'more', 'most', 'other', 'some', 'such', 'than', 'too', 'very', 'just',
-    'also', 'about', 'up', 'out', 'off', 'over', 'under', 'again',
-    'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why',
-    'how', 'what', 'which', 'who', 'whom', 'this', 'that', 'these',
-    'those', 'i', 'me', 'my', 'mine', 'we', 'our', 'you', 'your',
-    'he', 'him', 'his', 'she', 'her', 'it', 'its', 'they', 'them',
-    'their', 'if', 'only', 'based', 'information', 'reference', 'according',
-    'provided', 'answer', 'question', 'help', 'please', 'thanks', 'thank',
+    'the',
+    'a',
+    'an',
+    'is',
+    'are',
+    'was',
+    'were',
+    'be',
+    'been',
+    'being',
+    'have',
+    'has',
+    'had',
+    'do',
+    'does',
+    'did',
+    'will',
+    'would',
+    'could',
+    'should',
+    'may',
+    'might',
+    'can',
+    'shall',
+    'to',
+    'of',
+    'in',
+    'for',
+    'on',
+    'with',
+    'at',
+    'by',
+    'from',
+    'as',
+    'into',
+    'through',
+    'during',
+    'before',
+    'after',
+    'above',
+    'below',
+    'between',
+    'and',
+    'but',
+    'or',
+    'not',
+    'no',
+    'nor',
+    'so',
+    'yet',
+    'both',
+    'each',
+    'all',
+    'any',
+    'few',
+    'more',
+    'most',
+    'other',
+    'some',
+    'such',
+    'than',
+    'too',
+    'very',
+    'just',
+    'also',
+    'about',
+    'up',
+    'out',
+    'off',
+    'over',
+    'under',
+    'again',
+    'further',
+    'then',
+    'once',
+    'here',
+    'there',
+    'when',
+    'where',
+    'why',
+    'how',
+    'what',
+    'which',
+    'who',
+    'whom',
+    'this',
+    'that',
+    'these',
+    'those',
+    'i',
+    'me',
+    'my',
+    'mine',
+    'we',
+    'our',
+    'you',
+    'your',
+    'he',
+    'him',
+    'his',
+    'she',
+    'her',
+    'it',
+    'its',
+    'they',
+    'them',
+    'their',
+    'if',
+    'only',
+    'based',
+    'information',
+    'reference',
+    'according',
+    'provided',
+    'answer',
+    'question',
+    'help',
+    'please',
+    'thanks',
+    'thank',
   ]);
 
   const words = previousContext
@@ -180,9 +300,7 @@ export function expandQuery(
     /\b(that one|this one|the one)\b/i.test(currentQuery);
 
   if (isOrdinalRef) {
-    const lastBotTurn = [...history]
-      .reverse()
-      .find(t => t.role === 'bot');
+    const lastBotTurn = [...history].reverse().find(t => t.role === 'bot');
     if (lastBotTurn) {
       const botEntities = extractBotEntities(lastBotTurn.text);
       // Add bot entities (deduplicated) to provide product context

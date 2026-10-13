@@ -356,8 +356,12 @@ function handle(req, res, security) {
   }
 
   if (req.method === 'GET' && url.pathname === '/api/v1/sync/model') {
-    const manifest = getModelManifest();
-    sendJson(res, 200, manifest, rateHeaders);
+    try {
+      sendJson(res, 200, getModelManifest(), rateHeaders);
+    } catch (err) {
+      console.error('[bff] model manifest failed:', err);
+      sendJson(res, 500, {error: 'model_manifest_failed'});
+    }
     return;
   }
 

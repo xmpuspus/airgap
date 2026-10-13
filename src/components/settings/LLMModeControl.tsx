@@ -1,27 +1,7 @@
-/**
- * LLMModeControl — segmented control for the LLM routing mode. Persists
- * the user override in MMKV via llmRouter.setUserMode. Falls back to the
- * operator default in airgap.config.json when the user has not set an
- * override (the "Use config default" reset path).
- *
- * Three options:
- *  - Offline only   : never use cloud, even if available
- *  - Prefer offline : try local first, escalate to cloud only on failure
- *  - Prefer online  : try cloud first, fall back to local on failure
- *
- * Implementation: hand-rolled segmented control with absolute-positioned
- * thumb (no library). Animated.Value moves the thumb on selection change.
- */
+/** Segmented control that lets the user pick offline only, prefer offline, or prefer online answers. */
 
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  Animated,
-  LayoutChangeEvent,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Animated, LayoutChangeEvent, Pressable, StyleSheet, Text, View} from 'react-native';
 import {COLORS, RADIUS, SPACING, TIMING, TYPOGRAPHY} from '../../constants/theme';
 import {getMode, setUserMode, getConfigMode} from '../../services/llmRouter';
 import type {UserMode} from '../../services/llmRouter';
@@ -38,9 +18,7 @@ export function LLMModeControl() {
   // a stale user override from before a demo flip doesn't hide the banner.
   const operatorMode = getConfigMode();
   const isDemo = operatorMode === 'demo';
-  const initialUserMode: UserMode = isDemo
-    ? 'prefer-offline'
-    : (getMode() as UserMode);
+  const initialUserMode: UserMode = isDemo ? 'prefer-offline' : (getMode() as UserMode);
   const [active, setActive] = useState<UserMode>(() => initialUserMode);
   const [trackWidth, setTrackWidth] = useState(0);
   const thumbX = useRef(new Animated.Value(0)).current;
@@ -70,16 +48,13 @@ export function LLMModeControl() {
     }
   };
 
-  // Demo mode is operator-only. Hooks above still ran unconditionally;
-  // we just render a read-only banner instead of the segmented control.
   if (isDemo) {
     return (
       <View style={styles.wrapper}>
         <View style={styles.demoNotice}>
           <Text style={styles.demoNoticeLabel}>Demo mode</Text>
           <Text style={styles.demoNoticeBody}>
-            Routing is fixed by the operator. Disable demo in
-            airgap.config.json to expose offline and online options here.
+            Your organization sets how answers are made in demo mode.
           </Text>
         </View>
       </View>
@@ -112,10 +87,7 @@ export function LLMModeControl() {
               style={styles.segment}
               hitSlop={{top: 8, bottom: 8, left: 4, right: 4}}>
               <Text
-                style={[
-                  styles.segmentLabel,
-                  isActive ? styles.segmentLabelActive : null,
-                ]}
+                style={[styles.segmentLabel, isActive ? styles.segmentLabelActive : null]}
                 numberOfLines={1}>
                 {t(seg.labelKey, seg.fallback)}
               </Text>
@@ -140,7 +112,7 @@ const styles = StyleSheet.create({
   },
   track: {
     flexDirection: 'row',
-    backgroundColor: COLORS.inputBg ?? COLORS.surface,
+    backgroundColor: COLORS.inputBg,
     borderRadius: RADIUS.full,
     borderWidth: 1,
     borderColor: COLORS.border + '50',
@@ -182,11 +154,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.xs,
   },
   demoNotice: {
-    backgroundColor: COLORS.botBubble ?? '#F1F5F9',
+    backgroundColor: COLORS.botBubble,
     borderRadius: RADIUS.md,
     padding: SPACING.md,
     borderWidth: 1,
-    borderColor: COLORS.border ?? '#E5E7EB',
+    borderColor: COLORS.border,
   },
   demoNoticeLabel: {
     ...TYPOGRAPHY.caption,

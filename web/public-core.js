@@ -25,7 +25,9 @@ export function checkInputPolicy(query, policy = {}) {
   if (policy.enabled === false) return undefined;
   if (PROMPT_PROBE_PATTERNS.some(pattern => pattern.test(query))) return 'prompt_probe';
   for (const entry of policy.topicBlocklist ?? []) {
-    const [reason, raw] = entry.includes(':') ? entry.split(':', 2) : ['blocked_topic', entry];
+    const split = entry.indexOf(':');
+    const [reason, raw] =
+      split >= 0 ? [entry.slice(0, split), entry.slice(split + 1)] : ['blocked_topic', entry];
     const phrase = raw.trim().toLowerCase();
     if (!phrase) continue;
     const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

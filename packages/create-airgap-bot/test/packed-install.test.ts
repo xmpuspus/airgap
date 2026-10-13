@@ -42,6 +42,7 @@ describe('packaged template', () => {
         'scripts/provider-device-preflight.mjs',
         'scripts/validate-provider-evidence.mjs',
         'docs/provider-validation.md',
+        'DEPLOYMENT.md',
       ]) {
         await expect(fsp.access(path.join(templateRoot, relativePath))).resolves.toBeUndefined();
       }

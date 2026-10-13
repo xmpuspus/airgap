@@ -113,9 +113,7 @@ export function replaceKnowledgeFromBundle(
     try {
       parsed = JSON.parse(payload);
     } catch (err) {
-      throw new Error(
-        `bundle.files["${name}"] failed to parse as JSON: ${(err as Error).message}`,
-      );
+      throw new Error(`bundle.files["${name}"] failed to parse as JSON: ${(err as Error).message}`);
     }
     if (!Array.isArray(parsed)) {
       throw new Error(`bundle.files["${name}"] did not parse to an array`);
@@ -137,5 +135,3 @@ export function revertToCompiledKnowledge(): void {
   if (state.source === 'compiled') return;
   state = makeState(compiledDocuments, 'compiled');
 }
-
-export {compiledDocuments as _compiledDocumentsForTests};

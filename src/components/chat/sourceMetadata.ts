@@ -1,8 +1,5 @@
-// Turns document metadata into the lines the source drawer shows: who
-// published the record, where it is, when the snapshot was checked, and
-// whether its review date has passed. The saved-copy path and hash stay in
-// the record for reviewers and do not show in the app. Pure function, so it
-// is unit tested without rendering.
+// Turns record metadata into the drawer lines: publisher, link, checked date, and review state.
+// It is pure, so it is unit tested without rendering.
 
 export interface SourceView {
   publisher: string;
@@ -31,8 +28,7 @@ function hostOf(url: string): string | null {
   }
 }
 
-// The age counts days on the device calendar. At 01:35 in Manila, a record
-// checked the day before reads "1 day ago", not the UTC "today".
+// Age counts days on the device calendar.
 export function describeSourceMetadata(
   metadata: Record<string, unknown> | undefined,
   now: Date = new Date(),

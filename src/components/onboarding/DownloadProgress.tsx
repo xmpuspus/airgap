@@ -5,7 +5,6 @@ import {config, onboarding, interpolate} from '../../config/loader';
 import {formatMegabytes} from '../../utils/appChrome';
 
 interface DownloadProgressProps {
-  onSkip?: () => void;
   onComplete?: () => void;
   progress: number;
   isDownloading: boolean;
@@ -17,7 +16,6 @@ interface DownloadProgressProps {
 const formatSize = formatMegabytes;
 
 export function DownloadProgress({
-  onSkip: _onSkip,
   onComplete,
   progress,
   isDownloading,

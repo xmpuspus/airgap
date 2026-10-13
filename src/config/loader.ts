@@ -245,7 +245,7 @@ export interface LocaleSection {
   region?: string;
 }
 
-function applyDefaults(raw: any): AirgapConfig {
+function applyDefaults(raw: AirgapConfig): AirgapConfig {
   return {
     ...raw,
     theme: {
@@ -355,7 +355,7 @@ export function interpolate(template: string, config: AirgapConfig): string {
   return template.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? `{{${key}}}`);
 }
 
-export const config: AirgapConfig = applyDefaults(rawConfig);
+export const config: AirgapConfig = applyDefaults(rawConfig as AirgapConfig);
 
 // Validate at startup — logs warnings but never throws
 validateAndLog(config);

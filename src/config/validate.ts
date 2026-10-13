@@ -103,7 +103,7 @@ export function validateConfig(cfg: AirgapConfig): {valid: boolean; errors: stri
 
   if (cfg.privacy) {
     if (cfg.privacy.dataRetentionDays !== undefined) {
-      if (typeof cfg.privacy.dataRetentionDays !== 'number' || cfg.privacy.dataRetentionDays < 1) {
+      if (!Number.isInteger(cfg.privacy.dataRetentionDays) || cfg.privacy.dataRetentionDays < 1) {
         errors.push('privacy.dataRetentionDays must be a positive integer');
       }
     }

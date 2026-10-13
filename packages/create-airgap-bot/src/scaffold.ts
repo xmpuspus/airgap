@@ -10,7 +10,7 @@ export interface ScaffoldOptions {
   template: Template;
   targetDir: string;
   // Optional override; when set, the scaffolder copies from this directory
-  // instead of fetching a tarball. Used by tests and offline runs.
+  // instead of the packaged template. Used by tests and offline runs.
   sourceDir?: string;
 }
 
@@ -72,7 +72,6 @@ async function writeKnowledgeManifest(knowledgeDir: string): Promise<void> {
   const exports = names.map(name => `  ${name},`).join('\n');
   const content = `/**
  * Knowledge Base Manifest (auto-generated)
- * Run: node scripts/generate-manifest.js
  */
 ${imports}
 
@@ -90,7 +89,12 @@ async function applyTemplate(targetDir: string, template: Template): Promise<voi
   if (!fs.existsSync(cfgSrc)) {
     throw new Error(`Template config missing: ${cfgSrc}`);
   }
-  await fsp.copyFile(cfgSrc, cfgDest);
+  // Example configs sit in subfolders, so their $schema path breaks at the app root.
+  const cfgText = await fsp.readFile(cfgSrc, 'utf8');
+  await fsp.writeFile(
+    cfgDest,
+    cfgText.replace(/("\$schema"\s*:\s*)"[^"]*"/, '$1"./airgap.schema.json"'),
+  );
 
   // Replace compiled knowledge data while preserving its TypeScript module.
   const knSrc = path.join(targetDir, 'examples', template, 'knowledge');
