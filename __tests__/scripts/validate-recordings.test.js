@@ -193,6 +193,15 @@ describe('recording manifest validation', () => {
     expect(flow).toMatch(/element:\n\s+text: 'Try Offline Demo'\n\s+index: 1[\s\S]*timeout: 40000/);
   });
 
+  test('gives a full three-record demo answer time to finish streaming', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/industry-android.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toMatch(/visible: 'Document answer'\n\s+timeout: 90000/);
+  });
+
   test('can record one named industry after an interrupted batch', () => {
     const script = fs.readFileSync(
       path.join(process.cwd(), 'scripts/record-industries.mjs'),

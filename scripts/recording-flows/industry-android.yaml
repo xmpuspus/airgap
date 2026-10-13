@@ -23,6 +23,6 @@ name: Airgap industry template recording
 - tapOn: ${QUICK_REPLY}
 - extendedWaitUntil:
     visible: 'Document answer'
-    timeout: 30000
+    timeout: 90000
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
 - stopRecording
