@@ -279,7 +279,7 @@ Check each GIF as follows.
 6. Set `loopReviewed` to `true` only after the full check.
 
 The README GIF must stay under 5 MiB. Platform GIFs must stay under 8 MiB. Industry GIFs must stay
-under 3 MiB. The validator checks dimensions, frame rate, duration, file header, and exact byte
+under 5 MiB. The validator checks dimensions, frame rate, duration, file header, and exact byte
 count.
 
 ```bash

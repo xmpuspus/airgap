@@ -224,6 +224,19 @@ describe('recording manifest validation', () => {
     expect(flow).toMatch(/visible: 'Document answer'\n\s+timeout: 90000/);
   });
 
+  test('waits for the answers the government app shows today', () => {
+    const flow = fs.readFileSync(
+      path.join(process.cwd(), 'scripts/recording-flows/government-android-model.yaml'),
+      'utf8',
+    );
+
+    expect(flow).toContain("visible: '(?s).*Checked 2026-10-09.*'");
+    expect(flow).toContain("visible: '(?s).*Philippine national government only.*'");
+    expect(flow).toContain("visible: '(?s).*Appointments are free.*'");
+    expect(flow).not.toContain('post_id=153368');
+    expect(flow).not.toContain("assertVisible: 'Downloaded Airgap model'");
+  });
+
   test('waits on iOS until the answer finishes streaming', () => {
     const flow = fs.readFileSync(
       path.join(process.cwd(), 'scripts/recording-flows/demo-ios.yaml'),
@@ -384,6 +397,8 @@ describe('recording manifest validation', () => {
     );
     expect(REQUIRED_OUTPUTS).toHaveLength(16);
     expect(sizeLimitFor('showcase')).toBe(8 * 1024 * 1024);
+    // Demo answers show whole records, so one industry answer scrolls for longer.
+    expect(sizeLimitFor('industry')).toBe(5 * 1024 * 1024);
   });
 
   test.each([

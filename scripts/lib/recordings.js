@@ -36,7 +36,7 @@ const REQUIRED_OUTPUTS = Object.freeze([
 const SIZE_LIMITS = Object.freeze({
   readme: 5 * MIB,
   platform: 8 * MIB,
-  industry: 3 * MIB,
+  industry: 5 * MIB,
   joint: 8 * MIB,
   showcase: 8 * MIB,
 });
