@@ -349,7 +349,7 @@ async function load() {
     ).textContent = `Core SHA-256: ${pack.coreSha256}\nKnowledge SHA-256: ${pack.corpusSha256}`;
     $(
       'load-status',
-    ).textContent = `${pack.records.length} sourced service records · ${pack.cases.length} authored cases · model not called for live questions`;
+    ).textContent = `${pack.records.length} sourced service records · ${pack.cases.length} test cases · model not called for live questions`;
     $('workspace').hidden = false;
   } catch (error) {
     $(

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Ask sourced Philippine public-service questions, inspect the answer path, and replay a real historical source update." />
+      content="Ask sourced Philippine public-service questions, inspect the answer path, and replay a historical source update." />
     <title>Break Kuya B · Airgap Evidence Lab</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="lab.css" />
@@ -40,7 +40,7 @@
             <div class="panel">
               <p class="eyebrow">01 / LIVE DETERMINISTIC LOGIC</p>
               <h2 id="ask-heading">Try a public-service question</h2>
-              <label for="case">Authored regression case</label
+              <label for="case">Test case</label
               ><select id="case">
                 <option value="">Write your own question</option>
               </select>
@@ -101,7 +101,7 @@
             </p>
             <div id="revision-comparison" class="two-columns"></div>
             <p id="affected">
-              Affected authored question: “When was Ninoy Aquino Day in 2024?” Also check a doubt
+              Affected test question: “When was Ninoy Aquino Day in 2024?” Also check a doubt
               follow-up and a current-year question.
             </p>
             <button id="check-impact">Run affected question checks</button>
@@ -152,8 +152,8 @@
             <p class="eyebrow">04 / REPRODUCE THE RUN</p>
             <h2 id="kit-heading">Take the evidence with you</h2>
             <p>
-              The kit builds the site, executes the replay and model experiment, drives the real
-              browser journey, and exports five browser recordings. Raw captures stay local under
+              The kit builds the site, executes the replay and model experiment, drives the browser
+              journey, and exports five browser recordings. Raw captures stay local under
               tmp/recordings.
             </p>
             <pre><code>npm run public:demo -- --model /path/to/gemma-3-1b-it.gguf</code></pre>
