@@ -196,11 +196,40 @@ function gifPaletteFilter({fps, colors, ditherScale = 4}) {
   ].join(';');
 }
 
-function readmeLayoutFilter({panelWidth, panelHeight, gap}) {
+// Each panel can carry its platform GIF's speed and cuts. The shorter panel
+// holds its last frame, so both loops end on their finished answer.
+function readmeLayoutFilter({panelWidth, panelHeight, gap, panels}) {
   const secondPanelX = panelWidth + gap;
+  const fit = `scale=${panelWidth}:-2:flags=lanczos,pad=${panelWidth}:${panelHeight}:0:(oh-ih)/2:color=0x071727`;
+  const panelFilters = ['a', 'b'].flatMap((label, index) => {
+    const panel = panels?.[index];
+    if (!panel) return [`[${index}:v]${fit}[${label}]`];
+    const filters = [];
+    let input = `[${index}:v]`;
+    const ranges = panel.omittedSourceRangesSeconds ?? [];
+    if (ranges.length > 0) {
+      const segments = [];
+      let start = 0;
+      for (const [rangeStart, rangeEnd] of ranges) {
+        const name = `p${index}s${segments.length}`;
+        const trim = start === 0 ? `end=${rangeStart}` : `start=${start}:end=${rangeStart}`;
+        filters.push(`[${index}:v]trim=${trim},setpts=PTS-STARTPTS[${name}]`);
+        segments.push(`[${name}]`);
+        start = rangeEnd;
+      }
+      const name = `p${index}s${segments.length}`;
+      filters.push(`[${index}:v]trim=start=${start},setpts=PTS-STARTPTS[${name}]`);
+      segments.push(`[${name}]`);
+      input = `${segments.join('')}concat=n=${segments.length}:v=1:a=0,`;
+    }
+    filters.push(
+      `${input}setpts=PTS/${panel.playbackSpeed ?? 1},${fit},` +
+        `tpad=stop_mode=clone:stop_duration=${panel.holdSeconds ?? 0}[${label}]`,
+    );
+    return filters;
+  });
   return [
-    `[0:v]scale=${panelWidth}:-2:flags=lanczos,pad=${panelWidth}:${panelHeight}:0:(oh-ih)/2:color=0x071727[a]`,
-    `[1:v]scale=${panelWidth}:-2:flags=lanczos,pad=${panelWidth}:${panelHeight}:0:(oh-ih)/2:color=0x071727[b]`,
+    ...panelFilters,
     `[a][b]xstack=inputs=2:layout=0_0|${secondPanelX}_0:fill=0x071727[v]`,
   ].join(';');
 }

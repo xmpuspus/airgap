@@ -118,6 +118,28 @@ describe('recording manifest validation', () => {
     );
   });
 
+  test('applies each platform speed and cut, then holds the shorter panel', () => {
+    expect(
+      readmeLayoutFilter({
+        panelWidth: 300,
+        panelHeight: 668,
+        gap: 12,
+        panels: [
+          {playbackSpeed: 4, omittedSourceRangesSeconds: [[10, 12]], holdSeconds: 0},
+          {playbackSpeed: 4, omittedSourceRangesSeconds: [], holdSeconds: 1.5},
+        ],
+      }),
+    ).toBe(
+      '[0:v]trim=end=10,setpts=PTS-STARTPTS[p0s0];' +
+        '[0:v]trim=start=12,setpts=PTS-STARTPTS[p0s1];' +
+        '[p0s0][p0s1]concat=n=2:v=1:a=0,setpts=PTS/4,scale=300:-2:flags=lanczos,' +
+        'pad=300:668:0:(oh-ih)/2:color=0x071727,tpad=stop_mode=clone:stop_duration=0[a];' +
+        '[1:v]setpts=PTS/4,scale=300:-2:flags=lanczos,' +
+        'pad=300:668:0:(oh-ih)/2:color=0x071727,tpad=stop_mode=clone:stop_duration=1.5[b];' +
+        '[a][b]xstack=inputs=2:layout=0_0|312_0:fill=0x071727[v]',
+    );
+  });
+
   test('keeps the README GIF preset within its asset budget', () => {
     expect(README_GIF_OPTIONS).toEqual({
       panelWidth: 280,
@@ -210,6 +232,9 @@ describe('recording manifest validation', () => {
 
     expect(flow).toMatch(/visible: 'Document answer'\n\s+timeout: 90000/);
     expect(flow).toMatch(/visible: 'Not helpful'\n\s+timeout: 90000/);
+    expect(flow).toMatch(
+      /answer-source\n(?:#.*\n)*- swipe:\n\s+direction: DOWN[\s\S]*- swipe:\n\s+direction: UP/,
+    );
   });
 
   test('moves the screen after the answer so the recorder keeps the final card', () => {

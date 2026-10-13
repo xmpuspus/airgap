@@ -35,6 +35,11 @@ name: Airgap iOS release recording
     visible: 'Not helpful'
     timeout: 90000
 - takeScreenshot: ${SHOT_PREFIX}-answer-source
+# The simulator recording writes a frame only on change, so a short scroll
+# keeps the finished answer card in the clip.
+- swipe:
+    direction: DOWN
+    duration: 400
 - swipe:
     direction: UP
     duration: 400
