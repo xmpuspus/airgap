@@ -171,13 +171,13 @@ def build() -> Page:
     # Pipeline.
     user = p.box("<b>User</b><br>mobile app", 60, 410, 120, 70, stroke=INK, width=2)
     stages_spec = [
-        ("1 Guardrails", ["blocklist rules", "prompt-probe rules", "fixed refusal", "no inference"], CODE),
-        ("2 Deterministic intents", ["greeting", "doubt check: replay last answer", "date and time: system clock", "action phrase: keyword router"], CODE),
+        ("1 Guardrails", ["blocklist rules", "prompt-probe rules", "motive questions: record only", "fixed refusal", "no inference"], CODE),
+        ("2 Deterministic intents", ["greeting", "doubt check: re-check last record", "date and time: system clock", "action phrase: keyword router"], CODE),
         ("3 Retrieval", ["local BM25 (MiniSearch)", "top-k dated records", "no network call"], CODE),
         ("4 Verbatim records", ["identity and scope", "rendered as written", "model skipped"], CODE),
         ("5 Provider chain", ["policy picks one:", "on-device Gemma 4 E2B, 3-bit, 2.4 GB", "demo formatter", "cloud (optional)", "prompt = rules + records + question"], MODEL),
-        ("6 Output validation", ["amounts, dates, names", "must exist in the records", "streamed tokens gated", "miss: show the record and why"], CODE),
-        ("7 Provenance", ["provider", "model file", "knowledge version", "sources"], CODE),
+        ("6 Output validation", ["amounts, dates, names", "must exist in the records", "streamed tokens gated", "miss: show the record"], CODE),
+        ("7 Provenance", ["answer source", "publisher", "checked date"], CODE),
     ]
     stages = []
     for k, (title, lines, color) in enumerate(stages_spec):
@@ -201,7 +201,7 @@ def build() -> Page:
     p.side(user, stages[0], "payload", "message")
     for k in range(6):
         p.side(stages[k], stages[k + 1], "payload")
-    p.gutter(stages[6], user, "payload", "answer with provider, model, sources", 104)
+    p.gutter(stages[6], user, "payload", "answer with its source", 104)
     p.lane(stages[0], stages[6], "payload", "", 598)
     p.lane(stages[1], stages[6], "payload", "fixed replies skip the model", 606)
     p.lane(stages[3], stages[6], "payload", "", 614)
