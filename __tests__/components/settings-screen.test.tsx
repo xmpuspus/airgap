@@ -99,6 +99,16 @@ test('offers Sync now only when an update server is set up', () => {
   expect(textOf(render())).toContain('Sync now');
 });
 
+test('calls the records built-in, not unsynced, when no update server is set up', () => {
+  mockGetMode.mockReturnValue('demo');
+  mockSyncConfigured.mockReturnValue(false);
+  const text = textOf(render());
+  expect(text).toContain('Built-in records');
+  expect(text).not.toContain('Not synced');
+  mockSyncConfigured.mockReturnValue(true);
+  expect(textOf(render())).toContain('Not synced');
+});
+
 describe('about text', () => {
   const original = config.llm;
   afterEach(() => {

@@ -380,10 +380,10 @@ export function ChatScreen(_props: Props) {
                 <View
                   style={styles.toolRunningPill}
                   accessibilityLiveRegion="polite"
-                  accessibilityLabel={`Running ${toolDisplayName(runningTool)}`}>
+                  accessibilityLabel={`${toolDisplayName(runningTool)}, in progress`}>
                   <View style={styles.toolRunningDot} />
                   <Text style={styles.toolRunningText} numberOfLines={1}>
-                    Running {toolDisplayName(runningTool)}...
+                    {toolDisplayName(runningTool)}…
                   </Text>
                 </View>
               )}

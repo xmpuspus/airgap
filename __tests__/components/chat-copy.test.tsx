@@ -54,8 +54,14 @@ test('the overflow chip hint says it opens the next source', () => {
 
 describe('toolDisplayName', () => {
   test('turns a tool id into plain words', () => {
-    expect(toolDisplayName('create_ticket')).toBe('create ticket');
-    expect(toolDisplayName('check_balance_now')).toBe('check balance now');
+    expect(toolDisplayName('create_ticket')).toBe('Create ticket');
+    expect(toolDisplayName('check_balance_now')).toBe('Check balance now');
+  });
+
+  test('uses the template label for a configured tool', () => {
+    expect(toolDisplayName('checkBalance')).toBe(
+      'Check your balance, data remaining, and active promo',
+    );
   });
 });
 
@@ -90,7 +96,7 @@ test('the message bubble shows the tool name in plain words', () => {
     />,
   );
   const text = textOf(tree);
-  expect(text).toContain('create ticket');
+  expect(text).toContain('Create ticket');
   expect(text).not.toContain('create_ticket');
 });
 

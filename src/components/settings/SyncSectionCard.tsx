@@ -10,6 +10,7 @@ import {
   onSync,
   syncKnowledge,
 } from '../../services/syncService';
+import {recordsStatusLabel} from '../../utils/appChrome';
 import {t} from '../../utils/i18n';
 
 function bandLabel(band: string): string {
@@ -86,8 +87,9 @@ export function SyncSectionCard() {
       ? t('sync.sourceBundle', 'Downloaded bundle')
       : t('sync.sourceCompiled', 'Built-in');
   const band = info.band;
-  const bandStr = bandLabel(band);
-  const bandHex = bandColor(band);
+  const syncConfigured = isSyncConfigured();
+  const bandStr = recordsStatusLabel(syncConfigured, bandLabel(band));
+  const bandHex = syncConfigured ? bandColor(band) : COLORS.textSecondary;
 
   return (
     <View style={styles.card}>
@@ -108,7 +110,7 @@ export function SyncSectionCard() {
           />
         </>
       ) : null}
-      {isSyncConfigured() && (
+      {syncConfigured && (
         <>
           <View style={styles.divider} />
           <Pressable
